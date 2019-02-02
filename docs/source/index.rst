@@ -1,7 +1,7 @@
 .. libsbml_draw documentation master file, created by
    sphinx-quickstart on Fri Feb  1 15:42:59 2019.
    You can adapt this file completely to your liking, but it should at least
-   contain the root `toctree` directive.
+   contain the root `toctree` directive.  https://libsbml-draw.readthedocs.io/en/latest/index.html
 
 libsbml_draw
 ============
