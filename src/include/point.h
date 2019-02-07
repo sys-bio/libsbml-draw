@@ -38,7 +38,7 @@
 
 //== INCLUDES ========================================================================
 
-#include "graphfab/core/SagittariusCore.h"
+#include "SagittariusCore.h"
 
 #include <math.h>
 
@@ -47,7 +47,7 @@
 
 #include <iostream>
 
-namespace Graphfab {
+namespace LibsbmlDraw {
     
     struct Point; // a pain...
     

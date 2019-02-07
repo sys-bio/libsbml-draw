@@ -38,16 +38,16 @@
 
 //== INCLUDES ========================================================================
 
-#include "graphfab/core/SagittariusCore.h"
-#include "graphfab/layout/point.h"
-#include "graphfab/layout/box.h"
+#include "SagittariusCore.h"
+#include "point.h"
+#include "box.h"
 
 //-- C++ code --
 #ifdef __cplusplus
 
 #include <iostream>
 
-namespace Graphfab {
+namespace LibsbmlDraw {
     
     struct cutout {
         cutout(Real a, Real b, Real c, Real d)

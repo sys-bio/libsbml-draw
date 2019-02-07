@@ -29,10 +29,10 @@
 
 //== INCLUDES ========================================================================
 
-#include "graphfab/core/SagittariusCore.h"
-#include "graphfab/interface/layout.h"
-#include "graphfab/diag/error.h"
-#include "graphfab/util/string.h"
+#include "SagittariusCore.h"
+#include "layout.h"
+#include "error.h"
+#include "string.h"
 
 #include "sbml/SBMLTypes.h"
 #include "sbml/packages/layout/common/LayoutExtensionTypes.h"

@@ -38,10 +38,10 @@
 
 //== INCLUDES ========================================================================
 
-#include "graphfab/core/SagittariusCore.h"
-#include "graphfab/sbml/autolayoutSBML.h"
-#include "graphfab/sbml/layout.h"
-#include "graphfab/layout/fr.h"
+#include "SagittariusCore.h"
+#include "autolayoutSBML.h"
+#include "layout.h"  //says, graphfab/sbml/layout, is this the right one?
+#include "fr.h"
 
 #endif
 

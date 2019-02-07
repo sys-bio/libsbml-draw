@@ -38,7 +38,7 @@
 
 //== INCLUDES ========================================================================
 
-#include "graphfab/core/SagittariusCore.h"
+#include "SagittariusCore.h"
 
 #ifdef __cplusplus
 extern "C" {

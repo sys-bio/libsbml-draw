@@ -39,8 +39,8 @@
 
 //== INCLUDES ========================================================================
 
-#include "graphfab/core/SagittariusPlatform.h"
-#include "graphfab/core/config.h"
+#include "SagittariusPlatform.h"
+#include "config.h"
 
 #ifdef __cplusplus
     #include <string>
@@ -57,7 +57,7 @@
 #define JOIN(x, y) x##y
 
 #ifdef __cplusplus
-namespace Graphfab
+namespace LibsbmlDraw
 {
 #endif
 

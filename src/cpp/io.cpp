@@ -29,14 +29,14 @@
 
 //== INCLUDES ========================================================================
 
-#include "graphfab/core/SagittariusCore.h"
-#include "graphfab/diag/error.h"
-#include "graphfab/network/network.h"
+#include "SagittariusCore.h"
+#include "error.h"
+#include "network.h"
 
 #include <exception>
 #include <typeinfo>
 
-namespace Graphfab {
+namespace LibsbmlDraw {
     
     void indent(std::ostream& os, uint32 ind) {
         for(uint32 i=0; i<ind; ++i)

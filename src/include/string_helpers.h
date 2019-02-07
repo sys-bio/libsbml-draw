@@ -27,7 +27,7 @@
 
 //== FILEDOC =========================================================================
 
-/** @file string.h
+/** @file string_helpers.h
  * @brief C string utilities
   */
 
@@ -38,7 +38,7 @@
 
 //== INCLUDES ========================================================================
 
-#include "graphfab/core/SagittariusCore.h"
+#include "SagittariusCore.h"
 
 //-- C methods --
 

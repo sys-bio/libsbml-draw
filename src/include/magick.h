@@ -38,8 +38,8 @@
 
 //== INCLUDES ========================================================================
 
-#include "graphfab/core/SagittariusCore.h"
-#include "graphfab/sbml/layout.h"
+#include "SagittariusCore.h"
+#include "layout.h"  // this says, graphfab/sbml/layout.h which doesn't exist, is this the right one?
 
 //-- C code --
 
@@ -61,7 +61,7 @@ void gf_MagickRenderToFile(gf_layoutInfo* l, const char* filename, void* tf);
 //-- C++ code --
 #ifdef __cplusplus
 
-namespace Graphfab {
+namespace LibsbmlDraw {
 
     
     

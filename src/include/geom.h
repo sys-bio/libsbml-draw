@@ -38,17 +38,17 @@
 
 //== INCLUDES ========================================================================
 
-#include "graphfab/core/SagittariusCore.h"
-#include "graphfab/layout/point.h"
-#include "graphfab/layout/box.h"
-#include "graphfab/math/sign_mag.h"
+#include "SagittariusCore.h"
+#include "point.h"
+#include "box.h"
+#include "sign_mag.h"
 
 #include <math.h>
 
 //-- C++ code --
 #ifdef __cplusplus
 
-namespace Graphfab {
+namespace LibsbmlDraw {
     
     /// Degrees 2 radians
     inline Real deg2r(const Real deg) {

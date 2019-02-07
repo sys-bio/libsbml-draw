@@ -29,10 +29,10 @@
 
 //== INCLUDES ========================================================================
 
-#include "graphfab/core/SagittariusCore.h"
-#include "graphfab/layout/point.h"
+#include "SagittariusCore.h"
+#include "point.h"
 
-namespace Graphfab {
+namespace LibsbmlDraw {
     
     /*Point makePoint(const Real x, const Real y) {
         return Point(x,y);

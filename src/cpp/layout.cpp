@@ -29,17 +29,17 @@
 
 //== INCLUDES ========================================================================
 
-#include "graphfab/core/SagittariusCore.h"
-#include "graphfab/interface/layout.h"
-#include "graphfab/diag/error.h"
-#include "graphfab/network/network.h"
-#include "graphfab/layout/canvas.h"
-#include "graphfab/layout/box.h"
-#include "graphfab/layout/point.h"
-#include "graphfab/math/round.h"
-#include "graphfab/math/geom.h"
-#include "graphfab/math/transform.h"
-#include "graphfab/util/string.h"
+#include "SagittariusCore.h"
+#include "layout.h"
+#include "error.h"
+#include "network.h"
+#include "canvas.h"
+#include "box.h"
+#include "point.h"
+#include "round.h"
+#include "geom.h"
+#include "transform.h"
+#include "string_helpers.h"
 
 #include "sbml/SBMLTypes.h"
 #include "sbml/packages/layout/common/LayoutExtensionTypes.h"
@@ -49,7 +49,7 @@
 
 #include <stdlib.h> // free SBML strings
 
-using namespace Graphfab;
+using namespace LibsbmlDraw;
 
 void gf_freeLayoutInfo(gf_layoutInfo* l) {
     AN(l, "gf_freeLayoutInfo: unexpected null ptr");

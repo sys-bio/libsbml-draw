@@ -38,12 +38,12 @@
 
 //== INCLUDES ========================================================================
 
-#include "graphfab/core/SagittariusCore.h"
+#include "SagittariusCore.h"
 
 //-- C++ code --
 #ifdef __cplusplus
 
-namespace Graphfab {
+namespace LibsbmlDraw {
 
     inline Real min(const Real x, const Real y) {
         return x < y ? x : y;

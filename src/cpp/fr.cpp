@@ -29,16 +29,16 @@
 
 //== INCLUDES ========================================================================
 
-#include "graphfab/core/SagittariusCore.h"
-#include "graphfab/layout/fr.h"
-#include "graphfab/layout/canvas.h"
-#include "graphfab/math/rand_unif.h"
-#include "graphfab/math/min_max.h"
-#include "graphfab/math/dist.h"
-#include "graphfab/math/transform.h"
+#include "SagittariusCore.h"
+#include "fr.h"
+#include "canvas.h"
+#include "rand_unif.h"
+#include "min_max.h"
+#include "dist.h"
+#include "transform.h"
 
 #if SBNW_USE_MAGICK
-#include "graphfab/draw/magick.h"
+#include "magick.h"
 #endif
 
 #include <sstream>
@@ -102,7 +102,7 @@ void gf_doLayoutAlgorithm2(fr_options opt, gf_network* n, gf_canvas* c) {
     FruchtermanReingold(opt, *net, can, NULL);
 }
 
-namespace Graphfab {
+namespace LibsbmlDraw {
     
     bool eltTypesInteract(const NetworkEltType a, const NetworkEltType b, fr_options* opt) {
 //         if (a == b && b == NET_ELT_TYPE_SPEC)

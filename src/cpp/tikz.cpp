@@ -29,9 +29,9 @@
 
 //== INCLUDES ========================================================================
 
-#include "graphfab/core/SagittariusCore.h"
-#include "graphfab/draw/tikz.h"
-#include "graphfab/util/string.h"
+#include "SagittariusCore.h"
+#include "tikz.h"
+#include "string_helpers.h"
 
 #include <sstream>
 
@@ -78,7 +78,7 @@ int gf_renderTikZFile(gf_layoutInfo* l, const char* filename) {
   }
 }
 
-namespace Graphfab {
+namespace LibsbmlDraw {
 
   std::string replaceSubstr(const std::string& input, const std::string& src, const std::string& dst) {
     // http://stackoverflow.com/questions/4643512/replace-substring-with-another-substring-c

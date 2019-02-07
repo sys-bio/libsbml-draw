@@ -38,9 +38,9 @@
 
 //== INCLUDES ========================================================================
 
-#include "graphfab/core/SagittariusCore.h"
-#include "graphfab/layout/point.h"
-#include "graphfab/layout/curve.h"
-#include "graphfab/layout/canvas.h"
+#include "SagittariusCore.h"
+#include "point.h"
+#include "curve.h"
+#include "canvas.h"
 
 #endif

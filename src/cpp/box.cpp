@@ -29,12 +29,12 @@
 
 //== INCLUDES ========================================================================
 
-#include "graphfab/core/SagittariusCore.h"
-#include "graphfab/layout/box.h"
-#include "graphfab/math/sign_mag.h"
-#include "graphfab/math/allen.h"
+#include "SagittariusCore.h"
+#include "box.h"
+#include "sign_mag.h"
+#include "allen.h"
 
-namespace Graphfab {
+namespace LibsbmlDraw {
     
     std::ostream& operator<< (std::ostream& o, const Box& b) {
         b.dump(o);

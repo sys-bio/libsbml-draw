@@ -39,8 +39,8 @@
 
 //== INCLUDES ========================================================================
 
-#include "graphfab/core/SagittariusCore.h"
-#include "graphfab/layout/arrowhead.h"
+#include "SagittariusCore.h"
+#include "arrowhead.h"
 
 //-- C++ code --
 #ifdef __cplusplus
@@ -51,7 +51,7 @@
 
 static unsigned long n_semicirc_segments = 16;
 
-namespace Graphfab {
+namespace LibsbmlDraw {
 
   unsigned long ArrowheadStyles::count() {
     return 8;

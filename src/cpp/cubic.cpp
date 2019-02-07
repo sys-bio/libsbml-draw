@@ -29,10 +29,10 @@
 
 //== INCLUDES ========================================================================
 
-#include "graphfab/core/SagittariusCore.h"
-#include "graphfab/math/cubic.h"
+#include "SagittariusCore.h"
+#include "cubic.h"
 
-namespace Graphfab {
+namespace LibsbmlDraw {
     
     // CLASS CubicRoots:
     

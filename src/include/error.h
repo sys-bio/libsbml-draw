@@ -38,8 +38,8 @@
 
 //== INCLUDES ========================================================================
 
-#include "graphfab/core/SagittariusCore.h"
-#include "graphfab/sbml/autolayoutSBML.h"
+#include "SagittariusCore.h"
+#include "autolayoutSBML.h"
 
 
 #ifdef __cplusplus

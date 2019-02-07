@@ -38,10 +38,10 @@
 
 //== INCLUDES ========================================================================
 
-#include "graphfab/core/SagittariusCore.h"
-#include "graphfab/layout/point.h"
-#include "graphfab/math/transform.h"
-#include "graphfab/layout/arrowhead.h"
+#include "SagittariusCore.h"
+#include "point.h"
+#include "transform.h"
+#include "arrowhead.h"
 
 //-- C++ code --
 #ifdef __cplusplus
@@ -50,7 +50,7 @@
 
 #include <iostream>
 
-namespace Graphfab {
+namespace LibsbmlDraw {
     
     /// Role for the curve (substrate, product, etc.)
     typedef enum {

@@ -38,19 +38,19 @@
 
 //== INCLUDES ========================================================================
 
-#include "graphfab/core/SagittariusCore.h"
-#include "graphfab/math/min_max.h"
+#include "SagittariusCore.h"
+#include "min_max.h"
 
 //-- C++ code --
 #ifdef __cplusplus
 
-#include <graphfab/layout/point.h>
+#include "point.h" // says, <graphfab/layout/point.h>, why brackets?
 
 // #include <string>
 
 #include <iostream>
 
-namespace Graphfab {
+namespace LibsbmlDraw {
 
     class Box {
         public:

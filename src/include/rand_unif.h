@@ -38,14 +38,14 @@
 
 //== INCLUDES ========================================================================
 
-#include "graphfab/core/SagittariusCore.h"
+#include "SagittariusCore.h"
 
 #include <stdlib.h>
 
 //-- C++ code --
 #ifdef __cplusplus
 
-namespace Graphfab {
+namespace LibsbmlDraw {
 
     inline Real rand_range(const Real l, const Real u) {
         AT(u >= l, "Bounds reversed");

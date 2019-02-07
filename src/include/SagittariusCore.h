@@ -41,12 +41,12 @@
 
 //== INCLUDES ========================================================================
 
-#include "graphfab/core/SagittariusConfigure.h"
-#include "graphfab/core/SagittariusCommon.h"
-#include "graphfab/core/SagittariusAssert.h"
-#include "graphfab/core/BaseWORDs.h"
+#include "SagittariusConfigure.h"
+#include "SagittariusCommon.h"
+#include "SagittariusAssert.h"
+#include "BaseWORDs.h"
 #ifdef __cplusplus
-    #include "graphfab/core/SagittariusException.hpp"
+    #include "SagittariusException.hpp"
 #endif
 
 

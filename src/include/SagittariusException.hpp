@@ -32,12 +32,12 @@
 
 //== INCLUDES ========================================================================
 
-#include "graphfab/core/SagittariusCommon.h"
-#include "graphfab/core/SagittariusException.hpp"
-#include "graphfab/util/string.h"
+#include "SagittariusCommon.h"
+#include "SagittariusException.hpp"
+#include "string_helpers.h"
 #include <exception>
 
-namespace Graphfab
+namespace LibsbmlDraw
 {
     
     //== CLASSES =====================================================================
@@ -296,6 +296,6 @@ namespace Graphfab
     };
     
 #define SBNW_THROW( type, desc, origin ) throw type( desc, origin, __FILE__, __LINE__ );
-} //namespace Sagittarius
+} //namespace
 
 #endif

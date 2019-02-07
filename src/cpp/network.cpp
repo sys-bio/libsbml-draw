@@ -29,15 +29,15 @@
 
 //== INCLUDES ========================================================================
 
-#include "graphfab/core/SagittariusCore.h"
-#include "graphfab/diag/error.h"
-#include "graphfab/network/network.h"
-#include "graphfab/io/io.h"
-#include "graphfab/math/rand_unif.h"
-#include "graphfab/math/dist.h"
-#include "graphfab/math/allen.h"
-#include "graphfab/math/sign_mag.h"
-#include "graphfab/math/geom.h"
+#include "SagittariusCore.h"
+#include "error.h"
+#include "network.h"
+#include "io.h"
+#include "rand_unif.h"
+#include "dist.h"
+#include "allen.h"
+#include "sign_mag.h"
+#include "geom.h"
 
 #include <exception>
 #include <typeinfo>
@@ -46,7 +46,7 @@
 
 static std::string default_comp_id_ = "";
 
-namespace Graphfab {
+namespace LibsbmlDraw {
     
     std::string eltTypeToStr(const NetworkEltType t) {
         switch(t) {

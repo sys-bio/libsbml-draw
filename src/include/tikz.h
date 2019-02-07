@@ -42,11 +42,11 @@
 
 //== INCLUDES ========================================================================
 
-#include "graphfab/core/SagittariusCore.h"
-#include "graphfab/layout/box.h"
-#include "graphfab/layout/canvas.h"
-#include "graphfab/network/network.h"
-#include "graphfab/interface/layout.h"
+#include "SagittariusCore.h"
+#include "box.h"
+#include "canvas.h"
+#include "network.h"
+#include "layout.h"
 
 #ifdef __cplusplus
 extern "C" {
@@ -73,7 +73,7 @@ _GraphfabExport int gf_renderTikZFile(gf_layoutInfo* l, const char* filename);
 
 # include <iostream>
 
-namespace Graphfab {
+namespace LibsbmlDraw {
     
 	class _GraphfabExport TikZRenderer {
     public:

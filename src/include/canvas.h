@@ -38,14 +38,14 @@
 
 //== INCLUDES ========================================================================
 
-#include "graphfab/core/SagittariusCore.h"
-#include "graphfab/sbml/autolayoutSBML.h"
-#include "graphfab/layout/box.h"
+#include "SagittariusCore.h"
+#include "autolayoutSBML.h"
+#include "box.h"
 
 //-- C++ code --
 #ifdef __cplusplus
 
-namespace Graphfab {
+namespace LibsbmlDraw {
 
     /** @brief Drawing canvas
      */

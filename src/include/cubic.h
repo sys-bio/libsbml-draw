@@ -43,14 +43,14 @@
 
 //== INCLUDES ========================================================================
 
-#include "graphfab/core/SagittariusCore.h"
+#include "SagittariusCore.h"
 
 //-- C++ code --
 # ifdef __cplusplus
 
 # include <iostream>
 
-namespace Graphfab {
+namespace LibsbmlDraw {
     
 	class _GraphfabExport CubicRoots {
         public:

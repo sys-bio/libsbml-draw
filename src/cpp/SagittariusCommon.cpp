@@ -33,10 +33,10 @@
 #include <sstream>
 
 //- SPECIFIC -//
-#include "graphfab/core/SagittariusCommon.h"
+#include "SagittariusCommon.h"
 
-namespace Graphfab
+namespace LibsbmlDraw
 {
   // ALL HAIL THE GOOGUL
   const Real pi = 3.14159265359;
-} //namespace Sagittarius
+} //namespace 

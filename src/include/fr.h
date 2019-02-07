@@ -38,10 +38,10 @@
 
 //== INCLUDES ========================================================================
 
-#include "graphfab/core/SagittariusCore.h"
-#include "graphfab/layout/canvas.h"
-#include "graphfab/network/network.h"
-#include "graphfab/interface/layout.h"
+#include "SagittariusCore.h"
+#include "canvas.h"
+#include "network.h"
+#include "layout.h"
 
 //-- C code --
 
@@ -127,7 +127,7 @@ _GraphfabExport void gf_layout_setStiffness(fr_options* opt, double k);
 
 #include <iostream>
 
-namespace Graphfab {
+namespace LibsbmlDraw {
 
     /// Software Practice & Experience '91
     void FruchtermanReingold(fr_options opt, Network& net, Canvas* can, gf_layoutInfo* l);

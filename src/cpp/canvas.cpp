@@ -29,10 +29,10 @@
 
 //== INCLUDES ========================================================================
 
-#include "graphfab/core/SagittariusCore.h"
-#include "graphfab/layout/canvas.h"
+#include "SagittariusCore.h"
+#include "canvas.h"
 
-namespace Graphfab {
+namespace LibsbmlDraw {
     
     //--CLASS Canvas--
     Real Canvas::getWidth() const {

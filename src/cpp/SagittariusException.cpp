@@ -33,9 +33,9 @@
 #include <sstream>
 
 //- SPECIFIC -//
-#include "graphfab/core/SagittariusException.hpp"
+#include "SagittariusException.hpp"
 
-namespace Graphfab
+namespace LibsbmlDraw
 {
     //== CLASS METHODS ===============================================================
     
@@ -86,4 +86,4 @@ namespace Graphfab
     {
         return m_type;
     }
-} //namespace Sagittarius
+} //namespace

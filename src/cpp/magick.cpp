@@ -29,17 +29,17 @@
 
 //== INCLUDES ========================================================================
 
-#include "graphfab/core/SagittariusCore.h"
-#include "graphfab/draw/magick.h"
-#include "graphfab/network/network.h"
-#include "graphfab/layout/layoutall.h"
-#include "graphfab/math/transform.h"
+#include "SagittariusCore.h"
+#include "magick.h"
+#include "network.h"
+#include "layoutall.h"
+#include "transform.h"
 
 #include <wand/MagickWand.h>
 
 #include <iostream>
 
-using namespace Graphfab;
+using namespace LibsbmlDraw;
 
 //create image of a specified size
 void gf_MagickSizeImage(MagickWand *wand, gf_layoutInfo* l) {

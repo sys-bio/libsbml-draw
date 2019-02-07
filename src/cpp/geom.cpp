@@ -29,11 +29,11 @@
 
 //== INCLUDES ========================================================================
 
-#include "graphfab/core/SagittariusCore.h"
-#include "graphfab/math/geom.h"
-#include "graphfab/math/cubic.h"
+#include "SagittariusCore.h"
+#include "geom.h"
+#include "cubic.h"
 
-namespace Graphfab {
+namespace LibsbmlDraw {
 
     Point calcCurveBackup(const Point& src, const Point& cent, const Box& ext, Real dist) {
 

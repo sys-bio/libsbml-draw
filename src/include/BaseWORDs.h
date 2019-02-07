@@ -38,7 +38,7 @@
 
 //== INCLUDES ========================================================================
 
-#include "graphfab/core/SagittariusCommon.h"
+#include "SagittariusCommon.h"
 
 #include <stdint.h>
 

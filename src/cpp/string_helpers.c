@@ -29,8 +29,8 @@
 
 //== INCLUDES ========================================================================
 
-#include "graphfab/core/SagittariusCore.h"
-#include "graphfab/util/string.h"
+#include "SagittariusCore.h"
+#include "string_helpers.h"
 
 #include <stdlib.h>
 #include <string.h>

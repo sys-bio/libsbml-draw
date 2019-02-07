@@ -38,13 +38,13 @@
 
 //== INCLUDES ========================================================================
 
-#include "graphfab/core/SagittariusCore.h"
-#include "graphfab/layout/point.h"
+#include "SagittariusCore.h"
+#include "point.h"
 
 //-- C++ code --
 #ifdef __cplusplus
 
-namespace Graphfab {
+namespace LibsbmlDraw {
     
     /// 2d Euclidean distance
     inline Real euclidean2d(const Point& x, const Point& y) {

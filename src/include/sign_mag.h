@@ -38,12 +38,12 @@
 
 //== INCLUDES ========================================================================
 
-#include "graphfab/core/SagittariusCore.h"
+#include "SagittariusCore.h"
 
 //-- C++ code --
 #ifdef __cplusplus
 
-namespace Graphfab {
+namespace LibsbmlDraw {
 
     inline Real sign(const Real x) {
         //the easy way: return x == 0 ? 0 : x / mag(x);

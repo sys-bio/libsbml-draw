@@ -7,7 +7,7 @@
 
 //== INCLUDES ========================================================================
 
-#include "graphfab/core/SagittariusCommon.h"
-#include "graphfab/core/config.h"
+#include "SagittariusCommon.h"
+#include "config.h"
 
 #endif
