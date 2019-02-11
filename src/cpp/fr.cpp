@@ -1,28 +1,4 @@
-/*== SAGITTARIUS =====================================================================
- * Copyright (c) 2012, Jesse K Medley
- * All rights reserved.
-
- * Redistribution and use in source and binary forms, with or without
- * modification, are permitted provided that the following conditions are met:
-    * Redistributions of source code must retain the above copyright
-      notice, this list of conditions and the following disclaimer.
-    * Redistributions in binary form must reproduce the above copyright
-      notice, this list of conditions and the following disclaimer in the
-      documentation and/or other materials provided with the distribution.
-    * Neither the name of The University of Washington nor the
-      names of its contributors may be used to endorse or promote products
-      derived from this software without specific prior written permission.
-
- * THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS" AND
- * ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED
- * WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE
- * DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT HOLDERS OR ANYONE DISTRIBUTING THE SOFTWARE
- * BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL 
- * DAMAGES (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES;
- * LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND
- * ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT
- * (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS
- * SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
+/* MIT License
  */
 
 //== BEGINNING OF CODE ===============================================================
@@ -68,7 +44,7 @@ void gf_layout_setStiffness(fr_options* opt, double k) {
 }
 
 void gf_doLayoutAlgorithm(fr_options opt, gf_layoutInfo* l) {
-    using namespace Graphfab;
+    using namespace LibsbmlDraw;
     
     Network* net = (Network*)l->net;
     AN(net, "No network");
@@ -77,13 +53,13 @@ void gf_doLayoutAlgorithm(fr_options opt, gf_layoutInfo* l) {
     
     if(opt.prerandomize)
         //TODO: use canvas width, height
-        net->randomizePositions(Graphfab::Box(Graphfab::Point(0.,0.), Graphfab::Point(1024., 1024.)));
+        net->randomizePositions(LibsbmlDraw::Box(LibsbmlDraw::Point(0.,0.), LibsbmlDraw::Point(1024., 1024.)));
     
 	FruchtermanReingold(opt, *net, can, l);
 }
 
 void gf_doLayoutAlgorithm2(fr_options opt, gf_network* n, gf_canvas* c) {
-    using namespace Graphfab;
+    using namespace LibsbmlDraw;
     
     AN(n, "No network");
     Network* net = (Network*)n->n;
@@ -97,7 +73,7 @@ void gf_doLayoutAlgorithm2(fr_options opt, gf_network* n, gf_canvas* c) {
     
     if(opt.prerandomize)
         //TODO: use canvas width, height
-        net->randomizePositions(Graphfab::Box(Graphfab::Point(0.,0.), Graphfab::Point(1024., 1024.)));
+        net->randomizePositions(LibsbmlDraw::Box(LibsbmlDraw::Point(0.,0.), LibsbmlDraw::Point(1024., 1024.)));
     
     FruchtermanReingold(opt, *net, can, NULL);
 }
@@ -219,7 +195,7 @@ namespace LibsbmlDraw {
             NetworkElement* u = net.getElt(i);;
             
             // is the network element a container?
-            Graphfab::Compartment* comp=NULL;
+            LibsbmlDraw::Compartment* comp=NULL;
             if(u->getType() == NET_ELT_TYPE_COMP)
                 comp = dynamic_cast<Compartment*>(u); //get the associated compartment
             

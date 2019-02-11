@@ -1,30 +1,3 @@
-/*== SAGITTARIUS =====================================================================
- * Copyright (c) 2014, Jesse K Medley
- * All rights reserved.
-
- * Redistribution and use in source and binary forms, with or without
- * modification, are permitted provided that the following conditions are met:
-    * Redistributions of source code must retain the above copyright
-      notice, this list of conditions and the following disclaimer.
-    * Redistributions in binary form must reproduce the above copyright
-      notice, this list of conditions and the following disclaimer in the
-      documentation and/or other materials provided with the distribution.
-    * Neither the name of The University of Washington nor the
-      names of its contributors may be used to endorse or promote products
-      derived from this software without specific prior written permission.
-
- * THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS" AND
- * ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED
- * WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE
- * DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT HOLDERS OR ANYONE DISTRIBUTING THE SOFTWARE
- * BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL
- * DAMAGES (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES;
- * LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND
- * ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT
- * (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS
- * SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
- */
-
 //== FILEDOC =========================================================================
 
 /**
@@ -188,7 +161,7 @@ namespace LibsbmlDraw {
   class ArrowheadStyleControl<SubstrateArrowhead> {
   public:
     static void set(ArrowheadStyle val) {
-//       std::cerr << "graphfab: set style for substrate arrowhead\n";
+//       std::cerr << "libsbml_draw: set style for substrate arrowhead\n";
       sub_arrow_style_ = val;
     }
 
@@ -201,7 +174,7 @@ namespace LibsbmlDraw {
   class ArrowheadStyleControl<ProductArrowhead> {
   public:
     static void set(ArrowheadStyle val) {
-//       std::cerr << "graphfab: set style for product arrowhead\n";
+//       std::cerr << "libsbml_draw: set style for product arrowhead\n";
       prod_arrow_style_ = val;
     }
 
@@ -214,7 +187,7 @@ namespace LibsbmlDraw {
   class ArrowheadStyleControl<ActivatorArrowhead> {
   public:
     static void set(ArrowheadStyle val) {
-//       std::cerr << "graphfab: set style for activator arrowhead\n";
+//       std::cerr << "libsbml_draw: set style for activator arrowhead\n";
       act_arrow_style_ = val;
     }
 
@@ -227,7 +200,7 @@ namespace LibsbmlDraw {
   class ArrowheadStyleControl<InhibitorArrowhead> {
   public:
     static void set(ArrowheadStyle val) {
-//       std::cerr << "graphfab: set style for inhibitor arrowhead\n";
+//       std::cerr << "libsbml_draw: set style for inhibitor arrowhead\n";
       inh_arrow_style_ = val;
     }
 
@@ -240,7 +213,7 @@ namespace LibsbmlDraw {
   class ArrowheadStyleControl<ModifierArrowhead> {
   public:
     static void set(ArrowheadStyle val) {
-//       std::cerr << "graphfab: set style for modifier arrowhead\n";
+//       std::cerr << "libsbml_draw: set style for modifier arrowhead\n";
       mod_arrow_style_ = val;
     }
 

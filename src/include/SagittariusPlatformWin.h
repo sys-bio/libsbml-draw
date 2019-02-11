@@ -1,3 +1,6 @@
+/* MIT License
+*/
+
 #ifndef __SAGITTARIUS_PLATFORM_WIN_H_
 #define __SAGITTARIUS_PLATFORM_WIN_H_
 

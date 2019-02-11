@@ -1,28 +1,4 @@
-/*== SAGITTARIUS =====================================================================
- * Copyright (c) 2012, Jesse K Medley
- * All rights reserved.
-
- * Redistribution and use in source and binary forms, with or without
- * modification, are permitted provided that the following conditions are met:
-    * Redistributions of source code must retain the above copyright
-      notice, this list of conditions and the following disclaimer.
-    * Redistributions in binary form must reproduce the above copyright
-      notice, this list of conditions and the following disclaimer in the
-      documentation and/or other materials provided with the distribution.
-    * Neither the name of The University of Washington nor the
-      names of its contributors may be used to endorse or promote products
-      derived from this software without specific prior written permission.
-
- * THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS" AND
- * ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED
- * WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE
- * DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT HOLDERS OR ANYONE DISTRIBUTING THE SOFTWARE
- * BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL
- * DAMAGES (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES;
- * LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND
- * ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT
- * (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS
- * SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
+/* MIT License
  */
 
 //== BEGINNING OF CODE ===============================================================
@@ -229,7 +205,7 @@ void gf_getNodeCentroid(gf_layoutInfo* l, const char* id, CPoint* p) {
     Network* net = (Network*)l->net;
     AN(net, "No network");
 
-    Graphfab::Point pp(0,0);
+    LibsbmlDraw::Point pp(0,0);
     Node* n = net->findNodeById(id);
     if(!n) {
         gf_emitError("gf_getNodeCentroid: unable to find a node with the given id");
@@ -272,7 +248,7 @@ int gf_aliasNode(gf_layoutInfo* l, const char* id) {
         return 1;
     n->setAlias(true);
     for(Network::RxnIt i=net->RxnsBegin(); i!=net->RxnsEnd(); ++i) {
-        Graphfab::Reaction* r = *i;
+        LibsbmlDraw::Reaction* r = *i;
         if(r->hasSpecies(n)) {
             Node* w = new Node(*n);
             w->setGlyph(w->getGlyph() + "_" + r->getId());
@@ -292,25 +268,25 @@ void gf_aliasNodebyDegree(gf_layoutInfo* l, int minDegree) {
     char aliasCountString[33];
     sprintf(aliasCountString, "%d", aliasCount);
     std::vector<Node *> foundNodes;
-    std::vector<Graphfab::Reaction *> Rxns;
+    std::vector<LibsbmlDraw::Reaction *> Rxns;
 
     //Iterator does not work because nodes are added to the list, had to use while loop instead
     //for(Network::NodeIt i = net->NodesBegin(); i < net->NodesEnd(); ++i) {
     while(i < size) {
-        Graphfab::Node* n = net->getNodeAtIndex(i);
+        LibsbmlDraw::Node* n = net->getNodeAtIndex(i);
 
         //If the node is the required minimum degree or greater and is not an alias
         if(n->degree() >= minDegree && !n->isCentroidSet() && !n->isAlias()) {
 
             for(Network::RxnIt c=net->RxnsBegin(); c!=net->RxnsEnd(); ++c) {
-                Graphfab::Reaction* r = *c;
+                LibsbmlDraw::Reaction* r = *c;
 
                 if(r->hasSpecies(n)) {
                     if(n->degree() > 1) {
 
                         //Create a temp copy of all reactions
                         for(Network::RxnIt d=net->RxnsBegin(); d!=net->RxnsEnd(); ++d) {
-                            Graphfab::Reaction* react = *d;
+                            LibsbmlDraw::Reaction* react = *d;
                             Rxns.push_back(react);
                         }
 
@@ -322,8 +298,8 @@ void gf_aliasNodebyDegree(gf_layoutInfo* l, int minDegree) {
                             b = 0;
                             while(b < Rxns.size()) {
                                 if(Rxns[b]->hasSpecies(foundNodes[a])) {
-                                    for(Graphfab::Reaction::NodeIt j=Rxns[b]->NodesBegin(); j!=Rxns[b]->NodesEnd(); ++j) {
-                                        Graphfab::Node* node = j->first;
+                                    for(LibsbmlDraw::Reaction::NodeIt j=Rxns[b]->NodesBegin(); j!=Rxns[b]->NodesEnd(); ++j) {
+                                        LibsbmlDraw::Node* node = j->first;
                                         for(int m = 0; m < foundNodes.size(); ++m) {
                                             if(node == foundNodes[m]) break;
                                             else if(m == foundNodes.size() - 1) foundNodes.push_back(node);
@@ -355,7 +331,7 @@ void gf_aliasNodebyDegree(gf_layoutInfo* l, int minDegree) {
 
                         //Create a temp copy of all reactions
                         for(Network::RxnIt d=net->RxnsBegin(); d!=net->RxnsEnd(); ++d) {
-                            Graphfab::Reaction* react = *d;
+                            LibsbmlDraw::Reaction* react = *d;
                             Rxns.push_back(react);
                         }
 
@@ -367,8 +343,8 @@ void gf_aliasNodebyDegree(gf_layoutInfo* l, int minDegree) {
                             b = 0;
                             while(b < Rxns.size()) {
                                 if(Rxns[b]->hasSpecies(foundNodes[a])) {
-                                    for(Graphfab::Reaction::NodeIt j=Rxns[b]->NodesBegin(); j!=Rxns[b]->NodesEnd(); ++j) {
-                                        Graphfab::Node* node = j->first;
+                                    for(LibsbmlDraw::Reaction::NodeIt j=Rxns[b]->NodesBegin(); j!=Rxns[b]->NodesEnd(); ++j) {
+                                        LibsbmlDraw::Node* node = j->first;
                                         for(int m = 0; m < foundNodes.size(); ++m) {
                                             if(node == foundNodes[m]) break;
                                             else if(m == foundNodes.size() - 1) foundNodes.push_back(node);
@@ -495,7 +471,7 @@ SBMLDocument* populateSBMLdoc(gf_SBMLModel* m, gf_layoutInfo* l) {
 
         // add compartments
         for(Network::ConstCompIt i=net->CompsBegin(); i!=net->CompsEnd(); ++i) {
-            const Graphfab::Compartment* c = *i;
+            const LibsbmlDraw::Compartment* c = *i;
 
             // create glyph
             CompartmentGlyph* cg = new CompartmentGlyph();
@@ -570,7 +546,7 @@ SBMLDocument* populateSBMLdoc(gf_SBMLModel* m, gf_layoutInfo* l) {
             if (!species_map.count(n->getId())) {
                 ::Species* species = model->createSpecies();
                 species->setId(n->getId());
-                Graphfab::Compartment* com = net->findContainingCompartment(n);
+                LibsbmlDraw::Compartment* com = net->findContainingCompartment(n);
                 if(com)
                     species->setCompartment(com->getId());
                 else {
@@ -588,7 +564,7 @@ SBMLDocument* populateSBMLdoc(gf_SBMLModel* m, gf_layoutInfo* l) {
 
         if (create_default_compartment) {
             for(Network::ConstCompIt i=net->CompsBegin(); i!=net->CompsEnd(); ++i) {
-                const Graphfab::Compartment* c = *i;
+                const LibsbmlDraw::Compartment* c = *i;
                 if (c->getId() == "graphfab_default_compartment")
                     // already exists
                     goto skip_default_comp;
@@ -654,7 +630,7 @@ SBMLDocument* populateSBMLdoc(gf_SBMLModel* m, gf_layoutInfo* l) {
 
         // add reactions
         for(Network::ConstRxnIt i=net->RxnsBegin(); i!=net->RxnsEnd(); ++i) {
-            const Graphfab::Reaction* r = *i;
+            const LibsbmlDraw::Reaction* r = *i;
             AN(r, "Empty reaction");
 
             ReactionGlyph* rg = new ReactionGlyph();
@@ -667,8 +643,8 @@ SBMLDocument* populateSBMLdoc(gf_SBMLModel* m, gf_layoutInfo* l) {
 
             // do species
             uint64 sref=0;
-            Graphfab::Reaction::ConstNodeIt in=r->NodesBegin();
-            Graphfab::Reaction::ConstCurveIt ic=r->CurvesBegin();
+            LibsbmlDraw::Reaction::ConstNodeIt in=r->NodesBegin();
+            LibsbmlDraw::Reaction::ConstCurveIt ic=r->CurvesBegin();
             for(;in != r->NodesEnd() && ic != r->CurvesEnd(); ++in, ++ic) {
                 const Node* n = in->first;
                 AN(n, "Empty species reference");
@@ -752,7 +728,7 @@ SBMLDocument* populateSBMLdoc(gf_SBMLModel* m, gf_layoutInfo* l) {
             reaction->setFast(false);
             ::KineticLaw* kine = reaction->createKineticLaw();
             kine->setFormula("1");
-            for(Graphfab::Reaction::ConstNodeIt inode = r->NodesBegin();inode != r->NodesEnd(); ++inode) {
+            for(LibsbmlDraw::Reaction::ConstNodeIt inode = r->NodesBegin();inode != r->NodesEnd(); ++inode) {
                 switch(inode->second) {
                     case RXN_ROLE_SUBSTRATE: {
                         ::SpeciesReference* sref = reaction->createReactant();
@@ -1030,7 +1006,7 @@ gf_reaction gf_nw_getRxn(gf_network* n, uint64_t i) {
     gf_reaction r;
     r.r = net->getRxnAt(i);
     // optional
-    Graphfab::Reaction* rxn = (Graphfab::Reaction*)r.r;
+    LibsbmlDraw::Reaction* rxn = (LibsbmlDraw::Reaction*)r.r;
     AT(rxn->doByteCheck(), "Type verification failed");
 
     return r;
@@ -1042,7 +1018,7 @@ gf_reaction* gf_nw_getRxnp(gf_network* n, uint64_t i) {
     gf_reaction* r = (gf_reaction*)malloc(sizeof(gf_reaction));
     r->r = net->getRxnAt(i);
     // optional
-    Graphfab::Reaction* rxn = (Graphfab::Reaction*)r->r;
+    LibsbmlDraw::Reaction* rxn = (LibsbmlDraw::Reaction*)r->r;
     AT(rxn->doByteCheck(), "Type verification failed");
 
     return r;
@@ -1050,7 +1026,7 @@ gf_reaction* gf_nw_getRxnp(gf_network* n, uint64_t i) {
 
 void gf_nw_removeRxn(gf_network* nw, gf_reaction* r) {
     Network* net = CastToNetwork(nw->n);
-    Graphfab::Reaction* rx = CastToReaction(r->r);
+    LibsbmlDraw::Reaction* rx = CastToReaction(r->r);
     AN(net, "No network");
     AN(rx, "No reaction");
 
@@ -1076,7 +1052,7 @@ gf_compartment* gf_nw_getCompartmentp(gf_network* n, uint64_t i) {
 gf_compartment* gf_nw_findCompartmentById(gf_network* n, const char* id) {
     Network* net = CastToNetwork(n->n);
     AN(net, "No network");
-    Graphfab::Compartment* comp = net->findCompById(id);
+    LibsbmlDraw::Compartment* comp = net->findCompById(id);
     if (!comp) {
         gf_emitError("gf_nw_findCompartmentById: no such compartment in network\n");
         return NULL;
@@ -1105,7 +1081,7 @@ gf_compartment gf_nw_newCompartment(gf_network* nw, const char* id, const char* 
     AN(net, "No network");
 
     std::cout << "gf_nw_newCompartment started\n";
-    Graphfab::Compartment* c = new Graphfab::Compartment();
+    LibsbmlDraw::Compartment* c = new LibsbmlDraw::Compartment();
 
     std::cout << "gf_nw_newCompartment setting id\n";
     c->setName(name);
@@ -1160,7 +1136,7 @@ gf_node gf_nw_newNode(gf_network* nw, const char* id, const char* name, gf_compa
     n->setAlias(false);
 
     if(compartment) {
-        Graphfab::Compartment* c = (Graphfab::Compartment*)compartment->c;
+        LibsbmlDraw::Compartment* c = (LibsbmlDraw::Compartment*)compartment->c;
         c->addElt(n);
         n->_comp = c;
     }
@@ -1251,7 +1227,7 @@ int gf_nw_removeNode(gf_network* nw, gf_node* n) {
 int gf_nw_connectNode(gf_network* nw, gf_node* n, gf_reaction* r, gf_specRole role) {
     Network* net = CastToNetwork(nw->n);
     Node* node = CastToNode(n->n);
-    Graphfab::Reaction* reaction = CastToReaction(r->r);
+    LibsbmlDraw::Reaction* reaction = CastToReaction(r->r);
 
     if(!net->containsNode(node)) {
         gf_emitError("gf_nw_removeNode: no such node in network\n");
@@ -1283,7 +1259,7 @@ int gf_nw_connectNodeRoleStr(gf_network* nw, gf_node* n, gf_reaction* r, const c
 int gf_nw_isNodeConnected(gf_network* nw, gf_node* n, gf_reaction* r) {
     Network* net = CastToNetwork(nw->n);
     Node* node = CastToNode(n->n);
-    Graphfab::Reaction* reaction = CastToReaction(r->r);
+    LibsbmlDraw::Reaction* reaction = CastToReaction(r->r);
 
     if(!net->containsNode(node)) {
         gf_emitError("gf_nw_removeNode: no such node in network\n");
@@ -1342,7 +1318,7 @@ gf_node* gf_nw_getAliasInstancep(gf_network* nw, gf_node* n, uint64_t i) {
 // Node
 
 void gf_node_setCompartment(gf_node* n, gf_compartment* c) {
-  Graphfab::Compartment* comp = (Graphfab::Compartment*)c->c;
+  LibsbmlDraw::Compartment* comp = (LibsbmlDraw::Compartment*)c->c;
   AN(comp, "No comp");
   Node* node = CastToNode(n->n);
 
@@ -1360,27 +1336,27 @@ void gf_releaseNode(const gf_node* n) {
     delete node;
 }
 
-CPoint Point2CPoint(const Graphfab::Point& p) {
+CPoint Point2CPoint(const LibsbmlDraw::Point& p) {
     CPoint q;
     q.x = p.x;
     q.y = p.y;
     return q;
 }
 
-gf_point Point2gf_point(const Graphfab::Point& p) {
+gf_point Point2gf_point(const LibsbmlDraw::Point& p) {
     gf_point q;
     q.x = p.x;
     q.y = p.y;
     return q;
 }
 
-Graphfab::Point CPoint2Point(const CPoint& p) {
-    Graphfab::Point q(p.x, p.y);
+LibsbmlDraw::Point CPoint2Point(const CPoint& p) {
+    LibsbmlDraw::Point q(p.x, p.y);
     return q;
 }
 
-Graphfab::Point gf_point2Point(const gf_point& p) {
-    Graphfab::Point q(p.x, p.y);
+LibsbmlDraw::Point gf_point2Point(const gf_point& p) {
+    LibsbmlDraw::Point q(p.x, p.y);
     return q;
 }
 
@@ -1524,7 +1500,7 @@ int gf_node_getConnectedReactions(gf_node* n, gf_network* m, unsigned int* num, 
     Network* net = CastToNetwork(m->n);
     AN(net && net->doByteCheck(), "No network");
 
-    Graphfab::Network::AttachedRxnList rx = net->getConnectedReactions(node);
+    LibsbmlDraw::Network::AttachedRxnList rx = net->getConnectedReactions(node);
 
     *num = rx.size();
 
@@ -1545,7 +1521,7 @@ int gf_node_getAttachedCurves(gf_node* n, gf_network* m, unsigned int* num, gf_c
     Network* net = CastToNetwork(m->n);
     AN(net && net->doByteCheck(), "No network");
 
-    Graphfab::Network::AttachedCurveList rc = net->getAttachedCurves(node);
+    LibsbmlDraw::Network::AttachedCurveList rc = net->getAttachedCurves(node);
 
     *num = rc.size();
 
@@ -1588,7 +1564,7 @@ gf_compartment* gf_nw_nodeGetCompartment(gf_network* nw, gf_node* x) {
     Node* v = CastToNode(x->n);
     AN(v && v->doByteCheck(), "Not a node");
 
-    Graphfab::Compartment* com = net->findContainingCompartment(v);
+    LibsbmlDraw::Compartment* com = net->findContainingCompartment(v);
     gf_compartment* c = (gf_compartment*)malloc(sizeof(gf_compartment));
     c->c = com;
     return c;
@@ -1597,7 +1573,7 @@ gf_compartment* gf_nw_nodeGetCompartment(gf_network* nw, gf_node* x) {
 // Reaction
 
 void gf_releaseRxn(const gf_reaction* r) {
-    Graphfab::Reaction* rxn = (Graphfab::Reaction*) r->r;
+    LibsbmlDraw::Reaction* rxn = (LibsbmlDraw::Reaction*) r->r;
     AN(rxn, "No rxn");
     AT(rxn->doByteCheck(), "Type verification failed");
 
@@ -1611,7 +1587,7 @@ gf_reaction gf_nw_newReaction(gf_network* nw, const char* id, const char* name) 
     AN(net, "No network");
 
     std::cout << "gf_nw_newReaction started\n";
-    Graphfab::Reaction* r = new Graphfab::Reaction();
+    LibsbmlDraw::Reaction* r = new LibsbmlDraw::Reaction();
 
     std::cout << "gf_nw_newReaction setting id\n";
     r->setName(name);
@@ -1640,7 +1616,7 @@ gf_reaction* gf_nw_newReactionp(gf_network* nw, const char* id, const char* name
 }
 
 char* gf_reaction_getID(gf_reaction* r) {
-    Graphfab::Reaction* rxn = (Graphfab::Reaction*) r->r;
+    LibsbmlDraw::Reaction* rxn = (LibsbmlDraw::Reaction*) r->r;
     AN(rxn, "No rxn");
     AT(rxn->doByteCheck(), "Type verification failed");
 
@@ -1649,7 +1625,7 @@ char* gf_reaction_getID(gf_reaction* r) {
 
 // reaction.centroid
 gf_point gf_reaction_getCentroid(gf_reaction* r) {
-    Graphfab::Reaction* rxn = (Graphfab::Reaction*) r->r;
+    LibsbmlDraw::Reaction* rxn = (LibsbmlDraw::Reaction*) r->r;
     AN(rxn, "No rxn");
     AT(rxn->doByteCheck(), "Type verification failed");
 
@@ -1659,14 +1635,14 @@ gf_point gf_reaction_getCentroid(gf_reaction* r) {
 }
 
 void gf_reaction_setCentroid(gf_reaction* r, gf_point p) {
-    Graphfab::Reaction* rxn = (Graphfab::Reaction*) r->r;
+    LibsbmlDraw::Reaction* rxn = (LibsbmlDraw::Reaction*) r->r;
     AN(rxn && rxn->doByteCheck(), "Not a reaction");
 
     rxn->setGlobalCentroid(gf_point2Point(p));
 }
 
 uint64_t gf_reaction_getNumSpec(const gf_reaction* r) {
-    Graphfab::Reaction* rxn = (Graphfab::Reaction*) r->r;
+    LibsbmlDraw::Reaction* rxn = (LibsbmlDraw::Reaction*) r->r;
     AN(rxn, "No rxn");
     AT(rxn->doByteCheck(), "Type verification failed");
 
@@ -1674,7 +1650,7 @@ uint64_t gf_reaction_getNumSpec(const gf_reaction* r) {
 }
 
 int gf_reaction_hasSpec(const gf_reaction* r, const gf_node* n) {
-    Graphfab::Reaction* rxn = (Graphfab::Reaction*) r->r;
+    LibsbmlDraw::Reaction* rxn = (LibsbmlDraw::Reaction*) r->r;
     AN(rxn, "No rxn");
     AT(rxn->doByteCheck(), "Type verification failed");
     Node* node = CastToNode(n->n);
@@ -1699,7 +1675,7 @@ gf_specRole RxnRoleType2gf_specRole(RxnRoleType role) {
 }
 
 gf_specRole gf_reaction_getSpecRole(const gf_reaction* r, uint64_t i) {
-    Graphfab::Reaction* rxn = (Graphfab::Reaction*) r->r;
+    LibsbmlDraw::Reaction* rxn = (LibsbmlDraw::Reaction*) r->r;
     AN(rxn, "No rxn");
     AT(rxn->doByteCheck(), "Type verification failed");
 
@@ -1745,7 +1721,7 @@ gf_specRole gf_strToRole(const char* str) {
 }
 
 uint64_t gf_reaction_specGeti(const gf_reaction* r, uint64_t i) {
-    Graphfab::Reaction* rxn = (Graphfab::Reaction*) r->r;
+    LibsbmlDraw::Reaction* rxn = (LibsbmlDraw::Reaction*) r->r;
     AN(rxn, "No rxn");
     AT(rxn->doByteCheck(), "Type verification failed");
 
@@ -1753,7 +1729,7 @@ uint64_t gf_reaction_specGeti(const gf_reaction* r, uint64_t i) {
 }
 
 uint64_t gf_reaction_getNumCurves(const gf_reaction* r) {
-    Graphfab::Reaction* rxn = (Graphfab::Reaction*) r->r;
+    LibsbmlDraw::Reaction* rxn = (LibsbmlDraw::Reaction*) r->r;
 //     std::cerr << "gf_reaction_getNumCurves type verify\n";
 
     AN(rxn, "No rxn");
@@ -1765,7 +1741,7 @@ uint64_t gf_reaction_getNumCurves(const gf_reaction* r) {
 }
 
 gf_curve gf_reaction_getCurve(const gf_reaction* r, uint64_t i) {
-    Graphfab::Reaction* rxn = (Graphfab::Reaction*) r->r;
+    LibsbmlDraw::Reaction* rxn = (LibsbmlDraw::Reaction*) r->r;
     AN(rxn, "No rxn");
     AT(rxn->doByteCheck(), "Type verification failed");
     gf_curve c;
@@ -1782,14 +1758,14 @@ gf_curve* gf_reaction_getCurvep(const gf_reaction* r, uint64_t i) {
 }
 
 void gf_reaction_recenter(gf_reaction* r) {
-    Graphfab::Reaction* rxn = (Graphfab::Reaction*) r->r;
+    LibsbmlDraw::Reaction* rxn = (LibsbmlDraw::Reaction*) r->r;
     AN(rxn, "No rxn");
     AT(rxn->doByteCheck(), "Type verification failed");
     rxn->recenter();
 }
 
 void gf_reaction_recalcCurveCPs(gf_reaction* r) {
-    Graphfab::Reaction* rxn = (Graphfab::Reaction*) r->r;
+    LibsbmlDraw::Reaction* rxn = (LibsbmlDraw::Reaction*) r->r;
     AN(rxn, "No rxn");
     AT(rxn->doByteCheck(), "Type verification failed");
     rxn->recalcCurveCPs();
@@ -1886,7 +1862,7 @@ int gf_curve_getArrowheadVerts(const gf_curve* c, unsigned int* n, gf_point** v)
 }
 
 void gf_releaseCompartment(const gf_compartment* c) {
-    Graphfab::Compartment* comp = (Graphfab::Compartment*)c->c;
+    LibsbmlDraw::Compartment* comp = (LibsbmlDraw::Compartment*)c->c;
     AN(comp, "No comp");
     if(!comp->doByteCheck()) {
       gf_emitError("Type verification failed");
@@ -1897,7 +1873,7 @@ void gf_releaseCompartment(const gf_compartment* c) {
 }
 
 char* gf_compartment_getID(gf_compartment* c) {
-    Graphfab::Compartment* comp = (Graphfab::Compartment*)c->c;
+    LibsbmlDraw::Compartment* comp = (LibsbmlDraw::Compartment*)c->c;
     if(!comp) {
       gf_emitError("Compartment is NULL");
       return NULL;
@@ -1911,56 +1887,56 @@ char* gf_compartment_getID(gf_compartment* c) {
 }
 
 gf_point gf_compartment_getMinCorner(gf_compartment* c) {
-    Graphfab::Compartment* comp = (Graphfab::Compartment*)c->c;
+    LibsbmlDraw::Compartment* comp = (LibsbmlDraw::Compartment*)c->c;
     AN(comp, "No comp");
 
     return Point2gf_point(comp->getMin(NetworkElement::COORD_SYSTEM_GLOBAL));
 }
 
 void gf_compartment_setMinCorner(gf_compartment* c, gf_point p) {
-    Graphfab::Compartment* comp = (Graphfab::Compartment*)c->c;
+    LibsbmlDraw::Compartment* comp = (LibsbmlDraw::Compartment*)c->c;
     AN(comp, "No comp");
 
     comp->setMin(gf_point2Point(p));
 }
 
 gf_point gf_compartment_getMaxCorner(gf_compartment* c) {
-    Graphfab::Compartment* comp = (Graphfab::Compartment*)c->c;
+    LibsbmlDraw::Compartment* comp = (LibsbmlDraw::Compartment*)c->c;
     AN(comp, "No comp");
 
     return Point2gf_point(comp->getMax(NetworkElement::COORD_SYSTEM_GLOBAL));
 }
 
 void gf_compartment_setMaxCorner(gf_compartment* c, gf_point p) {
-    Graphfab::Compartment* comp = (Graphfab::Compartment*)c->c;
+    LibsbmlDraw::Compartment* comp = (LibsbmlDraw::Compartment*)c->c;
     AN(comp, "No comp");
 
     comp->setMax(gf_point2Point(p));
 }
 
 double gf_compartment_getWidth(gf_compartment* c) {
-    Graphfab::Compartment* comp = (Graphfab::Compartment*)c->c;
+    LibsbmlDraw::Compartment* comp = (LibsbmlDraw::Compartment*)c->c;
     AN(comp, "No comp");
 
     return comp->getGlobalWidth();
 }
 
 double gf_compartment_getHeight(gf_compartment* c) {
-    Graphfab::Compartment* comp = (Graphfab::Compartment*)c->c;
+    LibsbmlDraw::Compartment* comp = (LibsbmlDraw::Compartment*)c->c;
     AN(comp, "No comp");
 
     return comp->getGlobalHeight();
 }
 
 uint64_t gf_compartment_getNumElt(gf_compartment* c) {
-    Graphfab::Compartment* comp = (Graphfab::Compartment*)c->c;
+    LibsbmlDraw::Compartment* comp = (LibsbmlDraw::Compartment*)c->c;
     AN(comp, "No comp");
 
     return comp->getNElts();
 }
 
 int gf_compartment_addNode(gf_compartment* c, gf_node* n) {
-    Graphfab::Compartment* comp = (Graphfab::Compartment*)c->c;
+    LibsbmlDraw::Compartment* comp = (LibsbmlDraw::Compartment*)c->c;
     AN(comp, "No comp");
     Node* node = CastToNode(n->n);
     AN(node, "No node");
@@ -1975,7 +1951,7 @@ int gf_compartment_addNode(gf_compartment* c, gf_node* n) {
 }
 
 int gf_compartment_removeNode(gf_compartment* c, gf_node* n) {
-    Graphfab::Compartment* comp = (Graphfab::Compartment*)c->c;
+    LibsbmlDraw::Compartment* comp = (LibsbmlDraw::Compartment*)c->c;
     AN(comp, "No comp");
     Node* node = CastToNode(n->n);
     AN(node, "No node");
@@ -1990,7 +1966,7 @@ int gf_compartment_removeNode(gf_compartment* c, gf_node* n) {
 }
 
 int gf_compartment_containsNode(gf_compartment* c, gf_node* n) {
-    Graphfab::Compartment* comp = (Graphfab::Compartment*)c->c;
+    LibsbmlDraw::Compartment* comp = (LibsbmlDraw::Compartment*)c->c;
     AN(comp, "No comp");
     Node* node = CastToNode(n->n);
     AN(node, "No node");
@@ -2005,9 +1981,9 @@ int gf_compartment_containsNode(gf_compartment* c, gf_node* n) {
 }
 
 int gf_compartment_containsReaction(gf_compartment* c, gf_reaction* r) {
-    Graphfab::Compartment* comp = (Graphfab::Compartment*)c->c;
+    LibsbmlDraw::Compartment* comp = (LibsbmlDraw::Compartment*)c->c;
     AN(comp, "No comp");
-    Graphfab::Reaction* rxn = CastToReaction(r->r);
+    LibsbmlDraw::Reaction* rxn = CastToReaction(r->r);
     AN(rxn, "No reaction");
 
     if(!comp || !rxn) {
@@ -2023,15 +1999,15 @@ void gf_fit_to_window(gf_layoutInfo* l, double left, double top, double right, d
     Network* net = (Network*)l->net;
     AN(net, "No network");
 
-    Graphfab::Box bbox = net->getBoundingBox();
+    LibsbmlDraw::Box bbox = net->getBoundingBox();
 
 //     std::cerr << "Net bounding box: " << bbox << "\n";
 
-    Graphfab::Box window(left, top, right, bottom);
+    LibsbmlDraw::Box window(left, top, right, bottom);
 
 //     std::cout << "Window: " << window << "\n";
 
-    Graphfab::Affine2d tf = Graphfab::Affine2d::FitToWindow(bbox,
+    LibsbmlDraw::Affine2d tf = LibsbmlDraw::Affine2d::FitToWindow(bbox,
                                                    window);
 
 //     std::cout << "Transform is\n" << tf;
@@ -2046,15 +2022,15 @@ gf_transform* gf_tf_fitToWindow(gf_layoutInfo* l, double left, double top, doubl
     Network* net = (Network*)l->net;
     AN(net, "No network");
 
-    Graphfab::Box bbox = net->getBoundingBox();
+    LibsbmlDraw::Box bbox = net->getBoundingBox();
 
 //     std::cerr << "Net bounding box: " << bbox << "\n";
 
-    Graphfab::Box window(left, top, right, bottom);
+    LibsbmlDraw::Box window(left, top, right, bottom);
 
 //     std::cout << "Window: " << window << "\n";
 
-    Graphfab::Affine2d* tf = new Graphfab::Affine2d(Graphfab::Affine2d::FitToWindow(bbox,
+    LibsbmlDraw::Affine2d* tf = new LibsbmlDraw::Affine2d(LibsbmlDraw::Affine2d::FitToWindow(bbox,
                                                    window));
 
 //     std::cout << "Transform is\n" << tf;
@@ -2071,48 +2047,48 @@ void gf_moveNetworkToFirstQuad(gf_layoutInfo* l, double x_disp, double y_disp) {
     Network* net = (Network*)l->net;
     AN(net, "No network");
 
-    Graphfab::Box bbox = net->getBoundingBox();
+    LibsbmlDraw::Box bbox = net->getBoundingBox();
 
-    net->applyDisplacement(-bbox.getMin() + Graphfab::Point(x_disp, y_disp));
+    net->applyDisplacement(-bbox.getMin() + LibsbmlDraw::Point(x_disp, y_disp));
     net->rebuildCurves();
 }
 
 CPoint gf_tf_apply_to_point(gf_transform* tf, CPoint p) {
-    Graphfab::Affine2d* t = (Graphfab::Affine2d*)tf->tf;
+    LibsbmlDraw::Affine2d* t = (LibsbmlDraw::Affine2d*)tf->tf;
     AN(t, "No transform");
-    Graphfab::Point r = Graphfab::xformPoint(CPoint2Point(p), *t);
+    LibsbmlDraw::Point r = LibsbmlDraw::xformPoint(CPoint2Point(p), *t);
     return Point2CPoint(r);
 }
 
 gf_point gf_tf_getScale(gf_transform* tf) {
-  Graphfab::Affine2d* t = (Graphfab::Affine2d*)tf->tf;
+  LibsbmlDraw::Affine2d* t = (LibsbmlDraw::Affine2d*)tf->tf;
   AN(t, "No transform");
   return Point2gf_point(t->getScale());
 }
 
 gf_point gf_tf_getDisplacement(gf_transform* tf) {
-  Graphfab::Affine2d* t = (Graphfab::Affine2d*)tf->tf;
+  LibsbmlDraw::Affine2d* t = (LibsbmlDraw::Affine2d*)tf->tf;
   AN(t, "No transform");
 //   std::cerr << "  gf_tf_getDisplacement: " << t->getDisplacement() << "\n";
   return Point2gf_point(t->getDisplacement());
 }
 
 gf_point gf_tf_getPostDisplacement(gf_transform* tf) {
-  Graphfab::Affine2d* t = (Graphfab::Affine2d*)tf->tf;
+  LibsbmlDraw::Affine2d* t = (LibsbmlDraw::Affine2d*)tf->tf;
   AN(t, "No transform");
-  Graphfab::Point result(t->inv().applyLinearOnly(t->getDisplacement()));
+  LibsbmlDraw::Point result(t->inv().applyLinearOnly(t->getDisplacement()));
 //   std::cerr << "  gf_tf_getPostDisplacement: " << result << "\n";
   return Point2gf_point(result);
 }
 
 void gf_dump_transform(gf_transform* tf) {
-    Graphfab::Affine2d* t = (Graphfab::Affine2d*)tf->tf;
+    LibsbmlDraw::Affine2d* t = (LibsbmlDraw::Affine2d*)tf->tf;
     AN(t, "No transform");
 //     std::cerr << *t;
 }
 
 void gf_release_transform(gf_transform* tf) {
-    Graphfab::Affine2d* t = (Graphfab::Affine2d*)tf->tf;
+    LibsbmlDraw::Affine2d* t = (LibsbmlDraw::Affine2d*)tf->tf;
     AN(t, "No transform");
     delete t;
 }
@@ -2215,7 +2191,7 @@ void gf_randomizeLayout(gf_layoutInfo* m) {
     Canvas* can = (Canvas*)m->canv;
     AN(can, "No canvas");
 
-    net->randomizePositions(Graphfab::Box(Graphfab::Point(0.,0.), Graphfab::Point(can->getWidth(), can->getHeight())));
+    net->randomizePositions(LibsbmlDraw::Box(LibsbmlDraw::Point(0.,0.), LibsbmlDraw::Point(can->getWidth(), can->getHeight())));
 }
 
 void gf_randomizeLayout2(gf_network* n, gf_canvas* c) {
@@ -2224,14 +2200,14 @@ void gf_randomizeLayout2(gf_network* n, gf_canvas* c) {
     Canvas* can = (Canvas*)c->canv;
     AN(can, "No canvas");
 
-    net->randomizePositions(Graphfab::Box(Graphfab::Point(0.,0.), Graphfab::Point(can->getWidth(), can->getHeight())));
+    net->randomizePositions(LibsbmlDraw::Box(LibsbmlDraw::Point(0.,0.), LibsbmlDraw::Point(can->getWidth(), can->getHeight())));
 }
 
 void gf_randomizeLayout_fromExtents(gf_network* n, double left, double top, double right, double bottom) {
     Network* net = CastToNetwork(n->n);
     AN(net, "No network");
 
-    net->randomizePositions(Graphfab::Box(Graphfab::Point(left,top), Graphfab::Point(right, bottom)));
+    net->randomizePositions(LibsbmlDraw::Box(LibsbmlDraw::Point(left,top), LibsbmlDraw::Point(right, bottom)));
 }
 
 //TODO: move to more appropriate place like core/version or something
@@ -2245,7 +2221,7 @@ void gf_free(void* x) {
   free(x);
 }
 
-gf_point gf_computeCubicBezierPoint(gf_curveCP* c, Graphfab::Real t) {
+gf_point gf_computeCubicBezierPoint(gf_curveCP* c, LibsbmlDraw::Real t) {
   CubicBezier2Desc b(gf_point2Point(c->s), gf_point2Point(c->c1), gf_point2Point(c->c2), gf_point2Point(c->e));
   return Point2gf_point(b.p(t));
 }
@@ -2270,19 +2246,19 @@ gf_point* gf_computeCubicBezierLineIntersec(gf_curveCP* c, gf_point* line_start,
   return result;
 }
 int gf_arrowheadStyleGetNumVerts(int style) {
-  return Graphfab::ArrowheadStyles::getNumVerts(style);
+  return LibsbmlDraw::ArrowheadStyles::getNumVerts(style);
 }
 
 gf_point gf_arrowheadStyleGetVert(int style, int n) {
-  return Point2gf_point(Graphfab::ArrowheadStyles::getVert(style,  n));
+  return Point2gf_point(LibsbmlDraw::ArrowheadStyles::getVert(style,  n));
 }
 
 int gf_arrowheadStyleIsFilled(int style) {
-  return Graphfab::ArrowheadStyles::isFilled(style);
+  return LibsbmlDraw::ArrowheadStyles::isFilled(style);
 }
 
 unsigned long gf_arrowheadNumStyles() {
-  return Graphfab::ArrowheadStyles::count();
+  return LibsbmlDraw::ArrowheadStyles::count();
 }
 
 void gf_arrowheadSetStyle(gf_specRole role, int style) {

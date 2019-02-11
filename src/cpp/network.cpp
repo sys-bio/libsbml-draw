@@ -1,28 +1,4 @@
-/*== SAGITTARIUS =====================================================================
- * Copyright (c) 2012, Jesse K Medley
- * All rights reserved.
-
- * Redistribution and use in source and binary forms, with or without
- * modification, are permitted provided that the following conditions are met:
-    * Redistributions of source code must retain the above copyright
-      notice, this list of conditions and the following disclaimer.
-    * Redistributions in binary form must reproduce the above copyright
-      notice, this list of conditions and the following disclaimer in the
-      documentation and/or other materials provided with the distribution.
-    * Neither the name of The University of Washington nor the
-      names of its contributors may be used to endorse or promote products
-      derived from this software without specific prior written permission.
-
- * THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS" AND
- * ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED
- * WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE
- * DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT HOLDERS OR ANYONE DISTRIBUTING THE SOFTWARE
- * BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL 
- * DAMAGES (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES;
- * LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND
- * ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT
- * (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS
- * SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
+/* MIT License
  */
 
 //== BEGINNING OF CODE ===============================================================
@@ -1527,7 +1503,7 @@ namespace LibsbmlDraw {
         for(EltIt i=EltsBegin(); i!=EltsEnd(); ++i) {
             NetworkElement* e = *i;
             if(e->getType() == NET_ELT_TYPE_COMP) {
-                Graphfab::Compartment* c = (Graphfab::Compartment*)e;
+                LibsbmlDraw::Compartment* c = (LibsbmlDraw::Compartment*)e;
                 if(!c->empty())
                     w.push_back(c);
             } else
@@ -1592,7 +1568,7 @@ namespace LibsbmlDraw {
     }
     
     void Network::fitToWindow(const Box& w) {
-        Graphfab::Affine2d tf = Graphfab::Affine2d::FitToWindow(getBoundingBox(), w);
+        LibsbmlDraw::Affine2d tf = LibsbmlDraw::Affine2d::FitToWindow(getBoundingBox(), w);
 //         std::cerr << "Applying tf:\n" << tf;
         setTransform(tf);
         setInverseTransform(tf.inv());
@@ -1741,7 +1717,7 @@ namespace LibsbmlDraw {
                             rand_range(b.getMin().y, b.getMax().y)));
         }
         for(CompIt i=CompsBegin(); i!=CompsEnd(); ++i) {
-            Graphfab::Compartment* c = *i;
+            LibsbmlDraw::Compartment* c = *i;
             if(c->isLocked())
                 break;
             Real d = sqrt(c->restArea());
@@ -1807,7 +1783,7 @@ namespace LibsbmlDraw {
         for(int i=0; i<lay.getNumCompartmentGlyphs(); ++i) {
             const CompartmentGlyph* cg = lay.getCompartmentGlyph(i);
             
-            Graphfab::Compartment* c = net->findCompById(cg->getCompartmentId());
+            LibsbmlDraw::Compartment* c = net->findCompById(cg->getCompartmentId());
             
             c->setGlyph(cg->getId());
             
@@ -2040,7 +2016,7 @@ namespace LibsbmlDraw {
             // assume a compartment with the id "default" or "compartment" represents
             // a default, non-visual compartment, so discard it from the model
             if(comp->getId() != "default" && comp->getId() != "compartment" && comp->getId() != "graphfab_default_compartment" && (!haveDefaultCompartmentId() || getDefaultCompartmentId() !=  comp->getId())) {
-                Graphfab::Compartment* c = new Compartment();
+                LibsbmlDraw::Compartment* c = new Compartment();
                 
                 // set id
                 c->setId(comp->getId());
@@ -2070,7 +2046,7 @@ namespace LibsbmlDraw {
             n->setAlias(false);
             
             // associate compartment (if one exists)
-            Graphfab::Compartment* c = net->findCompById(s->getCompartment());
+            LibsbmlDraw::Compartment* c = net->findCompById(s->getCompartment());
             if(c) {
                 c->addElt(n);
                 n->_comp = c;
@@ -2101,7 +2077,7 @@ namespace LibsbmlDraw {
             AN(rxn, "Failed to get reaction");
 
             // associate compartment (if one exists)
-            Graphfab::Compartment* c = net->findCompById(rxn->getCompartment());
+            LibsbmlDraw::Compartment* c = net->findCompById(rxn->getCompartment());
             if(c) {
                 c->addElt(r);
             }

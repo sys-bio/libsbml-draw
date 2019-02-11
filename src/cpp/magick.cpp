@@ -1,28 +1,4 @@
-/*== SAGITTARIUS =====================================================================
- * Copyright (c) 2012, Jesse K Medley
- * All rights reserved.
-
- * Redistribution and use in source and binary forms, with or without
- * modification, are permitted provided that the following conditions are met:
-    * Redistributions of source code must retain the above copyright
-      notice, this list of conditions and the following disclaimer.
-    * Redistributions in binary form must reproduce the above copyright
-      notice, this list of conditions and the following disclaimer in the
-      documentation and/or other materials provided with the distribution.
-    * Neither the name of The University of Washington nor the
-      names of its contributors may be used to endorse or promote products
-      derived from this software without specific prior written permission.
-
- * THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS" AND
- * ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED
- * WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE
- * DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT HOLDERS OR ANYONE DISTRIBUTING THE SOFTWARE
- * BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL 
- * DAMAGES (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES;
- * LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND
- * ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT
- * (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS
- * SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
+/* MIT License
  */
 
 //== BEGINNING OF CODE ===============================================================
@@ -75,9 +51,9 @@ void gf_MagickDrawComps(MagickWand *wand, gf_layoutInfo* l, Affine2d* tf) {
     DrawSetStrokeWidth(dw, 2.0);
     
     for(Network::ConstCompIt i=net->CompsBegin(); i!=net->CompsEnd(); ++i) {
-        Graphfab::Compartment* c = *i;
+        LibsbmlDraw::Compartment* c = *i;
         // coordiates of bounding box
-        Graphfab::Point ul = xformPoint(c->getExtents().getMin(), *tf), lr = xformPoint(c->getExtents().getMax(), *tf);
+        LibsbmlDraw::Point ul = xformPoint(c->getExtents().getMin(), *tf), lr = xformPoint(c->getExtents().getMax(), *tf);
         
         DrawRoundRectangle(dw, ul.x, ul.y, lr.x, lr.y, 25., 25.);
         MagickDrawImage(wand, dw);
@@ -102,7 +78,7 @@ void gf_MagickDrawNodes(MagickWand *wand, gf_layoutInfo* l, Affine2d* tf) {
     for(Network::ConstNodeIt i=net->NodesBegin(); i!=net->NodesEnd(); ++i) {
         Node* n = *i;
         // coordiates of bounding box
-        Graphfab::Point ul = xformPoint(n->getUpperLeftCorner(), *tf), lr = xformPoint(n->getLowerRightCorner(), *tf);
+        LibsbmlDraw::Point ul = xformPoint(n->getUpperLeftCorner(), *tf), lr = xformPoint(n->getLowerRightCorner(), *tf);
         
         //set the color
         if(n->isAlias())
@@ -132,10 +108,10 @@ void gf_MagickDrawRxnCurve(MagickWand *wand, RxnBezier* c, bool straight, Affine
     DrawSetFillColor(dw, pixie);
     
     if(straight) {
-        Graphfab::Point start(xformPoint(*c->as, *tf)), stop(xformPoint(*c->ae, *tf));
+        LibsbmlDraw::Point start(xformPoint(*c->as, *tf)), stop(xformPoint(*c->ae, *tf));
         DrawLine(dw, start.x, start.y, stop.x, stop.y);
     } else {
-        Graphfab::Point s (xformPoint(c->s, *tf)),  e (xformPoint(c->e, *tf)),
+        LibsbmlDraw::Point s (xformPoint(c->s, *tf)),  e (xformPoint(c->e, *tf)),
                         c1(xformPoint(c->c1, *tf)), c2(xformPoint(c->c2, *tf));
         const PointInfo p[8] = {
             {s.x, s.y}, {c1.x,c1.y}, {c2.x,c2.y}, {e.x,e.y}};
@@ -154,9 +130,9 @@ void gf_MagickDrawRxns(MagickWand *wand, gf_layoutInfo* l, Affine2d* tf) {
     AN(net, "No network");
     
     for(Network::ConstRxnIt i=net->RxnsBegin(); i!=net->RxnsEnd(); ++i) {
-        Graphfab::Reaction* rxn = *i;
+        LibsbmlDraw::Reaction* rxn = *i;
         AN(rxn->getCurves().size());
-        for(Graphfab::Reaction::ConstCurveIt c=rxn->getCurves().begin(); c!=rxn->getCurves().end(); ++c) {
+        for(LibsbmlDraw::Reaction::ConstCurveIt c=rxn->getCurves().begin(); c!=rxn->getCurves().end(); ++c) {
             AN(*c);
             gf_MagickDrawRxnCurve(wand, *c, false, tf);
         }
