@@ -49,6 +49,15 @@ find_path(LIBSBML_INCLUDE_DIR sbml/SBMLTypes.h HINTS ${LIBSBML_PREFIX}/include)
 message(STATUS "LIBSBML_INCLUDE_DIR ${LIBSBML_INCLUDE_DIR}")
 include_directories(${LIBSBML_INCLUDE_DIR})
 
+# Image Magick
+if(LINK_WITH_MAGICK)
+    set(SBNW_USE_MAGICK 1)
+    include_directories(${MAGICK_INCLUDE})
+else()
+    set(SBNW_USE_MAGICK 0)
+endif()
+
+
 # Source Code
 
 set(SOURCE_DIR "src/cpp")
@@ -57,65 +66,69 @@ include_directories("src/include")
 # Set sources for library
 
 set(SOURCES
-    SagittariusAssert.c
-    SagittariusCommon.cpp
-    SagittariusException.cpp
-    error.cpp
-    tikz.cpp
-    io.cpp
-    layout.cpp
-    arrowhead.cpp
-    box.cpp
-    canvas.cpp
-    fr.cpp
-    point.cpp
-    cubic.cpp
-    geom.cpp
-    transform.cpp
-    network.cpp
-    autolayoutSBML.cpp
-    string_helpers.c
+    src/cpp/SagittariusAssert.c
+    src/cpp/SagittariusCommon.cpp
+    src/cpp/SagittariusException.cpp
+    src/cpp/error.cpp
+    src/cpp/tikz.cpp
+    src/cpp/io.cpp
+    src/cpp/layout.cpp
+    src/cpp/arrowhead.cpp
+    src/cpp/box.cpp
+    src/cpp/canvas.cpp
+    src/cpp/fr.cpp
+    src/cpp/point.cpp
+    src/cpp/cubic.cpp
+    src/cpp/geom.cpp
+    src/cpp/transform.cpp
+    src/cpp/network.cpp
+    src/cpp/autolayoutSBML.cpp
+    src/cpp/string_helpers.c
     )
 
 set(HEADERS
-    BaseWORDs.h
-    config.h.in
-    Debug.hpp
-    DefaultBool.hpp
-    SagittariusAssert.h
-    SagittariusCommon.h
-    SagittariusConfigure.h
-    SagittariusCore.h
-    SagittariusException.h
-    SagittariusPlatform.h
-    SagittariusPlatformWin.h
-    SagittariusPrefetch.h
-    error.h
-    magick.h
-    io.h
-    layout.h
-    arrowhead.h
-    box.h
-    canvas.h
-    curve.h
-    fr.h
-    layoutall.h
-    point.h
-    allen.h
-    dist.h
-    geom.h
-    min_max.h
-    rand_unif.h
-    round.h
-    sig.h
-    sign_mag.h
-    transform.h
-    network.h
-    autolayoutSBML.h
-    string_helpers.h
+    src/include/BaseWORDs.h
+    src/include/config.h.in
+    src/include/Debug.hpp
+    src/include/DefaultBool.hpp
+    src/include/SagittariusAssert.h
+    src/include/SagittariusCommon.h
+    src/include/SagittariusConfigure.h
+    src/include/SagittariusCore.h
+    src/include/SagittariusException.h
+    src/include/SagittariusPlatform.h
+    src/include/SagittariusPlatformWin.h
+    src/include/SagittariusPrefetch.h
+    src/include/error.h
+    src/include/magick.h
+    src/include/io.h
+    src/include/layout.h
+    src/include/arrowhead.h
+    src/include/box.h
+    src/include/canvas.h
+    src/include/curve.h
+    src/include/fr.h
+    src/include/layoutall.h
+    src/include/point.h
+    src/include/allen.h
+    src/include/dist.h
+    src/include/geom.h
+    src/include/min_max.h
+    src/include/rand_unif.h
+    src/include/round.h
+    src/include/sig.h
+    src/include/sign_mag.h
+    src/include/transform.h
+    src/include/network.h
+    src/include/autolayoutSBML.h
+    src/include/string_helpers.h
     )
 
-configure_file(src/include/config.h.in config.h)
+configure_file(src/include/config.h.in ../src/include/config.h)
+
+set(SBNW_SOURCES ${SOURCES} )
+set(SBNW_HEADERS ${HEADERS} )
+
 
 # Sphinx 
 

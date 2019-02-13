@@ -12,7 +12,7 @@
 #include <sstream>
 
 const char* gf_renderTikZ(gf_layoutInfo* l) {
-  using namespace Graphfab;
+  using namespace LibsbmlDraw;
 
   try {
     Network* net = (Network*)l->net;
@@ -22,7 +22,7 @@ const char* gf_renderTikZ(gf_layoutInfo* l) {
     if (!can)
       SBNW_THROW(InternalCheckFailureException, "No canvas set", "gf_renderTikZ");
 
-    Graphfab::Real cmscale = 50.;
+    LibsbmlDraw::Real cmscale = 50.;
     TikZRenderer renderer(can->getBox(), can->getWidth()/cmscale, can->getHeight()/cmscale);
     return gf_strclone(renderer.str(net, can).c_str());
   } catch (const Exception& e) {
@@ -36,11 +36,11 @@ int gf_renderTikZFile(gf_layoutInfo* l, const char* filename) {
 //   fprintf(stderr, "Saving to TikZ file %s\n", filename);
     FILE* f = fopen(filename, "w");
     if (!f)
-      SBNW_THROW(Graphfab::InternalCheckFailureException, "Could not open file " + ( filename ? std::string(filename) : std::string("") ), "gf_renderTikZFile");
+      SBNW_THROW(LibsbmlDraw::InternalCheckFailureException, "Could not open file " + ( filename ? std::string(filename) : std::string("") ), "gf_renderTikZFile");
 
     const char* buf = gf_renderTikZ(l);
     if (!buf)
-      SBNW_THROW(Graphfab::InternalCheckFailureException, "Could not create buffer", "gf_renderTikZFile");
+      SBNW_THROW(LibsbmlDraw::InternalCheckFailureException, "Could not create buffer", "gf_renderTikZFile");
 
     fprintf(f, "%s", buf);
 
@@ -48,7 +48,7 @@ int gf_renderTikZFile(gf_layoutInfo* l, const char* filename) {
 
     return 0;
 
-  } catch (const Graphfab::Exception& e) {
+  } catch (const LibsbmlDraw::Exception& e) {
     gf_setError( e.getReport().c_str() );
     return 1;
   }
