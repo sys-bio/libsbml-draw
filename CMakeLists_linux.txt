@@ -46,7 +46,6 @@ message(STATUS "Using Python include directory ${PYTHON_INCLUDE_DIR}")
 find_library(LIBSBML_LIBRARY sbml libsbml HINTS ${LIBSBML_PREFIX}/lib)
 find_library(LIBSBML_STATIC_LIBRARY sbml-static REQUIRED libsbml-static HINTS ${LIBSBML_PREFIX}/lib)
 find_path(LIBSBML_INCLUDE_DIR sbml/SBMLTypes.h HINTS ${LIBSBML_PREFIX}/include)
-#find_path(LIBSBML_EXTRA_LIBS libbz2.lib HINTS ${LIBSBML_PREFIX}/lib)
 message(STATUS "LIBSBML_INCLUDE_DIR ${LIBSBML_INCLUDE_DIR}")
 include_directories(${LIBSBML_INCLUDE_DIR})
 
@@ -147,11 +146,7 @@ set_target_properties(sbnw PROPERTIES COMPILE_DEFINITIONS SBNW_CLIENT_BUILD=0 )
 
 if(LINK_WITH_LIBSBML)
     # libxml2 libbz2 zdll libiconv Ws2_32
-    target_link_libraries(sbnw ${LIBSBML_STATIC_LIBRARY} ${LIBXML2_DIR}) 
-	target_link_libraries(sbnw ${LIBSBML_STATIC_LIBRARY} ${LIBBZ2_DIR}) 
-	target_link_libraries(sbnw ${LIBSBML_STATIC_LIBRARY} ${LIBICONV_DIR}) 
-	target_link_libraries(sbnw ${LIBSBML_STATIC_LIBRARY} ${ZLIB_DIR}) 
-	target_link_libraries(sbnw ${LIBSBML_STATIC_LIBRARY} ws2_32.lib) 
+    target_link_libraries(sbnw ${LIBSBML_STATIC_LIBRARY} ${LIBSBML_EXTRA_LIBS}) 
 endif()
 
 # Static Library
@@ -169,11 +164,7 @@ if(BUILD_STATIC_LIB)
     # Link in dependencies
 
     # SBML
-    target_link_libraries(sbnw_static ${LIBSBML_STATIC_LIBRARY} ${LIBXML2_DIR})
-	target_link_libraries(sbnw ${LIBSBML_STATIC_LIBRARY} ${LIBBZ2_DIR}) 
-	target_link_libraries(sbnw ${LIBSBML_STATIC_LIBRARY} ${LIBICONV_DIR}) 
-	target_link_libraries(sbnw ${LIBSBML_STATIC_LIBRARY} ${ZLIB_DIR}) 
-	target_link_libraries(sbnw ${LIBSBML_STATIC_LIBRARY} ws2_32.lib) 
+    target_link_libraries(sbnw_static ${LIBSBML_STATIC_LIBRARY} ${LIBSBML_EXTRA_LIBS})
 
 endif()
 

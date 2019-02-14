@@ -4,7 +4,8 @@ Sets up the python bindings to the c api.
 import ctypes
     
 # SBNW DLL
-slib = ctypes.CDLL ('C:\\Tellurium-Winpython-3.6\\python-3.6.6.amd64\\Lib\\site-packages\\sbnw\\sbnw.dll')
+slib = ctypes.CDLL(r"C:\Users\nrhaw\Documents\Tellurium\sbnw.dll")
+# slib = ctypes.CDLL ('C:\\Tellurium-Winpython-3.6\\python-3.6.6.amd64\\Lib\\site-packages\\sbnw\\sbnw.dll')
 # slib = ctypes.CDLL('C:\Users\nrhaw\Documents\Visual Studio 2017\Projects\sbnw\BUILD\graphfab\Release\sbnw.dll')
 
 # Enumerations
