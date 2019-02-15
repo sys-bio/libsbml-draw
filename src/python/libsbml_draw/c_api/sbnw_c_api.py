@@ -2,8 +2,18 @@
 Sets up the python bindings to the c api.
 """
 import ctypes
-    
+
+#import pkg_resources
+#libsbmldraw_lib_file = pkg_resources.resource_string("libsbml-draw", "data/libsbml_draw.dll")
+#DATA_PATH = pkg_resources.resource_filename("libsbml_draw", "data/")
+#DLL_FILE = pkg_resources.resource_filename("libsbml_draw", "data/libsbml_draw.dll")
+
+#print("data_path: ", DATA_PATH)
+#print("dll file: ", DLL_FILE)
+
 # SBNW DLL
+#slib = ctypes.CDLL("libsbml_draw.dll")
+#slib = ctypes.CDLL(libsbmldraw_lib_file)
 slib = ctypes.CDLL(r"C:\Users\nrhaw\Documents\Tellurium\sbnw.dll")
 # slib = ctypes.CDLL ('C:\\Tellurium-Winpython-3.6\\python-3.6.6.amd64\\Lib\\site-packages\\sbnw\\sbnw.dll')
 # slib = ctypes.CDLL('C:\Users\nrhaw\Documents\Visual Studio 2017\Projects\sbnw\BUILD\graphfab\Release\sbnw.dll')

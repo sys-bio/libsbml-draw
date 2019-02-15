@@ -5,6 +5,8 @@ setup(
     version="0.0.1",
     packages=PEP420PackageFinder.find("src/python"),
     package_dir={"": "src/python"},
+    #data_files=[("data", ["install_windows/libsbnw_draw.dll",]),
+    package_data={"libsbml_draw": ["data/libsbml_draw.dll"]},
     install_requires=["matplotlib"],
     extras_require={
         "testing": ["pytest", "pytest-mock"],

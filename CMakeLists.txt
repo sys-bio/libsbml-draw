@@ -178,7 +178,7 @@ if(BUILD_STATIC_LIB)
 endif()
 
 # Library dist
-install(TARGETS sbnw RUNTIME DESTINATION bin LIBRARY DESTINATION lib ARCHIVE DESTINATION lib)
+install(TARGETS libsbml_draw RUNTIME DESTINATION bin LIBRARY DESTINATION lib ARCHIVE DESTINATION lib)
 
 # Header dist
 add_custom_target(headers)

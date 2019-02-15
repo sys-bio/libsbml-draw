@@ -8,6 +8,20 @@ import pytest
 import libsbml_draw.c_api.sbnw_c_api as sbnw
 from libsbml_draw.model.sbml_layout import SBMLlayout
 
+import pkg_resources
+#libsbmldraw_lib_file = pkg_resources.resource_string("libsbml-draw", "data/libsbml_draw.dll")
+DATA_PATH = pkg_resources.resource_filename("libsbml_draw", "data/")
+DLL_FILE = pkg_resources.resource_filename("libsbml_draw", "data/libsbml_draw.dll")
+
+print("data_path: ", DATA_PATH)
+print("dll file: ", DLL_FILE, "type: ", type(DLL_FILE))
+
+#import ctypes
+#slib = ctypes.CDLL(DLL_FILE)
+#slib.gf_getCurrentLibraryVersion.restype = ctypes.c_char_p
+
+#print("slib: ", slib.gf_getCurrentLibraryVersion().decode('utf-8') )
+
 
 TEST_ARROWHEAD_STYLE = 3
 TEST_NUMBER_OF_NODES = 6
