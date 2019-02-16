@@ -8,18 +8,31 @@ import pytest
 import libsbml_draw.c_api.sbnw_c_api as sbnw
 from libsbml_draw.model.sbml_layout import SBMLlayout
 
-import pkg_resources
+#import pkg_resources
 #libsbmldraw_lib_file = pkg_resources.resource_string("libsbml-draw", "data/libsbml_draw.dll")
-DATA_PATH = pkg_resources.resource_filename("libsbml_draw", "data/")
-DLL_FILE = pkg_resources.resource_filename("libsbml_draw", "data/libsbml_draw.dll")
+#DATA_PATH = pkg_resources.resource_filename("libsbml_draw", "data/")
+#DLL_FILE = pkg_resources.resource_filename("libsbml_draw", "data/libsbml_draw.dll")
+#DLL_STREAM = pkg_resources.resource_stream("libsbml_draw", "data/libsbml_draw.dll")
+#OS_DLL_FILE = os.path.abspath(DLL_FILE)
+#from pathlib import Path
+#PATH_DLL_FILE = Path(DLL_FILE)
 
-print("data_path: ", DATA_PATH)
-print("dll file: ", DLL_FILE, "type: ", type(DLL_FILE))
+#print("data_path: ", DATA_PATH)
+#print("dll file: ", DLL_FILE, "type: ", type(DLL_FILE))
+#print("os path: " , OS_DLL_FILE)
+#print("Path: ", PATH_DLL_FILE)
+#print("dll stream: ", DLL_STREAM, "type: ", type(DLL_STREAM))
+#TMP_DLL_FILE = "c:\\tmp\\libsbml_draw.dll"
+#TMP_DLL_FILE = "c:users/nrhaw/documents/visual\ studio\ 2017/projects/project_libsbml_draw/project_libsbml_draw/libsbml-draw/src/python/libsbml_draw/data/libsbml_draw.dll"
+#print("TMP_DLL_FILE: ", TMP_DLL_FILE)
 
 #import ctypes
-#slib = ctypes.CDLL(DLL_FILE)
-#slib.gf_getCurrentLibraryVersion.restype = ctypes.c_char_p
 
+#assert os.path.isfile(TMP_DLL_FILE)
+
+#slib = ctypes.CDLL(TMP_DLL_FILE)
+#slib2 = ctypes.CDLL(DLL_FILE)
+#slib.gf_getCurrentLibraryVersion.restype = ctypes.c_char_p
 #print("slib: ", slib.gf_getCurrentLibraryVersion().decode('utf-8') )
 
 

@@ -7,6 +7,20 @@ import ctypes
 #libsbmldraw_lib_file = pkg_resources.resource_string("libsbml-draw", "data/libsbml_draw.dll")
 #DATA_PATH = pkg_resources.resource_filename("libsbml_draw", "data/")
 #DLL_FILE = pkg_resources.resource_filename("libsbml_draw", "data/libsbml_draw.dll")
+#
+#if sys.platform.startswith('win32'):
+#    rrInstallFolder = os.path.abspath(os.path.join(os.path.dirname(__file__), '..', 'bin'))
+#    sharedLib = os.path.join(rrInstallFolder, 'roadrunner_c_api.dll')
+#    rrLib=CDLL(sharedLib)
+#else:
+#    rrInstallFolder = os.path.abspath(os.path.join(os.path.dirname(__file__), '..', 'lib'))
+#    if os.path.isfile(os.path.join(rrInstallFolder, 'libroadrunner_c_api.so')):
+#        sharedLib = os.path.join(rrInstallFolder, 'libroadrunner_c_api.so')
+#    elif os.path.isfile(os.path.join(rrInstallFolder, 'libroadrunner_c_api.dylib')):
+#        sharedLib = os.path.join(rrInstallFolder, 'libroadrunner_c_api.dylib')
+#    else:
+#        raise Exception("could not locate RoadRunner shared library")
+#    rrLib = cdll.LoadLibrary(sharedLib)
 
 #print("data_path: ", DATA_PATH)
 #print("dll file: ", DLL_FILE)
