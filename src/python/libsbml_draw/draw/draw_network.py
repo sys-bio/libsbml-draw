@@ -1,25 +1,48 @@
 """
 Draw the SBML model's network which consists of nodes and reactions.
 """
+import numpy as np
+from matplotlib.patches import BoxStyle, FancyArrowPatch, FancyBboxPatch
+from matplotlib.path import Path
+from matplotlib import pyplot as plt
 
-import matplotlib.pyplot as plt
+fig = plt.figure(frameon=False)
+ax = fig.add_subplot(111, frameon=False) 
 
-plt.xlim(-0.5, 1.5)
-plt.ylim(-0.5, 1.5)
+start_point = [0,0]
+end_point = [1,1]
+control_point_1 = [0.2,0.5]
+control_point_2 = [0.8, 0.8]
 
-ax = plt.axes()
+vs = np.array(start_point)
+vc1 = np.array(control_point_1)
+vc2 = np.array(control_point_2)
+ve = np.array(end_point)
 
-# Draw Reactions
-ax.arrow(0,0,0.5,0.5, head_width=0.05, head_length=0.1, fc='k', ec='k')
+cubic_bezier_curve_path = Path([vs, vc1, vc2, ve],
+                               [Path.MOVETO, Path.CURVE4, Path.CURVE4, Path.CURVE4])
 
-# Label Reactions
-plt.text(0,1,"hello")
+fap = FancyArrowPatch(path=cubic_bezier_curve_path, 
+                    arrowstyle="-|>",
+                    clip_on=False,
+                    linewidth=3,
+                    color="red",
+                    mutation_scale=100
+                   )
 
-# Draw Nodes
-plt.text(0-.10,0-.10,"A")
-plt.text(0.5+.10, 0.5+.10, "B")
+ax.add_patch(fap)
+
+lower_left_point = [.6,.2]
+width = 0.2
+height = 0.2
+
+fbbp = FancyBboxPatch(
+        lower_left_point, 
+        width, 
+        height,
+        boxstyle=BoxStyle("Round", pad=0.02))
+
+ax.add_patch(fbbp)
+
 
 plt.show()
-
-
-
