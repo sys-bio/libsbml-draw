@@ -2,7 +2,8 @@
 Creates a python interface to the c API.
 """
 import libsbml_draw.c_api.sbnw_c_api as sbnw
-
+from libsbml_draw.draw.draw_network import createGraph
+from libsbml_draw.model.network import Network
 
 class SBMLlayout:
     """SBMLlayout represents the model in an SBML file, which already exists or
@@ -32,6 +33,7 @@ class SBMLlayout:
         self.numNodes = self.getNumberOfNodes()
         self.numReactions = self.getNumberOfReactions()
         self.numCompartments = self.getNumberOfCompartments()
+        self.network = Network()
     
     # Give the layout a starting point
     def randomizeLayout(self,):
@@ -112,4 +114,11 @@ class SBMLlayout:
         print("writeSBMLwithLayout result: ", result)
         # if result error, raise Exception?
         return result  
+    
+    def drawNetwork(self,):
+        createGraph(self.network)
+        
+
+
+
 		

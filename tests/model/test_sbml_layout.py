@@ -164,4 +164,9 @@ def test_sbml_with_layout_string_version(sbml_with_layout):
     assert "layout" in sbml_string
     assert '<layout:position layout:x="651" layout:y="-221"/>' in sbml_string
     #print(sbml_string)
+
+def test_draw_network(sbml_with_layout):
+    sbml_with_layout.drawNetwork(network)
+
+
     

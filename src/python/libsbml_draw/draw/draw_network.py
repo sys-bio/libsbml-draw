@@ -6,23 +6,49 @@ from matplotlib.patches import BoxStyle, FancyArrowPatch, FancyBboxPatch
 from matplotlib.path import Path
 from matplotlib import pyplot as plt
 
-fig = plt.figure(frameon=False)
-ax = fig.add_subplot(111, frameon=False) 
 
-start_point = [0,0]
-end_point = [1,1]
-control_point_1 = [0.2,0.5]
-control_point_2 = [0.8, 0.8]
+def draw_nodes(nodes):
+    """Create a list of FancyBbox Patches, one for each node 
+    """
+    node_patches = []
 
-vs = np.array(start_point)
-vc1 = np.array(control_point_1)
-vc2 = np.array(control_point_2)
-ve = np.array(end_point)
+    for node in nodes:
+    
+        lower_left_point = node.lower_left_point
+        width = node.width
+        height = node.height
+    
+        fbbp = FancyBboxPatch(
+            lower_left_point, 
+            width, 
+            height,
+            boxstyle=BoxStyle("Round", pad=0.02))
 
-cubic_bezier_curve_path = Path([vs, vc1, vc2, ve],
-                               [Path.MOVETO, Path.CURVE4, Path.CURVE4, Path.CURVE4])
+        node_patches.append(fbbp)  
+       
+    return node_patches
 
-fap = FancyArrowPatch(path=cubic_bezier_curve_path, 
+
+def draw_edges(edges):
+    """Create a list of FancyArrow Patches, one for each edge
+    """
+    edge_patches = []
+
+    for edge in edge_patches:
+    
+        start_point = np.array(edge.start_point)
+        end_point = np.array(edge.end_point)
+        control_point_1 = np.array(edge.control_point_1)
+        control_point_2 = np.array(edge.control_point_2)
+    
+        cubic_bezier_curve_path = Path(
+                [start_point, 
+                 control_point_1, 
+                 control_point_2, 
+                 end_point],
+                [Path.MOVETO, Path.CURVE4, Path.CURVE4, Path.CURVE4])
+
+        fap = FancyArrowPatch(path=cubic_bezier_curve_path, 
                     arrowstyle="-|>",
                     clip_on=False,
                     linewidth=3,
@@ -30,19 +56,33 @@ fap = FancyArrowPatch(path=cubic_bezier_curve_path,
                     mutation_scale=100
                    )
 
-ax.add_patch(fap)
+        edge_patches.append(fap)
 
-lower_left_point = [.6,.2]
-width = 0.2
-height = 0.2
-
-fbbp = FancyBboxPatch(
-        lower_left_point, 
-        width, 
-        height,
-        boxstyle=BoxStyle("Round", pad=0.02))
-
-ax.add_patch(fbbp)
+    return edge_patches
 
 
-plt.show()
+def createGraph(network):
+    # initialize figure
+    fig = plt.figure()
+    ax = plt.gca()
+
+    # draw the nodes
+    node_patches = draw_nodes(network.nodes)
+    for node_patch in node_patches:
+        ax.add_patch(node_patch)
+
+    # draw the edges
+    edge_patches = draw_edges(network.edges)
+    for edge_patch in edge_patches:
+        ax.add_patch(edge_patch)
+
+    # add labels
+
+    # No axes and size it just bigger than the data (i.e. tight)
+    plt.axis("off")
+    plt.axis("tight")
+
+    plt.show()
+
+    return fig
+
