@@ -22,7 +22,7 @@ def draw_nodes(nodes):
             lower_left_point, 
             width, 
             height,
-            boxstyle=BoxStyle("Round", pad=0.02))
+            boxstyle=BoxStyle("circle", pad=0.02))
 
         node_patches.append(fbbp)  
        
@@ -34,53 +34,77 @@ def draw_edges(edges):
     """
     edge_patches = []
 
-    for edge in edge_patches:
-    
-        start_point = np.array(edge.start_point)
-        end_point = np.array(edge.end_point)
-        control_point_1 = np.array(edge.control_point_1)
-        control_point_2 = np.array(edge.control_point_2)
-    
-        cubic_bezier_curve_path = Path(
-                [start_point, 
-                 control_point_1, 
-                 control_point_2, 
-                 end_point],
-                [Path.MOVETO, Path.CURVE4, Path.CURVE4, Path.CURVE4])
+    for edge in edges:
 
-        fap = FancyArrowPatch(path=cubic_bezier_curve_path, 
-                    arrowstyle="-|>",
+        curves = edge.curves
+        
+        for curve in curves:
+        
+            start_point = np.array([curve.start_point.x, curve.start_point.y])
+            end_point = np.array([curve.end_point.x, curve.end_point.y])
+            control_point_1 = np.array([curve.control_point_1.x, curve.control_point_1.y])
+            control_point_2 = np.array([curve.control_point_2.x, curve.control_point_2.y])
+    
+            cubic_bezier_curve_path = Path(
+                    [start_point, 
+                     control_point_1, 
+                     control_point_2, 
+                     end_point],
+                    [Path.MOVETO, Path.CURVE4, Path.CURVE4, Path.CURVE4])
+
+        #print("bezier_path: ", cubic_bezier_curve_path)
+
+            fap = FancyArrowPatch(path=cubic_bezier_curve_path, 
+                    arrowstyle=curve.curveArrowStyle,
                     clip_on=False,
-                    linewidth=3,
+                    linewidth=1,
                     color="red",
-                    mutation_scale=100
+                    mutation_scale=10
                    )
 
-        edge_patches.append(fap)
+            edge_patches.append(fap)
 
     return edge_patches
 
 
-def createGraph(network):
+def add_labels(nodes):
+    for node in nodes:
+        width_shift = node.width/4
+        height_shift = node.height/4
+        plt.text(node.center.x-width_shift, 
+                 node.center.y-height_shift, 
+                 node.name,
+                 fontsize="xx-small",
+                 color="black")
+
+
+def createNetworkFigure(network):
     # initialize figure
     fig = plt.figure()
     ax = plt.gca()
 
+    print("drawing the nodes")
     # draw the nodes
     node_patches = draw_nodes(network.nodes)
     for node_patch in node_patches:
         ax.add_patch(node_patch)
 
+    print("drawing the edges")
     # draw the edges
+    print(len(network.edges), "nw edges")
     edge_patches = draw_edges(network.edges)
+    print(len(edge_patches), " edge patches")
     for edge_patch in edge_patches:
         ax.add_patch(edge_patch)
 
+    print("adding the labels")
     # add labels
-
+    add_labels(network.nodes)
+    
     # No axes and size it just bigger than the data (i.e. tight)
     plt.axis("off")
     plt.axis("tight")
+    plt.axis("equal")
 
     plt.show()
 

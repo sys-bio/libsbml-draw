@@ -2,14 +2,14 @@
 Creates a python interface to the c API.
 """
 import libsbml_draw.c_api.sbnw_c_api as sbnw
-from libsbml_draw.draw.draw_network import createGraph
+from libsbml_draw.draw.draw_network import createNetworkFigure
 from libsbml_draw.model.network import Network
 
 class SBMLlayout:
     """SBMLlayout represents the model in an SBML file, which already exists or
     which can be created from scratch."""       
 
-    SBNW_version = sbnw.getCurrentLibraryVersion().decode('utf-8')
+    SBNW_version = sbnw.getCurrentLibraryVersion()
     
     def __init__ (self, sbml_filename=None, layout_alg_options=sbnw.fr_alg_options()):
         # note: the default values for the fr_alg_options are 0's
@@ -33,7 +33,7 @@ class SBMLlayout:
         self.numNodes = self.getNumberOfNodes()
         self.numReactions = self.getNumberOfReactions()
         self.numCompartments = self.getNumberOfCompartments()
-        self.network = Network()
+        self.network = None
     
     # Give the layout a starting point
     def randomizeLayout(self,):
@@ -114,11 +114,24 @@ class SBMLlayout:
         print("writeSBMLwithLayout result: ", result)
         # if result error, raise Exception?
         return result  
+
+    def createNetwork(self,):
+        self.network = Network(self.h_network)
     
     def drawNetwork(self,):
-        createGraph(self.network)
-        
+        createNetworkFigure(self.network)   
+        print("network, num nodes: ", len(self.network.nodes))
+        print("network, num edges: ", len(self.network.edges))
+        print("network, num rxns: ", self.getNumberOfReactions()) 
+        for edge in self.network.edges:
+            print(len(edge.curves), "curves")
+
+        #for node in self.network.nodes:
+            
 
 
 
-		
+
+
+
+                

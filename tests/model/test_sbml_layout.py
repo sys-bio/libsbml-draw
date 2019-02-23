@@ -45,7 +45,7 @@ TEST_SBML_FILE_NO_LAYOUT = "C:\\tmp\\model.xml"
 # This file has layout info
 TEST_SBML_FILE_WITH_LAYOUT = "C:\\tmp\\model_with_layout.xml"
 TEST_SBML_FILE_WITH_LAYOUT_OUTFILE = "C:\\tmp\\model_with_layout_write_again.xml"
-
+TEST_SBML_FILE_WITH_LAYOUT_MODIFIER = "C:\\tmp\\modexmpl.xml"
 
 @pytest.fixture
 def layout_alg_options():
@@ -72,6 +72,12 @@ def sbml_without_layout(layout_alg_options):
 def sbml_with_layout(layout_alg_options):
     sl = SBMLlayout(TEST_SBML_FILE_WITH_LAYOUT, layout_alg_options)
     return sl
+
+@pytest.fixture
+def sbml_with_layout_modifier(layout_alg_options):
+    sl = SBMLlayout(TEST_SBML_FILE_WITH_LAYOUT_MODIFIER, layout_alg_options)
+    return sl
+
 
 def test_describe_model(sbml_without_layout):
     result = sbml_without_layout.describeModel()
@@ -165,8 +171,10 @@ def test_sbml_with_layout_string_version(sbml_with_layout):
     assert '<layout:position layout:x="651" layout:y="-221"/>' in sbml_string
     #print(sbml_string)
 
-def test_draw_network(sbml_with_layout):
-    sbml_with_layout.drawNetwork(network)
+def test_draw_network(sbml_with_layout_modifier):
+    sbml_with_layout_modifier.createNetwork()
+    print("drawing network")
+    sbml_with_layout_modifier.drawNetwork()
 
 
     

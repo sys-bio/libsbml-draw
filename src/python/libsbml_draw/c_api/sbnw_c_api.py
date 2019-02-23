@@ -59,10 +59,10 @@ class point(ctypes.Structure):
                 ("y", ctypes.c_double)]
 
 class curveCP(ctypes.Structure):
-    _fields_ = [("s", point), 
-                ("c1", point),
-                ("c2", point),
-                ("e", point)]
+    _fields_ = [("start", point), 
+                ("control_point_1", point),
+                ("control_point_2", point),
+                ("end", point)]
 
 
 # Library Info Functions
@@ -70,7 +70,7 @@ slib.gf_getCurrentLibraryVersion.restype = ctypes.c_char_p
 
 # Library Info Functions
 def getCurrentLibraryVersion ():
-    return slib.gf_getCurrentLibraryVersion()
+    return slib.gf_getCurrentLibraryVersion().decode('utf-8')
 
 # IO Functions     
 slib.gf_getSBMLwithLayoutStr.argtypes = [ctypes.c_uint64, ctypes.c_uint64]
@@ -84,7 +84,7 @@ slib.gf_writeSBMLwithLayout.restype = ctypes.c_int
 
 # IO Functions
 def getSBMLwithLayoutStr (h_sbml_model, h_layout_info):
-    return slib.gf_getSBMLwithLayoutStr(h_sbml_model, h_layout_info)
+    return slib.gf_getSBMLwithLayoutStr(h_sbml_model, h_layout_info).decode('utf-8')
 
 def loadSBML (h_fileName):
    h_filename_string = h_fileName.encode('utf-8')
@@ -142,12 +142,15 @@ slib.gf_nw_getNumNodes.restype = ctypes.c_uint64
 slib.gf_nw_getNumRxns.argtypes = [ctypes.c_uint64]
 slib.gf_nw_getNumRxns.restype = ctypes.c_uint64
 
+slib.gf_nw_getRxnp.argtypes = [ctypes.c_uint64, ctypes.c_uint64]
+slib.gf_nw_getRxnp.restype = ctypes.c_uint64
+
 # Network Functions
 def getNetworkp(h_layout_info):
     return slib.gf_getNetworkp (h_layout_info)    
 
-def nw_getNodep(h_network, index):
-    return slib.gf_nw_getNodep(h_network, index)
+def nw_getNodep(h_network, node_index):
+    return slib.gf_nw_getNodep(h_network, node_index)
 
 def nw_getNodepFromId (h_network, h_id):
     return slib.gf_nw_getNodepFromId(h_network, h_id)
@@ -161,6 +164,9 @@ def nw_getNumNodes(h_network):
 def nw_getNumRxns (h_network):
     return slib.gf_nw_getNumRxns(h_network)
 
+def nw_getReactionp(h_network, reaction_index):
+    return slib.gf_nw_getRxnp(h_network, reaction_index)
+
 # Node Information
 slib.gf_node_getCentroid.argtypes = [ctypes.c_uint64]
 slib.gf_node_getCentroid.restype = point
@@ -168,6 +174,8 @@ slib.gf_node_getHeight.argtypes = [ctypes.c_uint64]
 slib.gf_node_getHeight.restype = ctypes.c_double
 slib.gf_node_getWidth.argtypes = [ctypes.c_uint64]
 slib.gf_node_getWidth.restype = ctypes.c_double
+slib.gf_node_getName.argtypes = [ctypes.c_uint64]
+slib.gf_node_getName.restype = ctypes.c_char_p
 
 def node_getCentroid (h_node):
     return slib.gf_node_getCentroid(h_node)
@@ -178,7 +186,10 @@ def node_getHeight (h_node):
 def node_getWidth (h_node):
     return slib.gf_node_getWidth(h_node)
 
-#Reaction Information
+def node_getName (h_node):
+    return slib.gf_node_getName(h_node).decode('utf-8')
+
+# Reaction Information
 slib.gf_reaction_getNumCurves.argtypes = [ctypes.c_uint64]
 slib.gf_reaction_getNumCurves.restype = ctypes.c_uint64
 slib.gf_reaction_getNumSpec.argtypes = [ctypes.c_uint64]
@@ -189,6 +200,18 @@ def reaction_getNumCurves (h_reaction):
 
 def reaction_getNumSpec (h_reaction):
     return slib.gf_reaction_getNumSpec(h_reaction)
+
+# Curve Information
+slib.gf_reaction_getCurvep.argtypes = [ctypes.c_uint64, ctypes.c_uint64] 
+slib.gf_reaction_getCurvep.restype = ctypes.c_uint64
+slib.gf_getCurveCPs.argtypes = [ctypes.c_uint64] 
+slib.gf_getCurveCPs.restype = curveCP
+
+def reaction_getCurvep (h_reaction, curve_index):
+    return slib.gf_reaction_getCurvep(h_reaction, curve_index)
+
+def getCurveCPs(h_curve):
+    return slib.gf_getCurveCPs(h_curve)
     
 # Model Sizing Functions
 slib.gf_fit_to_window.argtypes = [ctypes.c_uint64, ctypes.c_double, ctypes.c_double, ctypes.c_double, ctypes.c_double]
