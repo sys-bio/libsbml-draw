@@ -23,8 +23,14 @@ class Curve():
         self.end_point = curveCPs.end
         self.control_point_1 = curveCPs.control_point_1
         self.control_point_2 = curveCPs.control_point_2         
-        self.curveArrowStyle = "-"
-
+        self.role = sbnw.curve_getRole(h_curve)
+        if self.role == 1:
+            self.curveArrowStyle = "-|>"
+        elif self.role == 4:
+            self.curveArrowStyle = "-"
+        else:
+            self.curveArrowStyle = "-"
+ 
 class Edge():
     """ """
     def __init__ (self, h_reaction):

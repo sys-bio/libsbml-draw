@@ -206,12 +206,17 @@ slib.gf_reaction_getCurvep.argtypes = [ctypes.c_uint64, ctypes.c_uint64]
 slib.gf_reaction_getCurvep.restype = ctypes.c_uint64
 slib.gf_getCurveCPs.argtypes = [ctypes.c_uint64] 
 slib.gf_getCurveCPs.restype = curveCP
+slib.gf_curve_getRole.argtypes = [ctypes.c_uint64]
+slib.gf_curve_getRole.restype = ctypes.c_uint
 
 def reaction_getCurvep (h_reaction, curve_index):
     return slib.gf_reaction_getCurvep(h_reaction, curve_index)
 
 def getCurveCPs(h_curve):
     return slib.gf_getCurveCPs(h_curve)
+
+def curve_getRole(h_curve):
+    return slib.gf_curve_getRole(h_curve)
     
 # Model Sizing Functions
 slib.gf_fit_to_window.argtypes = [ctypes.c_uint64, ctypes.c_double, ctypes.c_double, ctypes.c_double, ctypes.c_double]

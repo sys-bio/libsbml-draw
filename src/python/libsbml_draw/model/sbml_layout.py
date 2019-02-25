@@ -105,7 +105,7 @@ class SBMLlayout:
 
     # SBML Functions        
     def getSBMLWithLayout(self,):
-        sbml_string = sbnw.getSBMLwithLayoutStr(self.h_model, self.h_layout_info).decode('utf-8')
+        sbml_string = sbnw.getSBMLwithLayoutStr(self.h_model, self.h_layout_info)
         return sbml_string 
     
     def writeSBMLWithLayout (self, output_filename):   
@@ -125,7 +125,8 @@ class SBMLlayout:
         print("network, num rxns: ", self.getNumberOfReactions()) 
         for edge in self.network.edges:
             print(len(edge.curves), "curves")
-
+            for curve in edge.curves:
+                print("role: ", curve.role)
         #for node in self.network.nodes:
             
 
