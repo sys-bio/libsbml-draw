@@ -45,7 +45,7 @@ TEST_SBML_FILE_NO_LAYOUT = "C:\\tmp\\model.xml"
 # This file has layout info
 TEST_SBML_FILE_WITH_LAYOUT = "C:\\tmp\\model_with_layout.xml"
 TEST_SBML_FILE_WITH_LAYOUT_OUTFILE = "C:\\tmp\\model_with_layout_write_again.xml"
-TEST_SBML_FILE_WITH_LAYOUT_MODIFIER = "C:\\tmp\\modexmpl.xml"
+TEST_SBML_FILE_WITH_LAYOUT_MODIFIER = "C:\\tmp\\copasi.xml"
 
 @pytest.fixture
 def layout_alg_options():

@@ -12,7 +12,7 @@ class Node():
         self.lower_left_point = [self.center.x - self.width/2,
                                  self.center.y - self.height/2]
         self.name = sbnw.node_getName(h_node)
-
+        print("centroid: ", self.center.x, ", ", self.center.y, ", ", self.name)
 
 class Curve():
     """ """
@@ -27,7 +27,8 @@ class Curve():
         if self.role == 1:
             self.curveArrowStyle = "-|>"
         elif self.role == 4:
-            self.curveArrowStyle = "-"
+            print("MODIFIER: ", sbnw.GF_ROLE_MODIFIER, "type: ", type(sbnw.GF_ROLE_MODIFIER))
+            self.curveArrowStyle = "|-|"
         else:
             self.curveArrowStyle = "-"
  

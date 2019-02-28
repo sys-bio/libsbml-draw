@@ -22,7 +22,7 @@ def draw_nodes(nodes):
             lower_left_point, 
             width, 
             height,
-            boxstyle=BoxStyle("circle", pad=0.02))
+            boxstyle=BoxStyle("round4", pad=0.02))
 
         node_patches.append(fbbp)  
        
@@ -69,10 +69,10 @@ def draw_edges(edges):
 
 def add_labels(nodes):
     for node in nodes:
-        width_shift = node.width/4
-        height_shift = node.height/4
-        plt.text(node.center.x-width_shift, 
-                 node.center.y-height_shift, 
+        # width_shift = node.width/4
+        # height_shift = node.height/4
+        plt.text(node.center.x, 
+                 node.center.y, 
                  node.name,
                  fontsize="xx-small",
                  color="black")
