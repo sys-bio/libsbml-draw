@@ -22,7 +22,9 @@ def draw_nodes(nodes):
             lower_left_point, 
             width, 
             height,
-            boxstyle=BoxStyle("round4", pad=0.02))
+            color="#0000ff30",
+            boxstyle=BoxStyle("round", pad=0.2, rounding_size=.6), 
+            mutation_scale=10)
 
         node_patches.append(fbbp)  
        
@@ -74,8 +76,11 @@ def add_labels(nodes):
         plt.text(node.center.x, 
                  node.center.y, 
                  node.name,
-                 fontsize="xx-small",
-                 color="black")
+                 fontsize="x-small",
+                 #fontsize="xx-small",
+                 color="black",
+                 horizontalalignment="center", 
+                 verticalalignment="center")
 
 
 def createNetworkFigure(network):

@@ -1,6 +1,7 @@
 """Represent the network as a collection of nodes and edges.
 """
 import libsbml_draw.c_api.sbnw_c_api as sbnw
+from matplotlib.patches import ArrowStyle
 
 class Node():
     """ """
@@ -28,7 +29,7 @@ class Curve():
             self.curveArrowStyle = "-|>"
         elif self.role == 4:
             print("MODIFIER: ", sbnw.GF_ROLE_MODIFIER, "type: ", type(sbnw.GF_ROLE_MODIFIER))
-            self.curveArrowStyle = "|-|"
+            self.curveArrowStyle = ArrowStyle("|-|", widthA=0, angleA=None, widthB=1.0, angleB=None)
         else:
             self.curveArrowStyle = "-"
  
