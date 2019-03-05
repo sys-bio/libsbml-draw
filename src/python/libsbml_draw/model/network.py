@@ -14,6 +14,7 @@ class Node():
                                  self.center.y - self.height/2]
         self.name = sbnw.node_getName(h_node)
         print("centroid: ", self.center.x, ", ", self.center.y, ", ", self.name)
+        self.fill_color = "#0000ff30"
 
 class Curve():
     """ """
@@ -40,7 +41,7 @@ class Edge():
         for curve_index in range(sbnw.reaction_getNumCurves(h_reaction)):
             h_curve = sbnw.reaction_getCurvep(h_reaction, curve_index)  
             self.curves.append(Curve(h_curve))
-
+        self.fill_color = "red"
         
 class Network():
     """ """

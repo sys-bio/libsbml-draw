@@ -13,16 +13,13 @@ def draw_nodes(nodes):
     node_patches = []
 
     for node in nodes:
-    
-        lower_left_point = node.lower_left_point
-        width = node.width
-        height = node.height
-    
+            
         fbbp = FancyBboxPatch(
-            lower_left_point, 
-            width, 
-            height,
-            color="#0000ff30",
+            node.lower_left_point, 
+            node.width, 
+            node.height,
+            #color="#0000ff30",
+            color=node.fill_color,
             boxstyle=BoxStyle("round", pad=0.2, rounding_size=.6), 
             mutation_scale=10)
 
@@ -60,7 +57,7 @@ def draw_edges(edges):
                     arrowstyle=curve.curveArrowStyle,
                     clip_on=False,
                     linewidth=1,
-                    color="red",
+                    color=edge.fill_color,
                     mutation_scale=10
                    )
 
