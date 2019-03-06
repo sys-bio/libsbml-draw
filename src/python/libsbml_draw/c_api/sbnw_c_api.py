@@ -176,6 +176,8 @@ slib.gf_node_getWidth.argtypes = [ctypes.c_uint64]
 slib.gf_node_getWidth.restype = ctypes.c_double
 slib.gf_node_getName.argtypes = [ctypes.c_uint64]
 slib.gf_node_getName.restype = ctypes.c_char_p
+slib.gf_node_getID.argtypes = [ctypes.c_uint64]
+slib.gf_node_getID.restype = ctypes.c_char_p
 
 def node_getCentroid (h_node):
     return slib.gf_node_getCentroid(h_node)
@@ -189,17 +191,25 @@ def node_getWidth (h_node):
 def node_getName (h_node):
     return slib.gf_node_getName(h_node).decode('utf-8')
 
+def node_getID (h_node):
+    return slib.gf_node_getID(h_node).decode('utf-8')
+
 # Reaction Information
 slib.gf_reaction_getNumCurves.argtypes = [ctypes.c_uint64]
 slib.gf_reaction_getNumCurves.restype = ctypes.c_uint64
 slib.gf_reaction_getNumSpec.argtypes = [ctypes.c_uint64]
 slib.gf_reaction_getNumSpec.restype = ctypes.c_uint64
+slib.gf_reaction_getID.argtypes = [ctypes.c_uint64]
+slib.gf_reaction_getID.restype = ctypes.c_char_p
 
 def reaction_getNumCurves (h_reaction):
     return slib.gf_reaction_getNumCurves(h_reaction)
 
 def reaction_getNumSpec (h_reaction):
     return slib.gf_reaction_getNumSpec(h_reaction)
+
+def reaction_getID (h_reaction):
+    return slib.gf_reaction_getID(h_reaction).decode('utf-8')
 
 # Curve Information
 slib.gf_reaction_getCurvep.argtypes = [ctypes.c_uint64, ctypes.c_uint64] 

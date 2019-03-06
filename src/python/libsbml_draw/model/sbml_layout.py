@@ -1,6 +1,8 @@
 """
 Creates a python interface to the c API.
 """
+import libsbml
+
 import libsbml_draw.c_api.sbnw_c_api as sbnw
 from libsbml_draw.draw.draw_network import createNetworkFigure
 from libsbml_draw.model.network import Network
@@ -123,14 +125,71 @@ class SBMLlayout:
         print("network, num nodes: ", len(self.network.nodes))
         print("network, num edges: ", len(self.network.edges))
         print("network, num rxns: ", self.getNumberOfReactions()) 
-        for edge in self.network.edges:
+        for edge in self.network.edges.values():
             print(len(edge.curves), "curves")
             for curve in edge.curves:
                 print("role: ", curve.role)
         #for node in self.network.nodes:
             
+    def get_node_ids(self,):
+        return list(self.network.nodes.keys())
+    
+    def change_node_color(self, node_id, node_color):
+        self.network.nodes[node_id].fill_color = node_color        
 
+    def get_reaction_ids(self,):
+        return list(self.network.edges.keys())
+    
+    def change_reaction_color(self, reaction_id, reaction_color):
+        self.network.edges[reaction_id].fill_color = reaction_color
 
+    def addRenderInformation(self, sbml_file_name):
+        #sbml_str = self.getSBMLWithLayout()
+        #print("render in sbml_str: ", "render" in sbml_str)
+        
+        doc = libsbml.readSBMLFromFile(sbml_file_name)
+        model = doc.getModel(); 
+        layout_plugin = model.getPlugin("layout")
+        #lol_plugin = layout_plugin.getListOfLayouts().getPlugin("render")
+        #info_global = lol_plugin.getRenderInformation(0)
+        
+        print("num layouts: ", layout_plugin.getNumLayouts())
+
+        # get first layout, there may be only 1
+        layout = layout_plugin.getLayout(0)
+        
+        rPlugin = layout.getPlugin("render")   
+
+        print("rPlugin type: " , type(rPlugin))
+        
+        rInfo = rPlugin.createLocalRenderInformation()
+
+        rInfo.setId("localRenderInfo")
+        rInfo.setName("Fill_Color Render Information")
+        # add color definitions
+        # add linear gradients
+        # add styles
+        style = rInfo.createStyle("substrateStyle")
+        style.getGroup().setFillColor("pink")
+        style.getGroup().setStroke("black")
+        style.getGroup().setStrokeWidth(2.0)
+        style.addId("S1")
+        style.addType("SPECIESGLYPH")
+
+        style = rInfo.createStyle("productStyle")
+        style.getGroup().setFillColor("green")
+        style.getGroup().setStroke("black")
+        style.getGroup().setStrokeWidth(2.0)
+        style.addId("S2")
+        style.addType("SPECIESGLYPH")
+        
+        return doc
+        
+    def writeRenderSBML(self, sbml_file_name, render_sbml_file_name):
+        doc = self.addRenderInformation(sbml_file_name)        
+        print("writing render sbml file")
+        libsbml.writeSBMLToFile(doc, render_sbml_file_name)
+        print("finished writing render sbml file!")
 
 
 

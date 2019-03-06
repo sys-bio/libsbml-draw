@@ -13,7 +13,8 @@ class Node():
         self.lower_left_point = [self.center.x - self.width/2,
                                  self.center.y - self.height/2]
         self.name = sbnw.node_getName(h_node)
-        print("centroid: ", self.center.x, ", ", self.center.y, ", ", self.name)
+        self.id = sbnw.node_getID(h_node)
+        print("centroid: ", self.center.x, ", ", self.center.y, ", ", self.name, ", ", self.id)
         self.fill_color = "#0000ff30"
 
 class Curve():
@@ -42,24 +43,27 @@ class Edge():
             h_curve = sbnw.reaction_getCurvep(h_reaction, curve_index)  
             self.curves.append(Curve(h_curve))
         self.fill_color = "red"
+        self.id = sbnw.reaction_getID(h_reaction)
         
 class Network():
     """ """
     def __init__ (self, h_network):
         self.h_network = h_network
-        self.nodes = []
-        self.edges = []
+        self.nodes = {}
+        self.edges = {}
         self._add_nodes(self.h_network)
         self._add_edges(self.h_network)
          
     def _add_nodes(self, h_network):
         for node_index in range(sbnw.nw_getNumNodes(h_network)):
             h_node = sbnw.nw_getNodep(h_network, node_index)
-            self.nodes.append(Node(h_node))
+            node_id = sbnw.node_getID(h_node)
+            self.nodes[node_id] = Node(h_node)
           
     def _add_edges(self, h_network):
         for reaction_index in range(sbnw.nw_getNumRxns(h_network)):
             h_reaction = sbnw.nw_getReactionp(h_network, reaction_index)                   
-            self.edges.append(Edge(h_reaction))        
+            reaction_id = sbnw.reaction_getID(h_reaction)
+            self.edges[reaction_id] = Edge(h_reaction)        
             
             

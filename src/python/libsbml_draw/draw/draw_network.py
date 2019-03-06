@@ -87,21 +87,21 @@ def createNetworkFigure(network):
 
     print("drawing the nodes")
     # draw the nodes
-    node_patches = draw_nodes(network.nodes)
+    node_patches = draw_nodes(network.nodes.values())
     for node_patch in node_patches:
         ax.add_patch(node_patch)
 
     print("drawing the edges")
     # draw the edges
     print(len(network.edges), "nw edges")
-    edge_patches = draw_edges(network.edges)
+    edge_patches = draw_edges(network.edges.values())
     print(len(edge_patches), " edge patches")
     for edge_patch in edge_patches:
         ax.add_patch(edge_patch)
 
     print("adding the labels")
     # add labels
-    add_labels(network.nodes)
+    add_labels(network.nodes.values())
     
     # No axes and size it just bigger than the data (i.e. tight)
     plt.axis("off")
