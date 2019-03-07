@@ -1,4 +1,4 @@
-from libsbml import readSBMLFromFile, readSBMLFromString
+#from libsbml import readSBMLFromFile, readSBMLFromString
 
 import libsbml_draw.c_api.sbnw_c_api as sbnw
 from libsbml_draw.model.sbml_layout import SBMLlayout
