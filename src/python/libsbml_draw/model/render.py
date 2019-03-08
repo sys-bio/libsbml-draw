@@ -6,17 +6,11 @@ from libsbml import readSBMLFromFile
 inputFile = "C:\\tmp\\copasi.xml"
 
 doc = readSBMLFromFile(inputFile)
-
 model = doc.getModel(); 
-
 layout_plugin = model.getPlugin("layout")
-
 print("num layouts: ", layout_plugin.getNumLayouts())
-
 render_plugin = layout_plugin.getListOfLayouts().getPlugin("render")
-
 print("num global info: ", render_plugin.getNumGlobalRenderInformationObjects()) 
-
 info_global = render_plugin.getRenderInformation(0)
 
 print("id: ", info_global.getId())

@@ -42,12 +42,19 @@ print("node ids: ", sl.get_node_ids())
 # set node properties
 sl.change_node_color("S1", "pink")
 sl.change_node_color("S2", "green")
+sl.change_node_fontname("S1", "Verdana")
+sl.change_node_fontcolor("S1", "white")
+sl.change_node_fontsize("S1", 18)
+sl.change_node_fontstyle("S1", "italic")
+sl.change_node_fontsize("S2", 24)
+sl.change_node_fontstyle("S2", "oblique")
+sl.change_node_fontcolor("S2", "yellow")
 
 # print reaction id's
 print("reaction ids: ", sl.get_reaction_ids())
 
 sl.change_reaction_color("_J0", "orange")
-
+sl.change_reaction_curve_width("_J0", 5)
 
 # set reaction properties
 sl.drawNetwork()
@@ -59,6 +66,9 @@ sl.drawNetwork()
 #sl.drawNetwork()
 render_sbml_file_name = "C:\\tmp\\render_sbml.xml"
 sl.writeRenderSBML(model_file, render_sbml_file_name)
+
+print("apply render info")
+sl.applyRenderInformation()
 
 
 

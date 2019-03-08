@@ -132,17 +132,32 @@ class SBMLlayout:
         #for node in self.network.nodes:
             
     def get_node_ids(self,):
-        return list(self.network.nodes.keys())
-    
-    def change_node_color(self, node_id, node_color):
-        self.network.nodes[node_id].fill_color = node_color        
+        return list(self.network.nodes.keys())   
 
     def get_reaction_ids(self,):
         return list(self.network.edges.keys())
     
+    def change_node_color(self, node_id, node_color):
+        self.network.nodes[node_id].fill_color = node_color     
+                          
+    def change_node_fontsize(self, node_id, fontsize):                      
+        self.network.nodes[node_id].font_size = fontsize
+
+    def change_node_fontname(self, node_id, fontname):                      
+        self.network.nodes[node_id].font_name = fontname
+        
+    def change_node_fontcolor(self, node_id, fontcolor):                      
+        self.network.nodes[node_id].font_color = fontcolor
+
+    def change_node_fontstyle(self, node_id, fontstyle):                      
+        self.network.nodes[node_id].font_style = fontstyle
+                          
     def change_reaction_color(self, reaction_id, reaction_color):
         self.network.edges[reaction_id].fill_color = reaction_color
 
+    def change_reaction_curve_width(self, reaction_id, curve_width):
+        self.network.edges[reaction_id].curve_width = curve_width
+        
     def addRenderInformation(self, sbml_file_name):
         #sbml_str = self.getSBMLWithLayout()
         #print("render in sbml_str: ", "render" in sbml_str)
@@ -191,7 +206,51 @@ class SBMLlayout:
         libsbml.writeSBMLToFile(doc, render_sbml_file_name)
         print("finished writing render sbml file!")
 
+    def applyRenderInformation(self,):
+        self.color_definitions = {}
 
+        doc = libsbml.readSBMLFromFile(self.sbml_filename)
+        model = doc.getModel(); 
+        layout_plugin = model.getPlugin("layout")
+        print("num layouts: ", layout_plugin.getNumLayouts())
+        layout = layout_plugin.getLayout(0)
+        rPlugin = layout.getPlugin("render")
+        render_plugin = layout_plugin.getListOfLayouts().getPlugin("render")
+        print("num global info: ", render_plugin.getNumGlobalRenderInformationObjects()) 
+        print("num local info: ", rPlugin.getNumLocalRenderInformationObjects())
+
+        #globalInformation
+            
+        info_global = render_plugin.getRenderInformation(0)
+
+        # -- add color definitions 
+
+        for j in range(info_global.getNumColorDefinitions()):    
+            color = info_global.getColorDefinition(j)
+            self.color_definitions[color.getId()] = color.createValueString()
+        
+        # -- styles - rolelist, typelist
+        print("styles: ", info_global.getNumStyles())
+
+        for j in range(info_global.getNumStyles()):    
+            style = info_global.getStyle(j)
+    
+            print("\tstyle: ", style.getId())
+            print("\t\troles: ", style.createRoleString())
+            print("\t\ttypes: ", style.createTypeString())
+            
+        #localInformation
+            # styles - idlist
+            #info_local = rPlugin.getRenderInformation(0)
+            #for j in range(info_local.getNumStyles()):
+            #    style = info_local.getStyle(j)
+            #print("\t\tids: ", style.createIdString())
+
+        
+        
+        
+        
+        
 
 
                 

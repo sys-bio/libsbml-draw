@@ -56,7 +56,7 @@ def draw_edges(edges):
             fap = FancyArrowPatch(path=cubic_bezier_curve_path, 
                     arrowstyle=curve.curveArrowStyle,
                     clip_on=False,
-                    linewidth=1,
+                    linewidth=edge.curve_width,
                     color=edge.fill_color,
                     mutation_scale=10
                    )
@@ -73,9 +73,11 @@ def add_labels(nodes):
         plt.text(node.center.x, 
                  node.center.y, 
                  node.name,
-                 fontsize="x-small",
+                 fontsize=node.font_size,
                  #fontsize="xx-small",
-                 color="black",
+                 color=node.font_color,
+                 fontname=node.font_name,
+                 fontstyle=node.font_style,
                  horizontalalignment="center", 
                  verticalalignment="center")
 
@@ -102,7 +104,7 @@ def createNetworkFigure(network):
     print("adding the labels")
     # add labels
     add_labels(network.nodes.values())
-    
+    print("finishing plot")
     # No axes and size it just bigger than the data (i.e. tight)
     plt.axis("off")
     plt.axis("tight")
