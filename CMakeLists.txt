@@ -139,41 +139,41 @@ configure_file(docs/Makefile docs/Makefile COPYONLY)
 
 # Shared Library
 
-add_library(sbnw SHARED ${SBNW_SOURCES})
+add_library(libsbml_draw SHARED ${SBNW_SOURCES})
 
-set_target_properties(sbnw PROPERTIES COMPILE_DEFINITIONS SBNW_CLIENT_BUILD=0 )
+set_target_properties(libsbml_draw PROPERTIES COMPILE_DEFINITIONS SBNW_CLIENT_BUILD=0 )
 
 # Link in dependencies
 
 if(LINK_WITH_LIBSBML)
     # libxml2 libbz2 zdll libiconv Ws2_32
-    target_link_libraries(sbnw ${LIBSBML_STATIC_LIBRARY} ${LIBXML2_DIR}) 
-	target_link_libraries(sbnw ${LIBSBML_STATIC_LIBRARY} ${LIBBZ2_DIR}) 
-	target_link_libraries(sbnw ${LIBSBML_STATIC_LIBRARY} ${LIBICONV_DIR}) 
-	target_link_libraries(sbnw ${LIBSBML_STATIC_LIBRARY} ${ZLIB_DIR}) 
-	target_link_libraries(sbnw ${LIBSBML_STATIC_LIBRARY} ws2_32.lib) 
+    target_link_libraries(libsbml_draw ${LIBSBML_STATIC_LIBRARY} ${LIBXML2_DIR}) 
+	target_link_libraries(libsbml_draw ${LIBSBML_STATIC_LIBRARY} ${LIBBZ2_DIR}) 
+	target_link_libraries(libsbml_draw ${LIBSBML_STATIC_LIBRARY} ${LIBICONV_DIR}) 
+	target_link_libraries(libsbml_draw ${LIBSBML_STATIC_LIBRARY} ${ZLIB_DIR}) 
+	target_link_libraries(libsbml_draw ${LIBSBML_STATIC_LIBRARY} ws2_32.lib) 
 endif()
 
 # Static Library
 
 if(BUILD_STATIC_LIB)
-    add_library(sbnw_static STATIC ${SBNW_SOURCES})
-    set_target_properties(sbnw_static PROPERTIES COMPILE_DEFINITIONS SBNW_CLIENT_BUILD=0 )
+    add_library(libsbml_draw_static STATIC ${SBNW_SOURCES})
+    set_target_properties(libsbml_draw_static PROPERTIES COMPILE_DEFINITIONS SBNW_CLIENT_BUILD=0 )
     if(${CMAKE_SYSTEM_NAME} MATCHES "Windows")
-        set_target_properties(sbnw_static PROPERTIES OUTPUT_NAME "libsbnw_static" COMPILE_FLAGS
+        set_target_properties(libsbml_draw_static PROPERTIES OUTPUT_NAME "libsbnw_static" COMPILE_FLAGS
 "/DPY_MAJOR_VERSION=${PYTHON_VERSION_MAJOR}) /DPYTHON_SCREWED_IT_UP=1" PREFIX "" )
     else()
-        set_target_properties(sbnw_static PROPERTIES COMPILE_FLAGS "-fPIC")
+        set_target_properties(libsbml_draw_static PROPERTIES COMPILE_FLAGS "-fPIC")
     endif()
 
     # Link in dependencies
 
     # SBML
-    target_link_libraries(sbnw_static ${LIBSBML_STATIC_LIBRARY} ${LIBXML2_DIR})
-	target_link_libraries(sbnw ${LIBSBML_STATIC_LIBRARY} ${LIBBZ2_DIR}) 
-	target_link_libraries(sbnw ${LIBSBML_STATIC_LIBRARY} ${LIBICONV_DIR}) 
-	target_link_libraries(sbnw ${LIBSBML_STATIC_LIBRARY} ${ZLIB_DIR}) 
-	target_link_libraries(sbnw ${LIBSBML_STATIC_LIBRARY} ws2_32.lib) 
+    target_link_libraries(libsbml_draw_static ${LIBSBML_STATIC_LIBRARY} ${LIBXML2_DIR})
+	target_link_libraries(libsbml_draw_static ${LIBSBML_STATIC_LIBRARY} ${LIBBZ2_DIR}) 
+	target_link_libraries(libsbml_draw_static ${LIBSBML_STATIC_LIBRARY} ${LIBICONV_DIR}) 
+	target_link_libraries(libsbml_draw_static ${LIBSBML_STATIC_LIBRARY} ${ZLIB_DIR}) 
+	target_link_libraries(libsbml_draw_static ${LIBSBML_STATIC_LIBRARY} ws2_32.lib) 
 
 endif()
 
@@ -184,7 +184,7 @@ install(TARGETS libsbml_draw RUNTIME DESTINATION bin LIBRARY DESTINATION lib ARC
 add_custom_target(headers)
 foreach(f ${SBNW_HEADERS})
     add_custom_command(TARGET headers COMMAND ${CMAKE_COMMAND} -E copy ${CMAKE_CURRENT_SOURCE_DIR}/${f}
-    ${CMAKE_CURRENT_BINARY_DIR}/../include/sbnw/${f})
+    ${CMAKE_CURRENT_BINARY_DIR}/../include/libsbml_draw/${f})
 endforeach()
 
 message(STATUS "PYTHON_VERSION_MAJOR ${PYTHON_VERSION_MAJOR}")

@@ -23,6 +23,8 @@ class SBMLlayout:
             self.h_model = sbnw.loadSBML(self.sbml_filename)
             self.h_layout_info = sbnw.processLayout (self.h_model)                
             self.h_network = sbnw.getNetworkp(self.h_layout_info)
+            self.layoutSpecified = True if sbnw.isLayoutSpecified(self.h_network) else False
+            print("layoutSpecified: ", self.layoutSpecified)
         else:
             print("No SBML filename given, creating a new model from scratch.")
             self.h_model = sbnw.SBMLModel_newp()
@@ -106,7 +108,7 @@ class SBMLlayout:
         print("reaction ", reaction_index, "numCurves: ", numCurves)
 
     # SBML Functions        
-    def getSBMLWithLayout(self,):
+    def getSBMLWithLayoutString(self,):
         sbml_string = sbnw.getSBMLwithLayoutStr(self.h_model, self.h_layout_info)
         return sbml_string 
     
@@ -161,8 +163,8 @@ class SBMLlayout:
     def addRenderInformation(self, sbml_file_name):
         #sbml_str = self.getSBMLWithLayout()
         #print("render in sbml_str: ", "render" in sbml_str)
-        
-        doc = libsbml.readSBMLFromFile(sbml_file_name)
+        doc = libsbml.readSBMLFromString(self.getSBMLWithLayoutString())
+        #doc = libsbml.readSBMLFromFile(sbml_file_name)
         model = doc.getModel(); 
         layout_plugin = model.getPlugin("layout")
         #lol_plugin = layout_plugin.getListOfLayouts().getPlugin("render")
@@ -172,31 +174,43 @@ class SBMLlayout:
 
         # get first layout, there may be only 1
         layout = layout_plugin.getLayout(0)
+        print("layout type: ", type(layout))
+        print("layout num plugins: ", layout.getNumPlugins())
         
         rPlugin = layout.getPlugin("render")   
-
         print("rPlugin type: " , type(rPlugin))
         
-        rInfo = rPlugin.createLocalRenderInformation()
+        if (rPlugin is not None and rPlugin.getNumLocalRenderInformationObjects() > 0):
+            print("num local render info objects: ", rPlugin.getNumLocalRenderInformationObjects())
+        else:
+            uri = libsbml.RenderExtension.getXmlnsL2() if doc.getLevel() == 2 else libsbml.RenderExtension.getXmlnsL3V1V1()
+            
+            # enable render package
+            doc.enablePackage(uri, "render", True)
+            doc.setPackageRequired("render", False)
+      
+            rPlugin = layout.getPlugin("render")   
+        
+            rInfo = rPlugin.createLocalRenderInformation()
 
-        rInfo.setId("localRenderInfo")
-        rInfo.setName("Fill_Color Render Information")
-        # add color definitions
-        # add linear gradients
-        # add styles
-        style = rInfo.createStyle("substrateStyle")
-        style.getGroup().setFillColor("pink")
-        style.getGroup().setStroke("black")
-        style.getGroup().setStrokeWidth(2.0)
-        style.addId("S1")
-        style.addType("SPECIESGLYPH")
+            rInfo.setId("localRenderInfo")
+            rInfo.setName("Fill_Color Render Information")
+            # add color definitions
+            # add linear gradients
+            # add styles
+            style = rInfo.createStyle("substrateStyle")
+            style.getGroup().setFillColor("pink")
+            style.getGroup().setStroke("black")
+            style.getGroup().setStrokeWidth(2.0)
+            style.addId("S1")
+            style.addType("SPECIESGLYPH")
 
-        style = rInfo.createStyle("productStyle")
-        style.getGroup().setFillColor("green")
-        style.getGroup().setStroke("black")
-        style.getGroup().setStrokeWidth(2.0)
-        style.addId("S2")
-        style.addType("SPECIESGLYPH")
+            style = rInfo.createStyle("productStyle")
+            style.getGroup().setFillColor("green")
+            style.getGroup().setStroke("black")
+            style.getGroup().setStrokeWidth(2.0)
+            style.addId("S2")
+            style.addType("SPECIESGLYPH")
         
         return doc
         

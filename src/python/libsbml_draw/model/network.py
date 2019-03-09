@@ -14,7 +14,8 @@ class Node():
                                  self.center.y - self.height/2]
         self.name = sbnw.node_getName(h_node)
         self.id = sbnw.node_getID(h_node)
-        print("centroid: ", self.center.x, ", ", self.center.y, ", ", self.name, ", ", self.id)
+        print(self.name, ", ", self.id)
+        print("centroid: ", self.center.x, ", ", self.center.y, ", ", self.width, ", ", self.height)
         self.fill_color = "#0000ff30"
         self.font_size = 12
         self.font_name = "Arial"

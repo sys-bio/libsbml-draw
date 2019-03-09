@@ -28,7 +28,8 @@ import ctypes
 # SBNW DLL
 #slib = ctypes.CDLL("libsbml_draw.dll")
 #slib = ctypes.CDLL(libsbmldraw_lib_file)
-slib = ctypes.CDLL(r"C:\Users\nrhaw\Documents\Tellurium\sbnw.dll")
+slib = ctypes.CDLL(r"C:\Users\nrhaw\Documents\Tellurium\libsbml_draw.dll")
+#slib = ctypes.CDLL(r"C:\Users\nrhaw\Documents\Tellurium\sbnw.dll")
 # slib = ctypes.CDLL ('C:\\Tellurium-Winpython-3.6\\python-3.6.6.amd64\\Lib\\site-packages\\sbnw\\sbnw.dll')
 # slib = ctypes.CDLL('C:\Users\nrhaw\Documents\Visual Studio 2017\Projects\sbnw\BUILD\graphfab\Release\sbnw.dll')
 
@@ -98,6 +99,8 @@ def writeSBML (filename, sbml_model):
     return slib.gf_writeSBML(filename, sbml_model)
 
 # Layout Functions
+slib.gf_nw_isLayoutSpecified.argtypes = [ctypes.c_uint64]
+slib.gf_nw_isLayoutSpecified.restype = ctypes.c_uint64
 slib.gf_processLayout.argtypes = [ctypes.c_uint64]
 slib.gf_processLayout.restype = ctypes.c_uint64
 slib.gf_randomizeLayout.argtypes = [ctypes.c_uint64]
@@ -106,6 +109,9 @@ slib.gf_doLayoutAlgorithm.argtypes = [fr_alg_options, ctypes.c_uint64]
 slib.gf_doLayoutAlgorithm.restype = None
 
 # Layout Functions
+def isLayoutSpecified(h_network):
+    return slib.gf_nw_isLayoutSpecified(h_network)
+
 def processLayout (h_layout):
     return slib.gf_processLayout(h_layout)         
 
