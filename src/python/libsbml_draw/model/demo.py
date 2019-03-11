@@ -1,10 +1,12 @@
-#from libsbml import readSBMLFromFile, readSBMLFromString
+#from libsbml import readSBMLFromFile, read`SBMLFromString
 
 import libsbml_draw.c_api.sbnw_c_api as sbnw
 from libsbml_draw.model.sbml_layout import SBMLlayout
 
-model_file = "C:\\tmp\\model.xml"
+#model_file = "C:\\tmp\\model.xml"
 #model_file = "C:\\tmp\\copasi.xml"
+#model_file = "C:\\tmp\\render_sbml.xml"
+model_file = "C:\\tmp\\largerpathway.xml"
 
 layout_alg_options = sbnw.fr_alg_options(
             20.0,        # k
@@ -73,6 +75,6 @@ sl.writeRenderSBML(model_file, render_sbml_file_name)
 print("apply render info")
 sl.applyRenderInformation()
 
-
+sl.drawNetwork()
 
 

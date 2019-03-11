@@ -221,45 +221,81 @@ class SBMLlayout:
         print("finished writing render sbml file!")
 
     def applyRenderInformation(self,):
-        self.color_definitions = {}
+        color_definitions = {}
 
         doc = libsbml.readSBMLFromFile(self.sbml_filename)
         model = doc.getModel(); 
+        print("model type: ", type(model))
         layout_plugin = model.getPlugin("layout")
-        print("num layouts: ", layout_plugin.getNumLayouts())
-        layout = layout_plugin.getLayout(0)
-        rPlugin = layout.getPlugin("render")
-        render_plugin = layout_plugin.getListOfLayouts().getPlugin("render")
-        print("num global info: ", render_plugin.getNumGlobalRenderInformationObjects()) 
-        print("num local info: ", rPlugin.getNumLocalRenderInformationObjects())
 
-        #globalInformation
-            
-        info_global = render_plugin.getRenderInformation(0)
+        if layout_plugin:
+            print("num layouts: ", layout_plugin.getNumLayouts())
+            layout = layout_plugin.getLayout(0)
+            rPlugin = layout.getPlugin("render")
 
-        # -- add color definitions 
+            if rPlugin:
+                render_plugin = layout_plugin.getListOfLayouts().getPlugin("render")
+                print("num global info: ", render_plugin.getNumGlobalRenderInformationObjects()) 
+                print("num local info: ", rPlugin.getNumLocalRenderInformationObjects())
 
-        for j in range(info_global.getNumColorDefinitions()):    
-            color = info_global.getColorDefinition(j)
-            self.color_definitions[color.getId()] = color.createValueString()
+                # globalInformation
+                info_global = render_plugin.getRenderInformation(0)
+
+                if(info_global):
+                    # -- add color definitions 
+                    for j in range(info_global.getNumColorDefinitions()):    
+                        color = info_global.getColorDefinition(j)
+                        color_definitions[color.getId()] = color.createValueString()
+                    print("color definitions: ", len(color_definitions))
         
-        # -- styles - rolelist, typelist
-        print("styles: ", info_global.getNumStyles())
+                    # -- styles - rolelist, typelist
+                    print("styles: ", info_global.getNumStyles())
 
-        for j in range(info_global.getNumStyles()):    
-            style = info_global.getStyle(j)
+                    for j in range(info_global.getNumStyles()):    
+                        style = info_global.getStyle(j)
     
-            print("\tstyle: ", style.getId())
-            print("\t\troles: ", style.createRoleString())
-            print("\t\ttypes: ", style.createTypeString())
-            
-        #localInformation
-            # styles - idlist
-            #info_local = rPlugin.getRenderInformation(0)
-            #for j in range(info_local.getNumStyles()):
-            #    style = info_local.getStyle(j)
-            #print("\t\tids: ", style.createIdString())
-
+                        #print("\tstyle: ", style.getId())
+                        #print("\t\troles: ", style.createRoleString())
+                        #print("\t\ttypes string: ", style.createTypeString())
+                        #types = style.getTypeList()
+                        #print("\t\ttypes list: ", len(types))
+                        if style.isInTypeList("SPECIESGLYPH"):
+                            #print("\t\tApply this style to nodes.")
+                            #print("\t\tFill is: ", style.getGroup().getFillColor())
+                            if style.getGroup().isSetFillColor():
+                                node_color = style.getGroup().getFillColor()
+                                for node in self.network.nodes.values():
+                                    node.fill_color = node_color
+                                    print("set node color to: ", node.fill_color)
+                                    
+                        if(style.isInTypeList("REACTIONGLYPH")):
+                            #print("\t\tApply this style to reactions.")
+                            for edge in self.network.edges.values():
+                                if style.getGroup().isSetStroke():
+                                    reaction_color = style.getGroup().getStroke()
+                                    #print("\t\tStroke is: ", stroke_color)
+                                    if reaction_color in color_definitions:
+                                    #print("\t\tcolor defn: ", color_definitions[stroke_color])
+                                        reaction_color = color_definitions[reaction_color]
+                                    edge.fill_color = reaction_color
+                                if style.getGroup().isSetStrokeWidth():
+                                    edge.curve_width = style.getGroup().getStrokeWidth()
+                            
+                        if(style.isInTypeList("TEXTGLYPH")):
+                            #print("\t\tApply this style to node text.")
+                            #print("\t\tFont-family is: ", style.getGroup().getFontFamily
+                            for node in self.network.nodes.values():                                                        
+                                if(style.getGroup().isSetFontFamily()):
+                                    node.font_name = style.getGroup().getFontFamily() 
+                                    print("set node font_name to: ", node.font_name)
+                # localInformation
+                # styles - idlist
+                info_local = rPlugin.getRenderInformation(0)
+                if(info_local):
+                    for j in range(info_local.getNumStyles()):
+                        style = info_local.getStyle(j)
+                        print("\t\tids: ", style.createIdString())
+                        print("\t\tfill color: ", style.getGroup().getFillColor())
         
         
         
