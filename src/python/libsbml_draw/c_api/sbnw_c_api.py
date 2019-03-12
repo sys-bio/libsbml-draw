@@ -3,10 +3,14 @@ Sets up the python bindings to the c api.
 """
 import ctypes
 
-#import pkg_resources
+import pkg_resources
+from pathlib import Path
 #libsbmldraw_lib_file = pkg_resources.resource_string("libsbml-draw", "data/libsbml_draw.dll")
 #DATA_PATH = pkg_resources.resource_filename("libsbml_draw", "data/")
-#DLL_FILE = pkg_resources.resource_filename("libsbml_draw", "data/libsbml_draw.dll")
+DLL_FILE = Path(pkg_resources.resource_filename("libsbml_draw", "data/libsbml_draw.dll"))
+print("DLL FILE: ", type(DLL_FILE), str(DLL_FILE))
+slib = ctypes.CDLL(str(DLL_FILE))
+
 #
 #if sys.platform.startswith('win32'):
 #    rrInstallFolder = os.path.abspath(os.path.join(os.path.dirname(__file__), '..', 'bin'))
@@ -28,7 +32,7 @@ import ctypes
 # SBNW DLL
 #slib = ctypes.CDLL("libsbml_draw.dll")
 #slib = ctypes.CDLL(libsbmldraw_lib_file)
-slib = ctypes.CDLL(r"C:\Users\nrhaw\Documents\Tellurium\libsbml_draw.dll")
+#slib = ctypes.CDLL(r"C:\Users\nrhaw\Documents\Tellurium\libsbml_draw.dll")
 #slib = ctypes.CDLL(r"C:\Users\nrhaw\Documents\Tellurium\sbnw.dll")
 # slib = ctypes.CDLL ('C:\\Tellurium-Winpython-3.6\\python-3.6.6.amd64\\Lib\\site-packages\\sbnw\\sbnw.dll')
 # slib = ctypes.CDLL('C:\Users\nrhaw\Documents\Visual Studio 2017\Projects\sbnw\BUILD\graphfab\Release\sbnw.dll')
