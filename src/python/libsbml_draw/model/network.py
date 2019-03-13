@@ -15,7 +15,8 @@ class Node():
         self.name = sbnw.node_getName(h_node)
         self.id = sbnw.node_getID(h_node)
         print(self.name, ", ", self.id)
-        print("centroid: ", self.center.x, ", ", self.center.y, ", ", self.width, ", ", self.height)
+        print("centroid: ", self.center.x, ", ", self.center.y, ", ", 
+              self.width, ", ", self.height)
         self.fill_color = "#0000ff30"
         self.font_size = 12
         self.font_name = "Arial"
@@ -35,8 +36,10 @@ class Curve():
         if self.role == 1:
             self.curveArrowStyle = "-|>"
         elif self.role == 4:
-            print("MODIFIER: ", sbnw.GF_ROLE_MODIFIER, "type: ", type(sbnw.GF_ROLE_MODIFIER))
-            self.curveArrowStyle = ArrowStyle("|-|", widthA=0, angleA=None, widthB=1.0, angleB=None)
+            print("MODIFIER: ", sbnw.GF_ROLE_MODIFIER, "type: ", 
+                  type(sbnw.GF_ROLE_MODIFIER))
+            self.curveArrowStyle = ArrowStyle("|-|", widthA=0, angleA=None, 
+                                              widthB=1.0, angleB=None)
         else:
             self.curveArrowStyle = "-"
  

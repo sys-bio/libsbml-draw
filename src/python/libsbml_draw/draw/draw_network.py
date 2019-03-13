@@ -41,8 +41,10 @@ def draw_edges(edges):
         
             start_point = np.array([curve.start_point.x, curve.start_point.y])
             end_point = np.array([curve.end_point.x, curve.end_point.y])
-            control_point_1 = np.array([curve.control_point_1.x, curve.control_point_1.y])
-            control_point_2 = np.array([curve.control_point_2.x, curve.control_point_2.y])
+            control_point_1 = np.array([curve.control_point_1.x, 
+                                        curve.control_point_1.y])
+            control_point_2 = np.array([curve.control_point_2.x, 
+                                        curve.control_point_2.y])
     
             cubic_bezier_curve_path = Path(
                     [start_point, 
