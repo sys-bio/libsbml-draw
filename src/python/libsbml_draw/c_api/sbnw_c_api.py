@@ -47,6 +47,7 @@ slib = ctypes.CDLL(str(DLL_FILE))
  GF_ROLE_INHIBITOR) = map(ctypes.c_uint, range(7))
 
 # Classes
+# note: the default values for the fr_alg_options are 0's
 class fr_alg_options(ctypes.Structure):
      _fields_ = [("k", ctypes.c_double),
                 ("boundary", ctypes.c_int),

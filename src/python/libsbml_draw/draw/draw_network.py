@@ -8,23 +8,22 @@ from matplotlib import pyplot as plt
 
 
 def draw_nodes(nodes):
-    """Create a list of FancyBbox Patches, one for each node 
+    """Create a list of FancyBbox Patches, one for each node
     """
     node_patches = []
 
     for node in nodes:
-            
+
         fbbp = FancyBboxPatch(
-            node.lower_left_point, 
-            node.width, 
+            node.lower_left_point,
+            node.width,
             node.height,
-            #color="#0000ff30",
             color=node.fill_color,
-            boxstyle=BoxStyle("round", pad=0.2, rounding_size=.6), 
+            boxstyle=BoxStyle("round", pad=0.2, rounding_size=.6),
             mutation_scale=10)
 
-        node_patches.append(fbbp)  
-       
+        node_patches.append(fbbp)
+
     return node_patches
 
 
@@ -36,32 +35,32 @@ def draw_edges(edges):
     for edge in edges:
 
         curves = edge.curves
-        
+
         for curve in curves:
-        
+
             start_point = np.array([curve.start_point.x, curve.start_point.y])
             end_point = np.array([curve.end_point.x, curve.end_point.y])
-            control_point_1 = np.array([curve.control_point_1.x, 
+            control_point_1 = np.array([curve.control_point_1.x,
                                         curve.control_point_1.y])
-            control_point_2 = np.array([curve.control_point_2.x, 
+            control_point_2 = np.array([curve.control_point_2.x,
                                         curve.control_point_2.y])
-    
+
             cubic_bezier_curve_path = Path(
-                    [start_point, 
-                     control_point_1, 
-                     control_point_2, 
+                    [start_point,
+                     control_point_1,
+                     control_point_2,
                      end_point],
                     [Path.MOVETO, Path.CURVE4, Path.CURVE4, Path.CURVE4])
 
-        #print("bezier_path: ", cubic_bezier_curve_path)
+        # print("bezier_path: ", cubic_bezier_curve_path)
 
-            fap = FancyArrowPatch(path=cubic_bezier_curve_path, 
-                    arrowstyle=curve.curveArrowStyle,
-                    clip_on=False,
-                    linewidth=edge.curve_width,
-                    color=edge.fill_color,
-                    mutation_scale=10
-                   )
+            fap = FancyArrowPatch(path=cubic_bezier_curve_path,
+                                  arrowstyle=curve.curveArrowStyle,
+                                  clip_on=False,
+                                  linewidth=edge.curve_width,
+                                  color=edge.fill_color,
+                                  mutation_scale=10
+                                  )
 
             edge_patches.append(fap)
 
@@ -72,15 +71,15 @@ def add_labels(nodes):
     for node in nodes:
         # width_shift = node.width/4
         # height_shift = node.height/4
-        plt.text(node.center.x, 
-                 node.center.y, 
+        plt.text(node.center.x,
+                 node.center.y,
                  node.name,
                  fontsize=node.font_size,
-                 #fontsize="xx-small",
+                 # fontsize="xx-small",
                  color=node.font_color,
                  fontname=node.font_name,
                  fontstyle=node.font_style,
-                 horizontalalignment="center", 
+                 horizontalalignment="center",
                  verticalalignment="center")
 
 
@@ -115,4 +114,3 @@ def createNetworkFigure(network):
     plt.show()
 
     return fig
-

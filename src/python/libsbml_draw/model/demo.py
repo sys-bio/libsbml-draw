@@ -8,21 +8,8 @@ from libsbml_draw.model.sbml_layout import SBMLlayout
 #model_file = "C:\\tmp\\render_sbml.xml"
 model_file = "C:\\tmp\\largerpathway.xml"
 
-layout_alg_options = sbnw.fr_alg_options(
-            20.0,        # k
-            1,           # boundary
-            0,           # mag
-            0,           # grav
-            500.0,       # baryx
-            0.0,         # baryy
-            1,           # autobary
-            0,           # enable_comps
-            0,           # prerandom
-            0.0          # padding
-            )    
-
 # read model
-sl = SBMLlayout(model_file, layout_alg_options)
+sl = SBMLlayout(model_file)
 
 # generate layout
 if not sl.layoutSpecified:
