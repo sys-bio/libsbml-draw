@@ -20,6 +20,7 @@ class SBMLlayout:
                  layout_number=0):
 
         self.sbml_filename = sbml_filename
+        self.layout_number = layout_number
 
         if self._validate_layout_alg_options(layout_alg_options):
             self.layout_alg_options = layout_alg_options
@@ -45,8 +46,8 @@ class SBMLlayout:
                     self.h_network) else False
             # create layout, if it doesn't already exist
             if not self.layoutSpecified:
-                self.randomizeLayout()
-                self.doLayoutAlgorithm()
+                self._randomizeLayout()
+                self._doLayoutAlgorithm()
             self.network = self._createNetwork()
             # apply render information, if any
             self._applyRenderInformation()
@@ -88,10 +89,11 @@ class SBMLlayout:
         sbnw.doLayoutAlgorithm(self.layout_alg_options, self.h_layout_info)
 
     def _createNetwork(self,):
-        self.network = Network(self.h_network)
+        return Network(self.h_network)
 
     def describeModel(self,):
         print()
+        print("layout is specified: ", self.layoutSpecified)
         print("number of Compartments: ", self.numCompartments)
         print("number of Nodes: ", self.numNodes)
         print("number of Reactions: ", self.numReactions)
@@ -151,13 +153,13 @@ class SBMLlayout:
 
     def drawNetwork(self,):
         createNetworkFigure(self.network)
-        print("network, num nodes: ", len(self.network.nodes))
-        print("network, num edges: ", len(self.network.edges))
-        print("network, num rxns: ", self.getNumberOfReactions())
-        for edge in self.network.edges.values():
-            print(len(edge.curves), "curves")
-            for curve in edge.curves:
-                print("role: ", curve.role)
+        # print("network, num nodes: ", len(self.network.nodes))
+        # print("network, num edges: ", len(self.network.edges))
+        # print("network, num rxns: ", self.getNumberOfReactions())
+        # for edge in self.network.edges.values():
+        #    print(len(edge.curves), "curves")
+        #    for curve in edge.curves:
+        #        print("role: ", curve.role)
 
     def writeSBMLFile(self, out_file_name):
         libsbml.writeSBMLToFile(self.doc, out_file_name)
@@ -170,77 +172,117 @@ class SBMLlayout:
 
     # Node Getters and Setters
 
+    def getNodeColor(self, node_id):        
+        return self.network.nodes[node_id].fill_color
+
+    def setNodeColor(self, node_id, node_color):
+        """
+        Sets the node edge color and fill color to the same value.
+
+        Args:
+        node_id (str): id of the node to change the color of one node, 
+                       or 'all' to change the color of all the nodes
+
+        Returns: None        
+        """
+        if node_id == "all":
+            for node in self.network.nodes.values():
+                node.fill_color = node_color
+                node.edge_color = node_color
+        else:
+            self.network.nodes[node_id].edge_color = node_color
+            self.network.nodes[node_id].fill_color = node_color
+    
     def getNodeFillColor(self, node_id):
-        self.network.nodes[node_id].fill_color
+        return self.network.nodes[node_id].fill_color
 
     def setNodeFillColor(self, node_id, node_color):
         self.network.nodes[node_id].fill_color = node_color
 
     def getNodeEdgeColor(self, node_id):
-        self.network.nodes[node_id].edge_color
+        return self.network.nodes[node_id].edge_color
 
     def setNodeEdgeColor(self, node_id, node_color):
         self.network.nodes[node_id].edge_color = node_color
 
     def getNodeFontsize(self, node_id):
-        self.network.nodes[node_id].font_size
+        return self.network.nodes[node_id].font_size
 
     def setNodeFontsize(self, node_id, fontsize):
         self.network.nodes[node_id].font_size = fontsize
 
     def getNodeFontname(self, node_id):
-        self.network.nodes[node_id].font_name
+        return self.network.nodes[node_id].font_name
 
     def setNodeFontname(self, node_id, fontname):
         self.network.nodes[node_id].font_name = fontname
 
     def getNodeFontfamily(self, node_id):
-        self.network.nodes[node_id].font_family
+        return self.network.nodes[node_id].font_family
 
     def setNodeFontfamily(self, node_id, fontfamily):
         self.network.nodes[node_id].font_family = fontfamily
 
     def getNodeFontcolor(self, node_id):
-        self.network.nodes[node_id].font_color
+        return self.network.nodes[node_id].font_color
 
     def setNodeFontcolor(self, node_id, fontcolor):
         self.network.nodes[node_id].font_color = fontcolor
 
     def getNodeFontstyle(self, node_id):
-        self.network.nodes[node_id].font_style
+        return self.network.nodes[node_id].font_style
 
     def setNodeFontstyle(self, node_id, fontstyle):
         """Available font styles are normal, italic, and oblique"""
         self.network.nodes[node_id].font_style = fontstyle
 
     def getNodeWidth(self, node_id):
-        self.network.nodes[node_id].width
+        return self.network.nodes[node_id].width
 
     def getNodeHeight(self, node_id):
-        self.network.nodes[node_id].height
+        return self.network.nodes[node_id].height
 
     def getNodeName(self, node_id):
-        self.network.nodes[node_id].name
+        return self.network.nodes[node_id].name
 
     def getNodeLowerLeftPoint(self, node_id):
-        self.network.nodes[node_id].lower_left_point
+        return self.network.nodes[node_id].lower_left_point
 
     # Reaction Getters and Setters
 
+    def setReactionColor(self, reaction_id, reaction_color):
+        """
+        Sets the reaction edge color and fill color to the same value.
+
+        Args:
+        reaction_id (str): id of the reaction to change the color of one 
+                           reaction, or 'all' to change the color of all the 
+                           nodes
+
+        Returns: None        
+        """
+        if reaction_id == "all":
+            for reaction in self.network.edges.values():
+                reaction.fill_color = reaction_color
+                reaction.edge_color = reaction_color
+        else:
+            self.network.edges[reaction_id].edge_color = reaction_color
+            self.network.edges[reaction_id].fill_color = reaction_color
+
     def getReactionEdgeColor(self, reaction_id):
-        self.network.edges[reaction_id].edge_color
+        return self.network.edges[reaction_id].edge_color
 
     def setReactionEdgeColor(self, reaction_id, reaction_edge_color):
         self.network.edges[reaction_id].edge_color = reaction_edge_color
 
     def getReactionFillColor(self, reaction_id):
-        self.network.edges[reaction_id].fill_color
+        return self.network.edges[reaction_id].fill_color
 
     def setReactionFillColor(self, reaction_id, reaction_fill_color):
         self.network.edges[reaction_id].fill_color = reaction_fill_color
 
     def getReactionCurveWidth(self, reaction_id):
-        self.network.edges[reaction_id].curve_width
+        return self.network.edges[reaction_id].curve_width
 
     def setReactionCurveWidth(self, reaction_id, curve_width):
         self.network.edges[reaction_id].curve_width = curve_width

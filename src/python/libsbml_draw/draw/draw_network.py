@@ -18,7 +18,8 @@ def draw_nodes(nodes):
             node.lower_left_point,
             node.width,
             node.height,
-            color=node.fill_color,
+            edgecolor=node.edge_color,
+            facecolor=node.fill_color,
             boxstyle=BoxStyle("round", pad=0.2, rounding_size=.6),
             mutation_scale=10)
 
@@ -54,12 +55,13 @@ def draw_edges(edges):
 
         # print("bezier_path: ", cubic_bezier_curve_path)
 
-            fap = FancyArrowPatch(path=cubic_bezier_curve_path,
+            fap = FancyArrowPatch(facecolor=edge.fill_color,
+                                  edgecolor=edge.edge_color,
                                   arrowstyle=curve.curveArrowStyle,
                                   clip_on=False,
-                                  linewidth=edge.curve_width,
-                                  color=edge.fill_color,
-                                  mutation_scale=10
+                                  linewidth=edge.curve_width,                                  
+                                  mutation_scale=15,
+                                  path=cubic_bezier_curve_path
                                   )
 
             edge_patches.append(fap)
@@ -69,8 +71,6 @@ def draw_edges(edges):
 
 def add_labels(nodes):
     for node in nodes:
-        # width_shift = node.width/4
-        # height_shift = node.height/4
         plt.text(node.center.x,
                  node.center.y,
                  node.name,

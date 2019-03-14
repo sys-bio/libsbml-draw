@@ -65,7 +65,7 @@ class Curve():
         self.role = sbnw.curve_getRole(h_curve)
         # what if role isn't defined?
         self.curveArrowStyle = Curve.role_arrowstyles[self.role]
-
+    
 
 class Edge():
     """ """
@@ -75,7 +75,7 @@ class Edge():
             h_curve = sbnw.reaction_getCurvep(h_reaction, curve_index)
             self.curves.append(Curve(h_curve))
         self.id = sbnw.reaction_getID(h_reaction)
-        self.edge_color = "red"
+        self.edge_color = "blue"
         self.fill_color = "red"
         self.curve_width = 1
 

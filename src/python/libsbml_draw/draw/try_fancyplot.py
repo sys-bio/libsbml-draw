@@ -19,21 +19,26 @@ fbbp = FancyBboxPatch(lower_left_corner,
                       color="red",
                       fill=False)
 
-head = (0,0)
+head = (0,0.2)
 tail = (1,1)
 
 arrow_path = Path([(0,0), (.25,.25), (.5,.5)])
 
-fap1 = FancyArrowPatch(head, 
-                      tail,
-                      arrowstyle="-|>",
-                      color="blue",
-                      linewidth="5.0")
+fap1 = FancyArrowPatch(head, tail,
+                       facecolor="lightblue",
+                       linewidth="1",
+                       mutation_scale=20)
 
-fap2 = FancyArrowPatch(path=arrow_path,
+fap2 = FancyArrowPatch(
                       arrowstyle="-|>",
-                      color="green",
-                      linewidth="5.0")
+                      facecolor="red",
+                      edgecolor="green",
+                      linewidth="3",
+                      mutation_scale=30,
+                      path=arrow_path
+                      )
+
+print("fap2 face edge: ", fap2.get_facecolor(), ", ", fap2.get_edgecolor())
 
 ax.add_patch(fbbp)
 ax.add_patch(fap1)
