@@ -1,4 +1,4 @@
-.. _model:
+.. _draw:
 
 Draw the SBML Model 
 ===================

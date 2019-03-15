@@ -1,4 +1,4 @@
-.. _model:
+.. _c_api:
 
 Python Bindings for C API
 =========================

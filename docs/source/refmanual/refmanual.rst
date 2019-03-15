@@ -1,5 +1,5 @@
 #############################
-libsbml_draw Reference Manual
+Reference Manual
 #############################
 
 .. toctree::

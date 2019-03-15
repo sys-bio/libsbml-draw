@@ -6,8 +6,8 @@ setup(
     packages=PEP420PackageFinder.find("src/python"),
     package_dir={"": "src/python"},
     #data_files=[("data", ["install_windows/libsbnw_draw.dll",]),
-    package_data={"libsbml_draw": ["data/libsbml_draw.dll"]},
-    install_requires=["libsbml", "matplotlib"],
+    package_data={"libsbml_draw": ["c_api/data/libsbml_draw.dll"]},
+    install_requires=["python-libsbml", "matplotlib"],
     extras_require={
         "testing": ["pytest", "pytest-mock"],
         "documentation": ["sphinx", "sphinx_rtd_theme", "sphinx-autobuild", "sphinxcontrib-napoleon"],
