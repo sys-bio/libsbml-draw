@@ -7,11 +7,14 @@ import pkg_resources
 from pathlib import Path
 #libsbmldraw_lib_file = pkg_resources.resource_string("libsbml-draw", "data/libsbml_draw.dll")
 #DATA_PATH = pkg_resources.resource_filename("libsbml_draw", "data/")
-DLL_FILE = Path(pkg_resources.resource_filename("libsbml_draw", "c_api/data/libsbml_draw.dll"))
+DLL_FILE = Path(pkg_resources.resource_filename("libsbml_draw", "c_api/data/sbnw.dll"))
 print("DLL FILE: ", type(DLL_FILE), str(DLL_FILE))
 slib = ctypes.CDLL(str(DLL_FILE))
 
-#
+#slib = ctypes.CDLL("C:\\Users\\nhawk\\Documents\\repos\\libsbml-draw\\src\\python\\libsbml_draw\\c_api\\data\\libsbml_draw.dll")
+
+#slib = ctypes.CDLL("C:\\tmp\\sbnw.dll")
+
 #if sys.platform.startswith('win32'):
 #    rrInstallFolder = os.path.abspath(os.path.join(os.path.dirname(__file__), '..', 'bin'))
 #    sharedLib = os.path.join(rrInstallFolder, 'roadrunner_c_api.dll')

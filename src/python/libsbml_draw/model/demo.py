@@ -1,33 +1,33 @@
 #from libsbml import readSBMLFromFile, read`SBMLFromString
 
-import libsbml_draw.c_api.sbnw_c_api as sbnw
+#import libsbml_draw.c_api.sbnw_c_api as sbnw
 from libsbml_draw.model.sbml_layout import SBMLlayout
 
-#model_file = "C:\\tmp\\model.xml"
+model_file = "C:\\tmp\\model.xml"
 #model_file = "C:\\tmp\\copasi.xml"
 #model_file = "C:\\tmp\\render_sbml.xml"
-model_file = "C:\\tmp\\largerpathway.xml"
+#model_file = "C:\\tmp\\largerpathway.xml"
 
 # read model
 sl = SBMLlayout(model_file)
 
 # generate layout
 if not sl.layoutSpecified:
-    sl.randomizeLayout()
-    sl.doLayoutAlgorithm()
+    sl._randomizeLayout()
+    sl._doLayoutAlgorithm()
 
 # describe network
 print("num nodes: ", sl.getNumberOfNodes())
 print("num reactions: ", sl.getNumberOfReactions())
 
 # create network
-sl.createNetwork()
+sl._createNetwork()
 
 # draw network
 sl.drawNetwork()
 
 # print node id's
-print("node ids: ", sl.get_node_ids())
+print("node ids: ", sl.getNodeIds())
 
 if "copasi" in model_file:
     # set node properties
@@ -43,10 +43,10 @@ if "copasi" in model_file:
     sl.change_node_fontcolor("S2", "yellow")
 
 # print reaction id's
-print("reaction ids: ", sl.get_reaction_ids())
+print("reaction ids: ", sl.getReactionIds())
 
-sl.change_reaction_color("_J0", "orange")
-sl.change_reaction_curve_width("_J0", 5)
+sl.setReactionColor("_J0", "orange")
+sl.setReactionCurveWidth("_J0", 5)
 
 # set reaction properties
 sl.drawNetwork()
@@ -57,10 +57,10 @@ sl.drawNetwork()
 # draw network
 #sl.drawNetwork()
 render_sbml_file_name = "C:\\tmp\\render_sbml.xml"
-sl.writeRenderSBML(model_file, render_sbml_file_name)
+sl.writeSBMLFile(render_sbml_file_name)
 
 print("apply render info")
-sl.applyRenderInformation()
+sl._applyRenderInformation()
 
 sl.drawNetwork()
 

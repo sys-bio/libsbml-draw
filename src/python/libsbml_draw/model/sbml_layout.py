@@ -180,8 +180,8 @@ class SBMLlayout:
         Sets the node edge color and fill color to the same value.
 
         Args:
-        node_id (str): id of the node to change the color of one node, 
-                       or 'all' to change the color of all the nodes
+            node_id (str): id of the node to change the color of one node, 
+                or 'all' to change the color of all the nodes
 
         Returns: None        
         """
@@ -255,9 +255,8 @@ class SBMLlayout:
         Sets the reaction edge color and fill color to the same value.
 
         Args:
-        reaction_id (str): id of the reaction to change the color of one 
-                           reaction, or 'all' to change the color of all the 
-                           nodes
+            reaction_id (str): id of the reaction to change the color of one 
+                reaction, or 'all' to change the color of all the nodes
 
         Returns: None        
         """
