@@ -18,11 +18,11 @@ sys.path.insert(0, os.path.abspath("../../src/python/"))
 
 import mock
 
-MOCK_MODULES = ['python-libsbml', 'matplotlib', 'ctypes']
+MOCK_MODULES = ['python-libsbml', 'ctypes']
 for mod_name in MOCK_MODULES:
     sys.modules[mod_name] = mock.Mock()
 
-
+#
 # -- Project information -----------------------------------------------------
 
 project = 'libsbml_draw'
