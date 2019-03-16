@@ -16,12 +16,6 @@ import os
 import sys
 sys.path.insert(0, os.path.abspath("../../src/python/"))
 
-import mock
-
-MOCK_MODULES = ['ctypes', 'python-libsbml']
-for mod_name in MOCK_MODULES:
-    sys.modules[mod_name] = mock.Mock()
-
 #
 # -- Project information -----------------------------------------------------
 
@@ -174,3 +168,8 @@ autodoc_member_order = "bysource"
 # Defaults for automodule and autoclass
 # To negate add `:no-undoc-members:` flag to a particular instance
 autodoc_default_flags = ["members", "undoc-members"]
+
+# Can't mock numpy because it causes a LooseVersion error.
+autodoc_mock_imports = [
+    "ctypes", "matplotlib", "networkx", "python-libsbml"
+    ]
