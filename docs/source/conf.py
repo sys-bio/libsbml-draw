@@ -177,5 +177,5 @@ autodoc_default_flags = ["members", "undoc-members"]
 
 # Can't mock numpy because it causes a LooseVersion error.
 autodoc_mock_imports = [
-    "ctypes", "matplotlib", "networkx", "libsbml"
+    "matplotlib", "networkx", "libsbml"
     ]
