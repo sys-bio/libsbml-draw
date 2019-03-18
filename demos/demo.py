@@ -62,6 +62,6 @@ sl.writeSBMLFile(render_sbml_file_name)
 print("apply render info")
 sl._applyRenderInformation()
 
-sl.drawNetwork()
+sl.drawNetwork("C:\\tmp\\save_network.pdf")
 
 
