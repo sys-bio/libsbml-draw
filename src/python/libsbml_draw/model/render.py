@@ -21,12 +21,52 @@ class Render:
         print("rPlugin: ", type(self.rPlugin))
         print("render_plugin: ", type(self.render_plugin))
         print("num layouts: ", self.layout_plugin.getNumLayouts())
+
+    def _collectColorDefinitions(self, global_render_info):
+        # -- collect color definitions
+        color_definitions = {}
+        for color_defn in global_render_info.getListOfColorDefinitions():
+            color_definitions[color_defn.getId()] = color_defn.createValueString()    
     
     def applyGlobalRenderInformation(self, network):
+
         if self.render_plugin:
+
             print("num global info: ", self.render_plugin.getNumGlobalRenderInformationObjects())
-        print("network type: ", type(network))
+
+            if self.render_plugin.getNumGlobalRenderInformationObjects() > 0:
+
+                for global_render_info in self.render_plugin.getListOfGlobalRenderInformation():
+                    # Process each global render information object
+                    if(global_render_info):
+                        # collect the color definitions
+                        print("num color definitions: ", global_render_info.getNumColorDefinitions())
+                        color_definitions = self._collectColorDefinitions(global_render_info)
+                        # process Styles 	                  
+                        for global_style in global_render_info.getListOfGlobalStyles(): 
+
+                            #   SPECIESGLYPHS
+                            #   TEXTGLYPHS
+                            #   REACTIONGLYPHS
+                            
+                            # apply to nodes                                
+                            if global_style.isInTypeList("SPECIESGLYPH"):
+                           
+                                if global_style.getGroup().isSetFillColor():
+                                    node_color = global_style.getGroup().getFillColor()
+                                    for node in network.nodes.values():
+                                        node.fill_color = node_color
+                                        print("set node color: ", node.fill_color)                            
+                        
+            print("color definitions: ", len(color_definitions))
         
     def applyLocalRenderInformation(self, network):
         if self.rPlugin:
             print("num local info: ", self.rPlugin.getNumLocalRenderInformationObjects())
+        print("local render, network type: ", type(network))
+        
+        
+        
+        
+        
+        

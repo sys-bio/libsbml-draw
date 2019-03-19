@@ -8,7 +8,7 @@ import libsbml
 import libsbml_draw.c_api.sbnw_c_api as sbnw
 from libsbml_draw.draw.draw_network import createNetworkFigure
 from libsbml_draw.model.network import Network
-#from libsbml_draw.model.render import Render
+from libsbml_draw.model.render import Render
 
 
 class SBMLlayout:
@@ -100,7 +100,7 @@ class SBMLlayout:
         print("number of Compartments: ", self.numCompartments)
         print("number of Nodes: ", self.numNodes)
         print("number of Reactions: ", self.numReactions)
-        return (self.numCompartments, self.numNodes, self.numReactions)
+        print("apply renderInfo, network type: ", type(self.network))
 
     def getNumberOfCompartments(self,):
         return sbnw.nw_getNumCompartments(self.h_network)
@@ -297,11 +297,9 @@ class SBMLlayout:
         print("TODO: add Render information")
         
     def _applyRenderInformation(self,):         
-        print("TODO: apply Render information")
-        #renderInfo = Render(self.sbml_filename, self.layout_number)
-        #print("renderInfo: ", type(renderInfo))
-        # renderInfo.applyGlobalRenderInformation(self.network)
-        # renderInfo.applyLocalRenderInformation(self.network)
+        renderInfo = Render(self.sbml_filename, self.layout_number)
+        renderInfo.applyGlobalRenderInformation(self.network)
+        renderInfo.applyLocalRenderInformation(self.network)
         
     def fitToWindow(self, left, top, right, bottom):
         sbnw.fit_to_window(self.h_layout_info, left, top, right, bottom)
