@@ -210,34 +210,34 @@ class SBMLlayout:
     def setNodeEdgeColor(self, node_id, node_color):
         self.network.nodes[node_id].edge_color = node_color
 
-    def getNodeFontsize(self, node_id):
+    def getNodeFontSize(self, node_id):
         return self.network.nodes[node_id].font_size
 
-    def setNodeFontsize(self, node_id, fontsize):
+    def setNodeFontSize(self, node_id, fontsize):
         self.network.nodes[node_id].font_size = fontsize
 
-    def getNodeFontname(self, node_id):
-        return self.network.nodes[node_id].font_name
-
-    def setNodeFontname(self, node_id, fontname):
-        self.network.nodes[node_id].font_name = fontname
-
-    def getNodeFontfamily(self, node_id):
+    def getNodeFontName(self, node_id):
         return self.network.nodes[node_id].font_family
 
-    def setNodeFontfamily(self, node_id, fontfamily):
+    def setNodeFontName(self, node_id, fontname):
+        self.network.nodes[node_id].font_family = fontname
+
+    def getNodeFontFamily(self, node_id):
+        return self.network.nodes[node_id].font_family
+
+    def setNodeFontFamily(self, node_id, fontfamily):
         self.network.nodes[node_id].font_family = fontfamily
 
-    def getNodeFontcolor(self, node_id):
+    def getNodeFontColor(self, node_id):
         return self.network.nodes[node_id].font_color
 
-    def setNodeFontcolor(self, node_id, fontcolor):
+    def setNodeFontColor(self, node_id, fontcolor):
         self.network.nodes[node_id].font_color = fontcolor
 
-    def getNodeFontstyle(self, node_id):
+    def getNodeFontStyle(self, node_id):
         return self.network.nodes[node_id].font_style
 
-    def setNodeFontstyle(self, node_id, fontstyle):
+    def setNodeFontStyle(self, node_id, fontstyle):
         """Available font styles are normal, italic, and oblique"""
         self.network.nodes[node_id].font_style = fontstyle
 

@@ -32,7 +32,7 @@ class Node():
         self.fill_color = "#0000ff30"
         self.font_size = 12
         self.font_family = "Arial"
-        self.font_name = "Arial"
+        # self.font_name = "Arial"
         self.font_color = "black"
         self.font_style = "normal"
 
@@ -47,9 +47,7 @@ class Curve():
                         ArrowStyle("|-|",
                                    widthA=0, angleA=None,
                                    widthB=1.0, angleB=None),  # MODIFIER
-                        ArrowStyle("|-|",
-                                   widthA=0, angleA=None,
-                                   widthB=1.0, angleB=None),  # ACTIVATOR
+                        "-|>",                                # ACTIVATOR
                         ArrowStyle("|-|",
                                    widthA=0, angleA=None,
                                    widthB=1.0, angleB=None)   # INHIBITOR

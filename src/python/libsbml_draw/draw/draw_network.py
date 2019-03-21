@@ -77,7 +77,7 @@ def add_labels(nodes):
                  fontsize=node.font_size,
                  # fontsize="xx-small",
                  color=node.font_color,
-                 fontname=node.font_name,
+                 fontname=node.font_family,
                  fontstyle=node.font_style,
                  horizontalalignment="center",
                  verticalalignment="center")
