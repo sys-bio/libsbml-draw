@@ -154,10 +154,10 @@ class SBMLlayout:
         # if result error, raise Exception?
         return result
 
-    def drawNetwork(self, save_file_name=None):
+    def drawNetwork(self, save_file_name=None, bbox_inches="tight"):
         fig = createNetworkFigure(self.network)
         if(save_file_name):
-            fig.savefig(save_file_name)
+            fig.savefig(save_file_name, bbox_inches=bbox_inches)
         # print("network, num nodes: ", len(self.network.nodes))
         # print("network, num edges: ", len(self.network.edges))
         # print("network, num rxns: ", self.getNumberOfReactions())

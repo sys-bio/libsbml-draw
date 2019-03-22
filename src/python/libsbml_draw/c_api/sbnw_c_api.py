@@ -9,7 +9,7 @@ import platform
 #libsbmldraw_lib_file = pkg_resources.resource_string("libsbml-draw", "data/libsbml_draw.dll")
 #DATA_PATH = pkg_resources.resource_filename("libsbml_draw", "data/")
 DLL_FILE = Path(pkg_resources.resource_filename("libsbml_draw", "c_api/data/sbnw.dll"))
-print("DLL FILE: ", type(DLL_FILE), str(DLL_FILE))
+#print("DLL FILE: ", type(DLL_FILE), str(DLL_FILE))
 
 if(platform.system() == "Windows"):
     slib = ctypes.CDLL(str(DLL_FILE))

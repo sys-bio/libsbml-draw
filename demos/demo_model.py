@@ -9,7 +9,7 @@ sl = SBMLlayout(model_file)
 #sl.describeModel()
 
 
-sl.drawNetwork()
+sl.drawNetwork("C:\\tmp\\model_compute_layout.png")
 
 
 print("node ids: ", sl.getNodeIds())

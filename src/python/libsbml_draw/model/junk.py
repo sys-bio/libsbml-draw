@@ -1,3 +1,10 @@
+def is_number(s):
+    try:
+        float(s)
+        return True
+    except ValueError:
+        return False
+
 def theRest():    
                 # globalInformation
                 info_global = render_plugin.getRenderInformation(0)

@@ -3,19 +3,22 @@ the SBML file."""
 
 from collections import namedtuple
 from matplotlib.colors import is_color_like
-from matplotlib.font_manager import FontProperties, get_fontconfig_fonts
+from matplotlib.font_manager import FontProperties, findSystemFonts
 
 import libsbml
 
-PlotColor = namedtuple("PlotColor", ['is_valid_color', 'color'])
-FontProperty = namedtuple("FontProperty", ['is_valid_value', 'value'])
+PlotColor = namedtuple("PlotColor", ["is_valid_color", "color"])
+FontProperty = namedtuple("FontProperty", ["is_valid_value", "value"])
 
 FONT_STYLES = ["italic", "normal"]
 
 FONT_PROPERTIES = {
     "style": [0, 1],        
-    "family": [FontProperties(fname=fname).get_name() for fname in get_fontconfig_fonts()],
-    "size": [12]
+    
+    "family": [FontProperties(fname=fname).get_name().lower() for fname in findSystemFonts(fontpaths=None, fontext='ttf')] +
+               ["serif", "sans-serif", "cursive", "fantasy", "monospace"],
+
+    "size": ["xx-small", "x-small", "small", "medium", "large", "x-large", "xx-large"]
         }
 
 
@@ -26,7 +29,7 @@ class Render:
         self.doc = libsbml.readSBMLFromFile(sbml_filename)
         self.model = self.doc.getModel()
         self.layout_plugin = self.model.getPlugin("layout")
-        self.layout = self.layout_plugin.getLayout(layout_number) if self.layout_plugin.getNumLayouts() > 0 else None
+        self.layout = self.layout_plugin.getLayout(layout_number) if self.layout_plugin and self.layout_plugin.getNumLayouts() > 0 else None
         self.rPlugin = self.layout.getPlugin("render") if self.layout else None 
         self.render_plugin = self.layout_plugin.getListOfLayouts().getPlugin("render") if self.layout_plugin else None       
     
@@ -80,25 +83,42 @@ class Render:
 
     def _set_font_property(self, font_property, property_value):
 
-       if font_property in FONT_PROPERTIES:
-           if font_property in FONT_PROPERTIES[font_property]:
-               if font_property == "style":
-                   font_property = FontProperty(True, FONT_STYLES[property_value])
-               else:
-                   font_property = FontProperty(True, property_value)
-           else:
-               font_property = FontProperty(False, property_value)
+        if font_property == "style":
+            if property_value in FONT_PROPERTIES[font_property]:              
+                font_property = FontProperty(True, FONT_STYLES[property_value])
+            else:
+                font_property = FontProperty(False, property_value)
+ 
+        elif font_property == "family":
+            if property_value.lower() in FONT_PROPERTIES[font_property]:
+                font_property = FontProperty(True, property_value)
+            else:
+                font_property = FontProperty(False, property_value)
+            
+        elif font_property == "size":
+            if str(round(property_value)).isdigit() or str(property_value).lower() in FONT_PROPERTIES[font_property]:
+                font_property = FontProperty(True, property_value)
+                print("font size is valid")
+            else:
+                font_property = FontProperty(False, property_value)
+        else:
+            font_property = FontProperty(False, property_value)
 
-       return font_property
+        return font_property
                                            
     def _updateNodesBasedOnTextGlyph(self, global_style, color_definitions, network):
     
         node_font_color = self._set_plot_color_and_validity(
                 global_style.getGroup().getStroke(), color_definitions)
-
-        # maybe convert the value to lower()
-        node_font_style = self._set_font_property("style", global_style.getGroup().getFontStyle())
         
+        node_font_size = self._set_font_property("size", global_style.getGroup().getFontSize().getAbsoluteValue())
+        print("node_font_size: ", node_font_size) 
+        node_font_family = self._set_font_property("family", global_style.getGroup().getFontFamily())
+        print("node_font_family: ", node_font_family)
+        node_font_style = self._set_font_property("style", global_style.getGroup().getFontStyle())
+        print("node_font_style: ", node_font_style)
+        
+        print("setting valid node text values")        
         for node in network.nodes.values():
 
             if node_font_color.is_valid_color:    
@@ -107,10 +127,31 @@ class Render:
             if node_font_style.is_valid_value:
                 node.font_style = node_font_style.value
 
+            if node_font_size.is_valid_value:
+                node.font_size = node_font_size.value
 
+            if node_font_family.is_valid_value:
+                node.font_family = node_font_family.value
 
     def _updateNodesBasedOnReactionGlyph(self, global_style, color_definitions, network):
-        pass
+
+        reaction_edge_color = self._set_plot_color_and_validity(
+                global_style.getGroup().getStroke(), color_definitions)     
+
+        reaction_edge_width = global_style.getGroup().getStrokeWidth()
+        
+        for reaction in network.edges.values():
+
+            if reaction_edge_color.is_valid_color:    
+                reaction.edge_color = reaction_edge_color.color 
+                reaction.fill_color = reaction_edge_color.color
+                print("set reaction edge color: ", reaction.edge_color)             
+            else:
+                pass
+                # log this, and stick with default value
+
+            #if reaction_edge_width > 0?, need to check this
+            reaction.curve_width = reaction_edge_width
         
     def applyGlobalRenderInformation(self, network):
 
@@ -144,7 +185,7 @@ class Render:
     def applyLocalRenderInformation(self, network):
         if self.rPlugin:
             print("num local info: ", self.rPlugin.getNumLocalRenderInformationObjects())
-        print("local render, network type: ", type(network))
+        #print("local render, network type: ", type(network))
         
         
         
