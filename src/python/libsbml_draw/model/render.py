@@ -185,7 +185,7 @@ class Render:
     def applyLocalRenderInformation(self, network):
         if self.rPlugin:
             print("num local info: ", self.rPlugin.getNumLocalRenderInformationObjects())
-        #print("local render, network type: ", type(network))
+        print("local render, rPlugin type: ", type(self.rPlugin))
         
         
         

@@ -24,6 +24,11 @@ sl.setReactionCurveWidth("_J0", 2)
 sl.setReactionColor("all", "purple")
 sl.setReactionColor("_J0", "green")
 
+# KeyError in setter
+#sl.setReactionColor("_J", "green")
+# ValueError in matplotlib
+#sl.setReactionColor("_J1", "greene")
+
 print("reaction edge: ", sl.getReactionEdgeColor("_J0"))
 print("reaction fill: ", sl.getReactionFillColor("_J0"))
 
