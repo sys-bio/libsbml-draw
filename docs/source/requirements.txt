@@ -22,8 +22,8 @@ port-for==0.3.1
 Pygments==2.2.0
 pyparsing==2.2.0
 pytz==2018.5
-PyYAML==3.13
-requests==2.19.1
+PyYAML==4.2b1
+requests==2.20.0
 setuptools_scm
 six==1.11.0
 snowballstemmer==1.2.1
