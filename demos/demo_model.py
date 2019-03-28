@@ -1,6 +1,7 @@
 from libsbml_draw.model.sbml_layout import SBMLlayout
 
-model_file = "C:\\tmp\\model.xml"
+#model_file = "C:\\tmp\\model.xml"
+model_file = "/home/radix/repos/libsbml-draw/model_files/model.xml"
 
 
 sl = SBMLlayout(model_file)
@@ -9,7 +10,7 @@ sl = SBMLlayout(model_file)
 #sl.describeModel()
 
 
-sl.drawNetwork("C:\\tmp\\model_compute_layout.png")
+#sl.drawNetwork("C:\\tmp\\model_compute_layout.png")
 
 
 print("node ids: ", sl.getNodeIds())

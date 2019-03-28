@@ -8,13 +8,16 @@ from pathlib import Path
 import platform
 #libsbmldraw_lib_file = pkg_resources.resource_string("libsbml-draw", "data/libsbml_draw.dll")
 #DATA_PATH = pkg_resources.resource_filename("libsbml_draw", "data/")
+
 DLL_FILE = Path(pkg_resources.resource_filename("libsbml_draw", "c_api/data/sbnw.dll"))
+SO_FILE = Path(pkg_resources.resource_filename("libsbml_draw", "c_api/data/libsbml_draw.so"))
+
 #print("DLL FILE: ", type(DLL_FILE), str(DLL_FILE))
 
 if(platform.system() == "Windows"):
     slib = ctypes.CDLL(str(DLL_FILE))
 else:
-    slib = None
+    slib = ctypes.CDLL(str(SO_FILE))
 
 #slib = ctypes.CDLL("C:\\Users\\nhawk\\Documents\\repos\\libsbml-draw\\src\\python\\libsbml_draw\\c_api\\data\\libsbml_draw.dll")
 

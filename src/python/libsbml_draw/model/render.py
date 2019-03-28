@@ -3,7 +3,8 @@ the SBML file."""
 
 from collections import namedtuple
 from matplotlib.colors import is_color_like
-from matplotlib.font_manager import FontProperties, findSystemFonts
+from matplotlib.font_manager import findSystemFonts
+from pathlib import Path
 
 import libsbml
 
@@ -12,11 +13,13 @@ FontProperty = namedtuple("FontProperty", ["is_valid_value", "value"])
 
 FONT_STYLES = ["italic", "normal"]
 
+SYSTEM_FONT_PATHS = findSystemFonts(fontpaths=None, fontext='ttf')
+SYSTEM_FONT_NAMES = [Path(fpath).stem for fpath in SYSTEM_FONT_PATHS]
+
 FONT_PROPERTIES = {
     "style": [0, 1],        
     
-    "family": [FontProperties(fname=fname).get_name().lower() for fname in findSystemFonts(fontpaths=None, fontext='ttf')] +
-               ["serif", "sans-serif", "cursive", "fantasy", "monospace"],
+    "family": SYSTEM_FONT_NAMES + ["serif", "sans-serif", "cursive", "fantasy", "monospace"],
 
     "size": ["xx-small", "x-small", "small", "medium", "large", "x-large", "xx-large"]
         }
