@@ -13,17 +13,6 @@ FontProperty = namedtuple("FontProperty", ["is_valid_value", "value"])
 
 FONT_STYLES = ["italic", "normal"]
 
-SYSTEM_FONT_PATHS = findSystemFonts(fontpaths=None, fontext='ttf')
-SYSTEM_FONT_NAMES = [Path(fpath).stem for fpath in SYSTEM_FONT_PATHS]
-
-FONT_PROPERTIES = {
-    "style": [0, 1],        
-    
-    "family": SYSTEM_FONT_NAMES + ["serif", "sans-serif", "cursive", "fantasy", "monospace"],
-
-    "size": ["xx-small", "x-small", "small", "medium", "large", "x-large", "xx-large"]
-        }
-
 
 class Render:
     
@@ -35,6 +24,19 @@ class Render:
         self.layout = self.layout_plugin.getLayout(layout_number) if self.layout_plugin and self.layout_plugin.getNumLayouts() > 0 else None
         self.rPlugin = self.layout.getPlugin("render") if self.layout else None 
         self.render_plugin = self.layout_plugin.getListOfLayouts().getPlugin("render") if self.layout_plugin else None       
+        self.font_properties = self._setFontProperties()
+
+    def _setFontProperties(self,):
+        system_font_paths = findSystemFonts(fontpaths=None, fontext='ttf')
+        system_font_names = [Path(fpath).stem for fpath in system_font_paths]
+
+        font_properties = {
+            "style": [0, 1],        
+            "family": system_font_names + ["serif", "sans-serif", "cursive", "fantasy", "monospace"],
+            "size": ["xx-small", "x-small", "small", "medium", "large", "x-large", "xx-large"]
+        }                
+        
+        return font_properties
     
     def _describeRenderInfo(self,):
         print("layout_plugin: ", type(self.layout_plugin))
