@@ -148,10 +148,12 @@ set_target_properties(libsbml_draw PROPERTIES COMPILE_DEFINITIONS SBNW_CLIENT_BU
 if(LINK_WITH_LIBSBML)
     # libxml2 libbz2 zdll libiconv Ws2_32
     target_link_libraries(libsbml_draw ${LIBSBML_STATIC_LIBRARY} ${LIBXML2_DIR}) 
-	target_link_libraries(libsbml_draw ${LIBSBML_STATIC_LIBRARY} ${LIBBZ2_DIR}) 
-	target_link_libraries(libsbml_draw ${LIBSBML_STATIC_LIBRARY} ${LIBICONV_DIR}) 
-	target_link_libraries(libsbml_draw ${LIBSBML_STATIC_LIBRARY} ${ZLIB_DIR}) 
-	target_link_libraries(libsbml_draw ${LIBSBML_STATIC_LIBRARY} ws2_32.lib) 
+    target_link_libraries(libsbml_draw ${LIBSBML_STATIC_LIBRARY} ${LIBBZ2_DIR}) 
+    target_link_libraries(libsbml_draw ${LIBSBML_STATIC_LIBRARY} ${ZLIB_DIR}) 
+    if(${WIN32})
+        target_link_libraries(libsbml_draw ${LIBSBML_STATIC_LIBRARY} ${LIBICONV_DIR}) 
+        target_link_libraries(libsbml_draw ${LIBSBML_STATIC_LIBRARY} ws2_32.lib) 
+    endif()
 endif()
 
 # Static Library
@@ -170,11 +172,12 @@ if(BUILD_STATIC_LIB)
 
     # SBML
     target_link_libraries(libsbml_draw_static ${LIBSBML_STATIC_LIBRARY} ${LIBXML2_DIR})
-	target_link_libraries(libsbml_draw_static ${LIBSBML_STATIC_LIBRARY} ${LIBBZ2_DIR}) 
-	target_link_libraries(libsbml_draw_static ${LIBSBML_STATIC_LIBRARY} ${LIBICONV_DIR}) 
-	target_link_libraries(libsbml_draw_static ${LIBSBML_STATIC_LIBRARY} ${ZLIB_DIR}) 
-	target_link_libraries(libsbml_draw_static ${LIBSBML_STATIC_LIBRARY} ws2_32.lib) 
-
+    target_link_libraries(libsbml_draw_static ${LIBSBML_STATIC_LIBRARY} ${LIBBZ2_DIR}) 
+    target_link_libraries(libsbml_draw_static ${LIBSBML_STATIC_LIBRARY} ${ZLIB_DIR}) 
+    if(${WIN32})
+        target_link_libraries(libsbml_draw_static ${LIBSBML_STATIC_LIBRARY} ${LIBICONV_DIR})
+        target_link_libraries(libsbml_draw_static ${LIBSBML_STATIC_LIBRARY} ws2_32.lib) 
+    endif()
 endif()
 
 # Library dist
