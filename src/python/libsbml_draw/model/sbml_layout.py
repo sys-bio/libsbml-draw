@@ -3,6 +3,8 @@ models defined in an SBML file, making use of a c API and libsbml."""
 
 import os
 
+from matplotlib.colors import is_color_like
+
 import libsbml
 
 import libsbml_draw.c_api.sbnw_c_api as sbnw
@@ -155,9 +157,14 @@ class SBMLlayout:
         return result
 
     def drawNetwork(self, save_file_name=None, bbox_inches="tight"):
-        fig = createNetworkFigure(self.network)
-        if(save_file_name):
-            fig.savefig(save_file_name, bbox_inches=bbox_inches)
+
+        try: 
+            fig = createNetworkFigure(self.network)
+            if(save_file_name):
+                fig.savefig(save_file_name, bbox_inches=bbox_inches)
+        except Exception as inst:
+            print("Type of Error: ", type(inst))
+            print("Description of Error: ", inst)
         # print("network, num nodes: ", len(self.network.nodes))
         # print("network, num edges: ", len(self.network.edges))
         # print("network, num rxns: ", self.getNumberOfReactions())
@@ -190,6 +197,14 @@ class SBMLlayout:
 
         Returns: None        
         """
+        try: 
+            if not is_color_like(node_color):
+                raise ValueError("Invalid color: ", node_color)        
+        except Exception as inst:
+            print("ERROR: Cannot set node color: ", inst)
+            print("TYPE of ERROR: ", type(inst).__name__)
+            return "Error"
+                
         if node_id == "all":
             for node in self.network.nodes.values():
                 node.fill_color = node_color
