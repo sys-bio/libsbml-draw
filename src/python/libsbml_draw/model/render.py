@@ -168,13 +168,13 @@ class Render:
 
                 for global_render_info in self.render_plugin.getListOfGlobalRenderInformation():
                     # Process each global render information object
-                    if(global_render_info):
+                    if global_render_info:
                         # collect the color definitions
                         print("num color definitions: ", global_render_info.getNumColorDefinitions())
                         color_definitions = self._collectColorDefinitions(global_render_info)
                         # process Styles 	                  
-                        x = global_render_info.getListOfStyles()
-                        print("list of GS: ", type(x), ", ", len(x))
+                        # x = global_render_info.getListOfStyles()
+                        # print("list of GS: ", type(x), ", ", len(x))
                         for global_style in global_render_info.getListOfStyles(): 
                             if global_style.isInTypeList("SPECIESGLYPH"):
                                 self._updateNodesBasedOnSpeciesGlyph(global_style, color_definitions, network)
@@ -188,9 +188,41 @@ class Render:
                         print("color definitions: ", len(color_definitions))
         
     def applyLocalRenderInformation(self, network):
+
         if self.rPlugin:
+            
             print("num local info: ", self.rPlugin.getNumLocalRenderInformationObjects())
-        print("local render, rPlugin type: ", type(self.rPlugin))
+
+            for local_render_info in self.rPlugin.getListOfLocalRenderInformation():
+
+                if local_render_info:
+                    
+                    for local_style in local_render_info.getListOfStyles():
+                        
+                        #network.nodes.keys()
+                        #network.edges.keys()                        
+
+
+                        
+                
+        #print("local render, rPlugin type: ", type(self.rPlugin))
+        
+
+
+        
+    def addRenderInformation(self, network): 
+        # Global
+        # get global object, else create global object
+        if self.render_plugin.getNumGlobalRenderInformationObjects() > 0:
+            # get Global Object of Interest
+
+
+
+
+
+
+
+
         
         
         
