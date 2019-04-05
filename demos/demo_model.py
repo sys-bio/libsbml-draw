@@ -1,13 +1,19 @@
+# from pathlib import Path
+# import pkg_resources
+
 from libsbml_draw.model.sbml_layout import SBMLlayout
 
 #model_file = "C:\\tmp\\model.xml"
-model_file = "/home/radix/repos/libsbml-draw/model_files/model.xml"
+#model_file = "/home/radix/repos/libsbml-draw/model_files/model.xml"
+model_file = "/Users/natalieh/repos/libsbml-draw/model_files/model.xml"
+#model_file = Path(pkg_resources.resource_filename("libsbml_draw", "model_files/model.xml"))
 
+print("model file: \t", model_file)
 
 sl = SBMLlayout(model_file)
 
 
-#sl.describeModel()
+sl._describeModel()
 
 
 #sl.drawNetwork("C:\\tmp\\model_compute_layout.png")

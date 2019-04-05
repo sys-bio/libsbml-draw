@@ -2,51 +2,19 @@
 Sets up the python bindings to the c api.
 """
 import ctypes
-
-import pkg_resources
 from pathlib import Path
+import pkg_resources
 import platform
-#libsbmldraw_lib_file = pkg_resources.resource_string("libsbml-draw", "data/libsbml_draw.dll")
-#DATA_PATH = pkg_resources.resource_filename("libsbml_draw", "data/")
 
-DLL_FILE = Path(pkg_resources.resource_filename("libsbml_draw", "c_api/data/sbnw.dll"))
-SO_FILE = Path(pkg_resources.resource_filename("libsbml_draw", "c_api/data/libsbml_draw.so"))
-
-#print("DLL FILE: ", type(DLL_FILE), str(DLL_FILE))
-
-if(platform.system() == "Windows"):
+if platform.system() == "Windows":
+    DLL_FILE = Path(pkg_resources.resource_filename("libsbml_draw", "c_api/data/sbnw.dll"))
     slib = ctypes.CDLL(str(DLL_FILE))
-else:
+elif platform.system() == "Linux":
+    SO_FILE = Path(pkg_resources.resource_filename("libsbml_draw", "c_api/data/libsbml_draw.so"))
     slib = ctypes.CDLL(str(SO_FILE))
-
-#slib = ctypes.CDLL("C:\\Users\\nhawk\\Documents\\repos\\libsbml-draw\\src\\python\\libsbml_draw\\c_api\\data\\libsbml_draw.dll")
-
-#slib = ctypes.CDLL("C:\\tmp\\sbnw.dll")
-
-#if sys.platform.startswith('win32'):
-#    rrInstallFolder = os.path.abspath(os.path.join(os.path.dirname(__file__), '..', 'bin'))
-#    sharedLib = os.path.join(rrInstallFolder, 'roadrunner_c_api.dll')
-#    rrLib=CDLL(sharedLib)
-#else:
-#    rrInstallFolder = os.path.abspath(os.path.join(os.path.dirname(__file__), '..', 'lib'))
-#    if os.path.isfile(os.path.join(rrInstallFolder, 'libroadrunner_c_api.so')):
-#        sharedLib = os.path.join(rrInstallFolder, 'libroadrunner_c_api.so')
-#    elif os.path.isfile(os.path.join(rrInstallFolder, 'libroadrunner_c_api.dylib')):
-#        sharedLib = os.path.join(rrInstallFolder, 'libroadrunner_c_api.dylib')
-#    else:
-#        raise Exception("could not locate RoadRunner shared library")
-#    rrLib = cdll.LoadLibrary(sharedLib)
-
-#print("data_path: ", DATA_PATH)
-#print("dll file: ", DLL_FILE)
-
-# SBNW DLL
-#slib = ctypes.CDLL("libsbml_draw.dll")
-#slib = ctypes.CDLL(libsbmldraw_lib_file)
-#slib = ctypes.CDLL(r"C:\Users\nrhaw\Documents\Tellurium\libsbml_draw.dll")
-#slib = ctypes.CDLL(r"C:\Users\nrhaw\Documents\Tellurium\sbnw.dll")
-# slib = ctypes.CDLL ('C:\\Tellurium-Winpython-3.6\\python-3.6.6.amd64\\Lib\\site-packages\\sbnw\\sbnw.dll')
-# slib = ctypes.CDLL('C:\Users\nrhaw\Documents\Visual Studio 2017\Projects\sbnw\BUILD\graphfab\Release\sbnw.dll')
+else:
+    DYLIB_FILE = Path(pkg_resources.resource_filename("libsbml_draw", "c_api/data/libsbml_draw.dylib"))
+    slib = ctypes.CDLL(str(DYLIB_FILE))
 
 # Enumerations
 (GF_ROLE_SUBSTRATE,

@@ -89,19 +89,19 @@ class Render:
     def _set_font_property(self, font_property, property_value):
 
         if font_property == "style":
-            if property_value in FONT_PROPERTIES[font_property]:              
+            if property_value in self.font_properties[font_property]:              
                 font_property = FontProperty(True, FONT_STYLES[property_value])
             else:
                 font_property = FontProperty(False, property_value)
  
         elif font_property == "family":
-            if property_value.lower() in FONT_PROPERTIES[font_property]:
+            if property_value.lower() in self.font_properties[font_property]:
                 font_property = FontProperty(True, property_value)
             else:
                 font_property = FontProperty(False, property_value)
             
         elif font_property == "size":
-            if str(round(property_value)).isdigit() or str(property_value).lower() in FONT_PROPERTIES[font_property]:
+            if str(round(property_value)).isdigit() or str(property_value).lower() in self.font_properties[font_property]:
                 font_property = FontProperty(True, property_value)
                 print("font size is valid")
             else:
@@ -198,16 +198,12 @@ class Render:
                 if local_render_info:
                     
                     for local_style in local_render_info.getListOfStyles():
-                        
+                        ids = local_style.getIdList()
+                        print("local style ids: ", ids)
                         #network.nodes.keys()
                         #network.edges.keys()                        
 
-
-                        
-                
-        #print("local render, rPlugin type: ", type(self.rPlugin))
-        
-
+        #print("local render, rPlugin type: ", type(self.rPlugin))    
 
         
     def addRenderInformation(self, network): 
@@ -215,7 +211,7 @@ class Render:
         # get global object, else create global object
         if self.render_plugin.getNumGlobalRenderInformationObjects() > 0:
             # get Global Object of Interest
-
+            print("global render IO's")
 
 
 
@@ -227,5 +223,4 @@ class Render:
         
         
         
-        
-        
+                
