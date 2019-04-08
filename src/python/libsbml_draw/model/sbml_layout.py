@@ -175,6 +175,7 @@ class SBMLlayout:
 
     def writeSBMLFile(self, out_file_name):
         libsbml.writeSBMLToFile(self.doc, out_file_name)
+        print("wrote file: ", out_file_name)
 
     def getNodeIds(self,):
         return list(self.network.nodes.keys())

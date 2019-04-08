@@ -4,11 +4,11 @@ from libsbml_draw.model.sbml_layout import SBMLlayout
 
 
 if platform.system() == "Windows":
-    model_file = "C:\\tmp\\largerpathway.xml"
+    model_file = "C:\\tmp\\render_sbml.xml"
 elif platform.system() == "Linux":    
-    model_file = "/home/radix/repos/libsbml-draw/model_files/largerpathway.xml"
+    model_file = "/home/radix/repos/libsbml-draw/model_files/render_sbml.xml"
 else:
-    model_file = "/Users/natalieh/repos/libsbml-draw/model_files/largerpathway.xml"
+    model_file = "/Users/natalieh/repos/libsbml-draw/model_files/render_sbml.xml"
 
 
 

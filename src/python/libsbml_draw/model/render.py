@@ -202,7 +202,7 @@ class Render:
                         print("local style ids: ", ids)
                         #network.nodes.keys()
                         #network.edges.keys()                        
-
+                        
         #print("local render, rPlugin type: ", type(self.rPlugin))    
 
         

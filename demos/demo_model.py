@@ -1,14 +1,18 @@
 # from pathlib import Path
 # import pkg_resources
+import platform
 
 from libsbml_draw.model.sbml_layout import SBMLlayout
 
-#model_file = "C:\\tmp\\model.xml"
-#model_file = "/home/radix/repos/libsbml-draw/model_files/model.xml"
-model_file = "/Users/natalieh/repos/libsbml-draw/model_files/model.xml"
+if platform.system() == "Windows":
+    model_file = "C:\\tmp\\model.xml"
+elif platform.system() == "Linux":    
+    model_file = "/home/radix/repos/libsbml-draw/model_files/model.xml"
+else:
+    model_file = "/Users/natalieh/repos/libsbml-draw/model_files/model.xml"
 #model_file = Path(pkg_resources.resource_filename("libsbml_draw", "model_files/model.xml"))
 
-print("model file: \t", model_file)
+print("model file: \n", model_file)
 
 sl = SBMLlayout(model_file)
 
