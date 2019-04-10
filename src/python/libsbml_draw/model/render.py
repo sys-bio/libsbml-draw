@@ -18,11 +18,17 @@ class Render:
     
     def __init__(self, sbml_filename, layout_number):
         
+        # SBMLDocument, SBMLReader
         self.doc = libsbml.readSBMLFromFile(sbml_filename)
+        # Model
         self.model = self.doc.getModel()
+        # SBasePlugin, LayoutModelPlugin
         self.layout_plugin = self.model.getPlugin("layout")
+        # Layout
         self.layout = self.layout_plugin.getLayout(layout_number) if self.layout_plugin and self.layout_plugin.getNumLayouts() > 0 else None
+        # SBasePlugin, RenderLayoutPlugin
         self.rPlugin = self.layout.getPlugin("render") if self.layout else None 
+        # SBasePlugin, RenderListOfLayoutsPlugin
         self.render_plugin = self.layout_plugin.getListOfLayouts().getPlugin("render") if self.layout_plugin else None       
         self.font_properties = self._setFontProperties()
 
@@ -63,14 +69,16 @@ class Render:
 
         return plot_color
 
-    def _updateNodesBasedOnSpeciesGlyph(self, global_style, color_definitions, network):
+    def _updateNodesBasedOnSpeciesGlyph(self, global_style, color_definitions, network, idList):
     
         node_fill_color = self._set_plot_color_and_validity(
                 global_style.getGroup().getFillColor(), color_definitions)     
         node_edge_color = self._set_plot_color_and_validity(
                 global_style.getGroup().getStroke(), color_definitions)
+
+        nodes_to_update = {k: network.nodes[k] for k in network.nodes.keys() & idList}
         
-        for node in network.nodes.values():
+        for node in nodes_to_update.values():
 
             if node_fill_color.is_valid_color:    
                 node.fill_color = node_fill_color.color
@@ -177,16 +185,29 @@ class Render:
                         # print("list of GS: ", type(x), ", ", len(x))
                         for global_style in global_render_info.getListOfStyles(): 
                             if global_style.isInTypeList("SPECIESGLYPH"):
-                                self._updateNodesBasedOnSpeciesGlyph(global_style, color_definitions, network)
+                                self._updateNodesBasedOnSpeciesGlyph(global_style, color_definitions, network, network.nodes.keys())
                             elif global_style.isInTypeList("TEXTGLYPH"):
                                 self._updateNodesBasedOnTextGlyph(global_style, color_definitions, network)
+                                #self._updateNodesBasedOnTextGlyph(global_style, color_definitions, network, network.nodes.keys())
                             elif global_style.isInTypeList("REACTIONGLYPH"):
                                 self._updateNodesBasedOnReactionGlyph(global_style, color_definitions, network)
+                                #self._updateNodesBasedOnReactionGlyph(global_style, color_definitions, network, network.edges.keys())
                             else:
                                 pass
                             
                         print("color definitions: ", len(color_definitions))
+
+    def _getLocalIdList(self, local_style, full_id_set):
+
+        idList = set()
+
+        for this_id in full_id_set:
         
+            if local_style.getIdList().has_key(this_id):
+                idList.add(this_id)
+                        
+        return idList
+                                                     
     def applyLocalRenderInformation(self, network):
 
         if self.rPlugin:
@@ -198,25 +219,71 @@ class Render:
                 if local_render_info:
                     
                     for local_style in local_render_info.getListOfStyles():
-                        ids = local_style.getIdList()
-                        print("local style ids: ", ids)
-                        #network.nodes.keys()
-                        #network.edges.keys()                        
-                        
-        #print("local render, rPlugin type: ", type(self.rPlugin))    
 
+                        if local_style.getTypeList().has_key("SPECIESGLYPH"):
+                            idList = self._getLocalIdList(local_style, network.nodes.keys())
+                            print("idList: ", idList)
+                            self._updateNodesBasedOnSpeciesGlyph(local_style, {}, network, idList)
+
+    def _addLocalStylesRenderInformation(self, local_render_info, network):
         
-    def addRenderInformation(self, network): 
-        # Global
-        # get global object, else create global object
-        if self.render_plugin.getNumGlobalRenderInformationObjects() > 0:
-            # get Global Object of Interest
-            print("global render IO's")
+        local_render_info.setId("localRenderInfo")
+        local_render_info.setName("Fill_Color Render Information")
 
+        print("adding local render info for nodes")
+ 
+        for node in network.nodes.values():            
+            style = local_render_info.createStyle("nodeStyle")
+            # LocalStyle, RenderGroup
+            style.getGroup().setFillColor(node.fill_color)
+            style.getGroup().setStroke(node.edge_color)
+            style.addId(node.id)
+            style.addType("SPECIESGLYPH")
 
+            style = local_render_info.createStyle("nodeStyle")
+            style.getGroup().setFontFamily(node.font_color)
+            style.getGroup().setFontSize(libsbml.RelAbsVector(node.font_size))
+            if node.font_style == "italic":
+                style.getGroup().setFontStyle(2)
+            else:
+                style.getGroup().setFontStyle(1)
+            print("font style: ", style.getGroup().getFontStyle())
+            style.addId(node.id)
+            style.addType("TEXTGLYPH")
 
+        print("adding local render info for reactions")
 
+        for reaction in network.edges.values():
+            style = local_render_info.createStyle("reactionStyle")
+            style.getGroup().setStroke(reaction.edge_color)
+            style.getGroup().setFillColor(reaction.fill_color)
+            style.getGroup().setStrokeWidth(reaction.curve_width)
+            style.addId(reaction.id)
+            style.addType("REACTIONGLYPH")
+    
+    def addRenderInformation(self, network):
+        # add local elements for each node and reaction
+        if (self.rPlugin is not None and self.rPlugin.getNumLocalRenderInformationObjects() > 0):
+            print("num local render info objects: ", self.rPlugin.getNumLocalRenderInformationObjects())
+            print("removing local render information objects")
+            for local_index in range(self.rPlugin.getNumLocalRenderInformationObjects()): 
+                local_render_info = self.rPlugin.removeLocalRenderInformation(local_index)            
+            print("num local render info objects: ", self.rPlugin.getNumLocalRenderInformationObjects())
+            print("adding local render information objects")
+            self._addLocalStylesRenderInformation(local_render_info, network)
+        else:
+            uri = libsbml.RenderExtension.getXmlnsL2() if self.doc.getLevel(
+                    ) == 2 else libsbml.RenderExtension.getXmlnsL3V1V1()
 
+            # enable render package
+            self.doc.enablePackage(uri, "render", True)
+            self.doc.setPackageRequired("render", False)
+
+            rPlugin = self.layout.getPlugin("render")
+
+            local_render_info = rPlugin.createLocalRenderInformation()
+
+            self._addLocalStylesRenderInformation(local_render_info, network)            
 
 
         

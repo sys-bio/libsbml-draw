@@ -54,7 +54,7 @@ class SBMLlayout:
             self.network = self._createNetwork()
             # apply render information, if any
             self._applyRenderInformation()
-            self.doc = None
+            self.doc = libsbml.readSBMLFromFile(self.sbml_filename)
         else:
             raise Exception(
                     f"The SBML file does not exist: {self.sbml_filename}")
@@ -148,13 +148,13 @@ class SBMLlayout:
                                                 self.h_layout_info)
         return sbml_string
 
-    def writeSBMLWithLayout(self, output_filename):
-        filename = output_filename.encode('utf-8')
-        result = sbnw.writeSBMLwithLayout(filename, self.h_model,
-                                          self.h_layout_info)
-        print("writeSBMLwithLayout result: ", result)
+    # def writeSBMLWithLayout(self, output_filename):
+    #    filename = output_filename.encode('utf-8')
+    #    result = sbnw.writeSBMLwithLayout(filename, self.h_model,
+    #                                      self.h_layout_info)
+    #    print("writeSBMLwithLayout result: ", result)
         # if result error, raise Exception?
-        return result
+    #    return result
 
     def drawNetwork(self, save_file_name=None, bbox_inches="tight"):
 
@@ -307,10 +307,10 @@ class SBMLlayout:
     def setReactionCurveWidth(self, reaction_id, curve_width):
         self.network.edges[reaction_id].curve_width = curve_width
 
-    # Private Render Methods
-
-    def _addRenderInformation(self,):
-        print("TODO: add Render information")
+    def addRenderInformation(self,):
+        renderInfo = Render(self.sbml_filename, self.layout_number)
+        renderInfo.addRenderInformation(self.network)
+        self.doc = renderInfo.doc
         
     def _applyRenderInformation(self,):         
         renderInfo = Render(self.sbml_filename, self.layout_number)
