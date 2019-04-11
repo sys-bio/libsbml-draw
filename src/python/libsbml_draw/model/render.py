@@ -11,7 +11,7 @@ import libsbml
 PlotColor = namedtuple("PlotColor", ["is_valid_color", "color"])
 FontProperty = namedtuple("FontProperty", ["is_valid_value", "value"])
 
-FONT_STYLES = ["italic", "normal"]
+FONT_STYLES = ["none", "normal", "italic"]
 
 
 class Render:
@@ -37,7 +37,7 @@ class Render:
         system_font_names = [Path(fpath).stem for fpath in system_font_paths]
 
         font_properties = {
-            "style": [0, 1],        
+            "style": [1, 2],        
             "family": system_font_names + ["serif", "sans-serif", "cursive", "fantasy", "monospace"],
             "size": ["xx-small", "x-small", "small", "medium", "large", "x-large", "xx-large"]
         }                
@@ -82,17 +82,15 @@ class Render:
 
             if node_fill_color.is_valid_color:    
                 node.fill_color = node_fill_color.color
-                print("set node fill color: ", node.fill_color)      
             else:
                 pass
-                # log this, and stick with default value
+                # stick with default value
 
             if node_edge_color.is_valid_color:    
                 node.edge_color = node_edge_color.color 
-                print("set node edge color: ", node.edge_color)             
             else:
                 pass
-                # log this, and stick with default value
+                # stick with default value
 
     def _set_font_property(self, font_property, property_value):
 
@@ -111,7 +109,6 @@ class Render:
         elif font_property == "size":
             if str(round(property_value)).isdigit() or str(property_value).lower() in self.font_properties[font_property]:
                 font_property = FontProperty(True, property_value)
-                print("font size is valid")
             else:
                 font_property = FontProperty(False, property_value)
         else:
@@ -119,20 +116,20 @@ class Render:
 
         return font_property
                                            
-    def _updateNodesBasedOnTextGlyph(self, global_style, color_definitions, network):
+    def _updateNodesBasedOnTextGlyph(self, global_style, color_definitions, network, idList):
     
         node_font_color = self._set_plot_color_and_validity(
                 global_style.getGroup().getStroke(), color_definitions)
         
         node_font_size = self._set_font_property("size", global_style.getGroup().getFontSize().getAbsoluteValue())
-        print("node_font_size: ", node_font_size) 
-        node_font_family = self._set_font_property("family", global_style.getGroup().getFontFamily())
-        print("node_font_family: ", node_font_family)
-        node_font_style = self._set_font_property("style", global_style.getGroup().getFontStyle())
-        print("node_font_style: ", node_font_style)
         
-        print("setting valid node text values")        
-        for node in network.nodes.values():
+        node_font_family = self._set_font_property("family", global_style.getGroup().getFontFamily())
+
+        node_font_style = self._set_font_property("style", global_style.getGroup().getFontStyle())
+
+        nodes_to_update = {k: network.nodes[k] for k in network.nodes.keys() & idList}
+        
+        for node in nodes_to_update.values():
 
             if node_font_color.is_valid_color:    
                 node.font_color = node_font_color.color
@@ -146,56 +143,47 @@ class Render:
             if node_font_family.is_valid_value:
                 node.font_family = node_font_family.value
 
-    def _updateNodesBasedOnReactionGlyph(self, global_style, color_definitions, network):
+    def _updateNodesBasedOnReactionGlyph(self, global_style, color_definitions, network, idList):
 
         reaction_edge_color = self._set_plot_color_and_validity(
                 global_style.getGroup().getStroke(), color_definitions)     
 
         reaction_edge_width = global_style.getGroup().getStrokeWidth()
+
+        reactions_to_update = {k: network.edges[k] for k in network.edges.keys() & idList}
         
-        for reaction in network.edges.values():
+        for reaction in reactions_to_update.values():
 
             if reaction_edge_color.is_valid_color:    
                 reaction.edge_color = reaction_edge_color.color 
                 reaction.fill_color = reaction_edge_color.color
-                print("set reaction edge color: ", reaction.edge_color)             
             else:
                 pass
-                # log this, and stick with default value
+                # stick with default value
 
-            #if reaction_edge_width > 0?, need to check this
             reaction.curve_width = reaction_edge_width
         
     def applyGlobalRenderInformation(self, network):
 
         if self.render_plugin:
 
-            print("num global info: ", self.render_plugin.getNumGlobalRenderInformationObjects())
-
             if self.render_plugin.getNumGlobalRenderInformationObjects() > 0:
 
                 for global_render_info in self.render_plugin.getListOfGlobalRenderInformation():
-                    # Process each global render information object
+                    
                     if global_render_info:
-                        # collect the color definitions
-                        print("num color definitions: ", global_render_info.getNumColorDefinitions())
+                        
                         color_definitions = self._collectColorDefinitions(global_render_info)
-                        # process Styles 	                  
-                        # x = global_render_info.getListOfStyles()
-                        # print("list of GS: ", type(x), ", ", len(x))
+
                         for global_style in global_render_info.getListOfStyles(): 
                             if global_style.isInTypeList("SPECIESGLYPH"):
                                 self._updateNodesBasedOnSpeciesGlyph(global_style, color_definitions, network, network.nodes.keys())
                             elif global_style.isInTypeList("TEXTGLYPH"):
-                                self._updateNodesBasedOnTextGlyph(global_style, color_definitions, network)
-                                #self._updateNodesBasedOnTextGlyph(global_style, color_definitions, network, network.nodes.keys())
+                                self._updateNodesBasedOnTextGlyph(global_style, color_definitions, network, network.nodes.keys())
                             elif global_style.isInTypeList("REACTIONGLYPH"):
-                                self._updateNodesBasedOnReactionGlyph(global_style, color_definitions, network)
-                                #self._updateNodesBasedOnReactionGlyph(global_style, color_definitions, network, network.edges.keys())
+                                self._updateNodesBasedOnReactionGlyph(global_style, color_definitions, network, network.edges.keys())
                             else:
                                 pass
-                            
-                        print("color definitions: ", len(color_definitions))
 
     def _getLocalIdList(self, local_style, full_id_set):
 
@@ -222,8 +210,15 @@ class Render:
 
                         if local_style.getTypeList().has_key("SPECIESGLYPH"):
                             idList = self._getLocalIdList(local_style, network.nodes.keys())
-                            print("idList: ", idList)
-                            self._updateNodesBasedOnSpeciesGlyph(local_style, {}, network, idList)
+                            self._updateNodesBasedOnSpeciesGlyph(local_style, {}, network, idList) 
+                        elif local_style.getTypeList().has_key("TEXTGLYPH"):
+                            idList = self._getLocalIdList(local_style, network.nodes.keys())
+                            self._updateNodesBasedOnTextGlyph(local_style, {}, network, idList) 
+                        elif local_style.getTypeList().has_key("REACTIONGLYPH"):
+                            idList = self._getLocalIdList(local_style, network.edges.keys())
+                            self._updateNodesBasedOnReactionGlyph(local_style, {}, network, idList) 
+                        else:
+                            pass                        
 
     def _addLocalStylesRenderInformation(self, local_render_info, network):
         
@@ -241,13 +236,14 @@ class Render:
             style.addType("SPECIESGLYPH")
 
             style = local_render_info.createStyle("nodeStyle")
-            style.getGroup().setFontFamily(node.font_color)
+            style.getGroup().setFontFamily(node.font_family)
             style.getGroup().setFontSize(libsbml.RelAbsVector(node.font_size))
             if node.font_style == "italic":
                 style.getGroup().setFontStyle(2)
             else:
                 style.getGroup().setFontStyle(1)
             print("font style: ", style.getGroup().getFontStyle())
+            style.getGroup().setStroke(node.font_color)
             style.addId(node.id)
             style.addType("TEXTGLYPH")
 
@@ -268,8 +264,10 @@ class Render:
             print("removing local render information objects")
             for local_index in range(self.rPlugin.getNumLocalRenderInformationObjects()): 
                 local_render_info = self.rPlugin.removeLocalRenderInformation(local_index)            
+            #print("num local render info objects: ", self.rPlugin.getNumLocalRenderInformationObjects())
+            local_render_info = self.rPlugin.createLocalRenderInformation()
             print("num local render info objects: ", self.rPlugin.getNumLocalRenderInformationObjects())
-            print("adding local render information objects")
+            print("adding local render styles")
             self._addLocalStylesRenderInformation(local_render_info, network)
         else:
             uri = libsbml.RenderExtension.getXmlnsL2() if self.doc.getLevel(

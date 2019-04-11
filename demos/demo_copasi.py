@@ -23,6 +23,7 @@ sl = SBMLlayout(model_file)
 
 sl._describeModel()
 
+## Draw Original copasi.xml
 sl.drawNetwork()
 
 print("node ids: ", sl.getNodeIds())
@@ -32,7 +33,13 @@ sl.setNodeFontStyle("S1", "italic")
 sl.setNodeColor("S1", "lightpink")
 sl.setNodeColor("S2", "lightgreen")
 
+sl.setNodeFontColor("S1", "white")
+sl.setNodeFontStyle("S1", "italic")
 
+sl.setReactionColor("_J0", "blue")
+sl.setReactionCurveWidth("_J0", 1)
+
+# Draw Pink and Green 
 sl.drawNetwork()
 
 new_model_file = model_dir + "render_sbml_pink_green.xml"
@@ -44,5 +51,25 @@ sl.writeSBMLFile(new_model_file)
 
 sl_apply = SBMLlayout(new_model_file)
 
+# Read in and Draw Pink and Green
 sl_apply.drawNetwork()
+
+sl_apply.setNodeEdgeColor("S1", "black")
+sl_apply.setNodeEdgeColor("S2", "black")
+
+sl_apply.setReactionColor("_J0", "orange")
+
+# Add edge color and change reaction color
+sl_apply.drawNetwork()
+
+local_model_file = model_dir + "render_had_local_already.xml"
+
+sl_apply.addRenderInformation()
+
+sl_apply.writeSBMLFile(local_model_file)
+
+sl_local = SBMLlayout(local_model_file)
+
+# Read in and Draw Edge Color 
+sl_local.drawNetwork()
 
