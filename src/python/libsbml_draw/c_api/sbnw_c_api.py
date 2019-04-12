@@ -220,7 +220,6 @@ def curve_getRole(h_curve):
     
 # Model Sizing Functions
 slib.gf_fit_to_window.argtypes = [ctypes.c_uint64, ctypes.c_double, ctypes.c_double, ctypes.c_double, ctypes.c_double]
-slib.gf_fit_to_window.restype = None
 
 # Model Sizing Functions
 def fit_to_window (h_layoutInfo, left, top, right, bottom):
@@ -238,6 +237,20 @@ def arrowheadSetStyle (h_role, style):
 
 def arrowheadGetStyle (h_role):
     return slib.gf_arrowheadGetStyle(h_role)
+
+# Arrowhead Functions
+slib.gf_arrowheadStyleGetNumVerts.argtypes = [ctypes.c_uint]
+slib.gf_arrowheadStyleGetNumVerts.restype = ctypes.c_uint
+slib.gf_arrowheadStyleGetVert.argtypes = [ctypes.c_uint, ctypes.c_uint]
+slib.gf_arrowheadStyleGetVert.restype = point
+
+def arrowheadStyleGetNumVerts(style):
+    return slib.gf_arrowheadStyleGetNumVerts(style)
+
+def arrowheadStyleGetVert(style, vertex_number):
+    return slib.gf_arrowheadStyleGetVert(style, vertex_number)
+
+
 
 
 
