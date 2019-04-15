@@ -20,7 +20,7 @@ class SBMLlayout:
     LIBSBML_DRAW_version = sbnw.getCurrentLibraryVersion()
 
     def __init__(self, sbml_filename, layout_alg_options=None,
-                 layout_number=0):
+                 layout_number=0, fitWindow=tuple()):
 
         self.sbml_filename = sbml_filename
         self.layout_number = layout_number
@@ -51,6 +51,8 @@ class SBMLlayout:
             if not self.layoutSpecified:
                 self._randomizeLayout()
                 self._doLayoutAlgorithm()
+            if len(fitWindow) == 4:    
+                self.fitToWindow(fitWindow[0],fitWindow[1],fitWindow[2],fitWindow[3])
             self.network = self._createNetwork()
             # apply render information, if any
             self._applyRenderInformation()
@@ -329,3 +331,13 @@ class SBMLlayout:
     def setModelNamespace(self, level, version):
         """Specify the Model"""
         sbnw.setModelNamespace(self.h_layout_info, level, version)
+
+    def arrowheadGetNumVerts(self, style):
+        return sbnw.arrowheadStyleGetNumVerts(style)
+        
+    def arrowheadGetVert(self, style, vertex_number):
+        return sbnw.arrowheadStyleGetVert(style, vertex_number)
+    
+    
+    
+
