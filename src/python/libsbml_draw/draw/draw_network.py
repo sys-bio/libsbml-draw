@@ -20,6 +20,7 @@ def draw_nodes(nodes):
             node.height,
             edgecolor=node.edge_color,
             facecolor=node.fill_color,
+            #boxstyle=BoxStyle("circle"),
             boxstyle=BoxStyle("round", pad=0.2, rounding_size=.6),
             mutation_scale=10)
 
@@ -52,8 +53,6 @@ def draw_edges(edges):
                      control_point_2,
                      end_point],
                     [Path.MOVETO, Path.CURVE4, Path.CURVE4, Path.CURVE4])
-
-        # print("bezier_path: ", cubic_bezier_curve_path)
 
             fap = FancyArrowPatch(facecolor=edge.fill_color,
                                   edgecolor=edge.edge_color,
@@ -88,24 +87,18 @@ def createNetworkFigure(network):
     fig = plt.figure()
     ax = plt.gca()
 
-    #3print("drawing the nodes")
     # draw the nodes
     node_patches = draw_nodes(network.nodes.values())
     for node_patch in node_patches:
         ax.add_patch(node_patch)
 
-    #print("drawing the edges")
     # draw the edges
-    #print(len(network.edges), "nw edges")
     edge_patches = draw_edges(network.edges.values())
-    #print(len(edge_patches), " edge patches")
     for edge_patch in edge_patches:
         ax.add_patch(edge_patch)
 
-    #print("adding the labels")
     # add labels
     add_labels(network.nodes.values())
-    #print("finishing plot")
     # No axes and size it just bigger than the data (i.e. tight)
     plt.axis("off")
     plt.axis("tight")

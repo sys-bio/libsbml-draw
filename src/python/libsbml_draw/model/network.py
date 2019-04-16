@@ -74,7 +74,7 @@ class Edge():
             self.curves.append(Curve(h_curve))
         self.id = sbnw.reaction_getID(h_reaction)
         self.edge_color = "blue"
-        self.fill_color = "red"
+        self.fill_color = "blue"
         self.curve_width = 1
 
 

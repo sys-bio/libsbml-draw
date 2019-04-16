@@ -82,6 +82,11 @@ def writeSBML (filename, sbml_model):
     #filename_string = filename.encode('utf-8')
     return slib.gf_writeSBML(filename, sbml_model)
 
+slib.gf_getLastError.restype = ctypes.c_char_p
+
+def getLastError ():
+    return slib.gf_getLastError ()
+
 # Layout Functions
 slib.gf_nw_isLayoutSpecified.argtypes = [ctypes.c_uint64]
 slib.gf_nw_isLayoutSpecified.restype = ctypes.c_uint64

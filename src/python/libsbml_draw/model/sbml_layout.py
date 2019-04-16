@@ -178,6 +178,7 @@ class SBMLlayout:
         #    print(len(edge.curves), "curves")
         #    for curve in edge.curves:
         #        print("role: ", curve.role)
+        return fig
 
     def writeSBMLFile(self, out_file_name):
         libsbml.writeSBMLToFile(self.doc, out_file_name)
