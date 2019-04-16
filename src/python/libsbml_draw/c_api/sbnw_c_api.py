@@ -96,8 +96,8 @@ slib.gf_doLayoutAlgorithm.restype = None
 def isLayoutSpecified(h_network):
     return slib.gf_nw_isLayoutSpecified(h_network)
 
-def processLayout (h_layout):
-    return slib.gf_processLayout(h_layout)         
+def processLayout (h_model):
+    return slib.gf_processLayout(h_model)         
 
 def randomizeLayout (h_layout_info):
     return slib.gf_randomizeLayout(h_layout_info)

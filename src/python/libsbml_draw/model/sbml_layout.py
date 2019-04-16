@@ -42,9 +42,13 @@ class SBMLlayout:
             )
 
         if self._validate_sbml_filename(self.sbml_filename):
+            print("getting h_model")
             self.h_model = sbnw.loadSBML(self.sbml_filename)
+            print("getting h_layout_info")
             self.h_layout_info = sbnw.processLayout(self.h_model)
+            print("getting h_network")
             self.h_network = sbnw.getNetworkp(self.h_layout_info)
+            print("setting layout specified")
             self.layoutSpecified = True if sbnw.isLayoutSpecified(
                     self.h_network) else False
             # create layout, if it doesn't already exist
