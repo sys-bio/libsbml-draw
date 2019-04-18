@@ -32,7 +32,6 @@ class Node():
         self.fill_color = "#0000ff30"
         self.font_size = 12
         self.font_family = "Arial"
-        # self.font_name = "Arial"
         self.font_color = "black"
         self.font_style = "normal"
 
@@ -65,7 +64,7 @@ class Curve():
         self.curveArrowStyle = Curve.role_arrowstyles[self.role]
     
 
-class Edge():
+class Reaction():
     """ """
     def __init__(self, h_reaction):
         self.curves = []
@@ -83,9 +82,9 @@ class Network():
     def __init__(self, h_network):
         self.h_network = h_network
         self.nodes = {}
-        self.edges = {}
+        self.reactions = {}
         self._add_nodes(self.h_network)
-        self._add_edges(self.h_network)
+        self._add_reactions(self.h_network)
 
     def _add_nodes(self, h_network):
         for node_index in range(sbnw.nw_getNumNodes(h_network)):
@@ -93,8 +92,8 @@ class Network():
             node_id = sbnw.node_getID(h_node)
             self.nodes[node_id] = Node(h_node)
 
-    def _add_edges(self, h_network):
+    def _add_reactions(self, h_network):
         for reaction_index in range(sbnw.nw_getNumRxns(h_network)):
             h_reaction = sbnw.nw_getReactionp(h_network, reaction_index)
             reaction_id = sbnw.reaction_getID(h_reaction)
-            self.edges[reaction_id] = Edge(h_reaction)
+            self.reactions[reaction_id] = Reaction(h_reaction)

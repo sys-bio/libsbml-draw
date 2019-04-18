@@ -29,14 +29,14 @@ def draw_nodes(nodes):
     return node_patches
 
 
-def draw_edges(edges):
-    """Create a list of FancyArrow Patches, one for each edge
+def draw_reactions(reactions):
+    """Create a list of FancyArrow Patches, one for each reaction
     """
-    edge_patches = []
+    reaction_patches = []
 
-    for edge in edges:
+    for reaction in reactions:
 
-        curves = edge.curves
+        curves = reaction.curves
 
         for curve in curves:
 
@@ -54,18 +54,18 @@ def draw_edges(edges):
                      end_point],
                     [Path.MOVETO, Path.CURVE4, Path.CURVE4, Path.CURVE4])
 
-            fap = FancyArrowPatch(facecolor=edge.fill_color,
-                                  edgecolor=edge.edge_color,
+            fap = FancyArrowPatch(facecolor=reaction.fill_color,
+                                  edgecolor=reaction.edge_color,
                                   arrowstyle=curve.curveArrowStyle,
                                   clip_on=False,
-                                  linewidth=edge.curve_width,                                  
+                                  linewidth=reaction.curve_width,                                  
                                   mutation_scale=15,
                                   path=cubic_bezier_curve_path
                                   )
 
-            edge_patches.append(fap)
+            reaction_patches.append(fap)
 
-    return edge_patches
+    return reaction_patches
 
 
 def add_labels(nodes):
@@ -92,10 +92,10 @@ def createNetworkFigure(network):
     for node_patch in node_patches:
         ax.add_patch(node_patch)
 
-    # draw the edges
-    edge_patches = draw_edges(network.edges.values())
-    for edge_patch in edge_patches:
-        ax.add_patch(edge_patch)
+    # draw the reactions
+    reaction_patches = draw_reactions(network.reactions.values())
+    for reaction_patch in reaction_patches:
+        ax.add_patch(reaction_patch)
 
     # add labels
     add_labels(network.nodes.values())

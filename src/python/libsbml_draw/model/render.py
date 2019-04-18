@@ -143,14 +143,14 @@ class Render:
             if node_font_family.is_valid_value:
                 node.font_family = node_font_family.value
 
-    def _updateNodesBasedOnReactionGlyph(self, global_style, color_definitions, network, idList):
+    def _updateReactionsBasedOnReactionGlyph(self, global_style, color_definitions, network, idList):
 
         reaction_edge_color = self._set_plot_color_and_validity(
                 global_style.getGroup().getStroke(), color_definitions)     
 
         reaction_edge_width = global_style.getGroup().getStrokeWidth()
 
-        reactions_to_update = {k: network.edges[k] for k in network.edges.keys() & idList}
+        reactions_to_update = {k: network.reactions[k] for k in network.reactions.keys() & idList}
         
         for reaction in reactions_to_update.values():
 
@@ -181,7 +181,7 @@ class Render:
                             elif global_style.isInTypeList("TEXTGLYPH"):
                                 self._updateNodesBasedOnTextGlyph(global_style, color_definitions, network, network.nodes.keys())
                             elif global_style.isInTypeList("REACTIONGLYPH"):
-                                self._updateNodesBasedOnReactionGlyph(global_style, color_definitions, network, network.edges.keys())
+                                self._updateReactionsBasedOnReactionGlyph(global_style, color_definitions, network, network.reactions.keys())
                             else:
                                 pass
 
@@ -215,8 +215,8 @@ class Render:
                             idList = self._getLocalIdList(local_style, network.nodes.keys())
                             self._updateNodesBasedOnTextGlyph(local_style, {}, network, idList) 
                         elif local_style.getTypeList().has_key("REACTIONGLYPH"):
-                            idList = self._getLocalIdList(local_style, network.edges.keys())
-                            self._updateNodesBasedOnReactionGlyph(local_style, {}, network, idList) 
+                            idList = self._getLocalIdList(local_style, network.reactions.keys())
+                            self._updateReactionsBasedOnReactionGlyph(local_style, {}, network, idList) 
                         else:
                             pass                        
 
@@ -249,7 +249,7 @@ class Render:
 
         print("adding local render info for reactions")
 
-        for reaction in network.edges.values():
+        for reaction in network.reactions.values():
             style = local_render_info.createStyle("reactionStyle")
             style.getGroup().setStroke(reaction.edge_color)
             style.getGroup().setFillColor(reaction.fill_color)
