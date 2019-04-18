@@ -1,33 +1,15 @@
 from pathlib import Path
 import pkg_resources
-# import platform
 
 from libsbml_draw.model.sbml_layout import SBMLlayout
-
-#from libsbml_draw import SBMLlayout
 
 model_file_name = "model.xml"
 
 model_file = Path(pkg_resources.resource_filename("libsbml_draw", "model/data/" + model_file_name))
 
-
-#if platform.system() == "Windows":
-#    model_file = "C:\\tmp\\model.xml"
-#elif platform.system() == "Linux":    
-#    model_file = "/home/radix/repos/libsbml-draw/model_files/model.xml"
-#else:
-#    model_file = "/Users/natalieh/repos/libsbml-draw/model_files/model.xml"
-#model_file = Path(pkg_resources.resource_filename("libsbml_draw", "model_files/model.xml"))
-
-print("model file: \n", model_file)
-
 sl = SBMLlayout(str(model_file))
 
-
 sl._describeModel()
-
-
-#sl.drawNetwork("C:\\tmp\\model_compute_layout.png")
 
 
 print("node ids: ", sl.getNodeIds())

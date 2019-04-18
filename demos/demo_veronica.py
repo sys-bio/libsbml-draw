@@ -31,8 +31,12 @@ for node in color1:
     
 for node in color2: 
     sl.setNodeFillColor(node, "lightgreen")
-    
+
+for reaction in sl.getReactionIds():
+    sl.setReactionCurveWidth(reaction, 2)    
+
 sl.drawNetwork()
 
-my_fig.show()
+    
+    
 
