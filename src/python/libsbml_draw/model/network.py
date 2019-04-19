@@ -1,4 +1,4 @@
-"""Represent the network as a collection of nodes and edges.
+"""Represent the network as a collection of nodes and reactions.
 """
 from enum import IntEnum
 

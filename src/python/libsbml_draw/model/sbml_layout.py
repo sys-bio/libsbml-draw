@@ -299,17 +299,12 @@ class SBMLlayout:
         Args:
             plot_color(str): id for a color
 
-        Returns: bool
+        Returns: True or raises ValueError
         """
-        try:
-            if not is_color_like(plot_color):
-                raise ValueError("Invalid color: ", plot_color)
-            else:
-                return True
-        except Exception as inst:
-            print("ERROR: Cannot set color: ", inst)
-            print("TYPE of ERROR: ", type(inst).__name__)
-            return False
+        if not is_color_like(plot_color):
+            raise ValueError("Invalid color: ", plot_color)
+        else:
+            return True
 
     def _validateFontStyle(font_style):
         """ Check if the font style is a valid value for matplotlib.
@@ -318,7 +313,7 @@ class SBMLlayout:
             font_style(str): name of a font style, which can be "normal",
                 "italic", or "oblique"
 
-        Return: bool
+        Return: True or raises ValueError
         """
         valid_font_styles = {"normal", "italic", "oblique"}
 
@@ -540,15 +535,32 @@ class SBMLlayout:
     # Node Methods
 
     def getNodeIds(self,):
-        """
+        """Returns a list of node ids.
+
+        Args: None
+
+        Returns: list of str
         """
         return list(self.network.nodes.keys())
 
     def getNodeColor(self, node_id):
+        """Returns the id of the color for this node.
+
+        Args:
+            node_id (str): id for the node
+
+        Returns: str
+        """
         return self.network.nodes[node_id].fill_color
 
     def getNodeKeywordIds(self, node_keyword):
+        """Returns a list of node ids corresponding to the given keyword.
 
+        Args:
+            node_keyword(str): 'all', 'boundary', or 'floating'
+
+        Returns: list of str
+        """
         if node_keyword == "all":
             return self.getNodeIds()
         elif node_keyword == "boundary":
@@ -579,7 +591,7 @@ class SBMLlayout:
                 self.network.nodes[node_id].fill_color = node_color
 
         elif (isinstance(node_id, str) and
-              node_id.lower() in self.getNodeIds()):
+              node_id in self.getNodeIds()):
             self.network.nodes[node_id].edge_color = node_color
             self.network.nodes[node_id].fill_color = node_color
 
@@ -599,6 +611,12 @@ class SBMLlayout:
                              {SBMLlayout.NODE_KEYWORDS} ).""")
 
     def getNodeFillColor(self, node_id):
+        """Returns the color id for the node fill color.
+
+        Args: node_id(str): id of the node
+
+        Returns: str
+        """
         return self.network.nodes[node_id].fill_color
 
     def setNodeFillColor(self, node_id, fill_color):
@@ -621,7 +639,7 @@ class SBMLlayout:
                 self.network.nodes[node_id].fill_color = fill_color
 
         elif (isinstance(node_id, str) and
-              node_id.lower() in self.getNodeIds()):
+              node_id in self.getNodeIds()):
             self.network.nodes[node_id].fill_color = fill_color
 
         elif isinstance(node_id, list):
@@ -639,6 +657,13 @@ class SBMLlayout:
                              {SBMLlayout.NODE_KEYWORDS} ).""")
 
     def getNodeEdgeColor(self, node_id):
+        """Returns the color id for the node edge color.
+
+        Args:
+            node_id(str): id for the node
+
+        Returns: str
+        """
         return self.network.nodes[node_id].edge_color
 
     def setNodeEdgeColor(self, node_id, edge_color):
@@ -659,11 +684,9 @@ class SBMLlayout:
                 node_id.lower() in SBMLlayout.NODE_KEYWORDS):
             for node_id in self.getNodeKeywordIds(str(node_id).lower()):
                 self.network.nodes[node_id].edge_color = edge_color
-
         elif (isinstance(node_id, str) and
-              node_id.lower() in self.getNodeIds()):
+              node_id in self.getNodeIds()):
             self.network.nodes[node_id].edge_color = edge_color
-
         elif isinstance(node_id, list):
             full_model_nodeIds = self.getNodeIds()
             for this_id in node_id:
@@ -679,24 +702,142 @@ class SBMLlayout:
                              {SBMLlayout.NODE_KEYWORDS} ).""")
 
     def getNodeFontSize(self, node_id):
+        """Returns the font size of the node text.
+
+        Args:
+            node_id (str): id for the node
+
+        Returns: int
+        """
         return self.network.nodes[node_id].font_size
 
-    def setNodeFontSize(self, node_id, fontsize):
-        self.network.nodes[node_id].font_size = fontsize
+    def setNodeFontSize(self, node_id, font_size):
+        """Set the font size for the node.
+
+        Args:
+            node_id (str): id for the node
+            font_size (int or str): matplotlib acceptable values, which are:
+                {size in points, 'xx-small', 'x-small', 'small', 'medium',
+                'large', 'x-large', 'xx-large'}
+
+        Returns: None
+        """
+        if (isinstance(node_id, str) and
+                node_id.lower() in SBMLlayout.NODE_KEYWORDS):
+            for node_id in self.getNodeKeywordIds(str(node_id).lower()):
+                self.network.nodes[node_id].font_size = font_size
+
+        elif (isinstance(node_id, str) and
+              node_id in self.getNodeIds()):
+            self.network.nodes[node_id].font_size = font_size
+
+        elif isinstance(node_id, list):
+            full_model_nodeIds = self.getNodeIds()
+            for this_id in node_id:
+                if this_id in full_model_nodeIds:
+                    self.network.nodes[this_id].font_size = font_size
+                else:
+                    print(f"""This id in the input list is invalid {this_id},
+                          so cannot set node font size for this id.""")
+        else:
+            raise ValueError(f"""Invalid input for node_id: {node_id}.
+                             node_id must be a Species id, a list of Species
+                             ids, or a node keyword (
+                             {SBMLlayout.NODE_KEYWORDS} ).""")
 
     def getNodeFontName(self, node_id):
+        """Returns the font family value, which can be the font family or
+        font name.
+
+        Args:
+            node_id (str): id for the node
+
+        Returns: str, eg. "Arial" or "serif"
+        """
         return self.network.nodes[node_id].font_family
 
-    def setNodeFontName(self, node_id, fontname):
-        self.network.nodes[node_id].font_family = fontname
+    def setNodeFontName(self, node_id, font_name):
+        """Sets the font family for the node, which can be a value for the
+        family or name of the font.
+
+        Args:
+            node_id (str): id for the node
+            font_name (str): value for font family (eg. 'serif')
+            or font name (eg. 'Arial')
+
+        Returns: None
+        """
+        if (isinstance(node_id, str) and
+                node_id.lower() in SBMLlayout.NODE_KEYWORDS):
+            for node_id in self.getNodeKeywordIds(str(node_id).lower()):
+                self.network.nodes[node_id].font_family = font_name
+
+        elif (isinstance(node_id, str) and
+              node_id in self.getNodeIds()):
+            self.network.nodes[node_id].font_family = font_name
+
+        elif isinstance(node_id, list):
+            full_model_nodeIds = self.getNodeIds()
+            for this_id in node_id:
+                if this_id in full_model_nodeIds:
+                    self.network.nodes[this_id].font_family = font_name
+                else:
+                    print(f"""This id in the input list is invalid {this_id},
+                          so cannot set node font family for this id.""")
+        else:
+            raise ValueError(f"""Invalid input for node_id: {node_id}.
+                             node_id must be a Species id, a list of Species
+                             ids, or a node keyword (
+                             {SBMLlayout.NODE_KEYWORDS} ).""")
 
     def getNodeFontFamily(self, node_id):
+        """Returns the font family value, which can be the font family or
+        font name.
+        """
         return self.network.nodes[node_id].font_family
 
-    def setNodeFontFamily(self, node_id, fontfamily):
-        self.network.nodes[node_id].font_family = fontfamily
+    def setNodeFontFamily(self, node_id, font_family):
+        """Sets the font family for the node, which can be a value for either
+        the family or name of the font.
+
+        Args:
+            node_id (str): id for the node
+            font_family (str): value for font family (eg. 'serif')
+            or font name (eg. 'Arial')
+
+        Returns: None
+        """
+        if (isinstance(node_id, str) and
+                node_id.lower() in SBMLlayout.NODE_KEYWORDS):
+            for node_id in self.getNodeKeywordIds(str(node_id).lower()):
+                self.network.nodes[node_id].font_family = font_family
+
+        elif (isinstance(node_id, str) and
+              node_id in self.getNodeIds()):
+            self.network.nodes[node_id].font_family = font_family
+
+        elif isinstance(node_id, list):
+            full_model_nodeIds = self.getNodeIds()
+            for this_id in node_id:
+                if this_id in full_model_nodeIds:
+                    self.network.nodes[this_id].font_family = font_family
+                else:
+                    print(f"""This id in the input list is invalid {this_id},
+                          so cannot set node font family for this id.""")
+        else:
+            raise ValueError(f"""Invalid input for node_id: {node_id}.
+                             node_id must be a Species id, a list of Species
+                             ids, or a node keyword (
+                             {SBMLlayout.NODE_KEYWORDS} ).""")
 
     def getNodeFontColor(self, node_id):
+        """Returns the color of the node's text.
+
+        Args:
+            node_id (str): id for the node
+
+        Returns: str
+        """
         return self.network.nodes[node_id].font_color
 
     def setNodeFontColor(self, node_id, font_color):
@@ -719,7 +860,7 @@ class SBMLlayout:
                 self.network.nodes[node_id].font_color = font_color
 
         elif (isinstance(node_id, str) and
-              node_id.lower() in self.getNodeIds()):
+              node_id in self.getNodeIds()):
             self.network.nodes[node_id].font_color = font_color
 
         elif isinstance(node_id, list):
@@ -737,6 +878,13 @@ class SBMLlayout:
                              {SBMLlayout.NODE_KEYWORDS} ).""")
 
     def getNodeFontStyle(self, node_id):
+        """Returns the style of the font for the given node.
+
+        Args:
+            node_id (str): id for the node
+
+        Returns: str, "italic", "normal", or "oblique"
+        """
         return self.network.nodes[node_id].font_style
 
     def setNodeFontStyle(self, node_id, font_style):
@@ -760,7 +908,7 @@ class SBMLlayout:
                 self.network.nodes[node_id].font_style = font_style
 
         elif (isinstance(node_id, str) and
-              node_id.lower() in self.getNodeIds()):
+              node_id in self.getNodeIds()):
             self.network.nodes[node_id].font_style = font_style
 
         elif isinstance(node_id, list):
@@ -778,15 +926,43 @@ class SBMLlayout:
                              {SBMLlayout.NODE_KEYWORDS} ).""")
 
     def getNodeWidth(self, node_id):
+        """Returns the width of the node.
+
+        Args:
+            node_id (str): id for the node
+
+        Returns: int
+        """
         return self.network.nodes[node_id].width
 
     def getNodeHeight(self, node_id):
+        """Returns the height of the node.
+
+        Args:
+            node_id (str): id for the node
+
+        Returns: int
+        """
         return self.network.nodes[node_id].height
 
     def getNodeName(self, node_id):
+        """Returns the name of the node.
+
+        Args:
+            node_id (str): id for the node
+
+        Returns: str
+        """
         return self.network.nodes[node_id].name
 
     def getNodeLowerLeftPoint(self, node_id):
+        """Returns the point for the node's lower left corner.
+
+        Args:
+            node_id (str): id for the node
+
+        Returns: point which has fields x and y
+        """
         return self.network.nodes[node_id].lower_left_point
 
     def getBoundarySpeciesIds(self,):
@@ -862,7 +1038,7 @@ class SBMLlayout:
                 reaction.edge_color = reaction_color
 
         elif (isinstance(reaction_id, str) and
-              reaction_id.lower() in self.getReactionIds()):
+              reaction_id in self.getReactionIds()):
             self.network.reactions[reaction_id].edge_color = reaction_color
             self.network.reactions[reaction_id].fill_color = reaction_color
 
@@ -879,6 +1055,13 @@ class SBMLlayout:
             raise ValueError(f"Invalid input for reaction ids: {reaction_id}")
 
     def getReactionEdgeColor(self, reaction_id):
+        """Returns the color id for the edge color of the reaction.
+
+        Args:
+            reaction_id (str): id for the reaction
+
+        Returns: str
+        """
         return self.network.reactions[reaction_id].edge_color
 
     def setReactionEdgeColor(self, reaction_id, edge_color):
@@ -899,7 +1082,7 @@ class SBMLlayout:
                 reaction.edge_color = edge_color
 
         elif (isinstance(reaction_id, str) and
-              reaction_id.lower() in self.getReactionIds()):
+              reaction_id in self.getReactionIds()):
             self.network.reactions[reaction_id].edge_color = edge_color
 
         elif isinstance(reaction_id, list):
@@ -914,6 +1097,13 @@ class SBMLlayout:
             raise ValueError(f"Invalid input for reaction ids: {reaction_id}")
 
     def getReactionFillColor(self, reaction_id):
+        """Returns the fill color for the reaction.
+
+        Args:
+            reaction_id (str): id for the reaction
+
+        Returns: str
+        """
         return self.network.reactions[reaction_id].fill_color
 
     def setReactionFillColor(self, reaction_id, fill_color):
@@ -934,7 +1124,7 @@ class SBMLlayout:
                 reaction.fill_color = fill_color
 
         elif (isinstance(reaction_id, str) and
-              reaction_id.lower() in self.getReactionIds()):
+              reaction_id in self.getReactionIds()):
             self.network.reactions[reaction_id].fill_color = fill_color
 
         elif isinstance(reaction_id, list):
@@ -949,6 +1139,12 @@ class SBMLlayout:
             raise ValueError(f"Invalid input for reaction ids: {reaction_id}")
 
     def getReactionCurveWidth(self, reaction_id):
+        """Returns the curve width for the given reaction.
+
+        Args: reaction_id (str): id for the reaction
+
+        Returns: int
+        """
         return self.network.reactions[reaction_id].curve_width
 
     def setReactionCurveWidth(self, reaction_id, curve_width):
@@ -967,7 +1163,7 @@ class SBMLlayout:
                 reaction.curve_width = curve_width
 
         elif (isinstance(reaction_id, str) and
-              reaction_id.lower() in self.getReactionIds()):
+              reaction_id in self.getReactionIds()):
             self.network.reactions[reaction_id].curve_width = curve_width
 
         elif isinstance(reaction_id, list):
@@ -984,11 +1180,24 @@ class SBMLlayout:
     # Render Methods
 
     def addRenderInformation(self,):
+        """Add render information to the model's libsbml.SBMLDocument.
+
+        Args: None
+
+        Returns: None
+        """
         renderInfo = Render(self.sbml_filename, self.layout_number)
         renderInfo.addRenderInformation(self.network)
         self.doc = renderInfo.doc
 
     def _applyRenderInformation(self,):
+        """Apply the render information in the SBML file to nodes and reactions
+        in the model's network.
+
+        Args: None
+
+        Returns: None
+        """
         renderInfo = Render(self.sbml_filename, self.layout_number)
         renderInfo.applyGlobalRenderInformation(self.network)
         renderInfo.applyLocalRenderInformation(self.network)
@@ -996,19 +1205,58 @@ class SBMLlayout:
     # Plotting Methods
 
     def arrowheadGetStyle(self, role):
+        """Returns the arrowhead style for the given role.
+
+        Args:
+            role (int): which role
+
+        Returns: int
+        """
         return sbnw.arrowheadGetStyle(role)
 
     def arrowheadSetStyle(self, role, style):
+        """Set the arrowhead style for the given role.
+
+        Args:
+            role (int): which role
+            style (int): which style
+
+        Returns: None
+        """
         sbnw.arrowheadSetStyle(role, style)
 
     def arrowheadGetNumVerts(self, style):
+        """Returns the number of vertices in the arrowhead of the given style.
+
+        Args:
+            style (int): which arrowhead style
+
+        Returns:int
+        """
         return sbnw.arrowheadStyleGetNumVerts(style)
 
     def arrowheadGetVert(self, style, vertex_number):
+        """Returns a point for the given vertex_number, given an arrowhead
+        style.
+
+        Args:
+            style (int): which arrowhead style
+            vertex_number (int): specify the vertex in the arrowhead
+
+        Returns: point with fields x and y
+        """
         return sbnw.arrowheadStyleGetVert(style, vertex_number)
 
     def drawNetwork(self, save_file_name=None, bbox_inches="tight"):
+        """Draws the network to screen.  The figure can be saved.
 
+        Args:
+            save_file_name (str): save figure to this file
+            bbox_inches (str or matplotlib.transforms.Bbox): "tight", or a
+                value for inches or a Bbox.
+
+        Returns: matplotlib.figure.Figure
+        """
         try:
             fig = createNetworkFigure(self.network)
             if(save_file_name):

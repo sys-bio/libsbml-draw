@@ -8,7 +8,12 @@ from matplotlib import pyplot as plt
 
 
 def draw_nodes(nodes):
-    """Create a list of FancyBbox Patches, one for each node
+    """Create a list of FancyBbox Patches, one for each node.
+
+    Args:
+        nodes (iterable collection of Node): collection of nodes
+
+    Returns: list of matplotlib.patches.FancyBboxPatch
     """
     node_patches = []
 
@@ -20,7 +25,6 @@ def draw_nodes(nodes):
             node.height,
             edgecolor=node.edge_color,
             facecolor=node.fill_color,
-            #boxstyle=BoxStyle("circle"),
             boxstyle=BoxStyle("round", pad=0.2, rounding_size=.6),
             mutation_scale=10)
 
@@ -30,7 +34,12 @@ def draw_nodes(nodes):
 
 
 def draw_reactions(reactions):
-    """Create a list of FancyArrow Patches, one for each reaction
+    """Create a list of FancyArrow Patches, one for each curve in a reaction.
+
+    Args:
+        reactions (iterable collection of Reaction): collection of reactions
+
+    Returns: list of matplotlib.patches.FancyArrowPatch
     """
     reaction_patches = []
 
@@ -58,7 +67,7 @@ def draw_reactions(reactions):
                                   edgecolor=reaction.edge_color,
                                   arrowstyle=curve.curveArrowStyle,
                                   clip_on=False,
-                                  linewidth=reaction.curve_width,                                  
+                                  linewidth=reaction.curve_width,
                                   mutation_scale=15,
                                   path=cubic_bezier_curve_path
                                   )
@@ -69,12 +78,18 @@ def draw_reactions(reactions):
 
 
 def add_labels(nodes):
+    """Add text to the nodes.
+
+    Args:
+        nodes (iterable collection of Node): collection of nodes
+
+    Returns: None
+    """
     for node in nodes:
         plt.text(node.center.x,
                  node.center.y,
                  node.name,
                  fontsize=node.font_size,
-                 # fontsize="xx-small",
                  color=node.font_color,
                  fontname=node.font_family,
                  fontstyle=node.font_style,
@@ -83,6 +98,15 @@ def add_labels(nodes):
 
 
 def createNetworkFigure(network):
+    """Creates the figure, draws the nodes, draws the reactions, adds text to
+    the nodes.
+
+    Args:
+        network (libsbml_draw.model.network.Network): the model's network which
+            contains Nodes and Reactions.
+
+    Returns: matplotlib.figure.Figure
+    """
     # initialize figure
     fig = plt.figure()
     ax = plt.gca()
