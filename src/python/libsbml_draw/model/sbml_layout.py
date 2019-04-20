@@ -43,9 +43,14 @@ class SBMLlayout:
                 0.0          # padding
             )
 
-        if self._validate_sbml_filename(self.sbml_filename):
-
-            self.h_model = sbnw.loadSBML(self.sbml_filename)
+        if isinstance(self.sbml_filename, str): 
+        #if self._validate_sbml_filename(self.sbml_filename) or isinstance(self.sbml_filename, str):
+            
+            if SBMLlayout._validate_sbml_filename(self.sbml_filename):
+                self.h_model = sbnw.loadSBMLFile(self.sbml_filename)
+            else:
+                self.h_model = sbnw.loadSBMLString(self.sbml_filename)
+                
             self.h_layout_info = sbnw.processLayout(self.h_model)
             self.h_network = sbnw.getNetworkp(self.h_layout_info)
             self.layoutSpecified = True if sbnw.isLayoutSpecified(
@@ -263,7 +268,7 @@ class SBMLlayout:
 
     # Validation Methods
 
-    def _validate_sbml_filename(self, sbml_filename):
+    def _validate_sbml_filename(sbml_filename):
         """
         Check if the file actually exists.
 

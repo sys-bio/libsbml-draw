@@ -70,6 +70,10 @@ slib.gf_getSBMLwithLayoutStr.argtypes = [ctypes.c_uint64, ctypes.c_uint64]
 slib.gf_getSBMLwithLayoutStr.restype = ctypes.c_char_p
 slib.gf_loadSBMLfile.argtypes = [ctypes.c_char_p]
 slib.gf_loadSBMLfile.restype = ctypes.c_uint64
+
+slib.gf_loadSBMLbuf.argtypes = [ctypes.c_char_p]
+slib.gf_loadSBMLbuf.restype = ctypes.c_uint64
+
 slib.gf_writeSBML.argtypes = [ctypes.c_char_p, ctypes.c_uint64]
 slib.gf_writeSBML.restype = ctypes.c_int
 slib.gf_writeSBMLwithLayout.argtypes = [ctypes.c_char_p, ctypes.c_uint64,
@@ -83,9 +87,14 @@ def getSBMLwithLayoutStr(h_sbml_model, h_layout_info):
             h_sbml_model, h_layout_info).decode('utf-8')
 
 
-def loadSBML(h_fileName):
+def loadSBMLFile(h_fileName):
     h_filename_string = h_fileName.encode('utf-8')
     return slib.gf_loadSBMLfile(h_filename_string)
+
+
+def loadSBMLString(h_stringName):
+    h_stringname_string = h_stringName.encode('utf-8')
+    return slib.gf_loadSBMLbuf(h_stringname_string)
 
 
 def writeSBMLwithLayout(filename, h_layout, h_layout_info):

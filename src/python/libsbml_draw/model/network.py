@@ -18,7 +18,8 @@ class Role(IntEnum):
 
 
 class Node():
-    """ """
+    """Represents a node in the SBMl model."""
+
     def __init__(self, h_node):
 
         self.width = sbnw.node_getWidth(h_node)
@@ -37,7 +38,10 @@ class Node():
 
 
 class Curve():
-    """ """
+    """Part of a complete reaction curve. As an example, a reaction between a
+    substrate and a product usually consists of two curves.  The first curve
+    has no arrowhead (i.e. has arrowstyle '-') and the second has an arrowhead
+    pointing to the product."""
 
     role_arrowstyles = ["-",                                  # SUBSTRATE
                         "-|>",                                # PRODUCT
@@ -62,10 +66,10 @@ class Curve():
         self.role = sbnw.curve_getRole(h_curve)
         # what if role isn't defined?
         self.curveArrowStyle = Curve.role_arrowstyles[self.role]
-    
+
 
 class Reaction():
-    """ """
+    """Represents a reaction in the SBML model."""
     def __init__(self, h_reaction):
         self.curves = []
         for curve_index in range(sbnw.reaction_getNumCurves(h_reaction)):
@@ -78,7 +82,8 @@ class Reaction():
 
 
 class Network():
-    """ """
+    """Represents a network in the SBML model, and consists of nodes and
+    reactions."""
     def __init__(self, h_network):
         self.h_network = h_network
         self.nodes = {}
@@ -87,12 +92,26 @@ class Network():
         self._add_reactions(self.h_network)
 
     def _add_nodes(self, h_network):
+        """Populates the collection of nodes.
+
+        Args:
+            h_network(int): C pointer to the network
+
+        Returns: None
+        """
         for node_index in range(sbnw.nw_getNumNodes(h_network)):
             h_node = sbnw.nw_getNodep(h_network, node_index)
             node_id = sbnw.node_getID(h_node)
             self.nodes[node_id] = Node(h_node)
 
     def _add_reactions(self, h_network):
+        """Populates the collection of reactions.
+
+        Args:
+            h_network(int): C pointer to the network
+
+        Returns: None
+        """
         for reaction_index in range(sbnw.nw_getNumRxns(h_network)):
             h_reaction = sbnw.nw_getReactionp(h_network, reaction_index)
             reaction_id = sbnw.reaction_getID(h_reaction)
