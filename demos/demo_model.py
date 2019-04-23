@@ -17,6 +17,9 @@ print("reaction ids: ", sl.getReactionIds())
 
 sl.drawNetwork()
 
+print("X0", sl.getNodeColor("X0"))
+print("X", sl.getNodeColor("X"))
+
 
 sl.setNodeColor("all", "lightpink")
 sl.setNodeEdgeColor("X0", "green")

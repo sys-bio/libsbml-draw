@@ -20,10 +20,10 @@ class SBMLlayout:
 
     NODE_KEYWORDS = {"all", "boundary", "floating"}
 
-    def __init__(self, sbml_filename, layout_alg_options=None,
+    def __init__(self, sbml_source, layout_alg_options=None,
                  layout_number=0, fitWindow=tuple()):
 
-        self.sbml_filename = sbml_filename
+        self.sbml_source = sbml_source
         self.layout_number = layout_number
         self.fitWindow = fitWindow
 
@@ -43,13 +43,12 @@ class SBMLlayout:
                 0.0          # padding
             )
 
-        if isinstance(self.sbml_filename, str): 
-        #if self._validate_sbml_filename(self.sbml_filename) or isinstance(self.sbml_filename, str):
+        if isinstance(self.sbml_source, str): 
             
-            if SBMLlayout._validate_sbml_filename(self.sbml_filename):
-                self.h_model = sbnw.loadSBMLFile(self.sbml_filename)
+            if SBMLlayout._validate_sbml_filename(self.sbml_source):
+                self.h_model = sbnw.loadSBMLFile(self.sbml_source)
             else:
-                self.h_model = sbnw.loadSBMLString(self.sbml_filename)
+                self.h_model = sbnw.loadSBMLString(self.sbml_source)
                 
             self.h_layout_info = sbnw.processLayout(self.h_model)
             self.h_network = sbnw.getNetworkp(self.h_layout_info)
@@ -63,10 +62,13 @@ class SBMLlayout:
                 self.doc = libsbml.readSBMLFromString(
                         self.getSBMLWithLayoutString())
             else:
-                self.doc = libsbml.readSBMLFromFile(self.sbml_filename)
+                if SBMLlayout._validate_sbml_filename(sbml_source):
+                    self.doc = libsbml.readSBMLFromFile(sbml_source)
+                else:
+                    self.doc = libsbml.readSBMLFromString(sbml_source)
 
             if len(self.fitWindow) == 4:
-                self.fitToWindow(self.fitWindow[0], self.fitWindow[1],
+                self._fitToWindow(self.fitWindow[0], self.fitWindow[1],
                                  self.fitWindow[2], self.fitWindow[3])
 
             self.network = self._createNetwork()
@@ -77,15 +79,8 @@ class SBMLlayout:
         else:
 
             raise Exception(
-                    f"The SBML file does not exist: {self.sbml_filename}")
-            # self.h_model = sbnw.SBMLModel_newp()
-            # not sure if process layout does something default,
-            # our model is empty here
-            # self.h_layout_info = sbnw.processLayout (self.h_model)
-            # self.h_network = sbnw.getNetworkp(self.h_layout_info)
-            # add nodes
-            # add reactions
-            # add compartments
+                    f"""The SBML source must be the name of an existing file or
+                        or an SBML string: {self.sbml_source}""")
 
         self.numNodes = self.getNumberOfNodes()
         self.numReactions = self.getNumberOfReactions()
@@ -384,7 +379,7 @@ class SBMLlayout:
         Returns: None
         """
         print()
-        print("sbml filename: ", self.sbml_filename)
+        print("sbml filename: ", self.sbml_source)
         print("layout number: ", self.layout_number)
         print("layout is specified: ", self.layoutSpecified)
         print("number of Compartments: ", self.numCompartments)
@@ -415,7 +410,7 @@ class SBMLlayout:
         """
         return sbnw.nw_getNumRxns(self.h_network)
 
-    def fitToWindow(self, left, top, right, bottom):
+    def _fitToWindow(self, left, top, right, bottom):
         """Constrains the (x,y) values for the layout to fall within this
         window.
 
@@ -492,7 +487,7 @@ class SBMLlayout:
         centroid = sbnw.reaction_getCentroid(reaction_p)
         return centroid
 
-    def describeReaction(self, reaction_index):
+    def _describeReaction(self, reaction_index):
         """Prints the number of Species and number of curves in the reaction.
 
         Args: reaction_index(int): index of the reaction
@@ -556,7 +551,13 @@ class SBMLlayout:
 
         Returns: str
         """
-        return self.network.nodes[node_id].fill_color
+        try:         
+            if node_id in self.network.nodes:        
+                return self.network.nodes[node_id].fill_color
+            else:            
+                raise ValueError(f"Species {node_id} not found in network.")
+        except ValueError as ve:
+            print(ve)
 
     def getNodeKeywordIds(self, node_keyword):
         """Returns a list of node ids corresponding to the given keyword.
@@ -1203,7 +1204,7 @@ class SBMLlayout:
 
         Returns: None
         """
-        renderInfo = Render(self.sbml_filename, self.layout_number)
+        renderInfo = Render(self.sbml_source, self.layout_number)
         renderInfo.applyGlobalRenderInformation(self.network)
         renderInfo.applyLocalRenderInformation(self.network)
 
