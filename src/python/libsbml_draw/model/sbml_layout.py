@@ -43,13 +43,13 @@ class SBMLlayout:
                 0.0          # padding
             )
 
-        if isinstance(self.sbml_source, str): 
-            
+        if isinstance(self.sbml_source, str):
+
             if SBMLlayout._validate_sbml_filename(self.sbml_source):
                 self.h_model = sbnw.loadSBMLFile(self.sbml_source)
             else:
                 self.h_model = sbnw.loadSBMLString(self.sbml_source)
-                
+
             self.h_layout_info = sbnw.processLayout(self.h_model)
             self.h_network = sbnw.getNetworkp(self.h_layout_info)
             self.layoutSpecified = True if sbnw.isLayoutSpecified(
@@ -69,7 +69,7 @@ class SBMLlayout:
 
             if len(self.fitWindow) == 4:
                 self._fitToWindow(self.fitWindow[0], self.fitWindow[1],
-                                 self.fitWindow[2], self.fitWindow[3])
+                                  self.fitWindow[2], self.fitWindow[3])
 
             self.network = self._createNetwork()
 
@@ -437,68 +437,56 @@ class SBMLlayout:
 
     # Node Information
 
-    def nodeGetCentroid(self, node_id):
+    def getNodeCentroid(self, node_id):
         """Returns the center point of the node.
 
         Args:
             node_id (str): id for the node
 
-        Returns: point, which has fields x and y
+        Returns: tuple, with x and y
         """
-        node_p = sbnw.nw_getNodepFromId(self.h_network,
-                                        node_id.encode('utf-8'))
-        return sbnw.node_getCentroid(node_p)
-
-    def nodeGetHeight(self, node_index):
-        """Returns the height of the node.
-
-        Args:
-            node_index(int): index of the node
-
-        Returns: int
-        """
-        node_p = sbnw.nw_getNodep(self.h_network, node_index)
-        node_height = sbnw.node_getHeight(node_p)
-        return node_height
-
-    def nodeGetWidth(self, node_index):
-        """Returns the width of the node.
-
-        Args:
-            node_index(int): index of the node
-
-        Returns: int
-        """
-        node_p = sbnw.nw_getNodep(self.h_network, node_index)
-        node_width = sbnw.node_getWidth(node_p)
-        return node_width
+        if node_id in self.getNodeIds():
+            node_p = sbnw.nw_getNodepFromId(self.h_network,
+                                            node_id.encode('utf-8'))
+            centroid = sbnw.node_getCentroid(node_p)
+            return (centroid.x, centroid.y)
+        else:
+            raise ValueError(f"species {node_id} is not in the network.")
 
     # Reaction Information
 
-    def reactionGetCentroid(self, reaction_index):
+    def getReactionCentroid(self, reaction_id):
         """Returns the centroid of the reaction.
 
         Args:
-            reaction_index(int): index of the reaction
+            reaction_id(str): id of the reaction
 
-        Returns: point, with fields x and y
+        Returns: tuple, with x and y
         """
-        reaction_p = sbnw.nw_getRxnp(self.h_network, reaction_index)
-        centroid = sbnw.reaction_getCentroid(reaction_p)
-        return centroid
+        if reaction_id in self.getReactionIds():
+            reaction_index = self.getReactionIds().index(reaction_id)
+            print("reaction_index: ", reaction_index)
+            reaction_p = sbnw.nw_getReactionp(self.h_network, reaction_index)
+            centroid = sbnw.reaction_getCentroid(reaction_p)
+            return (centroid.x, centroid.y)
+        else:
+            raise ValueError(f"reaction {reaction_id} is not in the network.")
 
     def _describeReaction(self, reaction_index):
-        """Prints the number of Species and number of curves in the reaction.
+        """Prints the number of species and number of curves in the reaction.
 
         Args: reaction_index(int): index of the reaction
 
         Returns: None
         """
-        reaction_p = sbnw.nw_getRxnp(self.h_network, reaction_index)
-        numSpecies = sbnw.reaction_getNumSpecies(reaction_p)
+        reaction_p = sbnw.nw_getReactionp(self.h_network, reaction_index)
+        reaction_id = sbnw.reaction_getID(reaction_p)
+        numSpecies = sbnw.reaction_getNumSpec(reaction_p)
         numCurves = sbnw.reaction_getNumCurves(reaction_p)
-        print("reaction ", reaction_index, "numSpecies: ", numSpecies)
-        print("reaction ", reaction_index, "numCurves: ", numCurves)
+        print("reaction index: ", reaction_index)
+        print("reaction_id: ", reaction_id)
+        print("numSpecies: ", numSpecies)
+        print("numCurves: ", numCurves)
 
     # SBML IO Functions
 
@@ -544,20 +532,17 @@ class SBMLlayout:
         return list(self.network.nodes.keys())
 
     def getNodeColor(self, node_id):
-        """Returns the id of the color for this node.
+        """Returns the id of the fill color for this node.
 
         Args:
             node_id (str): id for the node
 
         Returns: str
         """
-        try:         
-            if node_id in self.network.nodes:        
-                return self.network.nodes[node_id].fill_color
-            else:            
-                raise ValueError(f"Species {node_id} not found in network.")
-        except ValueError as ve:
-            print(ve)
+        if node_id in self.network.nodes:
+            return self.network.nodes[node_id].fill_color
+        else:
+            raise ValueError(f"Species {node_id} not found in network.")
 
     def getNodeKeywordIds(self, node_keyword):
         """Returns a list of node ids corresponding to the given keyword.
@@ -623,7 +608,11 @@ class SBMLlayout:
 
         Returns: str
         """
-        return self.network.nodes[node_id].fill_color
+
+        if node_id in self.network.nodes:
+            return self.network.nodes[node_id].fill_color
+        else:
+            raise ValueError(f"Species {node_id} not found in network.")
 
     def setNodeFillColor(self, node_id, fill_color):
         """
@@ -670,7 +659,10 @@ class SBMLlayout:
 
         Returns: str
         """
-        return self.network.nodes[node_id].edge_color
+        if node_id in self.network.nodes:
+            return self.network.nodes[node_id].edge_color
+        else:
+            raise ValueError(f"Species {node_id} not found in network.")
 
     def setNodeEdgeColor(self, node_id, edge_color):
         """
@@ -715,7 +707,10 @@ class SBMLlayout:
 
         Returns: int
         """
-        return self.network.nodes[node_id].font_size
+        if node_id in self.network.nodes:
+            return self.network.nodes[node_id].font_size
+        else:
+            raise ValueError(f"Species {node_id} not found in network.")
 
     def setNodeFontSize(self, node_id, font_size):
         """Set the font size for the node.
@@ -760,7 +755,10 @@ class SBMLlayout:
 
         Returns: str, eg. "Arial" or "serif"
         """
-        return self.network.nodes[node_id].font_family
+        if node_id in self.network.nodes:
+            return self.network.nodes[node_id].font_family
+        else:
+            raise ValueError(f"Species {node_id} not found in network.")
 
     def setNodeFontName(self, node_id, font_name):
         """Sets the font family for the node, which can be a value for the
@@ -800,7 +798,10 @@ class SBMLlayout:
         """Returns the font family value, which can be the font family or
         font name.
         """
-        return self.network.nodes[node_id].font_family
+        if node_id in self.network.nodes:
+            return self.network.nodes[node_id].font_family
+        else:
+            raise ValueError(f"Species {node_id} not found in network.")
 
     def setNodeFontFamily(self, node_id, font_family):
         """Sets the font family for the node, which can be a value for either
@@ -844,7 +845,10 @@ class SBMLlayout:
 
         Returns: str
         """
-        return self.network.nodes[node_id].font_color
+        if node_id in self.network.nodes:
+            return self.network.nodes[node_id].font_color
+        else:
+            raise ValueError(f"Species {node_id} not found in network.")
 
     def setNodeFontColor(self, node_id, font_color):
         """
@@ -891,7 +895,10 @@ class SBMLlayout:
 
         Returns: str, "italic", "normal", or "oblique"
         """
-        return self.network.nodes[node_id].font_style
+        if node_id in self.network.nodes:
+            return self.network.nodes[node_id].font_style
+        else:
+            raise ValueError(f"Species {node_id} not found in network.")
 
     def setNodeFontStyle(self, node_id, font_style):
         """
@@ -939,7 +946,10 @@ class SBMLlayout:
 
         Returns: int
         """
-        return self.network.nodes[node_id].width
+        if node_id in self.network.nodes:
+            return self.network.nodes[node_id].width
+        else:
+            raise ValueError(f"Species {node_id} not found in network.")
 
     def getNodeHeight(self, node_id):
         """Returns the height of the node.
@@ -949,7 +959,10 @@ class SBMLlayout:
 
         Returns: int
         """
-        return self.network.nodes[node_id].height
+        if node_id in self.network.nodes:
+            return self.network.nodes[node_id].height
+        else:
+            raise ValueError(f"Species {node_id} not found in network.")
 
     def getNodeName(self, node_id):
         """Returns the name of the node.
@@ -959,7 +972,10 @@ class SBMLlayout:
 
         Returns: str
         """
-        return self.network.nodes[node_id].name
+        if node_id in self.network.nodes:
+            return self.network.nodes[node_id].name
+        else:
+            raise ValueError(f"Species {node_id} not found in network.")
 
     def getNodeLowerLeftPoint(self, node_id):
         """Returns the point for the node's lower left corner.
@@ -969,7 +985,10 @@ class SBMLlayout:
 
         Returns: point which has fields x and y
         """
-        return self.network.nodes[node_id].lower_left_point
+        if node_id in self.network.nodes:
+            return self.network.nodes[node_id].lower_left_point
+        else:
+            raise ValueError(f"Species {node_id} not found in network.")
 
     def getBoundarySpeciesIds(self,):
         """
@@ -1068,7 +1087,10 @@ class SBMLlayout:
 
         Returns: str
         """
-        return self.network.reactions[reaction_id].edge_color
+        if reaction_id in self.network.reactions:
+            return self.network.reactions[reaction_id].edge_color
+        else:
+            raise ValueError(f"Reaction {reaction_id} not found in network.")
 
     def setReactionEdgeColor(self, reaction_id, edge_color):
         """
@@ -1110,7 +1132,10 @@ class SBMLlayout:
 
         Returns: str
         """
-        return self.network.reactions[reaction_id].fill_color
+        if reaction_id in self.network.reactions:
+            return self.network.reactions[reaction_id].fill_color
+        else:
+            raise ValueError(f"Reaction {reaction_id} not found in network.")
 
     def setReactionFillColor(self, reaction_id, fill_color):
         """
@@ -1151,7 +1176,10 @@ class SBMLlayout:
 
         Returns: int
         """
-        return self.network.reactions[reaction_id].curve_width
+        if reaction_id in self.network.reactions:
+            return self.network.reactions[reaction_id].curve_width
+        else:
+            raise ValueError(f"Reaction {reaction_id} not found in network.")
 
     def setReactionCurveWidth(self, reaction_id, curve_width):
         """
@@ -1251,7 +1279,31 @@ class SBMLlayout:
 
         Returns: point with fields x and y
         """
-        return sbnw.arrowheadStyleGetVert(style, vertex_number)
+        number_of_arrowhead_styles = self.arrowheadGetNumStyles()
+
+        if style in range(number_of_arrowhead_styles):
+            number_of_arrowhead_vertices = self.arrowheadGetNumVerts(style)
+
+            if vertex_number in range(number_of_arrowhead_vertices):
+                return sbnw.arrowheadStyleGetVert(style, vertex_number)
+
+            elif number_of_arrowhead_vertices == 0:
+                    raise ValueError(f"style {style} has no vertices")
+            else:
+                raise ValueError(f"vertex_number must be in the range " +
+                                 f"0 - {number_of_arrowhead_vertices}")
+        else:
+            raise ValueError(f"style {style} must be in range " +
+                             f"0 - {number_of_arrowhead_styles}")
+
+    def arrowheadGetNumStyles(self,):
+        """Returns the number of arrowhead styles available.
+
+        Args: None
+
+        Returns: int
+        """
+        return sbnw.arrowheadNumStyles()
 
     def drawNetwork(self, save_file_name=None, bbox_inches="tight"):
         """Draws the network to screen.  The figure can be saved.
@@ -1263,12 +1315,11 @@ class SBMLlayout:
 
         Returns: matplotlib.figure.Figure
         """
-        try:
-            fig = createNetworkFigure(self.network)
-            if(save_file_name):
-                fig.savefig(save_file_name, bbox_inches=bbox_inches)
-        except Exception as inst:
-            print("Type of Error: ", type(inst))
-            print("Description of Error: ", inst)
+        fig = createNetworkFigure(self.network)
+        if(save_file_name):
+            fig.savefig(save_file_name, bbox_inches=bbox_inches)
 
         return fig
+
+    def getLastError(self,):
+        print(sbnw.getLastError())

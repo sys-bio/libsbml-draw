@@ -245,6 +245,8 @@ slib.gf_reaction_getNumSpec.argtypes = [ctypes.c_uint64]
 slib.gf_reaction_getNumSpec.restype = ctypes.c_uint64
 slib.gf_reaction_getID.argtypes = [ctypes.c_uint64]
 slib.gf_reaction_getID.restype = ctypes.c_char_p
+slib.gf_reaction_getCentroid.argtypes = [ctypes.c_uint64]
+slib.gf_reaction_getCentroid.restype = point
 
 
 def reaction_getNumCurves(h_reaction):
@@ -257,6 +259,10 @@ def reaction_getNumSpec(h_reaction):
 
 def reaction_getID(h_reaction):
     return slib.gf_reaction_getID(h_reaction).decode('utf-8')
+
+
+def reaction_getCentroid(h_reaction):
+    return slib.gf_reaction_getCentroid(h_reaction)
 
 
 # Curve Information
@@ -296,6 +302,7 @@ slib.gf_arrowheadSetStyle.argtypes = [ctypes.c_uint, ctypes.c_int]
 slib.gf_arrowheadSetStyle.restype = None
 slib.gf_arrowheadGetStyle.argtypes = [ctypes.c_uint]
 slib.gf_arrowheadGetStyle.restype = ctypes.c_int
+slib.gf_arrowheadNumStyles.restype = ctypes.c_ulong
 
 
 # Styling Functions
@@ -305,6 +312,10 @@ def arrowheadSetStyle(h_role, style):
 
 def arrowheadGetStyle(h_role):
     return slib.gf_arrowheadGetStyle(h_role)
+
+
+def arrowheadNumStyles():
+    return slib.gf_arrowheadNumStyles()
 
 
 # Arrowhead Functions
@@ -320,3 +331,7 @@ def arrowheadStyleGetNumVerts(style):
 
 def arrowheadStyleGetVert(style, vertex_number):
     return slib.gf_arrowheadStyleGetVert(style, vertex_number)
+
+
+
+

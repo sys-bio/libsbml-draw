@@ -17,9 +17,20 @@ print("reaction ids: ", sl.getReactionIds())
 
 sl.drawNetwork()
 
+sl._describeReaction(0)
+
+sl.arrowheadGetVert(1,1)
+
+centroid = sl.getNodeCentroid("X0")
+print("centroid: ", centroid)
+
+centroid = sl.getReactionCentroid("_J0")
+print("rxn centroid: ", centroid)
+centroid = sl.getReactionCentroid("J0")
+print("rxn centroid: ", centroid)
+
 print("X0", sl.getNodeColor("X0"))
 print("X", sl.getNodeColor("X"))
-
 
 sl.setNodeColor("all", "lightpink")
 sl.setNodeEdgeColor("X0", "green")
