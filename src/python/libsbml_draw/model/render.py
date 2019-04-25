@@ -6,9 +6,12 @@ from matplotlib.colors import is_color_like
 from matplotlib.font_manager import findSystemFonts
 from pathlib import Path
 
-import libsbml_draw
-
 import libsbml
+
+# import libsbml_draw
+
+# import libsbml_draw.c_api.sbnw_c_api as sbnw
+
 
 PlotColor = namedtuple("PlotColor", ["is_valid_color", "color"])
 FontProperty = namedtuple("FontProperty", ["is_valid_value", "value"])
@@ -21,13 +24,14 @@ class Render:
     network and to add a user's changes to the network to be added to the
     render data.
     """
-    def __init__(self, sbml_filename, layout_number):
+    def __init__(self, sbml_doc, layout_number):
 
         # SBMLDocument, SBMLReader
-        if libsbml_draw.SBMLlayout._validate_sbml_filename(sbml_filename):
-            self.doc = libsbml.readSBMLFromFile(sbml_filename)
-        else:
-            self.doc = libsbml.readSBMLFromString(sbml_filename)
+        self.doc = sbml_doc
+        #if libsbml_draw.SBMLlayout._validate_sbml_filename(sbml_filename):
+        #self.doc = sbnw.readSBMLFromFile(sbml_filename)
+        #else:
+        #    self.doc = sbnw.readSBMLFromString(sbml_filename)
         # Model
         self.model = self.doc.getModel()
         # SBasePlugin, LayoutModelPlugin
@@ -369,7 +373,7 @@ class Render:
 
             style = local_render_info.createStyle("nodeStyle")
             style.getGroup().setFontFamily(node.font_family)
-            style.getGroup().setFontSize(libsbml.RelAbsVector(node.font_size))
+            #style.getGroup().setFontSize(sbnw.RelAbsVector(node.font_size))
             if node.font_style == "italic":
                 style.getGroup().setFontStyle(2)
             else:
@@ -407,8 +411,8 @@ class Render:
             local_render_info = self.rPlugin.createLocalRenderInformation()
             self._addLocalStylesRenderInformation(local_render_info, network)
         else:
-            uri = libsbml.RenderExtension.getXmlnsL2() if self.doc.getLevel(
-                    ) == 2 else libsbml.RenderExtension.getXmlnsL3V1V1()
+            uri = libsbml.RenderExtension_getXmlnsL2() if self.doc.getLevel(
+                    ) == 2 else libsbml.RenderExtension_getXmlnsL3V1V1()
 
             # enable render package
             self.doc.enablePackage(uri, "render", True)

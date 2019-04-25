@@ -60,12 +60,16 @@ class SBMLlayout:
                 self._randomizeLayout()
                 self._doLayoutAlgorithm()
                 self.doc = libsbml.readSBMLFromString(
-                        self.getSBMLWithLayoutString())
+                        self._getSBMLWithLayoutString())
+                # self.doc = sbnw.readSBMLFromString(
+                #        self._getSBMLWithLayoutString())
             else:
                 if SBMLlayout._validate_sbml_filename(sbml_source):
                     self.doc = libsbml.readSBMLFromFile(sbml_source)
+                    #self.doc = sbnw.readSBMLFromFile(sbml_source)
                 else:
                     self.doc = libsbml.readSBMLFromString(sbml_source)
+                    #self.doc = sbnw.readSBMLFromString(sbml_source)
 
             if len(self.fitWindow) == 4:
                 self._fitToWindow(self.fitWindow[0], self.fitWindow[1],
@@ -85,6 +89,8 @@ class SBMLlayout:
         self.numNodes = self.getNumberOfNodes()
         self.numReactions = self.getNumberOfReactions()
         self.numCompartments = self.getNumberOfCompartments()
+        self.mutation_scale = {key:10 for key in 
+                               range(self.getNumberOfRoles())}
 
     def setLayoutAlgorithmOptions(self, k=None, boundary=None, mag=None,
                                   grav=None, baryx=None, baryy=None,
@@ -335,7 +341,8 @@ class SBMLlayout:
         """
         self._randomizeLayout()
         self._doLayoutAlgorithm()
-        self.doc = libsbml.readSBMLFromString(self.getSBMLWithLayoutString())
+        self.doc = libsbml.readSBMLFromString(self._getSBMLWithLayoutString())
+        #self.doc = sbnw.readSBMLFromString(self._getSBMLWithLayoutString())
 
         if len(self.fitWindow) == 4:
                 self.fitToWindow(self.fitWindow[0], self.fitWindow[1],
@@ -490,7 +497,7 @@ class SBMLlayout:
 
     # SBML IO Functions
 
-    def getSBMLWithLayoutString(self,):
+    def _getSBMLWithLayoutString(self,):
         """Returns the SBML content, including layout, as a string.
 
         Args: None
@@ -518,6 +525,7 @@ class SBMLlayout:
         Returns: None
         """
         libsbml.writeSBMLToFile(self.doc, out_file_name)
+        #sbnw.writeSBMLToFile(self.doc, out_file_name)
         print("wrote file: ", out_file_name)
 
     # Node Methods
@@ -1220,7 +1228,7 @@ class SBMLlayout:
 
         Returns: None
         """
-        renderInfo = Render(self.sbml_filename, self.layout_number)
+        renderInfo = Render(self.doc, self.layout_number)
         renderInfo.addRenderInformation(self.network)
         self.doc = renderInfo.doc
 
@@ -1232,7 +1240,7 @@ class SBMLlayout:
 
         Returns: None
         """
-        renderInfo = Render(self.sbml_source, self.layout_number)
+        renderInfo = Render(self.doc, self.layout_number)
         renderInfo.applyGlobalRenderInformation(self.network)
         renderInfo.applyLocalRenderInformation(self.network)
 
@@ -1315,11 +1323,69 @@ class SBMLlayout:
 
         Returns: matplotlib.figure.Figure
         """
-        fig = createNetworkFigure(self.network)
+        fig = createNetworkFigure(self.network, self.mutation_scale)
         if(save_file_name):
             fig.savefig(save_file_name, bbox_inches=bbox_inches)
 
         return fig
 
-    def getLastError(self,):
-        print(sbnw.getLastError())
+    def _getLastError(self,):
+        """Returns the last error from the c_api code.
+
+        Args: None
+        
+        Returns: str
+        """
+        return sbnw.getLastError().decode('utf-8')
+
+    def getSBMLString(self,):
+        """Returns the SBML string for the model.
+        
+        Args: None
+        
+        Returns: str
+        """
+        return libsbml.writeSBMLToString(self.doc)
+        #return sbnw.writeSBMLToString(self.doc)
+
+    def setArrowheadMutationScale(self, role, mutation_scale):
+        """Set a value for matplotlib's mutation_scale to change the
+        size of the arrowhead for a given role.  The default value is 10.
+        
+        Args: 
+            mutation_scale(int): passed on to matplotlib
+            role(int): role of the reaction
+        
+        Returns: None
+        """
+        if role in range(self.getNumberOfRoles()):
+            if isinstance(mutation_scale, int) and mutation_scale > 0: 
+                self.mutation_scale[role] = mutation_scale
+            else:
+                raise ValueError(f"Mutation scale {mutation_scale} must be an" +
+                                 f" integer greater than 0.")
+        else:
+            raise ValueError(f"Role {role} is not in the allowable range: " +
+                             f"{self.getNumberOfRoles()}")
+
+    def getArrowheadMutationScale(self, role):
+        """Returns the mutation scale for the given role.
+        
+        Args: role(int)
+        
+        Returns: int
+        """
+        if role in self.mutation_scale:
+            return self.mutation_scale[role]
+        else:
+            raise ValueError(f"Role {role} must be in the range 0 - " + 
+                             f"{self.getNumberOfRoles() - 1}") 
+
+    def getNumberOfRoles(self,):
+        """
+        Args: None
+        
+        Returns: int
+        """
+        return len(sbnw.ROLES)
+                        

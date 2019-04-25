@@ -17,6 +17,21 @@ class Role(IntEnum):
     INHIBITOR = 6
 
 
+class Compartment():
+    """Represents a compartment in the SBML model."""
+
+    def __init__(self, h_compartment):
+        
+        self.width = sbnw.compartment_getWidth(h_compartment)
+        self.height = sbnw.compartment_getHeight(h_compartment)
+        self.min_corner = sbnw.compartment_getMinCorner(h_compartment)
+        self.max_corner = sbnw.compartment_getMaxCorner(h_compartment)
+        self.lower_left_point = [self.min_corner.x, self.max_corner.y]
+        self.id = sbnw.compartment_getID(h_compartment)
+        self.edge_color = "#0000ff30"
+        self.fill_color = None
+    
+    
 class Node():
     """Represents a node in the SBMl model."""
 
@@ -64,7 +79,6 @@ class Curve():
         self.control_point_1 = curveCPs.control_point_1
         self.control_point_2 = curveCPs.control_point_2
         self.role = sbnw.curve_getRole(h_curve)
-        # what if role isn't defined?
         self.curveArrowStyle = Curve.role_arrowstyles[self.role]
 
 
@@ -86,11 +100,25 @@ class Network():
     reactions."""
     def __init__(self, h_network):
         self.h_network = h_network
+        self.compartments = {}
         self.nodes = {}
         self.reactions = {}
         self._add_nodes(self.h_network)
         self._add_reactions(self.h_network)
 
+    def _add_compartments(self, h_network):
+        """Populates the collection of compartments.
+
+        Args:
+            h_network(int): C pointer to the network
+
+        Returns: None
+        """
+        for compartment_index in range(sbnw.nw_getNumCompartments(h_network)):
+            h_compartment = sbnw.nw_getCompartmentp(h_network, compartment_index)
+            compartment_id = sbnw.compartment_getID(h_compartment)
+            self.compartments[compartment_id] = Compartment(h_compartment)
+                
     def _add_nodes(self, h_network):
         """Populates the collection of nodes.
 

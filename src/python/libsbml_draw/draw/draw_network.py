@@ -7,6 +7,33 @@ from matplotlib.path import Path
 from matplotlib import pyplot as plt
 
 
+def draw_compartments(compartments):
+    """Create a list of FancyBbox Patches, one for each compartment.
+
+    Args:
+        compartments (iterable collection of Compartment): collection of
+        compartments
+
+    Returns: list of matplotlib.patches.FancyBboxPatch
+    """
+    compartment_patches = []
+
+    for compartment in compartments:
+
+        fbbp = FancyBboxPatch(
+            compartment.lower_left_point,
+            compartment.width,
+            compartment.height,
+            edgecolor=compartment.edge_color,
+            facecolor=compartment.fill_color,
+            boxstyle=BoxStyle("round", pad=0.2, rounding_size=.6),
+            mutation_scale=10)
+
+        compartment_patches.append(fbbp)
+
+    return compartment_patches
+
+
 def draw_nodes(nodes):
     """Create a list of FancyBbox Patches, one for each node.
 
@@ -33,7 +60,7 @@ def draw_nodes(nodes):
     return node_patches
 
 
-def draw_reactions(reactions):
+def draw_reactions(reactions, mutation_scale):
     """Create a list of FancyArrow Patches, one for each curve in a reaction.
 
     Args:
@@ -63,14 +90,15 @@ def draw_reactions(reactions):
                      end_point],
                     [Path.MOVETO, Path.CURVE4, Path.CURVE4, Path.CURVE4])
 
-            fap = FancyArrowPatch(facecolor=reaction.fill_color,
-                                  edgecolor=reaction.edge_color,
-                                  arrowstyle=curve.curveArrowStyle,
-                                  clip_on=False,
-                                  linewidth=reaction.curve_width,
-                                  mutation_scale=15,
-                                  path=cubic_bezier_curve_path
-                                  )
+            fap = FancyArrowPatch(
+                    facecolor=reaction.fill_color,
+                    edgecolor=reaction.edge_color,
+                    arrowstyle=curve.curveArrowStyle,
+                    clip_on=False,
+                    linewidth=reaction.curve_width,
+                    mutation_scale=mutation_scale.get(curve.role, 10),
+                    path=cubic_bezier_curve_path
+                    )
 
             reaction_patches.append(fap)
 
@@ -97,7 +125,7 @@ def add_labels(nodes):
                  verticalalignment="center")
 
 
-def createNetworkFigure(network):
+def createNetworkFigure(network, mutation_scale):
     """Creates the figure, draws the nodes, draws the reactions, adds text to
     the nodes.
 
@@ -111,13 +139,20 @@ def createNetworkFigure(network):
     fig = plt.figure()
     ax = plt.gca()
 
+    # draw the compartments
+    compartment_patches = draw_compartments(network.compartments.values())
+    for compartment_patch in compartment_patches:
+        ax.add_patch(compartment_patch)
+
     # draw the nodes
     node_patches = draw_nodes(network.nodes.values())
     for node_patch in node_patches:
         ax.add_patch(node_patch)
 
     # draw the reactions
-    reaction_patches = draw_reactions(network.reactions.values())
+    reaction_patches = draw_reactions(
+            network.reactions.values(), 
+            mutation_scale)
     for reaction_patch in reaction_patches:
         ax.add_patch(reaction_patch)
 

@@ -26,11 +26,11 @@ print("centroid: ", centroid)
 
 centroid = sl.getReactionCentroid("_J0")
 print("rxn centroid: ", centroid)
-centroid = sl.getReactionCentroid("J0")
-print("rxn centroid: ", centroid)
+#centroid = sl.getReactionCentroid("J0")
+#print("rxn centroid: ", centroid)
 
 print("X0", sl.getNodeColor("X0"))
-print("X", sl.getNodeColor("X"))
+#print("X", sl.getNodeColor("X"))
 
 sl.setNodeColor("all", "lightpink")
 sl.setNodeEdgeColor("X0", "green")
