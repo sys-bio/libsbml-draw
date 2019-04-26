@@ -9,7 +9,6 @@ from pathlib import Path
 import libsbml
 
 # import libsbml_draw
-
 # import libsbml_draw.c_api.sbnw_c_api as sbnw
 
 
@@ -259,6 +258,50 @@ class Render:
 
             reaction.curve_width = reaction_edge_width
 
+    def _updateCompartmentsBasedOnCompartmentGlyph(
+            self,
+            global_style,
+            color_definitions,
+            network,
+            idList):
+
+        """Sets compartment values based on the COMPARTMENTGLYPH settings.
+
+        Args:
+            global_style(libsbml.GlobalStyle): contains global style info
+            color_definitions(dict): color ids and their values
+            network (libsbml_draw.model.Network): the model's network
+            idList(list): list of ids to update
+
+        Returns: None
+        """
+        compartment_edge_color = self._set_plot_color_and_validity(
+                global_style.getGroup().getStroke(), color_definitions)
+
+        compartment_fill_color = self._set_plot_color_and_validity(
+                global_style.getGroup().getFillColor(), color_definitions)
+
+        compartment_line_width = global_style.getGroup().getStrokeWidth()
+
+        compartments_to_update = {k: network.compartments[k]
+                               for k in network.compartments.keys() & idList}
+
+        for compartment in compartments_to_update.values():
+
+            if compartment_edge_color.is_valid_color:
+                compartment.edge_color = compartment_edge_color.color
+            else:
+                pass
+                # stick with default value
+
+            if compartment_fill_color.is_valid_color:
+                compartment.fill_color = compartment_fill_color.color
+            else:
+                pass
+                # stick with default value
+                
+            compartment.line_width = compartment_line_width
+
     def applyGlobalRenderInformation(self, network):
         """Applies global style render information as specified in the
         SPECIESGLYPH, TEXTGLYPH, and REACTIONGLYPH.
@@ -294,6 +337,10 @@ class Render:
                                 self._updateReactionsBasedOnReactionGlyph(
                                         global_style, color_definitions,
                                         network, network.reactions.keys())
+                            elif global_style.isInTypeList("COMPARTMENTGLYPH"):
+                                self._updateCompartmentsBasedOnCompartmentGlyph(
+                                        global_style, color_definitions,
+                                        network, network.reactions.keys())    
                             else:
                                 pass
 
@@ -347,6 +394,11 @@ class Render:
                                     local_style, network.reactions.keys())
                             self._updateReactionsBasedOnReactionGlyph(
                                     local_style, {}, network, idList)
+                        elif "COMPARTMENTGLYPH" in local_style.getTypeList():
+                            idList = self._getLocalIdList(
+                                    local_style, network.reactions.keys())
+                            self._updateCompartmentsBasedOnCompartmentGlyph(
+                                    local_style, {}, network, idList)
                         else:
                             pass
 
@@ -373,7 +425,7 @@ class Render:
 
             style = local_render_info.createStyle("nodeStyle")
             style.getGroup().setFontFamily(node.font_family)
-            #style.getGroup().setFontSize(sbnw.RelAbsVector(node.font_size))
+            style.getGroup().setFontSize(libsbml.RelAbsVector(node.font_size))
             if node.font_style == "italic":
                 style.getGroup().setFontStyle(2)
             else:
@@ -390,6 +442,14 @@ class Render:
             style.getGroup().setStrokeWidth(reaction.curve_width)
             style.addId(reaction.id)
             style.addType("REACTIONGLYPH")
+
+        for compartment in network.compartments.values():
+            style = local_render_info.createStyle("compartmentStyle")
+            style.getGroup().setStroke(compartment.edge_color)
+            style.getGroup().setFillColor(compartment.fill_color)
+            style.getGroup().setStrokeWidth(compartment.line_width)
+            style.addId(compartment.id)
+            style.addType("COMPARTMENTGLYPH")
 
     def addRenderInformation(self, network):
         """Add Local Style render information to the model.  If local render

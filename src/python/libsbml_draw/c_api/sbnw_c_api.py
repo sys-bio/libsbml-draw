@@ -333,13 +333,8 @@ def arrowheadStyleGetVert(style, vertex_number):
     return slib.gf_arrowheadStyleGetVert(style, vertex_number)
 
 
-slib.readSBMLFromFile.argtypes = [ctypes.c_char_p]
-slib.readSBMLFromFile.restype = ctypes.c_uint64
-slib.readSBMLFromString.argtypes = [ctypes.c_char_p]
-slib.readSBMLFromString.restype = ctypes.c_uint64
-
-
 # Compartment Functions
+
 
 slib.gf_compartment_getMinCorner.argtypes = [ctypes.c_uint64]
 slib.gf_compartment_getMinCorner.restype = point
@@ -374,6 +369,18 @@ def compartment_getID(h_compartment):
 
 
 # libsbml Functions
+
+
+slib.readSBMLFromFile.argtypes = [ctypes.c_char_p]
+slib.readSBMLFromFile.restype = ctypes.c_uint64
+#from ctypes import POINTER
+#slib.readSBMLFromFile.restype = POINTER(SBMLDocument_t)
+#slib.readSBMLFromFile.restype = ctypes.c_void_p
+
+
+slib.readSBMLFromString.argtypes = [ctypes.c_char_p]
+slib.readSBMLFromString.restype = ctypes.c_uint64
+
 
 def readSBMLFromFile(sbml_file):
     return slib.readSBMLFromFile(sbml_file.encode('utf-8'))

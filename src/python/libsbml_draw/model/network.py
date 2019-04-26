@@ -30,7 +30,7 @@ class Compartment():
         self.id = sbnw.compartment_getID(h_compartment)
         self.edge_color = "#0000ff30"
         self.fill_color = None
-    
+        self.line_width = None 
     
 class Node():
     """Represents a node in the SBMl model."""

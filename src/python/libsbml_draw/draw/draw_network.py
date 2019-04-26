@@ -26,6 +26,7 @@ def draw_compartments(compartments):
             compartment.height,
             edgecolor=compartment.edge_color,
             facecolor=compartment.fill_color,
+            linewidth=compartment.line_width,
             boxstyle=BoxStyle("round", pad=0.2, rounding_size=.6),
             mutation_scale=10)
 
