@@ -23,14 +23,14 @@ class SBMLlayout:
     def __init__(self, sbml_source, layout_alg_options=None,
                  layout_number=0, fitWindow=tuple()):
 
-        self.sbml_source = sbml_source
-        self.layout_number = layout_number
-        self.fitWindow = fitWindow
+        self.__sbml_source = sbml_source
+        self.__layout_number = layout_number
+        self.__fitWindow = fitWindow
 
         if self._validate_layout_alg_options(layout_alg_options):
-            self.layout_alg_options = layout_alg_options
+            self.__layout_alg_options = layout_alg_options
         else:
-            self.layout_alg_options = sbnw.fr_alg_options(
+            self.__layout_alg_options = sbnw.fr_alg_options(
                 20.0,        # k
                 1,           # boundary
                 0,           # mag
@@ -43,42 +43,38 @@ class SBMLlayout:
                 0.0          # padding
             )
 
-        if isinstance(self.sbml_source, str):
+        if isinstance(self.__sbml_source, str):
 
-            if SBMLlayout._validate_sbml_filename(self.sbml_source):
-                self.h_model = sbnw.loadSBMLFile(self.sbml_source)
+            if SBMLlayout._validate_sbml_filename(self.__sbml_source):
+                self.__h_model = sbnw.loadSBMLFile(self.__sbml_source)
             else:
-                self.h_model = sbnw.loadSBMLString(self.sbml_source)
+                self.__h_model = sbnw.loadSBMLString(self.__sbml_source)
 
-            self.h_layout_info = sbnw.processLayout(self.h_model)
-            self.h_network = sbnw.getNetworkp(self.h_layout_info)
-            self.layoutSpecified = True if sbnw.isLayoutSpecified(
-                    self.h_network) else False
+            self.__h_layout_info = sbnw.processLayout(self.__h_model)
+            self.__h_network = sbnw.getNetworkp(self.__h_layout_info)
+            self.__layoutSpecified = True if sbnw.isLayoutSpecified(
+                    self.__h_network) else False
 
             # create layout, if it doesn't already exist
-            if not self.layoutSpecified:
-                self._randomizeLayout()
-                self._doLayoutAlgorithm()
-                self.doc = libsbml.readSBMLFromString(
-                        self._getSBMLWithLayoutString())
-                # self.doc = sbnw.readSBMLFromString(
-                #        self._getSBMLWithLayoutString())
+            if not self.__layoutSpecified:
+                self.__randomizeLayout()
+                self.__doLayoutAlgorithm()
+                self.__doc = libsbml.readSBMLFromString(
+                        self.__getSBMLWithLayoutString())
             else:
                 if SBMLlayout._validate_sbml_filename(sbml_source):
-                    self.doc = libsbml.readSBMLFromFile(sbml_source)
-                    #self.doc = sbnw.readSBMLFromFile(sbml_source)
+                    self.__doc = libsbml.readSBMLFromFile(sbml_source)
                 else:
-                    self.doc = libsbml.readSBMLFromString(sbml_source)
-                    #self.doc = sbnw.readSBMLFromString(sbml_source)
+                    self.__doc = libsbml.readSBMLFromString(sbml_source)
 
-            if len(self.fitWindow) == 4:
-                self._fitToWindow(self.fitWindow[0], self.fitWindow[1],
-                                  self.fitWindow[2], self.fitWindow[3])
+            if len(self.__fitWindow) == 4:
+                self.__fitToWindow(self.__fitWindow[0], self.__fitWindow[1],
+                                  self.__fitWindow[2], self.__fitWindow[3])
 
-            self.network = self._createNetwork()
+            self.__network = self.__createNetwork()
 
             # apply render information, if any
-            self._applyRenderInformation()
+            self.__applyRenderInformation()
 
         else:
 
@@ -86,10 +82,10 @@ class SBMLlayout:
                     f"""The SBML source must be the name of an existing file or
                         or an SBML string: {self.sbml_source}""")
 
-        self.numNodes = self.getNumberOfNodes()
-        self.numReactions = self.getNumberOfReactions()
-        self.numCompartments = self.getNumberOfCompartments()
-        self.mutation_scale = {key:10 for key in 
+        self.__numNodes = self.getNumberOfNodes()
+        self.__numReactions = self.getNumberOfReactions()
+        self.__numCompartments = self.getNumberOfCompartments()
+        self.__mutation_scale = {key:10 for key in 
                                range(self.getNumberOfRoles())}
 
     def setLayoutAlgorithmOptions(self, k=None, boundary=None, mag=None,
@@ -115,25 +111,25 @@ class SBMLlayout:
         Returns: None
         """
         if k:
-            self.layout_alg_options.k = k
+            self.__layout_alg_options.k = k
         if boundary:
-            self.layout_alg_options.boundary = boundary
+            self.__layout_alg_options.boundary = boundary
         if mag:
-            self.layout_alg_options.mag = mag
+            self.__layout_alg_options.mag = mag
         if grav:
-            self.layout_alg_options.grav = grav
+            self.__layout_alg_options.grav = grav
         if baryx:
-            self.layout_alg_options.baryx = baryx
+            self.__layout_alg_options.baryx = baryx
         if baryy:
-            self.layout_alg_options.baryy = baryy
+            self.__layout_alg_options.baryy = baryy
         if autobary:
-            self.layout_alg_options.autobary = autobary
+            self.__layout_alg_options.autobary = autobary
         if enable_comps:
-            self.layout_alg_options.enable_comps
+            self.__layout_alg_options.enable_comps
         if prerandom:
-            self.layout_alg_options.prerandom = prerandom
+            self.__layout_alg_options.prerandom = prerandom
         if padding:
-            self.layout_alg_options.padding = padding
+            self.__layout_alg_options.padding = padding
 
     def setLayoutAlgorithm_k(self, k):
         """Set the Fruchterman-Reingold layout algorithm parameter 'k'.
@@ -143,7 +139,7 @@ class SBMLlayout:
 
         Returns: None
         """
-        self.layout_alg_options.k = k
+        self.__layout_alg_options.k = k
 
     def setLayoutAlgorithm_boundary(self, boundary):
         """Set the Fruchterman-Reingold layout algorithm parameter 'boundary'.
@@ -153,7 +149,7 @@ class SBMLlayout:
 
         Returns: None
         """
-        self.layout_alg_options.boundary = boundary
+        self.__layout_alg_options.boundary = boundary
 
     def setLayoutAlgorithm_mag(self, magnitude):
         """Set the Fruchterman-Reingold layout algorithm parameter 'mag'.
@@ -163,7 +159,7 @@ class SBMLlayout:
 
         Returns: None
         """
-        self.layout_alg_options.mag = magnitude
+        self.__layout_alg_options.mag = magnitude
 
     def setLayoutAlgorithm_grav(self, gravity):
         """Set the Fruchterman-Reingold layout algorithm parameter 'grav'.
@@ -173,7 +169,7 @@ class SBMLlayout:
 
         Returns: None
         """
-        self.layout_alg_options.grav = gravity
+        self.__layout_alg_options.grav = gravity
 
     def setLayoutAlgorithm_baryx(self, baryx):
         """Set the Fruchterman-Reingold layout algorithm parameter 'baryx'.
@@ -183,7 +179,7 @@ class SBMLlayout:
 
         Returns: None
         """
-        self.layout_alg_options.baryx = baryx
+        self.__layout_alg_options.baryx = baryx
 
     def setLayoutAlgorithm_baryy(self, baryy):
         """Set the Fruchterman-Reingold layout algorithm parameter 'baryy'.
@@ -193,7 +189,7 @@ class SBMLlayout:
 
         Returns: None
         """
-        self.layout_alg_options.baryy = baryy
+        self.__layout_alg_options.baryy = baryy
 
     def setLayoutAlgorithm_autobary(self, autobary):
         """Set the Fruchterman-Reingold layout algorithm parameter 'autobary'.
@@ -203,7 +199,7 @@ class SBMLlayout:
 
         Returns: None
         """
-        self.layout_alg_options.autobary = autobary
+        self.__layout_alg_options.autobary = autobary
 
     def setLayoutAlgorithm_enable_comps(self, enable_comps):
         """Set the Fruchterman-Reingold layout algorithm parameter
@@ -214,7 +210,7 @@ class SBMLlayout:
 
         Returns: None
         """
-        self.layout_alg_options.enable_comps = enable_comps
+        self.__layout_alg_options.enable_comps = enable_comps
 
     def setLayoutAlgorithm_prerandom(self, prerandom):
         """Set the Fruchterman-Reingold layout algorithm parameter 'prerandom'.
@@ -224,7 +220,7 @@ class SBMLlayout:
 
         Returns: None
         """
-        self.layout_alg_options.prerandom = prerandom
+        self.__layout_alg_options.prerandom = prerandom
 
     def setLayoutAlgorithm_padding(self, padding):
         """Set the Fruchterman-Reingold layout algorithm parameter 'padding'.
@@ -234,7 +230,7 @@ class SBMLlayout:
 
         Returns: None
         """
-        self.layout_alg_options.padding = padding
+        self.__layout_alg_options.padding = padding
 
     def getLayoutAlgorithmOptions(self,):
         """Get the Fruchterman-Reingold layout algorithm parameter values.
@@ -243,7 +239,7 @@ class SBMLlayout:
 
         Returns: instance of the fr_alg_options class
         """
-        return self.layout_alg_options
+        return self.__layout_alg_options
 
     def showLayoutAlgorithmOptions(self,):
         """Prints out the values of the Fruchterman-Reingold algorithm
@@ -255,16 +251,16 @@ class SBMLlayout:
         Returns: None
         """
         print("layout algorithm options: \n",
-              "k ", self.layout_alg_options.k, "\n",
-              "boundary ", self.layout_alg_options.boundary, "\n",
-              "magnitude ", self.layout_alg_options.mag, "\n",
-              "gravity ", self.layout_alg_options.grav, "\n",
-              "baryx ", self.layout_alg_options.baryx, "\n",
-              "baryy ", self.layout_alg_options.baryy, "\n",
-              "autobary ", self.layout_alg_options.autobary, "\n",
-              "enable_comps ", self.layout_alg_options.enable_comps, "\n",
-              "prerandom ", self.layout_alg_options.prerandom, "\n",
-              "padding ", self.layout_alg_options.padding, "\n"
+              "k ", self.__layout_alg_options.k, "\n",
+              "boundary ", self.__layout_alg_options.boundary, "\n",
+              "magnitude ", self.__layout_alg_options.mag, "\n",
+              "gravity ", self.__layout_alg_options.grav, "\n",
+              "baryx ", self.__layout_alg_options.baryx, "\n",
+              "baryy ", self.__layout_alg_options.baryy, "\n",
+              "autobary ", self.__layout_alg_options.autobary, "\n",
+              "enable_comps ", self.__layout_alg_options.enable_comps, "\n",
+              "prerandom ", self.__layout_alg_options.prerandom, "\n",
+              "padding ", self.__layout_alg_options.padding, "\n"
               )
 
     # Validation Methods
@@ -339,45 +335,44 @@ class SBMLlayout:
 
         Returns: None
         """
-        self._randomizeLayout()
-        self._doLayoutAlgorithm()
-        self.doc = libsbml.readSBMLFromString(self._getSBMLWithLayoutString())
-        #self.doc = sbnw.readSBMLFromString(self._getSBMLWithLayoutString())
+        self.__randomizeLayout()
+        self.__doLayoutAlgorithm()
+        self.__doc = libsbml.readSBMLFromString(self.__getSBMLWithLayoutString())
 
-        if len(self.fitWindow) == 4:
-                self.fitToWindow(self.fitWindow[0], self.fitWindow[1],
-                                 self.fitWindow[2], self.fitWindow[3])
+        if len(self.__fitWindow) == 4:
+                self.__fitToWindow(self.__fitWindow[0], self.__fitWindow[1],
+                                 self.__fitWindow[2], self.__fitWindow[3])
 
-        self.network = self._createNetwork()
+        self.__network = self.__createNetwork()
 
         # apply render information, if any
-        self._applyRenderInformation()
+        self.__applyRenderInformation()
 
-    def _randomizeLayout(self,):
+    def __randomizeLayout(self,):
         """Give the layout a starting point
 
         Args: None
         Returns: None
         """
-        sbnw.randomizeLayout(self.h_layout_info)
+        sbnw.randomizeLayout(self.__h_layout_info)
 
-    def _doLayoutAlgorithm(self,):
+    def __doLayoutAlgorithm(self,):
         """Run the Fruchterman-Reingold Layout Algorithm
 
         Args: None
         Returns: None
         """
-        sbnw.doLayoutAlgorithm(self.layout_alg_options, self.h_layout_info)
+        sbnw.doLayoutAlgorithm(self.__layout_alg_options, self.__h_layout_info)
 
     # Model Methods
 
-    def _createNetwork(self,):
+    def __createNetwork(self,):
         """Creates a network for this model based on the existing layout.
 
         Args: None
         Returns: None
         """
-        return Network(self.h_network)
+        return Network(self.__h_network)
 
     def _describeModel(self,):
         """Provides a summary of the model built from the SBML file.
@@ -386,12 +381,12 @@ class SBMLlayout:
         Returns: None
         """
         print()
-        print("sbml filename: ", self.sbml_source)
-        print("layout number: ", self.layout_number)
-        print("layout is specified: ", self.layoutSpecified)
-        print("number of Compartments: ", self.numCompartments)
-        print("number of Nodes: ", self.numNodes)
-        print("number of Reactions: ", self.numReactions)
+        print("sbml filename: ", self.__sbml_source)
+        print("layout number: ", self.__layout_number)
+        print("layout is specified: ", self.__layoutSpecified)
+        print("number of Compartments: ", self.__numCompartments)
+        print("number of Nodes: ", self.__numNodes)
+        print("number of Reactions: ", self.__numReactions)
 
     def getNumberOfCompartments(self,):
         """Returns the number of compartments in the model.
@@ -399,7 +394,7 @@ class SBMLlayout:
         Args: None
         Returns: None
         """
-        return sbnw.nw_getNumCompartments(self.h_network)
+        return sbnw.nw_getNumCompartments(self.__h_network)
 
     def getNumberOfNodes(self,):
         """Returns the number of nodes in the model.
@@ -407,7 +402,7 @@ class SBMLlayout:
         Args: None
         Returns: None
         """
-        return sbnw.nw_getNumNodes(self.h_network)
+        return sbnw.nw_getNumNodes(self.__h_network)
 
     def getNumberOfReactions(self,):
         """Returns the number of reactions in the model.
@@ -415,9 +410,9 @@ class SBMLlayout:
         Args: None
         Returns: None
         """
-        return sbnw.nw_getNumRxns(self.h_network)
+        return sbnw.nw_getNumRxns(self.__h_network)
 
-    def _fitToWindow(self, left, top, right, bottom):
+    def __fitToWindow(self, left, top, right, bottom):
         """Constrains the (x,y) values for the layout to fall within this
         window.
 
@@ -429,7 +424,7 @@ class SBMLlayout:
 
         Returns: None
         """
-        sbnw.fit_to_window(self.h_layout_info, left, top, right, bottom)
+        sbnw.fit_to_window(self.__h_layout_info, left, top, right, bottom)
 
     def setModelNamespace(self, level, version):
         """Specify the Model level and version.
@@ -440,7 +435,7 @@ class SBMLlayout:
 
         Returns: None
         """
-        sbnw.setModelNamespace(self.h_layout_info, level, version)
+        sbnw.setModelNamespace(self.__h_layout_info, level, version)
 
     # Node Information
 
@@ -453,7 +448,7 @@ class SBMLlayout:
         Returns: tuple, with x and y
         """
         if node_id in self.getNodeIds():
-            node_p = sbnw.nw_getNodepFromId(self.h_network,
+            node_p = sbnw.nw_getNodepFromId(self.__h_network,
                                             node_id.encode('utf-8'))
             centroid = sbnw.node_getCentroid(node_p)
             return (centroid.x, centroid.y)
@@ -472,8 +467,7 @@ class SBMLlayout:
         """
         if reaction_id in self.getReactionIds():
             reaction_index = self.getReactionIds().index(reaction_id)
-            print("reaction_index: ", reaction_index)
-            reaction_p = sbnw.nw_getReactionp(self.h_network, reaction_index)
+            reaction_p = sbnw.nw_getReactionp(self.__h_network, reaction_index)
             centroid = sbnw.reaction_getCentroid(reaction_p)
             return (centroid.x, centroid.y)
         else:
@@ -486,7 +480,7 @@ class SBMLlayout:
 
         Returns: None
         """
-        reaction_p = sbnw.nw_getReactionp(self.h_network, reaction_index)
+        reaction_p = sbnw.nw_getReactionp(self.__h_network, reaction_index)
         reaction_id = sbnw.reaction_getID(reaction_p)
         numSpecies = sbnw.reaction_getNumSpec(reaction_p)
         numCurves = sbnw.reaction_getNumCurves(reaction_p)
@@ -497,15 +491,15 @@ class SBMLlayout:
 
     # SBML IO Functions
 
-    def _getSBMLWithLayoutString(self,):
+    def __getSBMLWithLayoutString(self,):
         """Returns the SBML content, including layout, as a string.
 
         Args: None
 
         Returns: str
         """
-        sbml_string = sbnw.getSBMLwithLayoutStr(self.h_model,
-                                                self.h_layout_info)
+        sbml_string = sbnw.getSBMLwithLayoutStr(self.__h_model,
+                                                self.__h_layout_info)
         return sbml_string
 
     # def writeSBMLWithLayout(self, output_filename):
@@ -524,7 +518,7 @@ class SBMLlayout:
 
         Returns: None
         """
-        libsbml.writeSBMLToFile(self.doc, out_file_name)
+        libsbml.writeSBMLToFile(self.__doc, out_file_name)
         #sbnw.writeSBMLToFile(self.doc, out_file_name)
         print("wrote file: ", out_file_name)
 
@@ -537,7 +531,7 @@ class SBMLlayout:
 
         Returns: list of str
         """
-        return list(self.network.nodes.keys())
+        return list(self.__network.nodes.keys())
 
     def getNodeColor(self, node_id):
         """Returns the id of the fill color for this node.
@@ -547,8 +541,8 @@ class SBMLlayout:
 
         Returns: str
         """
-        if node_id in self.network.nodes:
-            return self.network.nodes[node_id].fill_color
+        if node_id in self.__network.nodes:
+            return self.__network.nodes[node_id].fill_color
         else:
             raise ValueError(f"Species {node_id} not found in network.")
 
@@ -586,20 +580,20 @@ class SBMLlayout:
         if (isinstance(node_id, str) and
                 node_id.lower() in SBMLlayout.NODE_KEYWORDS):
             for node_id in self.getNodeKeywordIds(str(node_id).lower()):
-                self.network.nodes[node_id].edge_color = node_color
-                self.network.nodes[node_id].fill_color = node_color
+                self.__network.nodes[node_id].edge_color = node_color
+                self.__network.nodes[node_id].fill_color = node_color
 
         elif (isinstance(node_id, str) and
               node_id in self.getNodeIds()):
-            self.network.nodes[node_id].edge_color = node_color
-            self.network.nodes[node_id].fill_color = node_color
+            self.__network.nodes[node_id].edge_color = node_color
+            self.__network.nodes[node_id].fill_color = node_color
 
         elif isinstance(node_id, list):
             full_model_nodeIds = self.getNodeIds()
             for this_id in node_id:
                 if this_id in full_model_nodeIds:
-                    self.network.nodes[this_id].edge_color = node_color
-                    self.network.nodes[this_id].fill_color = node_color
+                    self.__network.nodes[this_id].edge_color = node_color
+                    self.__network.nodes[this_id].fill_color = node_color
                 else:
                     print(f"""This id in the input list is invalid {this_id},
                           so cannot set color for this id.""")
@@ -617,8 +611,8 @@ class SBMLlayout:
         Returns: str
         """
 
-        if node_id in self.network.nodes:
-            return self.network.nodes[node_id].fill_color
+        if node_id in self.__network.nodes:
+            return self.__network.nodes[node_id].fill_color
         else:
             raise ValueError(f"Species {node_id} not found in network.")
 
@@ -639,17 +633,17 @@ class SBMLlayout:
         if (isinstance(node_id, str) and
                 node_id.lower() in SBMLlayout.NODE_KEYWORDS):
             for node_id in self.getNodeKeywordIds(str(node_id).lower()):
-                self.network.nodes[node_id].fill_color = fill_color
+                self.__network.nodes[node_id].fill_color = fill_color
 
         elif (isinstance(node_id, str) and
               node_id in self.getNodeIds()):
-            self.network.nodes[node_id].fill_color = fill_color
+            self.__network.nodes[node_id].fill_color = fill_color
 
         elif isinstance(node_id, list):
             full_model_nodeIds = self.getNodeIds()
             for this_id in node_id:
                 if this_id in full_model_nodeIds:
-                    self.network.nodes[this_id].fill_color = fill_color
+                    self.__network.nodes[this_id].fill_color = fill_color
                 else:
                     print(f"""This id in the input list is invalid {this_id},
                           so cannot set node fill color for this id.""")
@@ -667,8 +661,8 @@ class SBMLlayout:
 
         Returns: str
         """
-        if node_id in self.network.nodes:
-            return self.network.nodes[node_id].edge_color
+        if node_id in self.__network.nodes:
+            return self.__network.nodes[node_id].edge_color
         else:
             raise ValueError(f"Species {node_id} not found in network.")
 
@@ -689,15 +683,15 @@ class SBMLlayout:
         if (isinstance(node_id, str) and
                 node_id.lower() in SBMLlayout.NODE_KEYWORDS):
             for node_id in self.getNodeKeywordIds(str(node_id).lower()):
-                self.network.nodes[node_id].edge_color = edge_color
+                self.__network.nodes[node_id].edge_color = edge_color
         elif (isinstance(node_id, str) and
               node_id in self.getNodeIds()):
-            self.network.nodes[node_id].edge_color = edge_color
+            self.__network.nodes[node_id].edge_color = edge_color
         elif isinstance(node_id, list):
             full_model_nodeIds = self.getNodeIds()
             for this_id in node_id:
                 if this_id in full_model_nodeIds:
-                    self.network.nodes[this_id].edge_color = edge_color
+                    self.__network.nodes[this_id].edge_color = edge_color
                 else:
                     print(f"""This id in the input list is invalid {this_id},
                           so cannot set node edge color for this id.""")
@@ -715,8 +709,8 @@ class SBMLlayout:
 
         Returns: int
         """
-        if node_id in self.network.nodes:
-            return self.network.nodes[node_id].font_size
+        if node_id in self.__network.nodes:
+            return self.__network.nodes[node_id].font_size
         else:
             raise ValueError(f"Species {node_id} not found in network.")
 
@@ -734,17 +728,17 @@ class SBMLlayout:
         if (isinstance(node_id, str) and
                 node_id.lower() in SBMLlayout.NODE_KEYWORDS):
             for node_id in self.getNodeKeywordIds(str(node_id).lower()):
-                self.network.nodes[node_id].font_size = font_size
+                self.__network.nodes[node_id].font_size = font_size
 
         elif (isinstance(node_id, str) and
               node_id in self.getNodeIds()):
-            self.network.nodes[node_id].font_size = font_size
+            self.__network.nodes[node_id].font_size = font_size
 
         elif isinstance(node_id, list):
             full_model_nodeIds = self.getNodeIds()
             for this_id in node_id:
                 if this_id in full_model_nodeIds:
-                    self.network.nodes[this_id].font_size = font_size
+                    self.__network.nodes[this_id].font_size = font_size
                 else:
                     print(f"""This id in the input list is invalid {this_id},
                           so cannot set node font size for this id.""")
@@ -763,8 +757,8 @@ class SBMLlayout:
 
         Returns: str, eg. "Arial" or "serif"
         """
-        if node_id in self.network.nodes:
-            return self.network.nodes[node_id].font_family
+        if node_id in self.__network.nodes:
+            return self.__network.nodes[node_id].font_family
         else:
             raise ValueError(f"Species {node_id} not found in network.")
 
@@ -782,17 +776,17 @@ class SBMLlayout:
         if (isinstance(node_id, str) and
                 node_id.lower() in SBMLlayout.NODE_KEYWORDS):
             for node_id in self.getNodeKeywordIds(str(node_id).lower()):
-                self.network.nodes[node_id].font_family = font_name
+                self.__network.nodes[node_id].font_family = font_name
 
         elif (isinstance(node_id, str) and
               node_id in self.getNodeIds()):
-            self.network.nodes[node_id].font_family = font_name
+            self.__network.nodes[node_id].font_family = font_name
 
         elif isinstance(node_id, list):
             full_model_nodeIds = self.getNodeIds()
             for this_id in node_id:
                 if this_id in full_model_nodeIds:
-                    self.network.nodes[this_id].font_family = font_name
+                    self.__network.nodes[this_id].font_family = font_name
                 else:
                     print(f"""This id in the input list is invalid {this_id},
                           so cannot set node font family for this id.""")
@@ -806,8 +800,8 @@ class SBMLlayout:
         """Returns the font family value, which can be the font family or
         font name.
         """
-        if node_id in self.network.nodes:
-            return self.network.nodes[node_id].font_family
+        if node_id in self.__network.nodes:
+            return self.__network.nodes[node_id].font_family
         else:
             raise ValueError(f"Species {node_id} not found in network.")
 
@@ -825,17 +819,17 @@ class SBMLlayout:
         if (isinstance(node_id, str) and
                 node_id.lower() in SBMLlayout.NODE_KEYWORDS):
             for node_id in self.getNodeKeywordIds(str(node_id).lower()):
-                self.network.nodes[node_id].font_family = font_family
+                self.__network.nodes[node_id].font_family = font_family
 
         elif (isinstance(node_id, str) and
               node_id in self.getNodeIds()):
-            self.network.nodes[node_id].font_family = font_family
+            self.__network.nodes[node_id].font_family = font_family
 
         elif isinstance(node_id, list):
             full_model_nodeIds = self.getNodeIds()
             for this_id in node_id:
                 if this_id in full_model_nodeIds:
-                    self.network.nodes[this_id].font_family = font_family
+                    self.__network.nodes[this_id].font_family = font_family
                 else:
                     print(f"""This id in the input list is invalid {this_id},
                           so cannot set node font family for this id.""")
@@ -853,8 +847,8 @@ class SBMLlayout:
 
         Returns: str
         """
-        if node_id in self.network.nodes:
-            return self.network.nodes[node_id].font_color
+        if node_id in self.__network.nodes:
+            return self.__network.nodes[node_id].font_color
         else:
             raise ValueError(f"Species {node_id} not found in network.")
 
@@ -875,17 +869,17 @@ class SBMLlayout:
         if (isinstance(node_id, str) and
                 node_id.lower() in SBMLlayout.NODE_KEYWORDS):
             for node_id in self.getNodeKeywordIds(str(node_id).lower()):
-                self.network.nodes[node_id].font_color = font_color
+                self.__network.nodes[node_id].font_color = font_color
 
         elif (isinstance(node_id, str) and
               node_id in self.getNodeIds()):
-            self.network.nodes[node_id].font_color = font_color
+            self.__network.nodes[node_id].font_color = font_color
 
         elif isinstance(node_id, list):
             full_model_nodeIds = self.getNodeIds()
             for this_id in node_id:
                 if this_id in full_model_nodeIds:
-                    self.network.nodes[this_id].font_color = font_color
+                    self.__network.nodes[this_id].font_color = font_color
                 else:
                     print(f"""This id in the input list is invalid {this_id},
                           so cannot set node font color for this id.""")
@@ -903,8 +897,8 @@ class SBMLlayout:
 
         Returns: str, "italic", "normal", or "oblique"
         """
-        if node_id in self.network.nodes:
-            return self.network.nodes[node_id].font_style
+        if node_id in self.__network.nodes:
+            return self.__network.nodes[node_id].font_style
         else:
             raise ValueError(f"Species {node_id} not found in network.")
 
@@ -926,17 +920,17 @@ class SBMLlayout:
         if (isinstance(node_id, str) and
                 node_id.lower() in SBMLlayout.NODE_KEYWORDS):
             for node_id in self.getNodeKeywordIds(str(node_id).lower()):
-                self.network.nodes[node_id].font_style = font_style
+                self.__network.nodes[node_id].font_style = font_style
 
         elif (isinstance(node_id, str) and
               node_id in self.getNodeIds()):
-            self.network.nodes[node_id].font_style = font_style
+            self.__network.nodes[node_id].font_style = font_style
 
         elif isinstance(node_id, list):
             full_model_nodeIds = self.getNodeIds()
             for this_id in node_id:
                 if this_id in full_model_nodeIds:
-                    self.network.nodes[this_id].font_style = font_style
+                    self.__network.nodes[this_id].font_style = font_style
                 else:
                     print(f"""This id in the input list is invalid {this_id},
                           so cannot set node font style for this id.""")
@@ -954,8 +948,8 @@ class SBMLlayout:
 
         Returns: int
         """
-        if node_id in self.network.nodes:
-            return self.network.nodes[node_id].width
+        if node_id in self.__network.nodes:
+            return self.__network.nodes[node_id].width
         else:
             raise ValueError(f"Species {node_id} not found in network.")
 
@@ -967,8 +961,8 @@ class SBMLlayout:
 
         Returns: int
         """
-        if node_id in self.network.nodes:
-            return self.network.nodes[node_id].height
+        if node_id in self.__network.nodes:
+            return self.__network.nodes[node_id].height
         else:
             raise ValueError(f"Species {node_id} not found in network.")
 
@@ -980,8 +974,8 @@ class SBMLlayout:
 
         Returns: str
         """
-        if node_id in self.network.nodes:
-            return self.network.nodes[node_id].name
+        if node_id in self.__network.nodes:
+            return self.__network.nodes[node_id].name
         else:
             raise ValueError(f"Species {node_id} not found in network.")
 
@@ -993,8 +987,8 @@ class SBMLlayout:
 
         Returns: point which has fields x and y
         """
-        if node_id in self.network.nodes:
-            return self.network.nodes[node_id].lower_left_point
+        if node_id in self.__network.nodes:
+            return self.__network.nodes[node_id].lower_left_point
         else:
             raise ValueError(f"Species {node_id} not found in network.")
 
@@ -1008,7 +1002,7 @@ class SBMLlayout:
 
         Returns: list of Species ids
         """
-        model = self.doc.getModel()
+        model = self.__doc.getModel()
         speciesList = model.getListOfSpecies()
 
         boundarySpeciesIds = list()
@@ -1029,7 +1023,7 @@ class SBMLlayout:
 
         Returns: list of Species ids
         """
-        model = self.doc.getModel()
+        model = self.__doc.getModel()
         speciesList = model.getListOfSpecies()
 
         floatingSpeciesIds = list()
@@ -1050,7 +1044,7 @@ class SBMLlayout:
 
         Returns: list of Reaction ids
         """
-        return list(self.network.reactions.keys())
+        return list(self.__network.reactions.keys())
 
     def setReactionColor(self, reaction_id, reaction_color):
         """
@@ -1066,21 +1060,21 @@ class SBMLlayout:
         SBMLlayout._validatePlotColor(reaction_color)
 
         if reaction_id == "all":
-            for reaction in self.network.reactions.values():
+            for reaction in self.__network.reactions.values():
                 reaction.fill_color = reaction_color
                 reaction.edge_color = reaction_color
 
         elif (isinstance(reaction_id, str) and
               reaction_id in self.getReactionIds()):
-            self.network.reactions[reaction_id].edge_color = reaction_color
-            self.network.reactions[reaction_id].fill_color = reaction_color
+            self.__network.reactions[reaction_id].edge_color = reaction_color
+            self.__network.reactions[reaction_id].fill_color = reaction_color
 
         elif isinstance(reaction_id, list):
             full_model_reactionIds = self.getReactionIds()
             for this_id in reaction_id:
                 if this_id in full_model_reactionIds:
-                    self.network.reactions[this_id].edge_color = reaction_color
-                    self.network.reactions[this_id].fill_color = reaction_color
+                    self.__network.reactions[this_id].edge_color = reaction_color
+                    self.__network.reactions[this_id].fill_color = reaction_color
                 else:
                     print(f"""This id in the input list is invalid {this_id},
                           so cannot set color for this id.""")
@@ -1095,8 +1089,8 @@ class SBMLlayout:
 
         Returns: str
         """
-        if reaction_id in self.network.reactions:
-            return self.network.reactions[reaction_id].edge_color
+        if reaction_id in self.__network.reactions:
+            return self.__network.reactions[reaction_id].edge_color
         else:
             raise ValueError(f"Reaction {reaction_id} not found in network.")
 
@@ -1114,18 +1108,18 @@ class SBMLlayout:
         SBMLlayout._validatePlotColor(edge_color)
 
         if reaction_id == "all":
-            for reaction in self.network.reactions.values():
+            for reaction in self.__network.reactions.values():
                 reaction.edge_color = edge_color
 
         elif (isinstance(reaction_id, str) and
               reaction_id in self.getReactionIds()):
-            self.network.reactions[reaction_id].edge_color = edge_color
+            self.__network.reactions[reaction_id].edge_color = edge_color
 
         elif isinstance(reaction_id, list):
             full_model_reactionIds = self.getReactionIds()
             for this_id in reaction_id:
                 if this_id in full_model_reactionIds:
-                    self.network.reactions[this_id].edge_color = edge_color
+                    self.__network.reactions[this_id].edge_color = edge_color
                 else:
                     print(f"""This id in the input list is invalid {this_id},
                           so cannot set color for this id.""")
@@ -1140,8 +1134,8 @@ class SBMLlayout:
 
         Returns: str
         """
-        if reaction_id in self.network.reactions:
-            return self.network.reactions[reaction_id].fill_color
+        if reaction_id in self.__network.reactions:
+            return self.__network.reactions[reaction_id].fill_color
         else:
             raise ValueError(f"Reaction {reaction_id} not found in network.")
 
@@ -1159,18 +1153,18 @@ class SBMLlayout:
         SBMLlayout._validatePlotColor(fill_color)
 
         if reaction_id == "all":
-            for reaction in self.network.reactions.values():
+            for reaction in self.__network.reactions.values():
                 reaction.fill_color = fill_color
 
         elif (isinstance(reaction_id, str) and
               reaction_id in self.getReactionIds()):
-            self.network.reactions[reaction_id].fill_color = fill_color
+            self.__network.reactions[reaction_id].fill_color = fill_color
 
         elif isinstance(reaction_id, list):
             full_model_reactionIds = self.getReactionIds()
             for this_id in reaction_id:
                 if this_id in full_model_reactionIds:
-                    self.network.reactions[this_id].fill_color = fill_color
+                    self.__network.reactions[this_id].fill_color = fill_color
                 else:
                     print(f"""This id in the input list is invalid {this_id},
                           so cannot set color for this id.""")
@@ -1184,8 +1178,8 @@ class SBMLlayout:
 
         Returns: int
         """
-        if reaction_id in self.network.reactions:
-            return self.network.reactions[reaction_id].curve_width
+        if reaction_id in self.__network.reactions:
+            return self.__network.reactions[reaction_id].curve_width
         else:
             raise ValueError(f"Reaction {reaction_id} not found in network.")
 
@@ -1201,18 +1195,18 @@ class SBMLlayout:
         Returns: None
         """
         if reaction_id == "all":
-            for reaction in self.network.reactions.values():
+            for reaction in self.__network.reactions.values():
                 reaction.curve_width = curve_width
 
         elif (isinstance(reaction_id, str) and
               reaction_id in self.getReactionIds()):
-            self.network.reactions[reaction_id].curve_width = curve_width
+            self.__network.reactions[reaction_id].curve_width = curve_width
 
         elif isinstance(reaction_id, list):
             full_model_reactionIds = self.getReactionIds()
             for this_id in reaction_id:
                 if this_id in full_model_reactionIds:
-                    self.network.reactions[this_id].curve_width = curve_width
+                    self.__network.reactions[this_id].curve_width = curve_width
                 else:
                     print(f"""This id in the input list is invalid {this_id},
                           so cannot set reaction curve width for this id.""")
@@ -1228,21 +1222,20 @@ class SBMLlayout:
 
         Returns: None
         """
-        renderInfo = Render(self.doc, self.layout_number)
-        renderInfo.addRenderInformation(self.network)
-        self.doc = renderInfo.doc
+        renderInfo = Render(self.__doc, self.__layout_number)
+        renderInfo.addRenderInformation(self.__network)
+        self.__doc = renderInfo.doc
 
-    def _applyRenderInformation(self,):
-        """Apply the render information in the SBML file to nodes and reactions
-        in the model's network.
+    def __applyRenderInformation(self,):
+        """Apply the render information in the SBML file to nodes, reactions,
+        and compartments in the model's network.
 
         Args: None
 
         Returns: None
         """
-        renderInfo = Render(self.doc, self.layout_number)
-        renderInfo.applyGlobalRenderInformation(self.network)
-        renderInfo.applyLocalRenderInformation(self.network)
+        renderInfo = Render(self.__doc, self.__layout_number)
+        renderInfo.applyRenderInformation(self.__network)
 
     # Plotting Methods
 
@@ -1323,13 +1316,13 @@ class SBMLlayout:
 
         Returns: matplotlib.figure.Figure
         """
-        fig = createNetworkFigure(self.network, self.mutation_scale)
+        fig = createNetworkFigure(self.__network, self.__mutation_scale)
         if(save_file_name):
             fig.savefig(save_file_name, bbox_inches=bbox_inches)
 
         return fig
 
-    def _getLastError(self,):
+    def __getLastError(self,):
         """Returns the last error from the c_api code.
 
         Args: None
@@ -1345,7 +1338,7 @@ class SBMLlayout:
         
         Returns: str
         """
-        return libsbml.writeSBMLToString(self.doc)
+        return libsbml.writeSBMLToString(self.__doc)
         #return sbnw.writeSBMLToString(self.doc)
 
     def setArrowheadMutationScale(self, role, mutation_scale):
@@ -1360,7 +1353,7 @@ class SBMLlayout:
         """
         if role in range(self.getNumberOfRoles()):
             if isinstance(mutation_scale, int) and mutation_scale > 0: 
-                self.mutation_scale[role] = mutation_scale
+                self.__mutation_scale[role] = mutation_scale
             else:
                 raise ValueError(f"Mutation scale {mutation_scale} must be an" +
                                  f" integer greater than 0.")
@@ -1375,8 +1368,8 @@ class SBMLlayout:
         
         Returns: int
         """
-        if role in self.mutation_scale:
-            return self.mutation_scale[role]
+        if role in self.__mutation_scale:
+            return self.__mutation_scale[role]
         else:
             raise ValueError(f"Role {role} must be in the range 0 - " + 
                              f"{self.getNumberOfRoles() - 1}") 

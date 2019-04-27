@@ -139,9 +139,10 @@ def createNetworkFigure(network, mutation_scale):
     # initialize figure
     fig = plt.figure()
     ax = plt.gca()
-
+        
     # draw the compartments
     compartment_patches = draw_compartments(network.compartments.values())
+
     for compartment_patch in compartment_patches:
         ax.add_patch(compartment_patch)
 

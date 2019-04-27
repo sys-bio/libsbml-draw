@@ -8,10 +8,6 @@ from pathlib import Path
 
 import libsbml
 
-# import libsbml_draw
-# import libsbml_draw.c_api.sbnw_c_api as sbnw
-
-
 PlotColor = namedtuple("PlotColor", ["is_valid_color", "color"])
 FontProperty = namedtuple("FontProperty", ["is_valid_value", "value"])
 
@@ -27,10 +23,6 @@ class Render:
 
         # SBMLDocument, SBMLReader
         self.doc = sbml_doc
-        #if libsbml_draw.SBMLlayout._validate_sbml_filename(sbml_filename):
-        #self.doc = sbnw.readSBMLFromFile(sbml_filename)
-        #else:
-        #    self.doc = sbnw.readSBMLFromString(sbml_filename)
         # Model
         self.model = self.doc.getModel()
         # SBasePlugin, LayoutModelPlugin
@@ -45,6 +37,7 @@ class Render:
         self.render_plugin = self.layout_plugin.getListOfLayouts(
                 ).getPlugin("render") if self.layout_plugin else None
         self.font_properties = self._getFontProperties()
+        self.color_definitions = {}
 
     def _getFontProperties(self,):
         """Finds the font families on the system, and provides valid values for
@@ -90,41 +83,38 @@ class Render:
                               ] = color_defn.createValueString()
         return color_definitions
 
-    def _set_plot_color_and_validity(self, color, color_definitions):
+    def _set_plot_color_and_validity(self, color):
         """Determines if the plot color is valid.
 
         Args:
             color(str): id of color
-            color_definitions(dict): colors and their values
 
         Returns: named tuple PlotColor with fields is_valid_color and color
         """
-        if is_color_like(color):
+        if is_color_like(color) and color != "none":
             plot_color = PlotColor(True, color)
-        elif color in color_definitions and is_color_like(
-                color_definitions[color]):
-            plot_color = PlotColor(True, color_definitions[color])
+        elif color in self.color_definitions and is_color_like(
+                self.color_definitions[color]):
+            plot_color = PlotColor(True, self.color_definitions[color])
         else:
             plot_color = PlotColor(False, color)
 
         return plot_color
 
-    def _updateNodesBasedOnSpeciesGlyph(self, global_style, color_definitions,
-                                        network, idList):
+    def _updateNodesBasedOnSpeciesGlyph(self, global_style, network, idList):
         """Sets node values based on the SPECIESGLYPH settings.
 
         Args:
             global_style(libsbml.GlobalStyle): contains global style info
-            color_definitions(dict): color ids and their values
             network (libsbml_draw.model.Network): the model's network
             idList(list): list of ids to update
 
         Returns: None
         """
         node_fill_color = self._set_plot_color_and_validity(
-                global_style.getGroup().getFillColor(), color_definitions)
+                global_style.getGroup().getFillColor())
         node_edge_color = self._set_plot_color_and_validity(
-                global_style.getGroup().getStroke(), color_definitions)
+                global_style.getGroup().getStroke())
 
         nodes_to_update = {k: network.nodes[k]
                            for k in network.nodes.keys() & idList}
@@ -167,8 +157,8 @@ class Render:
 
         elif font_property == "size":
             if (str(round(property_value)).isdigit() or
-                str(property_value).lower()) in self.font_properties[
-                    font_property]:
+                str(property_value).lower() in self.font_properties[
+                    font_property]):
                 font_property = FontProperty(True, property_value)
             else:
                 font_property = FontProperty(False, property_value)
@@ -177,33 +167,34 @@ class Render:
 
         return font_property
 
-    def _updateNodesBasedOnTextGlyph(self, global_style, color_definitions,
-                                     network, idList):
+    def _updateNodesBasedOnTextGlyph(
+            self,
+            global_style,
+            network,
+            idList):
         """Sets node values based on the TEXTGLYPH settings.
 
         Args:
             global_style(libsbml.GlobalStyle): contains global style info
-            color_definitions(dict): color ids and their values
             network (libsbml_draw.model.Network): the model's network
             idList(list): list of ids to update
 
         Returns: None
         """
         node_font_color = self._set_plot_color_and_validity(
-                global_style.getGroup().getStroke(), color_definitions)
+                global_style.getGroup().getStroke())
 
-        node_font_size = self._set_font_property("size",
-                                                 global_style.getGroup(
-                                                 ).getFontSize(
-                                                         ).getAbsoluteValue())
+        node_font_size = self._set_font_property(
+                "size",
+                global_style.getGroup().getFontSize().getAbsoluteValue())
 
-        node_font_family = self._set_font_property("family",
-                                                   global_style.getGroup(
-                                                   ).getFontFamily())
+        node_font_family = self._set_font_property(
+                "family",
+                global_style.getGroup().getFontFamily())
 
-        node_font_style = self._set_font_property("style",
-                                                  global_style.getGroup(
-                                                  ).getFontStyle())
+        node_font_style = self._set_font_property(
+                "style",
+                global_style.getGroup().getFontStyle())
 
         nodes_to_update = {k: network.nodes[k]
                            for k in network.nodes.keys() & idList}
@@ -225,7 +216,6 @@ class Render:
     def _updateReactionsBasedOnReactionGlyph(
             self,
             global_style,
-            color_definitions,
             network,
             idList):
 
@@ -233,14 +223,13 @@ class Render:
 
         Args:
             global_style(libsbml.GlobalStyle): contains global style info
-            color_definitions(dict): color ids and their values
             network (libsbml_draw.model.Network): the model's network
             idList(list): list of ids to update
 
         Returns: None
         """
         reaction_edge_color = self._set_plot_color_and_validity(
-                global_style.getGroup().getStroke(), color_definitions)
+                global_style.getGroup().getStroke())
 
         reaction_edge_width = global_style.getGroup().getStrokeWidth()
 
@@ -261,7 +250,6 @@ class Render:
     def _updateCompartmentsBasedOnCompartmentGlyph(
             self,
             global_style,
-            color_definitions,
             network,
             idList):
 
@@ -269,22 +257,32 @@ class Render:
 
         Args:
             global_style(libsbml.GlobalStyle): contains global style info
-            color_definitions(dict): color ids and their values
             network (libsbml_draw.model.Network): the model's network
             idList(list): list of ids to update
 
         Returns: None
         """
         compartment_edge_color = self._set_plot_color_and_validity(
-                global_style.getGroup().getStroke(), color_definitions)
+                global_style.getGroup().getStroke())
 
         compartment_fill_color = self._set_plot_color_and_validity(
-                global_style.getGroup().getFillColor(), color_definitions)
+                global_style.getGroup().getFillColor())
 
         compartment_line_width = global_style.getGroup().getStrokeWidth()
 
-        compartments_to_update = {k: network.compartments[k]
-                               for k in network.compartments.keys() & idList}
+        compartments_to_update = {k: network.compartments[k] for k in
+                                  network.compartments.keys() & idList}
+
+        # print("metaid ", global_style.getGroup().getElement(0).getStroke())
+        
+        # print("stroke:", global_style.getGroup().getStroke())
+        # print("fill:", global_style.getGroup().getFillColor())
+        # print("stroke_width: ", global_style.getGroup().getStrokeWidth())
+
+        # print("compartment_fill_color: ", compartment_fill_color.color,
+        #      compartment_fill_color.is_valid_color)
+        # print("compartment_edge_color: ", compartment_edge_color.color, 
+        #      compartment_edge_color.is_valid_color)
 
         for compartment in compartments_to_update.values():
 
@@ -299,10 +297,11 @@ class Render:
             else:
                 pass
                 # stick with default value
-                
-            compartment.line_width = compartment_line_width
 
-    def applyGlobalRenderInformation(self, network):
+            if compartment_line_width > 0:
+                compartment.line_width = compartment_line_width
+
+    def _applyGlobalRenderInformation(self, network):
         """Applies global style render information as specified in the
         SPECIESGLYPH, TEXTGLYPH, and REACTIONGLYPH.
 
@@ -311,41 +310,45 @@ class Render:
 
         Returns: None
         """
-        if self.render_plugin:
+        if (self.render_plugin and
+                self.render_plugin.getNumGlobalRenderInformationObjects() > 0):
 
-            if self.render_plugin.getNumGlobalRenderInformationObjects() > 0:
+            for global_render_info in \
+                    self.render_plugin.getListOfGlobalRenderInformation():
 
-                for global_render_info in \
-                        self.render_plugin.getListOfGlobalRenderInformation():
+                if global_render_info:
 
-                    if global_render_info:
+                    self.color_definitions = self._collectColorDefinitions(
+                            global_render_info)
 
-                        color_definitions = self._collectColorDefinitions(
-                                global_render_info)
+                    for global_style in global_render_info.getListOfStyles():
 
-                        for global_style in \
-                                global_render_info.getListOfStyles():
-                            if global_style.isInTypeList("SPECIESGLYPH"):
-                                self._updateNodesBasedOnSpeciesGlyph(
-                                        global_style, color_definitions,
-                                        network, network.nodes.keys())
-                            elif global_style.isInTypeList("TEXTGLYPH"):
-                                self._updateNodesBasedOnTextGlyph(
-                                        global_style, color_definitions,
-                                        network, network.nodes.keys())
-                            elif global_style.isInTypeList("REACTIONGLYPH"):
-                                self._updateReactionsBasedOnReactionGlyph(
-                                        global_style, color_definitions,
-                                        network, network.reactions.keys())
-                            elif global_style.isInTypeList("COMPARTMENTGLYPH"):
-                                self._updateCompartmentsBasedOnCompartmentGlyph(
-                                        global_style, color_definitions,
-                                        network, network.reactions.keys())    
-                            else:
-                                pass
+                        if global_style.isInTypeList("SPECIESGLYPH"):
+                            self._updateNodesBasedOnSpeciesGlyph(
+                                    global_style,
+                                    network,
+                                    network.nodes.keys())
+                        elif global_style.isInTypeList("TEXTGLYPH"):
+                            self._updateNodesBasedOnTextGlyph(
+                                    global_style,
+                                    network,
+                                    network.nodes.keys())
+                        elif global_style.isInTypeList("REACTIONGLYPH"):
+                            self._updateReactionsBasedOnReactionGlyph(
+                                    global_style,
+                                    network,
+                                    network.reactions.keys())
+                        elif global_style.isInTypeList("COMPARTMENTGLYPH"):
+                            self._updateCompartmentsBasedOnCompartmentGlyph(
+                                    global_style,
+                                    network,
+                                    network.compartments.keys())
+                        else:
+                            pass
 
-    def _getLocalIdList(self, local_style, full_id_set):
-        """Gets a list of ids which are found in the LocalStyle's id list.
+    def _getLocalIdList(self, local_style, network_id_set):
+        """Gets a list of ids from the network (nodes, reactions, or
+        compartments), which are found in the LocalStyle's id list.
 
         Args:
             local_style(libsbml.LocalStyle):
@@ -354,16 +357,29 @@ class Render:
         """
         idList = set()
 
-        for this_id in full_id_set:
-
-            if this_id in local_style.getIdList():
+        for this_id in network_id_set:
+            
+            if local_style.getIdList().has_key(this_id):
                 idList.add(this_id)
 
         return idList
 
-    def applyLocalRenderInformation(self, network):
+    def applyRenderInformation(self, network):
+        """Applies global style render information as specified in the
+        SPECIESGLYPH, TEXTGLYPH, and REACTIONGLYPH, and local render
+        information based on id's of nodes, reactions, and compartments.
+
+        Args:
+            network (libsbml_draw.model.Network): the model's network
+
+        Returns: None
+        """
+        self._applyGlobalRenderInformation(network)
+        self._applyLocalRenderInformation(network)
+
+    def _applyLocalRenderInformation(self, network):
         """Sets values in the model's nodes and reactions as specified by
-        the types SPECIESGLYPH, TEXTGLYPH, and REACTIONGLYPH.
+        the idList for each local style.
 
         Args:
             network (libsbml_draw.model.Network): the model's network
@@ -379,28 +395,30 @@ class Render:
 
                     for local_style in local_render_info.getListOfStyles():
 
-                        if "SPECIESGLYPH" in local_style.getTypeList():
-                            idList = self._getLocalIdList(
-                                    local_style, network.nodes.keys())
+                        nodes_id_list = self._getLocalIdList(
+                                local_style, network.nodes.keys())
+
+                        if len(nodes_id_list) > 0:
                             self._updateNodesBasedOnSpeciesGlyph(
-                                    local_style, {}, network, idList)
-                        elif "TEXTGLYPH" in local_style.getTypeList():
-                            idList = self._getLocalIdList(
-                                    local_style, network.nodes.keys())
+                                    local_style, network, nodes_id_list)
+
                             self._updateNodesBasedOnTextGlyph(
-                                    local_style, {}, network, idList)
-                        elif "REACTIONGLYPH" in local_style.getTypeList():
-                            idList = self._getLocalIdList(
-                                    local_style, network.reactions.keys())
+                                    local_style, network, nodes_id_list)
+
+                        reactions_id_list = self._getLocalIdList(
+                                local_style, network.reactions.keys())
+
+                        if len(reactions_id_list) > 0:
                             self._updateReactionsBasedOnReactionGlyph(
-                                    local_style, {}, network, idList)
-                        elif "COMPARTMENTGLYPH" in local_style.getTypeList():
-                            idList = self._getLocalIdList(
-                                    local_style, network.reactions.keys())
+                                    local_style, network, reactions_id_list)
+                            
+                        compartments_id_list = self._getLocalIdList(
+                                    local_style, network.compartments.keys())
+
+                        if len(compartments_id_list) > 0:
+                            print("local updating compartments cglyph")
                             self._updateCompartmentsBasedOnCompartmentGlyph(
-                                    local_style, {}, network, idList)
-                        else:
-                            pass
+                                    local_style, network, compartments_id_list)
 
     def _addLocalStylesRenderInformation(self, local_render_info, network):
         """Add a LocalStyle of type SPECIESGLYPH and TEXTGLYPH for each node,

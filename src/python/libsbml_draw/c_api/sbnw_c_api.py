@@ -335,7 +335,8 @@ def arrowheadStyleGetVert(style, vertex_number):
 
 # Compartment Functions
 
-
+slib.gf_nw_getCompartmentp.argtypes = [ctypes.c_uint64]
+slib.gf_nw_getCompartmentp.restype = ctypes.c_uint64
 slib.gf_compartment_getMinCorner.argtypes = [ctypes.c_uint64]
 slib.gf_compartment_getMinCorner.restype = point
 slib.gf_compartment_getMaxCorner.argtypes = [ctypes.c_uint64]
@@ -346,6 +347,10 @@ slib.gf_compartment_getWidth.argtypes = [ctypes.c_uint64]
 slib.gf_compartment_getWidth.restype = ctypes.c_double
 slib.gf_compartment_getID.argtypes = [ctypes.c_uint64]
 slib.gf_compartment_getID.restype = ctypes.c_char_p
+
+
+def nw_getCompartmentp(h_network, compartment_index):
+    return slib.gf_nw_getCompartmentp(h_network, compartment_index)
 
 
 def compartment_getMinCorner(h_compartment):
@@ -365,42 +370,42 @@ def compartment_getWidth(h_compartment):
 
 
 def compartment_getID(h_compartment):
-    return slib.gf_compartment_getID(h_compartment)
+    return slib.gf_compartment_getID(h_compartment).decode("utf-8")
 
 
 # libsbml Functions
 
 
-slib.readSBMLFromFile.argtypes = [ctypes.c_char_p]
-slib.readSBMLFromFile.restype = ctypes.c_uint64
+#slib.readSBMLFromFile.argtypes = [ctypes.c_char_p]
+#slib.readSBMLFromFile.restype = ctypes.c_uint64
 #from ctypes import POINTER
 #slib.readSBMLFromFile.restype = POINTER(SBMLDocument_t)
 #slib.readSBMLFromFile.restype = ctypes.c_void_p
 
 
-slib.readSBMLFromString.argtypes = [ctypes.c_char_p]
-slib.readSBMLFromString.restype = ctypes.c_uint64
+#slib.readSBMLFromString.argtypes = [ctypes.c_char_p]
+#slib.readSBMLFromString.restype = ctypes.c_uint64
 
 
-def readSBMLFromFile(sbml_file):
-    return slib.readSBMLFromFile(sbml_file.encode('utf-8'))
+#def readSBMLFromFile(sbml_file):
+#    return slib.readSBMLFromFile(sbml_file.encode('utf-8'))
 
 
-def readSBMLFromString(sbml_file):
-    return slib.readSBMLFromString(sbml_file.encode('utf-8'))
+#def readSBMLFromString(sbml_file):
+#    return slib.readSBMLFromString(sbml_file.encode('utf-8'))
 
 
-slib.writeSBMLToFile.argtypes = [ctypes.c_uint64, ctypes.c_char_p]
-slib.writeSBMLToString.argtypes = [ctypes.c_uint64]
-slib.writeSBMLToString.restype = ctypes.c_char_p
+#slib.writeSBMLToFile.argtypes = [ctypes.c_uint64, ctypes.c_char_p]
+#slib.writeSBMLToString.argtypes = [ctypes.c_uint64]
+#slib.writeSBMLToString.restype = ctypes.c_char_p
 
 
-def writeSBMLToFile(doc, out_file_name):
-    return slib.writeSBMLToFile(doc, out_file_name.encode('utf-8'))
+#def writeSBMLToFile(doc, out_file_name):
+#    return slib.writeSBMLToFile(doc, out_file_name.encode('utf-8'))
     
 
-def writeSBMLToString(doc):
-    return slib.writeSBMLToString(doc).decode('utf-8')
+#def writeSBMLToString(doc):
+#    return slib.writeSBMLToString(doc).decode('utf-8')
 
 
 # slib.RelAbsVector.argtypes = [ctypes.c_float]
