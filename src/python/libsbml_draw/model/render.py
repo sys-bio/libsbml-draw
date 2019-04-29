@@ -376,7 +376,7 @@ class Render:
         """
         self._applyGlobalRenderInformation(network)
         self._applyLocalRenderInformation(network)
-
+        
     def _applyLocalRenderInformation(self, network):
         """Sets values in the model's nodes and reactions as specified by
         the idList for each local style.
@@ -386,6 +386,12 @@ class Render:
 
         Returns: None
         """
+        #if self.layout:
+        #    for index in range(self.layout.getNumCompartmentGlyphs()):        
+        #        compartment_glyph = self.layout.getCompartmentGlyph(index)
+        #        print("cg id: ", compartment_glyph.getId())            
+        #        print("compartment id: ", compartment_glyph.getCompartmentId())        
+        
         if self.rPlugin:
 
             for local_render_info in \
@@ -416,7 +422,6 @@ class Render:
                                     local_style, network.compartments.keys())
 
                         if len(compartments_id_list) > 0:
-                            print("local updating compartments cglyph")
                             self._updateCompartmentsBasedOnCompartmentGlyph(
                                     local_style, network, compartments_id_list)
 
