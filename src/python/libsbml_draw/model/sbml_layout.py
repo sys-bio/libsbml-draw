@@ -66,7 +66,6 @@ class SBMLlayout:
                     self.__doc = libsbml.readSBMLFromFile(sbml_source)
                 else:
                     self.__doc = libsbml.readSBMLFromString(sbml_source)
-
             if len(self.__fitWindow) == 4:
                 self.__fitToWindow(self.__fitWindow[0], self.__fitWindow[1],
                                   self.__fitWindow[2], self.__fitWindow[3])
@@ -1225,7 +1224,7 @@ class SBMLlayout:
         renderInfo = Render(self.__doc, self.__layout_number)
         renderInfo.addRenderInformation(self.__network)
         self.__doc = renderInfo.doc
-
+     
     def __applyRenderInformation(self,):
         """Apply the render information in the SBML file to nodes, reactions,
         and compartments in the model's network.
