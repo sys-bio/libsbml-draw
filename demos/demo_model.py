@@ -19,7 +19,7 @@ sl.drawNetwork()
 
 sl._describeReaction(0)
 
-sl.arrowheadGetVert(1,1)
+sl.getArrowheadVert(1,1)
 
 centroid = sl.getNodeCentroid("X0")
 print("centroid: ", centroid)
@@ -62,5 +62,8 @@ sl.regenerateLayoutAndNetwork()
 
 sl.drawNetwork()
 
+print("node centroid: ", sl.getNodeCentroid("X0"))
+print("rxn centroid: ", sl.getReactionCentroid("_J0"))
 
+print("Bezier Points: ", sl.getReactionBezierPoints("_J0"))
 

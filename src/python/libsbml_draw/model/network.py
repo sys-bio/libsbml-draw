@@ -21,17 +21,18 @@ class Compartment():
     """Represents a compartment in the SBML model."""
 
     def __init__(self, h_compartment):
-        
+
         self.width = sbnw.compartment_getWidth(h_compartment)
         self.height = sbnw.compartment_getHeight(h_compartment)
         self.min_corner = sbnw.compartment_getMinCorner(h_compartment)
         self.max_corner = sbnw.compartment_getMaxCorner(h_compartment)
         self.lower_left_point = [self.min_corner.x, self.min_corner.y]
         self.id = sbnw.compartment_getID(h_compartment)
-        self.edge_color = "#0000ff30" # 30% blue
-        self.fill_color = "#0000ff05" # 5% blue
-        self.line_width = 3 
-    
+        self.edge_color = "#0000ff30"  # 30% blue
+        self.fill_color = "#0000ff05"  # 5% blue
+        self.line_width = 3
+
+
 class Node():
     """Represents a node in the SBMl model."""
 
@@ -93,6 +94,7 @@ class Reaction():
         self.edge_color = "blue"
         self.fill_color = "blue"
         self.curve_width = 1
+        self.centroid = sbnw.reaction_getCentroid(h_reaction)
 
 
 class Network():
@@ -116,10 +118,11 @@ class Network():
         Returns: None
         """
         for compartment_index in range(sbnw.nw_getNumCompartments(h_network)):
-            h_compartment = sbnw.nw_getCompartmentp(h_network, compartment_index)
+            h_compartment = sbnw.nw_getCompartmentp(h_network,
+                                                    compartment_index)
             compartment_id = sbnw.compartment_getID(h_compartment)
             self.compartments[compartment_id] = Compartment(h_compartment)
-                
+
     def _add_nodes(self, h_network):
         """Populates the collection of nodes.
 

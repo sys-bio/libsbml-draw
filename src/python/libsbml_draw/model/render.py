@@ -274,14 +274,14 @@ class Render:
                                   network.compartments.keys() & idList}
 
         # print("metaid ", global_style.getGroup().getElement(0).getStroke())
-        
+
         # print("stroke:", global_style.getGroup().getStroke())
         # print("fill:", global_style.getGroup().getFillColor())
         # print("stroke_width: ", global_style.getGroup().getStrokeWidth())
 
         # print("compartment_fill_color: ", compartment_fill_color.color,
         #      compartment_fill_color.is_valid_color)
-        # print("compartment_edge_color: ", compartment_edge_color.color, 
+        # print("compartment_edge_color: ", compartment_edge_color.color,
         #      compartment_edge_color.is_valid_color)
 
         for compartment in compartments_to_update.values():
@@ -358,7 +358,6 @@ class Render:
         idList = set()
 
         for this_id in network_id_set:
-            
             if local_style.getIdList().has_key(this_id):
                 idList.add(this_id)
 
@@ -376,7 +375,7 @@ class Render:
         """
         self._applyGlobalRenderInformation(network)
         self._applyLocalRenderInformation(network)
-        
+
     def _applyLocalRenderInformation(self, network):
         """Sets values in the model's nodes and reactions as specified by
         the idList for each local style.
@@ -386,12 +385,13 @@ class Render:
 
         Returns: None
         """
-        #if self.layout:
-        #    for index in range(self.layout.getNumCompartmentGlyphs()):        
+        # if self.layout:
+        #    for index in range(self.layout.getNumCompartmentGlyphs()):
         #        compartment_glyph = self.layout.getCompartmentGlyph(index)
-        #        print("cg id: ", compartment_glyph.getId())            
-        #        print("compartment id: ", compartment_glyph.getCompartmentId())        
-        
+        #        print("cg id: ", compartment_glyph.getId())
+        #        print("compartment id: ", compartment_glyph.getCompartmentId(
+        # ))
+
         if self.rPlugin:
 
             for local_render_info in \
@@ -417,7 +417,7 @@ class Render:
                         if len(reactions_id_list) > 0:
                             self._updateReactionsBasedOnReactionGlyph(
                                     local_style, network, reactions_id_list)
-                            
+
                         compartments_id_list = self._getLocalIdList(
                                     local_style, network.compartments.keys())
 
@@ -451,9 +451,8 @@ class Render:
             style.getGroup().setFontSize(libsbml.RelAbsVector(node.font_size))
             if node.font_style == "italic":
                 style.getGroup().setFontStyle(2)
-            else:
+            else:  # "normal"
                 style.getGroup().setFontStyle(1)
-            print("font style: ", style.getGroup().getFontStyle())
             style.getGroup().setStroke(node.font_color)
             style.addId(node.id)
             style.addType("TEXTGLYPH")

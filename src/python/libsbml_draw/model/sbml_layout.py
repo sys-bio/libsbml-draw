@@ -1,6 +1,7 @@
 """Creates a Python interface to load, display and manipulate
 models defined in an SBML file, making use of a c API and libsbml."""
 
+from collections import namedtuple
 import os
 
 from matplotlib.colors import is_color_like
@@ -11,6 +12,9 @@ import libsbml_draw.c_api.sbnw_c_api as sbnw
 from libsbml_draw.draw.draw_network import createNetworkFigure
 from libsbml_draw.model.network import Network
 from libsbml_draw.model.render import Render
+
+BezierPoints = namedtuple("BezierPoints", ["start", "end",
+                                           "control1", "control2"])
 
 
 class SBMLlayout:
@@ -68,24 +72,41 @@ class SBMLlayout:
                     self.__doc = libsbml.readSBMLFromString(sbml_source)
             if len(self.__fitWindow) == 4:
                 self.__fitToWindow(self.__fitWindow[0], self.__fitWindow[1],
-                                  self.__fitWindow[2], self.__fitWindow[3])
-
+                                   self.__fitWindow[2], self.__fitWindow[3])
             self.__network = self.__createNetwork()
 
             # apply render information, if any
             self.__applyRenderInformation()
 
-        else:
-
-            raise Exception(
-                    f"""The SBML source must be the name of an existing file or
-                        or an SBML string: {self.sbml_source}""")
+        else:  # User can separately load a file
+            pass
 
         self.__numNodes = self.getNumberOfNodes()
         self.__numReactions = self.getNumberOfReactions()
         self.__numCompartments = self.getNumberOfCompartments()
-        self.__mutation_scale = {key:10 for key in 
-                               range(self.getNumberOfRoles())}
+        self.__mutation_scale = {key: 10 for key in
+                                 range(self.getNumberOfRoles())}
+        print("sl done")
+
+    def loadSBMLFile(self, sbml_file):
+        """Loads the SBML model into SBMLlayout.
+
+        Args:
+            sbml_string(str): name of file containing an SBML model
+
+        Returns: None
+        """
+        self.__init__(sbml_file)
+
+    def loadSBMLString(self, sbml_string):
+        """Loads the SBML model into SBMLlayout.
+
+        Args:
+            sbml_string(str): SBML model in string format
+
+        Returns: None
+        """
+        self.__init__(sbml_string)
 
     def setLayoutAlgorithmOptions(self, k=None, boundary=None, mag=None,
                                   grav=None, baryx=None, baryy=None,
@@ -336,11 +357,12 @@ class SBMLlayout:
         """
         self.__randomizeLayout()
         self.__doLayoutAlgorithm()
-        self.__doc = libsbml.readSBMLFromString(self.__getSBMLWithLayoutString())
+        self.__doc = libsbml.readSBMLFromString(
+                self.__getSBMLWithLayoutString())
 
         if len(self.__fitWindow) == 4:
                 self.__fitToWindow(self.__fitWindow[0], self.__fitWindow[1],
-                                 self.__fitWindow[2], self.__fitWindow[3])
+                                   self.__fitWindow[2], self.__fitWindow[3])
 
         self.__network = self.__createNetwork()
 
@@ -447,9 +469,9 @@ class SBMLlayout:
         Returns: tuple, with x and y
         """
         if node_id in self.getNodeIds():
-            node_p = sbnw.nw_getNodepFromId(self.__h_network,
-                                            node_id.encode('utf-8'))
-            centroid = sbnw.node_getCentroid(node_p)
+
+            centroid = self.__network.nodes[node_id].center
+
             return (centroid.x, centroid.y)
         else:
             raise ValueError(f"species {node_id} is not in the network.")
@@ -465,9 +487,9 @@ class SBMLlayout:
         Returns: tuple, with x and y
         """
         if reaction_id in self.getReactionIds():
-            reaction_index = self.getReactionIds().index(reaction_id)
-            reaction_p = sbnw.nw_getReactionp(self.__h_network, reaction_index)
-            centroid = sbnw.reaction_getCentroid(reaction_p)
+
+            centroid = self.__network.reactions[reaction_id].centroid
+
             return (centroid.x, centroid.y)
         else:
             raise ValueError(f"reaction {reaction_id} is not in the network.")
@@ -501,14 +523,6 @@ class SBMLlayout:
                                                 self.__h_layout_info)
         return sbml_string
 
-    # def writeSBMLWithLayout(self, output_filename):
-    #    filename = output_filename.encode('utf-8')
-    #    result = sbnw.writeSBMLwithLayout(filename, self.h_model,
-    #                                      self.h_layout_info)
-    #    print("writeSBMLwithLayout result: ", result)
-        # if result error, raise Exception?
-    #    return result
-
     def writeSBMLFile(self, out_file_name):
         """Writes the model as an SBML file.
 
@@ -518,8 +532,159 @@ class SBMLlayout:
         Returns: None
         """
         libsbml.writeSBMLToFile(self.__doc, out_file_name)
-        #sbnw.writeSBMLToFile(self.doc, out_file_name)
         print("wrote file: ", out_file_name)
+
+    # Compartment Methods
+
+    def getCompartmentIds(self,):
+        """Returns a list of compartment ids.
+
+        Args: None
+
+        Returns: list of str
+        """
+        return list(self.__network.compartments.keys())
+
+    def setCompartmentEdgeColor(self, compartment_id, edge_color):
+        """
+        Sets the compartment edge color.
+
+        Args:
+            compartment_id (str): id of the compartment to change the color of
+                one compartment, or 'all' to change the color of all the
+                compartments
+            edge_color (str): id of the color
+
+        Returns: None
+        """
+        SBMLlayout._validatePlotColor(edge_color)
+
+        if compartment_id == "all":
+            for compartment in self.__network.compartments.values():
+                compartment.edge_color = edge_color
+
+        elif (isinstance(compartment_id, str) and
+              compartment_id in self.getCompartmentIds()):
+            self.__network.compartments[compartment_id].edge_color = edge_color
+
+        elif isinstance(compartment_id, list):
+            full_model_compartmentIds = self.getCompartmentIds()
+            for this_id in compartment_id:
+                if this_id in full_model_compartmentIds:
+                    self.__network.compartments[this_id].edge_color = \
+                        edge_color
+                else:
+                    print(f"""Id {this_id} in the input list is invalid,
+                          so cannot set color for this id.""")
+        else:
+            raise ValueError(f"""Invalid input for compartment ids:
+                                 {compartment_id}""")
+
+    def getCompartmentEdgeColor(self, compartment_id):
+        """Returns the color id for the compartment edge color.
+
+        Args:
+            compartment_id(str): id for the compartment
+
+        Returns: str
+        """
+        if compartment_id in self.__network.compartments:
+            return self.__network.compartments[compartment_id].edge_color
+        else:
+            raise ValueError(f"Compartment {compartment_id} not in network.")
+
+    def setCompartmentFillColor(self, compartment_id, fill_color):
+        """
+        Sets the compartment fill color.
+
+        Args:
+            compartment_id (str): id of the compartment to change the color of
+                one compartment, or 'all' to change the color of all the
+                compartments
+            fill_color (str): id of the color
+
+        Returns: None
+        """
+        SBMLlayout._validatePlotColor(fill_color)
+
+        if compartment_id == "all":
+            for compartment in self.__network.compartments.values():
+                compartment.fill_color = fill_color
+
+        elif (isinstance(compartment_id, str) and
+              compartment_id in self.getCompartmentIds()):
+            self.__network.compartments[compartment_id].fill_color = fill_color
+
+        elif isinstance(compartment_id, list):
+            full_model_compartmentIds = self.getCompartmentIds()
+            for this_id in compartment_id:
+                if this_id in full_model_compartmentIds:
+                    self.__network.compartments[this_id].fill_color = \
+                        fill_color
+                else:
+                    print(f"""Id {this_id} in the input list is invalid,
+                          so cannot set color for this id.""")
+        else:
+            raise ValueError(f"""Invalid input for compartment ids:
+                                 {compartment_id}""")
+
+    def getCompartmentFillColor(self, compartment_id):
+        """Returns the color id for the compartment fill color.
+
+        Args:
+            compartment_id(str): id for the compartment
+
+        Returns: str
+        """
+        if compartment_id in self.__network.compartments:
+            return self.__network.compartments[compartment_id].fill_color
+        else:
+            raise ValueError(f"Compartment {compartment_id} not in network.")
+
+    def getCompartmentLineWidth(self, compartment_id):
+        """Returns the line width for the given compartment.
+
+        Args: compartment_id (str): id for the compartment
+
+        Returns: int
+        """
+        if compartment_id in self.__network.compartments:
+            return self.__network.compartments[compartment_id].line_width
+        else:
+            raise ValueError(f"Reaction {compartment_id} not in network.")
+
+    def setCompartmentLineWidth(self, compartment_id, line_width):
+        """
+        Sets the line width of the compartment.
+
+        Args:
+            compartment_id (str): id of the compartment to change the width of
+                one compartment, or 'all' to change the width of all the
+                compartments
+            line_width (int): numeric value representing the line width
+
+        Returns: None
+        """
+        if compartment_id == "all":
+            for compartment in self.__network.compartments.values():
+                compartment.line_width = line_width
+
+        elif (isinstance(compartment_id, str) and
+              compartment_id in self.getCompartmentIds()):
+            self.__network.compartments[compartment_id].line_width = line_width
+
+        elif isinstance(compartment_id, list):
+            full_model_compartmentIds = self.getCompartmentIds()
+            for this_id in compartment_id:
+                if this_id in full_model_compartmentIds:
+                    self.__network.compartments[this_id].line_width = \
+                        line_width
+                else:
+                    print(f"""Id in the input list is invalid {this_id},
+                          so cannot set compartment line width for this id.""")
+        else:
+            raise ValueError(f"""Invalid input for compartment ids:
+                                 {compartment_id}""")
 
     # Node Methods
 
@@ -1051,7 +1216,7 @@ class SBMLlayout:
 
         Args:
             reaction_id (str): id of the reaction to change the color of one
-                reaction, or 'all' to change the color of all the nodes
+                reaction, or 'all' to change the color of all the reactions
             reaction_color (str): id of the color
 
         Returns: None
@@ -1072,8 +1237,10 @@ class SBMLlayout:
             full_model_reactionIds = self.getReactionIds()
             for this_id in reaction_id:
                 if this_id in full_model_reactionIds:
-                    self.__network.reactions[this_id].edge_color = reaction_color
-                    self.__network.reactions[this_id].fill_color = reaction_color
+                    self.__network.reactions[this_id].edge_color = \
+                        reaction_color
+                    self.__network.reactions[this_id].fill_color = \
+                        reaction_color
                 else:
                     print(f"""This id in the input list is invalid {this_id},
                           so cannot set color for this id.""")
@@ -1099,7 +1266,7 @@ class SBMLlayout:
 
         Args:
             reaction_id (str): id of the reaction to change the color of one
-                reaction, or 'all' to change the color of all the nodes
+                reaction, or 'all' to change the color of all the reactions
             edge_color (str): id of the color
 
         Returns: None
@@ -1144,7 +1311,7 @@ class SBMLlayout:
 
         Args:
             reaction_id (str): id of the reaction to change the color of one
-                reaction, or 'all' to change the color of all the nodes
+                reaction, or 'all' to change the color of all the reactions
             fill_color (str): id of the color
 
         Returns: None
@@ -1187,8 +1354,8 @@ class SBMLlayout:
         Sets the width of the reaction curve.
 
         Args:
-            reaction_id (str): id of the reaction to change the color of one
-                reaction, or 'all' to change the color of all the nodes
+            reaction_id (str): id of the reaction to change the width of one
+                reaction, or 'all' to change the width of all the reactions
             curve_width (int): numeric value representing the line width
 
         Returns: None
@@ -1216,6 +1383,8 @@ class SBMLlayout:
 
     def addRenderInformation(self,):
         """Add render information to the model's libsbml.SBMLDocument.
+        A LocalStyle element is added for each node, reaction, and compartment.
+        If any of these elements already exist, they are first removed.
 
         Args: None
 
@@ -1224,7 +1393,7 @@ class SBMLlayout:
         renderInfo = Render(self.__doc, self.__layout_number)
         renderInfo.addRenderInformation(self.__network)
         self.__doc = renderInfo.doc
-     
+
     def __applyRenderInformation(self,):
         """Apply the render information in the SBML file to nodes, reactions,
         and compartments in the model's network.
@@ -1238,7 +1407,7 @@ class SBMLlayout:
 
     # Plotting Methods
 
-    def arrowheadGetStyle(self, role):
+    def getArrowheadStyle(self, role):
         """Returns the arrowhead style for the given role.
 
         Args:
@@ -1248,7 +1417,7 @@ class SBMLlayout:
         """
         return sbnw.arrowheadGetStyle(role)
 
-    def arrowheadSetStyle(self, role, style):
+    def setArrowheadStyle(self, role, style):
         """Set the arrowhead style for the given role.
 
         Args:
@@ -1259,7 +1428,7 @@ class SBMLlayout:
         """
         sbnw.arrowheadSetStyle(role, style)
 
-    def arrowheadGetNumVerts(self, style):
+    def getArrowheadNumVerts(self, style):
         """Returns the number of vertices in the arrowhead of the given style.
 
         Args:
@@ -1269,7 +1438,7 @@ class SBMLlayout:
         """
         return sbnw.arrowheadStyleGetNumVerts(style)
 
-    def arrowheadGetVert(self, style, vertex_number):
+    def getArrowheadVert(self, style, vertex_number):
         """Returns a point for the given vertex_number, given an arrowhead
         style.
 
@@ -1279,10 +1448,10 @@ class SBMLlayout:
 
         Returns: point with fields x and y
         """
-        number_of_arrowhead_styles = self.arrowheadGetNumStyles()
+        number_of_arrowhead_styles = self.getArrowheadNumStyles()
 
         if style in range(number_of_arrowhead_styles):
-            number_of_arrowhead_vertices = self.arrowheadGetNumVerts(style)
+            number_of_arrowhead_vertices = self.getArrowheadNumVerts(style)
 
             if vertex_number in range(number_of_arrowhead_vertices):
                 return sbnw.arrowheadStyleGetVert(style, vertex_number)
@@ -1296,7 +1465,7 @@ class SBMLlayout:
             raise ValueError(f"style {style} must be in range " +
                              f"0 - {number_of_arrowhead_styles}")
 
-    def arrowheadGetNumStyles(self,):
+    def getArrowheadNumStyles(self,):
         """Returns the number of arrowhead styles available.
 
         Args: None
@@ -1325,59 +1494,82 @@ class SBMLlayout:
         """Returns the last error from the c_api code.
 
         Args: None
-        
+
         Returns: str
         """
         return sbnw.getLastError().decode('utf-8')
 
     def getSBMLString(self,):
         """Returns the SBML string for the model.
-        
+
         Args: None
-        
+
         Returns: str
         """
         return libsbml.writeSBMLToString(self.__doc)
-        #return sbnw.writeSBMLToString(self.doc)
 
     def setArrowheadMutationScale(self, role, mutation_scale):
         """Set a value for matplotlib's mutation_scale to change the
         size of the arrowhead for a given role.  The default value is 10.
-        
-        Args: 
+
+        Args:
             mutation_scale(int): passed on to matplotlib
             role(int): role of the reaction
-        
+
         Returns: None
         """
         if role in range(self.getNumberOfRoles()):
-            if isinstance(mutation_scale, int) and mutation_scale > 0: 
+            if isinstance(mutation_scale, int) and mutation_scale > 0:
                 self.__mutation_scale[role] = mutation_scale
             else:
-                raise ValueError(f"Mutation scale {mutation_scale} must be an" +
-                                 f" integer greater than 0.")
+                raise ValueError(f"Mutation scale {mutation_scale} must be an"
+                                 + f" integer greater than 0.")
         else:
             raise ValueError(f"Role {role} is not in the allowable range: " +
                              f"{self.getNumberOfRoles()}")
 
     def getArrowheadMutationScale(self, role):
         """Returns the mutation scale for the given role.
-        
+
         Args: role(int)
-        
+
         Returns: int
         """
         if role in self.__mutation_scale:
             return self.__mutation_scale[role]
         else:
-            raise ValueError(f"Role {role} must be in the range 0 - " + 
-                             f"{self.getNumberOfRoles() - 1}") 
+            raise ValueError(f"Role {role} must be in the range 0 - " +
+                             f"{self.getNumberOfRoles() - 1}")
 
     def getNumberOfRoles(self,):
         """
         Args: None
-        
+
         Returns: int
         """
         return len(sbnw.ROLES)
-                        
+
+    def getReactionBezierPoints(self, reaction_id):
+        """Returns a list of Bezier points (start, end, control1, control2) for
+        each curve in the reaction.
+
+        Args:
+            reaction_id(str): id for the reaction
+
+        Returns: list, of BezierPoints named tuple of tuples
+        """
+        bezier_points = list()
+
+        if reaction_id in self.getReactionIds():
+
+            for curve in self.__network.reactions[reaction_id].curves:
+
+                bezier_points.append(BezierPoints(
+                        (curve.start_point.x, curve.start_point.y),
+                        (curve.end_point.x, curve.end_point.y),
+                        (curve.control_point_1.x, curve.control_point_1.y),
+                        (curve.control_point_2.x, curve.control_point_2.y)))
+        else:
+            raise ValueError(f"Reaction {reaction_id} is not in the network.")
+
+        return bezier_points

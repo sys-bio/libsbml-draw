@@ -1,8 +1,10 @@
 from setuptools import setup, PEP420PackageFinder
 
+exec(open("libsbml/version.py").read())
+
 setup(
     name="libsbml-draw",
-    version="0.0.4",
+    version=__version__,
     packages=PEP420PackageFinder.find("src/python"),
     package_dir={"": "src/python"},
     package_data={"libsbml_draw.c_api": ["data/sbnw.dll", "data/libsbml_draw.dylib", "data/libsbml_draw.so"]},

@@ -21,12 +21,12 @@ else:
 
 # Enumerations
 ROLES = (GF_ROLE_SUBSTRATE,
-    GF_ROLE_PRODUCT,
-    GF_ROLE_SIDESUBSTRATE,
-    GF_ROLE_SIDEPRODUCT,
-    GF_ROLE_MODIFIER,
-    GF_ROLE_ACTIVATOR,
-    GF_ROLE_INHIBITOR) = tuple(map(ctypes.c_uint, range(7)))
+         GF_ROLE_PRODUCT,
+         GF_ROLE_SIDESUBSTRATE,
+         GF_ROLE_SIDEPRODUCT,
+         GF_ROLE_MODIFIER,
+         GF_ROLE_ACTIVATOR,
+         GF_ROLE_INHIBITOR) = tuple(map(ctypes.c_uint, range(7)))
 
 
 # Classes
@@ -356,16 +356,16 @@ def nw_getCompartmentp(h_network, compartment_index):
 def compartment_getMinCorner(h_compartment):
     return slib.gf_compartment_getMinCorner(h_compartment)
 
-       
+
 def compartment_getMaxCorner(h_compartment):
     return slib.gf_compartment_getMaxCorner(h_compartment)
-    
+
 
 def compartment_getHeight(h_compartment):
     return slib.gf_compartment_getHeight(h_compartment)
 
-     
-def compartment_getWidth(h_compartment): 
+
+def compartment_getWidth(h_compartment):
     return slib.gf_compartment_getWidth(h_compartment)
 
 
@@ -376,35 +376,35 @@ def compartment_getID(h_compartment):
 # libsbml Functions
 
 
-#slib.readSBMLFromFile.argtypes = [ctypes.c_char_p]
-#slib.readSBMLFromFile.restype = ctypes.c_uint64
-#from ctypes import POINTER
-#slib.readSBMLFromFile.restype = POINTER(SBMLDocument_t)
-#slib.readSBMLFromFile.restype = ctypes.c_void_p
+# slib.readSBMLFromFile.argtypes = [ctypes.c_char_p]
+# slib.readSBMLFromFile.restype = ctypes.c_uint64
+# from ctypes import POINTER
+# slib.readSBMLFromFile.restype = POINTER(SBMLDocument_t)
+# slib.readSBMLFromFile.restype = ctypes.c_void_p
 
 
-#slib.readSBMLFromString.argtypes = [ctypes.c_char_p]
-#slib.readSBMLFromString.restype = ctypes.c_uint64
+# slib.readSBMLFromString.argtypes = [ctypes.c_char_p]
+# slib.readSBMLFromString.restype = ctypes.c_uint64
 
 
-#def readSBMLFromFile(sbml_file):
+# def readSBMLFromFile(sbml_file):
 #    return slib.readSBMLFromFile(sbml_file.encode('utf-8'))
 
 
-#def readSBMLFromString(sbml_file):
+# def readSBMLFromString(sbml_file):
 #    return slib.readSBMLFromString(sbml_file.encode('utf-8'))
 
 
-#slib.writeSBMLToFile.argtypes = [ctypes.c_uint64, ctypes.c_char_p]
-#slib.writeSBMLToString.argtypes = [ctypes.c_uint64]
-#slib.writeSBMLToString.restype = ctypes.c_char_p
+# slib.writeSBMLToFile.argtypes = [ctypes.c_uint64, ctypes.c_char_p]
+# slib.writeSBMLToString.argtypes = [ctypes.c_uint64]
+# slib.writeSBMLToString.restype = ctypes.c_char_p
 
 
-#def writeSBMLToFile(doc, out_file_name):
+# def writeSBMLToFile(doc, out_file_name):
 #    return slib.writeSBMLToFile(doc, out_file_name.encode('utf-8'))
-    
 
-#def writeSBMLToString(doc):
+
+# def writeSBMLToString(doc):
 #    return slib.writeSBMLToString(doc).decode('utf-8')
 
 

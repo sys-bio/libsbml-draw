@@ -139,7 +139,7 @@ def createNetworkFigure(network, mutation_scale):
     # initialize figure
     fig = plt.figure()
     ax = plt.gca()
-        
+
     # draw the compartments
     compartment_patches = draw_compartments(network.compartments.values())
 
@@ -153,7 +153,7 @@ def createNetworkFigure(network, mutation_scale):
 
     # draw the reactions
     reaction_patches = draw_reactions(
-            network.reactions.values(), 
+            network.reactions.values(),
             mutation_scale)
     for reaction_patch in reaction_patches:
         ax.add_patch(reaction_patch)
