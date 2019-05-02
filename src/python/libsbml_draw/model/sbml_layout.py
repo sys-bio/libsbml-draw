@@ -24,7 +24,7 @@ class SBMLlayout:
 
     NODE_KEYWORDS = {"all", "boundary", "floating"}
 
-    def __init__(self, sbml_source, layout_alg_options=None,
+    def __init__(self, sbml_source=None, layout_alg_options=None,
                  layout_number=0, fitWindow=tuple()):
 
         self.__sbml_source = sbml_source
@@ -51,6 +51,7 @@ class SBMLlayout:
 
             if SBMLlayout._validate_sbml_filename(self.__sbml_source):
                 self.__h_model = sbnw.loadSBMLFile(self.__sbml_source)
+                
             else:
                 self.__h_model = sbnw.loadSBMLString(self.__sbml_source)
 
@@ -77,17 +78,17 @@ class SBMLlayout:
 
             # apply render information, if any
             self.__applyRenderInformation()
+            
+            self.__numNodes = self.getNumberOfNodes()
+            self.__numReactions = self.getNumberOfReactions()
+            self.__numCompartments = self.getNumberOfCompartments()
+            self.__mutation_scale = {key: 10 for key in
+                                 range(self.getNumberOfRoles())}    
 
         else:  # User can separately load a file
             pass
 
-        self.__numNodes = self.getNumberOfNodes()
-        self.__numReactions = self.getNumberOfReactions()
-        self.__numCompartments = self.getNumberOfCompartments()
-        self.__mutation_scale = {key: 10 for key in
-                                 range(self.getNumberOfRoles())}
-        print("sl done")
-
+        
     def loadSBMLFile(self, sbml_file):
         """Loads the SBML model into SBMLlayout.
 
@@ -402,7 +403,7 @@ class SBMLlayout:
         Returns: None
         """
         print()
-        print("sbml filename: ", self.__sbml_source)
+        # print("sbml filename: ", self.__sbml_source)
         print("layout number: ", self.__layout_number)
         print("layout is specified: ", self.__layoutSpecified)
         print("number of Compartments: ", self.__numCompartments)

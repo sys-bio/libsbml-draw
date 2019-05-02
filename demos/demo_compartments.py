@@ -12,9 +12,9 @@ model_file = Path(pkg_resources.resource_filename("libsbml_draw", "model/data/" 
 
 sl = SBMLlayout(str(model_file))
 
-#sl._describeModel()
+sl._describeModel()
 
-#sl.drawNetwork()
+sl.drawNetwork()
 
 model_file_name = "simple-L2-render-local.xml"
 
@@ -22,10 +22,19 @@ model_file = Path(pkg_resources.resource_filename("libsbml_draw", "model/data/" 
 
 sll = SBMLlayout(str(model_file))
 
-#sll._describeModel()
+sll._describeModel()
 
-#sll.drawNetwork()
+sll.drawNetwork()
 
+sll.setCompartmentEdgeColor("vol1", "blue")
+sll.setCompartmentFillColor("vol1", "lightpink")
+sll.setCompartmentLineWidth("vol1", 5)
+
+sll.drawNetwork()
+
+print(sll.getCompartmentEdgeColor("vol1"))
+print(sll.getCompartmentFillColor("vol1"))
+print(sll.getCompartmentLineWidth("vol1"))
 
 # check libsbml API
 
@@ -40,6 +49,10 @@ print("numCompartments: ", numCompartments)
 for index in range(numCompartments):
     compartment = model.getCompartment(index)
     print("id, name: ", compartment.getId(), ", ", compartment.getElementName())
+
+
+
+
 
 
 

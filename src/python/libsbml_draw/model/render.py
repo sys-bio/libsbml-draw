@@ -418,12 +418,31 @@ class Render:
                             self._updateReactionsBasedOnReactionGlyph(
                                     local_style, network, reactions_id_list)
 
-                        compartments_id_list = self._getLocalIdList(
-                                    local_style, network.compartments.keys())
+                        compartments_id_list = \
+                                self._getCompartmentIdsFromCGlyphs(local_style, 
+                                                                  network)
 
                         if len(compartments_id_list) > 0:
                             self._updateCompartmentsBasedOnCompartmentGlyph(
                                     local_style, network, compartments_id_list)
+
+    def _getCompartmentIdsFromCGlyphs(self, local_style, network):
+        """
+        """
+        all_compartment_ids = list()
+        
+        for cglyph_index in range(self.layout.getNumCompartmentGlyphs()):
+            cglyph = self.layout.getCompartmentGlyph(cglyph_index)
+            if local_style.getIdList().has_key(cglyph.getId()):
+                all_compartment_ids.append(cglyph.getCompartmentId())               
+
+        network_compartment_ids = list()
+        
+        for compartment_id in all_compartment_ids:
+            if compartment_id in network.compartments:
+                network_compartment_ids.append(compartment_id)
+
+        return network_compartment_ids
 
     def _addLocalStylesRenderInformation(self, local_render_info, network):
         """Add a LocalStyle of type SPECIESGLYPH and TEXTGLYPH for each node,

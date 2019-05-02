@@ -74,11 +74,11 @@ slib.gf_loadSBMLfile.restype = ctypes.c_uint64
 slib.gf_loadSBMLbuf.argtypes = [ctypes.c_char_p]
 slib.gf_loadSBMLbuf.restype = ctypes.c_uint64
 
-slib.gf_writeSBML.argtypes = [ctypes.c_char_p, ctypes.c_uint64]
-slib.gf_writeSBML.restype = ctypes.c_int
-slib.gf_writeSBMLwithLayout.argtypes = [ctypes.c_char_p, ctypes.c_uint64,
-                                        ctypes.c_uint64]
-slib.gf_writeSBMLwithLayout.restype = ctypes.c_int
+# slib.gf_writeSBML.argtypes = [ctypes.c_char_p, ctypes.c_uint64]
+# slib.gf_writeSBML.restype = ctypes.c_int
+# slib.gf_writeSBMLwithLayout.argtypes = [ctypes.c_char_p, ctypes.c_uint64,
+#                                        ctypes.c_uint64]
+# slib.gf_writeSBMLwithLayout.restype = ctypes.c_int
 
 
 # IO Functions
@@ -97,13 +97,13 @@ def loadSBMLString(h_stringName):
     return slib.gf_loadSBMLbuf(h_stringname_string)
 
 
-def writeSBMLwithLayout(filename, h_layout, h_layout_info):
-    return slib.gf_writeSBMLwithLayout(filename, h_layout, h_layout_info)
+# def writeSBMLwithLayout(filename, h_layout, h_layout_info):
+#    return slib.gf_writeSBMLwithLayout(filename, h_layout, h_layout_info)
 
 
-def writeSBML(filename, sbml_model):
-    filename_string = filename.encode('utf-8')
-    return slib.gf_writeSBML(filename_string, sbml_model)
+# def writeSBML(filename, sbml_model):
+#    filename_string = filename.encode('utf-8')
+#    return slib.gf_writeSBML(filename_string, sbml_model)
 
 
 slib.gf_getLastError.restype = ctypes.c_char_p
@@ -175,6 +175,17 @@ slib.gf_nw_getNumRxns.restype = ctypes.c_uint64
 slib.gf_nw_getRxnp.argtypes = [ctypes.c_uint64, ctypes.c_uint64]
 slib.gf_nw_getRxnp.restype = ctypes.c_uint64
 
+slib.gf_nw_newAliasNodep.argtypes = [ctypes.c_uint64, ctypes.c_uint64]
+slib.gf_nw_newAliasNodep.restype = ctypes.c_uint64
+slib.gf_nw_getAliasInstancep.argtypes = [ctypes.c_uint64, ctypes.c_uint64, 
+                                         ctypes.c_uint64]
+slib.gf_nw_getAliasInstancep.restype = ctypes.c_uint64
+slib.gf_nw_getNumAliasInstances.argtypes = [ctypes.c_uint64, ctypes.c_uint64]
+slib.gf_nw_getNumAliasInstances.restype = ctypes.c_int
+
+slib.gf_nw_rebuildCurves.argtypes = [ctypes.c_uint64]
+slib.gf_nw_recenterJunctions.argtypes = [ctypes.c_uint64]
+
 
 # Network Functions
 def getNetworkp(h_layout_info):
@@ -205,9 +216,31 @@ def nw_getReactionp(h_network, reaction_index):
     return slib.gf_nw_getRxnp(h_network, reaction_index)
 
 
+def nw_newAliasNodep(h_network, h_node):
+    return slib.gf_nw_newAliasNodep(h_network, h_node)
+
+
+def nw_getAliasInstancep(h_network, h_node, alias_index):
+    return slib.gf_nw_getAliasInstancep(h_network, h_node, alias_index)
+
+
+def nw_getNumAliasInstances(h_network, h_node):
+    return slib.gf_nw_getNumAliasInstances(h_network, h_node)
+
+
+def nw_rebuildCurves(h_network):
+    return slib.gf_nw_rebuildCurves(h_network)
+
+
+def nw_recenterJunctions(h_network):
+    return slib.gf_nw_recenterJunctions(h_network)
+
+
 # Node Information
 slib.gf_node_getCentroid.argtypes = [ctypes.c_uint64]
 slib.gf_node_getCentroid.restype = point
+slib.gf_node_setCentroid.argtypes = [ctypes.c_uint64]
+
 slib.gf_node_getHeight.argtypes = [ctypes.c_uint64]
 slib.gf_node_getHeight.restype = ctypes.c_double
 slib.gf_node_getWidth.argtypes = [ctypes.c_uint64]
@@ -217,9 +250,23 @@ slib.gf_node_getName.restype = ctypes.c_char_p
 slib.gf_node_getID.argtypes = [ctypes.c_uint64]
 slib.gf_node_getID.restype = ctypes.c_char_p
 
+slib.gf_node_isLocked.argtypes = [ctypes.c_uint64]
+slib.gf_node_isLocked.restype = ctypes.c_int
+slib.gf_node_lock.argtypes = [ctypes.c_uint64]
+slib.gf_node_unlock.argtypes = [ctypes.c_uint64]
+
+slib.gf_node_make_alias.argtypes = [ctypes.c_uint64, ctypes.c_uint64]
+slib.gf_node_make_alias.restype = ctypes.c_int
+slib.gf_node_isAliased.argtypes = [ctypes.c_uint64]
+slib.gf_node_isAliased.restype = ctypes.c_int
+
 
 def node_getCentroid(h_node):
     return slib.gf_node_getCentroid(h_node)
+
+
+def node_setCentroid(h_node):
+    return slib.gf_node_setCentroid(h_node)
 
 
 def node_getHeight(h_node):
@@ -236,6 +283,26 @@ def node_getName(h_node):
 
 def node_getID(h_node):
     return slib.gf_node_getID(h_node).decode('utf-8')
+
+
+def node_isLocked(h_node):
+    return slib.gf_node_isLocked(h_node)
+
+
+def node_lock(h_node):
+    return slib.gf_node_lock(h_node)
+
+
+def node_unlock(h_node):
+    return slib.gf_node_unlock(h_node)
+
+
+def node_make_alias(h_node, h_network):
+    return slib.gf_node_make_alias(h_node, h_network)
+
+
+def node_isAliased(h_node):
+    return slib.gf_node_isAliased(h_node)
 
 
 # Reaction Information
