@@ -56,6 +56,8 @@ sl.showLayoutAlgorithmOptions()
 
 sl.setLayoutAlgorithmOptions(k=40, grav=20)
 
+#sl.setLayoutAlgorithmOptions(mag=1)
+
 sl.showLayoutAlgorithmOptions()
 
 sl.regenerateLayoutAndNetwork()

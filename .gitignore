@@ -1,0 +1,6 @@
+__pycache__
+/doxy/build
+/build
+*.egg-info
+/dist
+*.ipynb_checkpoints
