@@ -419,8 +419,8 @@ class Render:
                                     local_style, network, reactions_id_list)
 
                         compartments_id_list = \
-                                self._getCompartmentIdsFromCGlyphs(local_style, 
-                                                                  network)
+                            self._getCompartmentIdsFromCGlyphs(local_style,
+                                                               network)
 
                         if len(compartments_id_list) > 0:
                             self._updateCompartmentsBasedOnCompartmentGlyph(
@@ -430,14 +430,14 @@ class Render:
         """
         """
         all_compartment_ids = list()
-        
+
         for cglyph_index in range(self.layout.getNumCompartmentGlyphs()):
             cglyph = self.layout.getCompartmentGlyph(cglyph_index)
             if local_style.getIdList().has_key(cglyph.getId()):
-                all_compartment_ids.append(cglyph.getCompartmentId())               
+                all_compartment_ids.append(cglyph.getCompartmentId())
 
         network_compartment_ids = list()
-        
+
         for compartment_id in all_compartment_ids:
             if compartment_id in network.compartments:
                 network_compartment_ids.append(compartment_id)

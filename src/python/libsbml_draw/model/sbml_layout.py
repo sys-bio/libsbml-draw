@@ -44,14 +44,14 @@ class SBMLlayout:
                 1,           # autobary
                 0,           # enable_comps
                 0,           # prerandom
-                0.0          # padding
+                20.0          # padding
             )
 
         if isinstance(self.__sbml_source, str):
 
             if SBMLlayout._validate_sbml_filename(self.__sbml_source):
                 self.__h_model = sbnw.loadSBMLFile(self.__sbml_source)
-                
+
             else:
                 self.__h_model = sbnw.loadSBMLString(self.__sbml_source)
 
@@ -78,17 +78,16 @@ class SBMLlayout:
 
             # apply render information, if any
             self.__applyRenderInformation()
-            
+
             self.__numNodes = self.getNumberOfNodes()
             self.__numReactions = self.getNumberOfReactions()
             self.__numCompartments = self.getNumberOfCompartments()
-            self.__mutation_scale = {key: 10 for key in
-                                 range(self.getNumberOfRoles())}    
+            self.__arrowhead_scale = {key: 10 for key in
+                                      range(self.getNumberOfRoles())}
 
         else:  # User can separately load a file
             pass
 
-        
     def loadSBMLFile(self, sbml_file):
         """Loads the SBML model into SBMLlayout.
 
@@ -461,6 +460,109 @@ class SBMLlayout:
 
     # Node Information
 
+    def aliasNode(self, node_id):
+        """Creates an alias of this node for each incoming and outgoing
+        reaction.
+
+        Args:
+            node_id (str):
+
+        Returns: None
+        """
+        if node_id in self.getNodeIds():
+
+            h_node_id = node_id.encode('utf-8')
+            h_node = sbnw.nw_getNodepFromId(self.__h_network, h_node_id)
+
+            sbnw.node_make_alias(h_node, self.__h_network)
+
+            self.__network._add_alias_nodes(node_id, self.__h_network)
+            self.__network._add_reactions(self.__h_network)
+            self.__network._remove_node(node_id)
+            self.__doc = libsbml.readSBMLFromString(
+                        self.__getSBMLWithLayoutString())
+        else:
+            raise ValueError(f"species {node_id} is not in the network.")
+
+    def getIsNodeAliased(self, node_id):
+        """Returns True if this node has been aliased.
+
+        Args:
+            node_id (str):
+
+        Returns: None
+        """
+        if node_id in self.getNodeIds():
+
+            h_node_id = node_id.encode('utf-8')
+            h_node = sbnw.nw_getNodepFromId(self.__h_network, h_node_id)
+
+            is_aliased = sbnw.node_isAliased(h_node)
+
+            if is_aliased == 0:
+                return False
+            else:
+                return True
+        else:
+            raise ValueError(f"species {node_id} is not in the network.")
+
+    def getIsNodeLocked(self, node_id):
+        """Returns True if this node is locked.
+
+        Args:
+            node_id(str): id for the node
+
+        Returns: bool
+        """
+        if node_id in self.getNodeIds():
+
+            h_node_id = node_id.encode('utf-8')
+            h_node = sbnw.nw_getNodepFromId(self.__h_network, h_node_id)
+
+            is_locked = sbnw.node_isLocked(h_node)
+
+            if is_locked == 0:
+                return False
+            else:
+                return True
+        else:
+            raise ValueError(f"species {node_id} is not in the network.")
+
+    def lockNode(self, node_id):
+        """Locks the node so that a new layout can be generated w/o moving
+        this node.
+
+        Args:
+            node_id (str): id for the node
+
+        Returns: None
+        """
+        if node_id in self.getNodeIds():
+
+            h_node_id = node_id.encode('utf-8')
+            h_node = sbnw.nw_getNodepFromId(self.__h_network, h_node_id)
+            sbnw.node_lock(h_node)
+
+        else:
+            raise ValueError(f"species {node_id} is not in the network.")
+
+    def unlockNode(self, node_id):
+        """Unlocks a previously locked node.
+
+        Args:
+            node_id (str): id for the node
+
+        Returns: None
+        """
+        if node_id in self.getNodeIds():
+
+            h_node_id = node_id.encode('utf-8')
+            h_node = sbnw.nw_getNodepFromId(self.__h_network, h_node_id)
+            sbnw.node_unlock(h_node)
+
+        else:
+            raise ValueError(f"species {node_id} is not in the network.")
+
     def getNodeCentroid(self, node_id):
         """Returns the center point of the node.
 
@@ -477,13 +579,42 @@ class SBMLlayout:
         else:
             raise ValueError(f"species {node_id} is not in the network.")
 
+    def setNodeCentroid(self, node_id, x, y):
+        """Sets the center point of the node.
+
+        Args:
+            node_id (str): id for the node
+            x (float): new x coordinate
+            y (float): new y coordinate
+
+        Returns: None
+        """
+        if node_id in self.getNodeIds():
+
+            centroid = self.__network.nodes[node_id].center
+            centroid.x = x
+            centroid.y = y
+
+            h_node_id = node_id.encode('utf-8')
+            h_node = sbnw.nw_getNodepFromId(self.__h_network, h_node_id)
+
+            sbnw.node_setCentroid(h_node, centroid)
+            sbnw.nw_recenterJunctions(self.__h_network)
+            sbnw.nw_rebuildCurves(self.__h_network)
+
+            self.__network = self.__createNetwork()
+            self.__doc = libsbml.readSBMLFromString(
+                        self.__getSBMLWithLayoutString())
+        else:
+            raise ValueError(f"species {node_id} is not in the network.")
+
     # Reaction Information
 
     def getReactionCentroid(self, reaction_id):
         """Returns the centroid of the reaction.
 
         Args:
-            reaction_id(str): id of the reaction
+            reaction_id (str): id of the reaction
 
         Returns: tuple, with x and y
         """
@@ -498,7 +629,7 @@ class SBMLlayout:
     def _describeReaction(self, reaction_index):
         """Prints the number of species and number of curves in the reaction.
 
-        Args: reaction_index(int): index of the reaction
+        Args: reaction_index (int): index of the reaction
 
         Returns: None
         """
@@ -532,6 +663,7 @@ class SBMLlayout:
 
         Returns: None
         """
+        self.__addRenderInformation()
         libsbml.writeSBMLToFile(self.__doc, out_file_name)
         print("wrote file: ", out_file_name)
 
@@ -1382,7 +1514,7 @@ class SBMLlayout:
 
     # Render Methods
 
-    def addRenderInformation(self,):
+    def __addRenderInformation(self,):
         """Add render information to the model's libsbml.SBMLDocument.
         A LocalStyle element is added for each node, reaction, and compartment.
         If any of these elements already exist, they are first removed.
@@ -1485,7 +1617,7 @@ class SBMLlayout:
 
         Returns: matplotlib.figure.Figure
         """
-        fig = createNetworkFigure(self.__network, self.__mutation_scale)
+        fig = createNetworkFigure(self.__network, self.__arrowhead_scale)
         if(save_file_name):
             fig.savefig(save_file_name, bbox_inches=bbox_inches)
 
@@ -1509,35 +1641,37 @@ class SBMLlayout:
         """
         return libsbml.writeSBMLToString(self.__doc)
 
-    def setArrowheadMutationScale(self, role, mutation_scale):
+    def setArrowheadScale(self, role, arrowhead_scale):
         """Set a value for matplotlib's mutation_scale to change the
         size of the arrowhead for a given role.  The default value is 10.
+        Bigger values result in bigger arrowheads.
 
         Args:
-            mutation_scale(int): passed on to matplotlib
+            arrowhead_scale(int): passed on to matplotlib
             role(int): role of the reaction
 
         Returns: None
         """
         if role in range(self.getNumberOfRoles()):
-            if isinstance(mutation_scale, int) and mutation_scale > 0:
-                self.__mutation_scale[role] = mutation_scale
+            if isinstance(arrowhead_scale, int) and arrowhead_scale > 0:
+                self.__arrowhead_scale[role] = arrowhead_scale
             else:
-                raise ValueError(f"Mutation scale {mutation_scale} must be an"
-                                 + f" integer greater than 0.")
+                raise ValueError(f"Arrowhead scale {arrowhead_scale} must be "
+                                 "an" + f" integer greater than 0.")
         else:
             raise ValueError(f"Role {role} is not in the allowable range: " +
                              f"{self.getNumberOfRoles()}")
 
-    def getArrowheadMutationScale(self, role):
-        """Returns the mutation scale for the given role.
+    def getArrowheadScale(self, role):
+        """Returns the arrowhead scale for the given role.  Bigger values
+        result in bigger arrowheads.
 
         Args: role(int)
 
         Returns: int
         """
-        if role in self.__mutation_scale:
-            return self.__mutation_scale[role]
+        if role in self.__arrowhead_scale:
+            return self.__arrowhead_scale[role]
         else:
             raise ValueError(f"Role {role} must be in the range 0 - " +
                              f"{self.getNumberOfRoles() - 1}")

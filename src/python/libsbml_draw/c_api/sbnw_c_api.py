@@ -177,7 +177,7 @@ slib.gf_nw_getRxnp.restype = ctypes.c_uint64
 
 slib.gf_nw_newAliasNodep.argtypes = [ctypes.c_uint64, ctypes.c_uint64]
 slib.gf_nw_newAliasNodep.restype = ctypes.c_uint64
-slib.gf_nw_getAliasInstancep.argtypes = [ctypes.c_uint64, ctypes.c_uint64, 
+slib.gf_nw_getAliasInstancep.argtypes = [ctypes.c_uint64, ctypes.c_uint64,
                                          ctypes.c_uint64]
 slib.gf_nw_getAliasInstancep.restype = ctypes.c_uint64
 slib.gf_nw_getNumAliasInstances.argtypes = [ctypes.c_uint64, ctypes.c_uint64]
@@ -228,18 +228,18 @@ def nw_getNumAliasInstances(h_network, h_node):
     return slib.gf_nw_getNumAliasInstances(h_network, h_node)
 
 
-def nw_rebuildCurves(h_network):
-    return slib.gf_nw_rebuildCurves(h_network)
-
-
 def nw_recenterJunctions(h_network):
     return slib.gf_nw_recenterJunctions(h_network)
+
+
+def nw_rebuildCurves(h_network):
+    return slib.gf_nw_rebuildCurves(h_network)
 
 
 # Node Information
 slib.gf_node_getCentroid.argtypes = [ctypes.c_uint64]
 slib.gf_node_getCentroid.restype = point
-slib.gf_node_setCentroid.argtypes = [ctypes.c_uint64]
+slib.gf_node_setCentroid.argtypes = [ctypes.c_uint64, point]
 
 slib.gf_node_getHeight.argtypes = [ctypes.c_uint64]
 slib.gf_node_getHeight.restype = ctypes.c_double
@@ -265,8 +265,8 @@ def node_getCentroid(h_node):
     return slib.gf_node_getCentroid(h_node)
 
 
-def node_setCentroid(h_node):
-    return slib.gf_node_setCentroid(h_node)
+def node_setCentroid(h_node, point):
+    return slib.gf_node_setCentroid(h_node, point)
 
 
 def node_getHeight(h_node):

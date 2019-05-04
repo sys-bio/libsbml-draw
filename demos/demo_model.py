@@ -69,3 +69,37 @@ print("rxn centroid: ", sl.getReactionCentroid("_J0"))
 
 print("Bezier Points: ", sl.getReactionBezierPoints("_J0"))
 
+
+sl.setNodeCentroid("X0", 200, 300)
+
+sl.drawNetwork()
+
+print("node centroid: ", sl.getNodeCentroid("X0"))
+
+print("X1 locked, False: ", sl.getIsNodeLocked("X1"))
+
+sl.lockNode("X1")
+
+print("X1 locked, True: ", sl.getIsNodeLocked("X1"))
+
+
+sl.regenerateLayoutAndNetwork()
+sl.drawNetwork()
+
+sl.regenerateLayoutAndNetwork()
+sl.drawNetwork()
+
+sl.unlockNode("X1")
+
+print("X1 locked, False: ", sl.getIsNodeLocked("X1"))
+
+
+sl.aliasNode("A")
+
+#print("A aliased? ", sl.getIsNodeAliased("A"))
+
+sl.drawNetwork()
+
+print(sl.getNodeIds())
+
+

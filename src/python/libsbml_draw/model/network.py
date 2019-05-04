@@ -109,6 +109,45 @@ class Network():
         self._add_reactions(self.h_network)
         self._add_compartments(self.h_network)
 
+    def _remove_node(self, node_id):
+        """Remove a node from the network.
+
+        Args:
+            node_id (str): id for the node
+
+        Returns: None
+        """
+        if node_id in self.nodes:
+            del self.nodes[node_id]
+        else:
+            raise ValueError(f"species {node_id} is not in the network.")
+
+    def _add_alias_nodes(self, node_id, h_network):
+        """Add alias nodes to the network for the given node.
+
+        Args:
+            node_id (str): id for the node
+            h_network (int): C pointer to the network
+
+        Returns: None
+        """
+        if node_id in self.nodes:
+
+            h_node_id = node_id.encode('utf-8')
+            h_node = sbnw.nw_getNodepFromId(h_network, h_node_id)
+            num_aliases = sbnw.nw_getNumAliasInstances(h_network, h_node)
+
+            for alias_index in range(num_aliases):
+                h_alias_node = sbnw.nw_getAliasInstancep(h_network, h_node,
+                                                         alias_index)
+
+                alias_node_id = sbnw.node_getID(
+                        h_alias_node) + "_" + str(alias_index)
+
+                self.nodes[alias_node_id] = Node(h_alias_node)
+        else:
+            raise ValueError(f"species {node_id} is not in the network.")
+
     def _add_compartments(self, h_network):
         """Populates the collection of compartments.
 

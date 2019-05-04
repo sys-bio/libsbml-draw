@@ -1,16 +1,20 @@
+from pathlib import Path
+import pkg_resources
+
 from libsbml_draw.model.sbml_layout import SBMLlayout
 
-model_file = "C:\\tmp\\modexmpl.xml"
+model_file_name = "modexmpl.xml"
+
+model_file = Path(pkg_resources.resource_filename("libsbml_draw", "model/data/" + model_file_name))
+
+sl = SBMLlayout(str(model_file))
+
+sl._describeModel()
+
+sl.drawNetwork()
+
+sl.setArrowheadScale(1, 25)
+
+sl.drawNetwork()
 
 
-sl = SBMLlayout(model_file)
-
-
-#sl.describeModel()
-
-
-sl.drawNetwork("C:\\tmp\\modexmpl.png")
-
-
-print("node ids: ", sl.getNodeIds())
-print("reaction ids: ", sl.getReactionIds())
