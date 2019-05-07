@@ -51,9 +51,12 @@ class SBMLlayout:
 
             if SBMLlayout._validate_sbml_filename(self.__sbml_source):
                 self.__h_model = sbnw.loadSBMLFile(self.__sbml_source)
-
             else:
-                self.__h_model = sbnw.loadSBMLString(self.__sbml_source)
+                if self.__sbml_source.startswith("<?xml"):
+                    self.__h_model = sbnw.loadSBMLString(self.__sbml_source)
+                else:
+                    raise ValueError(f"""File {
+                            self.__sbml_source} does not exist.""")
 
             self.__h_layout_info = sbnw.processLayout(self.__h_model)
             self.__h_network = sbnw.getNetworkp(self.__h_layout_info)
@@ -108,10 +111,9 @@ class SBMLlayout:
         """
         self.__init__(sbml_string)
 
-    def setLayoutAlgorithmOptions(self, k=None, boundary=None, mag=None,
+    def setLayoutAlgorithmOptions(self, k=None, boundary=None,
                                   grav=None, baryx=None, baryy=None,
-                                  autobary=None, enable_comps=None,
-                                  prerandom=None, padding=None
+                                  autobary=None, padding=None
                                   ):
         """
         Set values for the Fruchterman-Reingold layout algorithm parameters.
@@ -119,13 +121,10 @@ class SBMLlayout:
         Args:
             k (float):
             boundary (int):
-            magnitude (int):
             gravity (float):
             baryx (float):
             baryy (float):
             autobary (int):
-            enable_comps (int):
-            prerandom (int):
             padding (float):
 
         Returns: None
@@ -134,8 +133,6 @@ class SBMLlayout:
             self.__layout_alg_options.k = k
         if boundary:
             self.__layout_alg_options.boundary = boundary
-        if mag:
-            self.__layout_alg_options.mag = mag
         if grav:
             self.__layout_alg_options.grav = grav
         if baryx:
@@ -144,10 +141,6 @@ class SBMLlayout:
             self.__layout_alg_options.baryy = baryy
         if autobary:
             self.__layout_alg_options.autobary = autobary
-        if enable_comps:
-            self.__layout_alg_options.enable_comps
-        if prerandom:
-            self.__layout_alg_options.prerandom = prerandom
         if padding:
             self.__layout_alg_options.padding = padding
 
@@ -171,15 +164,15 @@ class SBMLlayout:
         """
         self.__layout_alg_options.boundary = boundary
 
-    def setLayoutAlgorithm_mag(self, magnitude):
-        """Set the Fruchterman-Reingold layout algorithm parameter 'mag'.
-
-        Args:
-            mag (int):
-
-        Returns: None
-        """
-        self.__layout_alg_options.mag = magnitude
+#    def setLayoutAlgorithm_mag(self, magnitude):
+#        """Set the Fruchterman-Reingold layout algorithm parameter 'mag'.
+#
+#        Args:
+#            mag (int):
+#
+#        Returns: None
+#        """
+#        self.__layout_alg_options.mag = magnitude
 
     def setLayoutAlgorithm_grav(self, gravity):
         """Set the Fruchterman-Reingold layout algorithm parameter 'grav'.
@@ -221,26 +214,26 @@ class SBMLlayout:
         """
         self.__layout_alg_options.autobary = autobary
 
-    def setLayoutAlgorithm_enable_comps(self, enable_comps):
-        """Set the Fruchterman-Reingold layout algorithm parameter
-        'enable_comps'.
+#    def setLayoutAlgorithm_enable_comps(self, enable_comps):
+#        """Set the Fruchterman-Reingold layout algorithm parameter
+#        'enable_comps'.
+#
+#        Args:
+#            enable_comps (int):
+#
+#        Returns: None
+#        """
+#        self.__layout_alg_options.enable_comps = enable_comps
 
-        Args:
-            enable_comps (int):
-
-        Returns: None
-        """
-        self.__layout_alg_options.enable_comps = enable_comps
-
-    def setLayoutAlgorithm_prerandom(self, prerandom):
-        """Set the Fruchterman-Reingold layout algorithm parameter 'prerandom'.
-
-        Args:
-            prerandom (int):
-
-        Returns: None
-        """
-        self.__layout_alg_options.prerandom = prerandom
+#    def setLayoutAlgorithm_prerandom(self, prerandom):
+#       """Set the Fruchterman-Reingold layout algorithm parameter 'prerandom'.
+#
+#        Args:
+#            prerandom (int):
+#
+#        Returns: None
+#        """
+#        self.__layout_alg_options.prerandom = prerandom
 
     def setLayoutAlgorithm_padding(self, padding):
         """Set the Fruchterman-Reingold layout algorithm parameter 'padding'.
@@ -665,7 +658,6 @@ class SBMLlayout:
         """
         self.__addRenderInformation()
         libsbml.writeSBMLToFile(self.__doc, out_file_name)
-        print("wrote file: ", out_file_name)
 
     # Compartment Methods
 
@@ -707,8 +699,9 @@ class SBMLlayout:
                     self.__network.compartments[this_id].edge_color = \
                         edge_color
                 else:
-                    print(f"""Id {this_id} in the input list is invalid,
-                          so cannot set color for this id.""")
+                    raise ValueError(
+                            f"""Id {this_id} in the input list is invalid,
+                            so cannot set color for this id.""")
         else:
             raise ValueError(f"""Invalid input for compartment ids:
                                  {compartment_id}""")
@@ -755,8 +748,9 @@ class SBMLlayout:
                     self.__network.compartments[this_id].fill_color = \
                         fill_color
                 else:
-                    print(f"""Id {this_id} in the input list is invalid,
-                          so cannot set color for this id.""")
+                    raise ValueError(
+                            f"""Id {this_id} in the input list is invalid,
+                            so cannot set color for this id.""")
         else:
             raise ValueError(f"""Invalid input for compartment ids:
                                  {compartment_id}""")
@@ -813,8 +807,9 @@ class SBMLlayout:
                     self.__network.compartments[this_id].line_width = \
                         line_width
                 else:
-                    print(f"""Id in the input list is invalid {this_id},
-                          so cannot set compartment line width for this id.""")
+                    raise ValueError(
+                            f"""Id in the input list is invalid {this_id}, so
+                            cannot set compartment line width for this id.""")
         else:
             raise ValueError(f"""Invalid input for compartment ids:
                                  {compartment_id}""")
@@ -892,8 +887,9 @@ class SBMLlayout:
                     self.__network.nodes[this_id].edge_color = node_color
                     self.__network.nodes[this_id].fill_color = node_color
                 else:
-                    print(f"""This id in the input list is invalid {this_id},
-                          so cannot set color for this id.""")
+                    raise ValueError(
+                            f"""This id in the input list is invalid {this_id},
+                            so cannot set color for this id.""")
         else:
             raise ValueError(f"""Invalid input for node_id: {node_id}.
                              node_id must be a Species id, a list of Species
@@ -942,8 +938,9 @@ class SBMLlayout:
                 if this_id in full_model_nodeIds:
                     self.__network.nodes[this_id].fill_color = fill_color
                 else:
-                    print(f"""This id in the input list is invalid {this_id},
-                          so cannot set node fill color for this id.""")
+                    raise ValueError(
+                            f"""This id in the input list is invalid {this_id},
+                            so cannot set node fill color for this id.""")
         else:
             raise ValueError(f"""Invalid input for node_id: {node_id}.
                              node_id must be a Species id, a list of Species
@@ -990,8 +987,9 @@ class SBMLlayout:
                 if this_id in full_model_nodeIds:
                     self.__network.nodes[this_id].edge_color = edge_color
                 else:
-                    print(f"""This id in the input list is invalid {this_id},
-                          so cannot set node edge color for this id.""")
+                    raise ValueError(
+                            f"""This id in the input list is invalid {this_id},
+                            so cannot set node edge color for this id.""")
         else:
             raise ValueError(f"""Invalid input for node_id: {node_id}.
                              node_id must be a Species id, a list of Species
@@ -1037,8 +1035,9 @@ class SBMLlayout:
                 if this_id in full_model_nodeIds:
                     self.__network.nodes[this_id].font_size = font_size
                 else:
-                    print(f"""This id in the input list is invalid {this_id},
-                          so cannot set node font size for this id.""")
+                    raise ValueError(
+                            f"""This id in the input list is invalid {this_id},
+                            so cannot set node font size for this id.""")
         else:
             raise ValueError(f"""Invalid input for node_id: {node_id}.
                              node_id must be a Species id, a list of Species
@@ -1085,8 +1084,9 @@ class SBMLlayout:
                 if this_id in full_model_nodeIds:
                     self.__network.nodes[this_id].font_family = font_name
                 else:
-                    print(f"""This id in the input list is invalid {this_id},
-                          so cannot set node font family for this id.""")
+                    raise ValueError(
+                            f"""This id in the input list is invalid {this_id},
+                            so cannot set node font family for this id.""")
         else:
             raise ValueError(f"""Invalid input for node_id: {node_id}.
                              node_id must be a Species id, a list of Species
@@ -1128,8 +1128,9 @@ class SBMLlayout:
                 if this_id in full_model_nodeIds:
                     self.__network.nodes[this_id].font_family = font_family
                 else:
-                    print(f"""This id in the input list is invalid {this_id},
-                          so cannot set node font family for this id.""")
+                    raise ValueError(
+                            f"""This id in the input list is invalid {this_id},
+                            so cannot set node font family for this id.""")
         else:
             raise ValueError(f"""Invalid input for node_id: {node_id}.
                              node_id must be a Species id, a list of Species
@@ -1178,8 +1179,9 @@ class SBMLlayout:
                 if this_id in full_model_nodeIds:
                     self.__network.nodes[this_id].font_color = font_color
                 else:
-                    print(f"""This id in the input list is invalid {this_id},
-                          so cannot set node font color for this id.""")
+                    raise ValueError(
+                            f"""This id in the input list is invalid {this_id},
+                            so cannot set node font color for this id.""")
         else:
             raise ValueError(f"""Invalid input for node_id: {node_id}.
                              node_id must be a Species id, a list of Species
@@ -1229,8 +1231,9 @@ class SBMLlayout:
                 if this_id in full_model_nodeIds:
                     self.__network.nodes[this_id].font_style = font_style
                 else:
-                    print(f"""This id in the input list is invalid {this_id},
-                          so cannot set node font style for this id.""")
+                    raise ValueError(
+                            f"""This id in the input list is invalid {this_id},
+                            so cannot set node font style for this id.""")
         else:
             raise ValueError(f"""Invalid input for node_id: {node_id}.
                              node_id must be a Species id, a list of Species
@@ -1375,8 +1378,9 @@ class SBMLlayout:
                     self.__network.reactions[this_id].fill_color = \
                         reaction_color
                 else:
-                    print(f"""This id in the input list is invalid {this_id},
-                          so cannot set color for this id.""")
+                    raise ValueError(
+                            f"""This id in the input list is invalid {this_id},
+                            so cannot set color for this id.""")
         else:
             raise ValueError(f"Invalid input for reaction ids: {reaction_id}")
 
@@ -1420,8 +1424,9 @@ class SBMLlayout:
                 if this_id in full_model_reactionIds:
                     self.__network.reactions[this_id].edge_color = edge_color
                 else:
-                    print(f"""This id in the input list is invalid {this_id},
-                          so cannot set color for this id.""")
+                    raise ValueError(
+                            f"""This id in the input list is invalid {this_id},
+                            so cannot set color for this id.""")
         else:
             raise ValueError(f"Invalid input for reaction ids: {reaction_id}")
 
@@ -1465,8 +1470,9 @@ class SBMLlayout:
                 if this_id in full_model_reactionIds:
                     self.__network.reactions[this_id].fill_color = fill_color
                 else:
-                    print(f"""This id in the input list is invalid {this_id},
-                          so cannot set color for this id.""")
+                    raise ValueError(
+                            f"""This id in the input list is invalid {this_id},
+                            so cannot set color for this id.""")
         else:
             raise ValueError(f"Invalid input for reaction ids: {reaction_id}")
 
@@ -1507,8 +1513,9 @@ class SBMLlayout:
                 if this_id in full_model_reactionIds:
                     self.__network.reactions[this_id].curve_width = curve_width
                 else:
-                    print(f"""This id in the input list is invalid {this_id},
-                          so cannot set reaction curve width for this id.""")
+                    raise ValueError(
+                            f"""This id in the input list is invalid {this_id},
+                            so cannot set reaction curve width for this id.""")
         else:
             raise ValueError(f"Invalid input for reaction ids: {reaction_id}")
 

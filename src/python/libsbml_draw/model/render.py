@@ -358,7 +358,7 @@ class Render:
         idList = set()
 
         for this_id in network_id_set:
-            if local_style.getIdList().has_key(this_id):
+            if local_style.getIdList().has_key(this_id):  # noqa
                 idList.add(this_id)
 
         return idList
@@ -433,7 +433,7 @@ class Render:
 
         for cglyph_index in range(self.layout.getNumCompartmentGlyphs()):
             cglyph = self.layout.getCompartmentGlyph(cglyph_index)
-            if local_style.getIdList().has_key(cglyph.getId()):
+            if local_style.getIdList().has_key(cglyph.getId()):  # noqa
                 all_compartment_ids.append(cglyph.getCompartmentId())
 
         network_compartment_ids = list()

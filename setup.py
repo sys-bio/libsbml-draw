@@ -1,6 +1,6 @@
 from setuptools import setup, PEP420PackageFinder
 
-exec(open("libsbml/version.py").read())
+exec(open("src/python/libsbml_draw/version.py").read())
 
 setup(
     name="libsbml-draw",
