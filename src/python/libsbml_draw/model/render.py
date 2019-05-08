@@ -2,6 +2,8 @@
 the SBML file."""
 
 from collections import namedtuple
+import math
+
 from matplotlib.colors import is_color_like
 from matplotlib.font_manager import findSystemFonts
 from pathlib import Path
@@ -156,9 +158,11 @@ class Render:
                 font_property = FontProperty(False, property_value)
 
         elif font_property == "size":
-            if (str(round(property_value)).isdigit() or
-                str(property_value).lower() in self.font_properties[
-                    font_property]):
+            # property_value is a float
+            if (not math.isnan(property_value) and
+                (str(round(property_value)).isdigit() or
+                 str(property_value).lower() in self.font_properties[
+                    font_property])):
                 font_property = FontProperty(True, property_value)
             else:
                 font_property = FontProperty(False, property_value)
@@ -405,25 +409,35 @@ class Render:
                                 local_style, network.nodes.keys())
 
                         if len(nodes_id_list) > 0:
-                            self._updateNodesBasedOnSpeciesGlyph(
-                                    local_style, network, nodes_id_list)
 
-                            self._updateNodesBasedOnTextGlyph(
+                            if local_style.isInTypeList("SPECIESGLYPH"):
+                                self._updateNodesBasedOnSpeciesGlyph(
                                     local_style, network, nodes_id_list)
+                            elif local_style.isInTypeList("TEXTGLYPH"):
+                                self._updateNodesBasedOnTextGlyph(
+                                    local_style, network, nodes_id_list)
+                            else:
+                                pass
 
                         reactions_id_list = self._getLocalIdList(
                                 local_style, network.reactions.keys())
 
                         if len(reactions_id_list) > 0:
-                            self._updateReactionsBasedOnReactionGlyph(
+
+                            if local_style.isInTypeList("REACTIONGLYPH"):
+                                self._updateReactionsBasedOnReactionGlyph(
                                     local_style, network, reactions_id_list)
+                            else:
+                                pass
 
                         compartments_id_list = \
                             self._getCompartmentIdsFromCGlyphs(local_style,
                                                                network)
 
                         if len(compartments_id_list) > 0:
-                            self._updateCompartmentsBasedOnCompartmentGlyph(
+
+                            if local_style.isInTypeList("COMPARTMENTGLYPH"):
+                                self._updateCompartmentsBasedOnCompartmentGlyph(  # noqa  
                                     local_style, network, compartments_id_list)
 
     def _getCompartmentIdsFromCGlyphs(self, local_style, network):

@@ -5,8 +5,8 @@ import pkg_resources
 
 from libsbml_draw.model.sbml_layout import SBMLlayout
 
-#model_file_name = "complicated_nodes-L3V1.xml"
-model_file_name = "complicated_nodes.xml"
+model_file_name = "complicated_nodes-L3V1.xml"
+#model_file_name = "complicated_nodes.xml"
 
 model_file = Path(pkg_resources.resource_filename(
         "libsbml_draw", "model/data/" + model_file_name))
@@ -44,18 +44,36 @@ sl.drawNetwork(figure_size=(15,15))
 
 #print("sls: \n", sls)
 
-#out_file = "complicated_nodes_out.xml"    
+out_file = "complicated_nodes_out.xml"    
     
-#sl.writeSBMLFile("complicated_nodes_out.xml")
+sl.writeSBMLFile("complicated_nodes_out.xml")
 
 
-#sl2 = SBMLlayout(out_file)
+sl2 = SBMLlayout(out_file)
 
-#sl2._describeModel()
+sl2._describeModel()
 
-#sl2.drawNetwork()
+#sl2.drawNetwork(figure_size=(15,15))
+sl2.drawNetwork()
 
-#for node in sl2.getNodeIds():
+x = list()
+y = list()
+
+for node in sl2.getNodeIds():
+    centroid = sl2.getNodeCentroid(node)
+    x.append(centroid[0])
+    y.append(centroid[1])    
+    print("centroid: ", centroid[0], ", ", centroid[1])
+    print("width: ", sl2.getNodeWidth(node))
+    print("height: ", sl2.getNodeHeight(node))
+
+print()    
+print("min x, max x: ", min(x)-20, ", ", max(x)+20)
+print("min y, max y: ", min(y)-10, ", ", max(y)+10)
+print()
+print("width: ", max(x) - min(x))
+print("height: ", max(y) - min(y))
+
 #    centroid = sl2.getNodeCentroid(node)
 #    print("centroid: ", centroid[0], ", ", centroid[1])
 #    print("width: ", sl2.getNodeWidth(node))

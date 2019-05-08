@@ -67,7 +67,7 @@ def draw_nodes(nodes, ratio=1):
             edgecolor=node.edge_color,
             facecolor=node.fill_color,
             boxstyle=BoxStyle("round", pad=0.2, rounding_size=.6),
-            mutation_scale=2.5)
+            mutation_scale=20*ratio)
 
         node_patches.append(fbbp)
 
@@ -158,8 +158,8 @@ def createNetworkFigure(network, mutation_scale, figure_size=None):
         fig = plt.figure() # figsize=(20,10)
     ax = plt.gca()
 
-    ratio = get_ratio()
-    #ratio = 1
+    #ratio = get_ratio()
+    ratio = 1
 
     # draw the compartments
     compartment_patches = draw_compartments(network.compartments.values())

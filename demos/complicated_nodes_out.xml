@@ -1,0 +1,745 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<sbml xmlns="http://www.sbml.org/sbml/level3/version1/core" xmlns:layout="http://www.sbml.org/sbml/level3/version1/layout/version1" xmlns:render="http://www.sbml.org/sbml/level3/version1/render/version1" level="3" version="1" layout:required="false" render:required="false">
+  <model id="untitled">
+    <listOfCompartments>
+      <compartment sboTerm="SBO:0000410" id="graphfab_default_compartment" size="1" constant="false"/>
+    </listOfCompartments>
+    <listOfSpecies>
+      <species id="Node0" compartment="graphfab_default_compartment" initialConcentration="0" hasOnlySubstanceUnits="false" boundaryCondition="false" constant="false"/>
+      <species id="Node3" compartment="graphfab_default_compartment" initialConcentration="0" hasOnlySubstanceUnits="false" boundaryCondition="false" constant="false"/>
+      <species id="Node5" compartment="graphfab_default_compartment" initialConcentration="0" hasOnlySubstanceUnits="false" boundaryCondition="false" constant="false"/>
+      <species id="Node6" compartment="graphfab_default_compartment" initialConcentration="0" hasOnlySubstanceUnits="false" boundaryCondition="false" constant="false"/>
+      <species id="Node7" compartment="graphfab_default_compartment" initialConcentration="0" hasOnlySubstanceUnits="false" boundaryCondition="false" constant="false"/>
+      <species id="Node8" compartment="graphfab_default_compartment" initialConcentration="0" hasOnlySubstanceUnits="false" boundaryCondition="false" constant="false"/>
+      <species id="Node9" compartment="graphfab_default_compartment" initialConcentration="0" hasOnlySubstanceUnits="false" boundaryCondition="false" constant="false"/>
+      <species id="Node10" compartment="graphfab_default_compartment" initialConcentration="0" hasOnlySubstanceUnits="false" boundaryCondition="false" constant="false"/>
+      <species id="Node11" compartment="graphfab_default_compartment" initialConcentration="0" hasOnlySubstanceUnits="false" boundaryCondition="false" constant="false"/>
+      <species id="Node12" compartment="graphfab_default_compartment" initialConcentration="0" hasOnlySubstanceUnits="false" boundaryCondition="false" constant="false"/>
+      <species id="Node13" compartment="graphfab_default_compartment" initialConcentration="0" hasOnlySubstanceUnits="false" boundaryCondition="false" constant="false"/>
+      <species id="Node14" compartment="graphfab_default_compartment" initialConcentration="0" hasOnlySubstanceUnits="false" boundaryCondition="false" constant="false"/>
+    </listOfSpecies>
+    <listOfReactions>
+      <reaction id="J0" reversible="false" fast="false">
+        <listOfReactants>
+          <speciesReference species="Node8" stoichiometry="1" constant="false"/>
+          <speciesReference species="Node5" stoichiometry="1" constant="false"/>
+        </listOfReactants>
+        <listOfProducts>
+          <speciesReference species="Node9" stoichiometry="1" constant="false"/>
+        </listOfProducts>
+        <kineticLaw>
+          <math xmlns="http://www.w3.org/1998/Math/MathML">
+            <cn type="integer"> 1 </cn>
+          </math>
+        </kineticLaw>
+      </reaction>
+      <reaction id="J1" reversible="false" fast="false">
+        <listOfReactants>
+          <speciesReference species="Node11" stoichiometry="1" constant="false"/>
+          <speciesReference species="Node9" stoichiometry="1" constant="false"/>
+        </listOfReactants>
+        <listOfProducts>
+          <speciesReference species="Node14" stoichiometry="1" constant="false"/>
+        </listOfProducts>
+        <kineticLaw>
+          <math xmlns="http://www.w3.org/1998/Math/MathML">
+            <cn type="integer"> 1 </cn>
+          </math>
+        </kineticLaw>
+      </reaction>
+      <reaction id="J2" reversible="false" fast="false">
+        <listOfReactants>
+          <speciesReference species="Node0" stoichiometry="1" constant="false"/>
+          <speciesReference species="Node13" stoichiometry="1" constant="false"/>
+        </listOfReactants>
+        <listOfProducts>
+          <speciesReference species="Node7" stoichiometry="1" constant="false"/>
+          <speciesReference species="Node12" stoichiometry="1" constant="false"/>
+        </listOfProducts>
+        <kineticLaw>
+          <math xmlns="http://www.w3.org/1998/Math/MathML">
+            <cn type="integer"> 1 </cn>
+          </math>
+        </kineticLaw>
+      </reaction>
+      <reaction id="J3" reversible="false" fast="false">
+        <listOfReactants>
+          <speciesReference species="Node0" stoichiometry="1" constant="false"/>
+        </listOfReactants>
+        <listOfProducts>
+          <speciesReference species="Node13" stoichiometry="1" constant="false"/>
+        </listOfProducts>
+        <kineticLaw>
+          <math xmlns="http://www.w3.org/1998/Math/MathML">
+            <cn type="integer"> 1 </cn>
+          </math>
+        </kineticLaw>
+      </reaction>
+      <reaction id="J4" reversible="false" fast="false">
+        <listOfReactants>
+          <speciesReference species="Node8" stoichiometry="1" constant="false"/>
+          <speciesReference species="Node14" stoichiometry="1" constant="false"/>
+        </listOfReactants>
+        <listOfProducts>
+          <speciesReference species="Node6" stoichiometry="1" constant="false"/>
+        </listOfProducts>
+        <kineticLaw>
+          <math xmlns="http://www.w3.org/1998/Math/MathML">
+            <cn type="integer"> 1 </cn>
+          </math>
+        </kineticLaw>
+      </reaction>
+      <reaction id="J5" reversible="false" fast="false">
+        <listOfReactants>
+          <speciesReference species="Node12" stoichiometry="1" constant="false"/>
+          <speciesReference species="Node5" stoichiometry="1" constant="false"/>
+        </listOfReactants>
+        <listOfProducts>
+          <speciesReference species="Node13" stoichiometry="1" constant="false"/>
+          <speciesReference species="Node0" stoichiometry="1" constant="false"/>
+        </listOfProducts>
+        <kineticLaw>
+          <math xmlns="http://www.w3.org/1998/Math/MathML">
+            <cn type="integer"> 1 </cn>
+          </math>
+        </kineticLaw>
+      </reaction>
+      <reaction id="J6" reversible="false" fast="false">
+        <listOfReactants>
+          <speciesReference species="Node0" stoichiometry="1" constant="false"/>
+          <speciesReference species="Node3" stoichiometry="1" constant="false"/>
+        </listOfReactants>
+        <listOfProducts>
+          <speciesReference species="Node8" stoichiometry="1" constant="false"/>
+        </listOfProducts>
+        <kineticLaw>
+          <math xmlns="http://www.w3.org/1998/Math/MathML">
+            <cn type="integer"> 1 </cn>
+          </math>
+        </kineticLaw>
+      </reaction>
+      <reaction id="J7" reversible="false" fast="false">
+        <listOfReactants>
+          <speciesReference species="Node10" stoichiometry="1" constant="false"/>
+        </listOfReactants>
+        <listOfProducts>
+          <speciesReference species="Node8" stoichiometry="1" constant="false"/>
+        </listOfProducts>
+        <kineticLaw>
+          <math xmlns="http://www.w3.org/1998/Math/MathML">
+            <cn type="integer"> 1 </cn>
+          </math>
+        </kineticLaw>
+      </reaction>
+    </listOfReactions>
+    <layout:listOfLayouts xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:layout="http://www.sbml.org/sbml/level3/version1/layout/version1">
+      <layout:layout layout:id="Graphfab_Layout">
+        <layout:dimensions layout:width="1024" layout:height="1024"/>
+        <layout:listOfSpeciesGlyphs>
+          <layout:speciesGlyph layout:id="Node0_Glyph" layout:species="Node0">
+            <layout:boundingBox>
+              <layout:position layout:x="713" layout:y="690"/>
+              <layout:dimensions layout:width="40" layout:height="20"/>
+            </layout:boundingBox>
+          </layout:speciesGlyph>
+          <layout:speciesGlyph layout:id="Node3_Glyph" layout:species="Node3">
+            <layout:boundingBox>
+              <layout:position layout:x="638" layout:y="833"/>
+              <layout:dimensions layout:width="40" layout:height="20"/>
+            </layout:boundingBox>
+          </layout:speciesGlyph>
+          <layout:speciesGlyph layout:id="Node5_Glyph" layout:species="Node5">
+            <layout:boundingBox>
+              <layout:position layout:x="583" layout:y="615"/>
+              <layout:dimensions layout:width="40" layout:height="20"/>
+            </layout:boundingBox>
+          </layout:speciesGlyph>
+          <layout:speciesGlyph layout:id="Node6_Glyph" layout:species="Node6">
+            <layout:boundingBox>
+              <layout:position layout:x="289" layout:y="823"/>
+              <layout:dimensions layout:width="40" layout:height="20"/>
+            </layout:boundingBox>
+          </layout:speciesGlyph>
+          <layout:speciesGlyph layout:id="Node7_Glyph" layout:species="Node7">
+            <layout:boundingBox>
+              <layout:position layout:x="901" layout:y="636"/>
+              <layout:dimensions layout:width="40" layout:height="20"/>
+            </layout:boundingBox>
+          </layout:speciesGlyph>
+          <layout:speciesGlyph layout:id="Node8_Glyph" layout:species="Node8">
+            <layout:boundingBox>
+              <layout:position layout:x="476" layout:y="768"/>
+              <layout:dimensions layout:width="40" layout:height="20"/>
+            </layout:boundingBox>
+          </layout:speciesGlyph>
+          <layout:speciesGlyph layout:id="Node9_Glyph" layout:species="Node9">
+            <layout:boundingBox>
+              <layout:position layout:x="376" layout:y="626"/>
+              <layout:dimensions layout:width="40" layout:height="20"/>
+            </layout:boundingBox>
+          </layout:speciesGlyph>
+          <layout:speciesGlyph layout:id="Node10_Glyph" layout:species="Node10">
+            <layout:boundingBox>
+              <layout:position layout:x="440" layout:y="938"/>
+              <layout:dimensions layout:width="40" layout:height="20"/>
+            </layout:boundingBox>
+          </layout:speciesGlyph>
+          <layout:speciesGlyph layout:id="Node11_Glyph" layout:species="Node11">
+            <layout:boundingBox>
+              <layout:position layout:x="211" layout:y="592"/>
+              <layout:dimensions layout:width="40" layout:height="20"/>
+            </layout:boundingBox>
+          </layout:speciesGlyph>
+          <layout:speciesGlyph layout:id="Node12_Glyph" layout:species="Node12">
+            <layout:boundingBox>
+              <layout:position layout:x="781" layout:y="552"/>
+              <layout:dimensions layout:width="40" layout:height="20"/>
+            </layout:boundingBox>
+          </layout:speciesGlyph>
+          <layout:speciesGlyph layout:id="Node13_Glyph" layout:species="Node13">
+            <layout:boundingBox>
+              <layout:position layout:x="777" layout:y="597"/>
+              <layout:dimensions layout:width="40" layout:height="20"/>
+            </layout:boundingBox>
+          </layout:speciesGlyph>
+          <layout:speciesGlyph layout:id="Node14_Glyph" layout:species="Node14">
+            <layout:boundingBox>
+              <layout:position layout:x="281" layout:y="714"/>
+              <layout:dimensions layout:width="40" layout:height="20"/>
+            </layout:boundingBox>
+          </layout:speciesGlyph>
+        </layout:listOfSpeciesGlyphs>
+        <layout:listOfReactionGlyphs>
+          <layout:reactionGlyph layout:id="J0_Glyph" layout:reaction="J0">
+            <layout:boundingBox>
+              <layout:position layout:x="0" layout:y="0"/>
+              <layout:dimensions layout:width="0" layout:height="0"/>
+            </layout:boundingBox>
+            <layout:listOfSpeciesReferenceGlyphs>
+              <layout:speciesReferenceGlyph layout:id="J0_SpeciesRef1" layout:speciesReference="Node8" layout:speciesGlyph="Node8_Glyph" layout:role="substrate">
+                <layout:curve>
+                  <layout:listOfCurveSegments>
+                    <layout:curveSegment xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:type="CubicBezier">
+                      <layout:start layout:x="500.713309820081" layout:y="757.37513897138"/>
+                      <layout:end layout:x="498.891781643827" layout:y="673.93043841996"/>
+                      <layout:basePoint1 layout:x="500.276830492138" layout:y="737.379902393728"/>
+                      <layout:basePoint2 layout:x="520.886905724606" layout:y="685.813809855337"/>
+                    </layout:curveSegment>
+                  </layout:listOfCurveSegments>
+                </layout:curve>
+              </layout:speciesReferenceGlyph>
+              <layout:speciesReferenceGlyph layout:id="J0_SpeciesRef2" layout:speciesReference="Node5" layout:speciesGlyph="Node5_Glyph" layout:role="substrate">
+                <layout:curve>
+                  <layout:listOfCurveSegments>
+                    <layout:curveSegment xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:type="CubicBezier">
+                      <layout:start layout:x="581.04107284439" layout:y="640.054376807871"/>
+                      <layout:end layout:x="498.891781643827" layout:y="673.93043841996"/>
+                      <layout:basePoint1 layout:x="562.551466173805" layout:y="647.678971562156"/>
+                      <layout:basePoint2 layout:x="520.886905724606" layout:y="685.813809855337"/>
+                    </layout:curveSegment>
+                  </layout:listOfCurveSegments>
+                </layout:curve>
+              </layout:speciesReferenceGlyph>
+              <layout:speciesReferenceGlyph layout:id="J0_SpeciesRef3" layout:speciesReference="Node9" layout:speciesGlyph="Node9_Glyph" layout:role="product">
+                <layout:curve>
+                  <layout:listOfCurveSegments>
+                    <layout:curveSegment xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:type="CubicBezier">
+                      <layout:start layout:x="498.891781643827" layout:y="673.93043841996"/>
+                      <layout:end layout:x="425.498550593462" layout:y="645.126905278938"/>
+                      <layout:basePoint1 layout:x="476.896657563047" layout:y="662.047066984583"/>
+                      <layout:basePoint2 layout:x="444.11612800301" layout:y="652.433464756521"/>
+                    </layout:curveSegment>
+                  </layout:listOfCurveSegments>
+                </layout:curve>
+              </layout:speciesReferenceGlyph>
+            </layout:listOfSpeciesReferenceGlyphs>
+          </layout:reactionGlyph>
+          <layout:reactionGlyph layout:id="J1_Glyph" layout:reaction="J1">
+            <layout:boundingBox>
+              <layout:position layout:x="0" layout:y="0"/>
+              <layout:dimensions layout:width="0" layout:height="0"/>
+            </layout:boundingBox>
+            <layout:listOfSpeciesReferenceGlyphs>
+              <layout:speciesReferenceGlyph layout:id="J1_SpeciesRef1" layout:speciesReference="Node11" layout:speciesGlyph="Node11_Glyph" layout:role="substrate">
+                <layout:curve>
+                  <layout:listOfCurveSegments>
+                    <layout:curveSegment xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:type="CubicBezier">
+                      <layout:start layout:x="260.693844727118" layout:y="609.455478447581"/>
+                      <layout:end layout:x="304.567855826525" layout:y="646.277388497364"/>
+                      <layout:basePoint1 layout:x="276.013488107681" layout:y="622.312714802737"/>
+                      <layout:basePoint2 layout:x="312.607243684034" layout:y="622.605290092775"/>
+                    </layout:curveSegment>
+                  </layout:listOfCurveSegments>
+                </layout:curve>
+              </layout:speciesReferenceGlyph>
+              <layout:speciesReferenceGlyph layout:id="J1_SpeciesRef2" layout:speciesReference="Node9" layout:speciesGlyph="Node9_Glyph" layout:role="substrate">
+                <layout:curve>
+                  <layout:listOfCurveSegments>
+                    <layout:curveSegment xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:type="CubicBezier">
+                      <layout:start layout:x="366.108037559446" layout:y="630.534026236705"/>
+                      <layout:end layout:x="304.567855826525" layout:y="646.277388497364"/>
+                      <layout:basePoint1 layout:x="346.732023164109" layout:y="635.490846402063"/>
+                      <layout:basePoint2 layout:x="312.607243684034" layout:y="622.605290092775"/>
+                    </layout:curveSegment>
+                  </layout:listOfCurveSegments>
+                </layout:curve>
+              </layout:speciesReferenceGlyph>
+              <layout:speciesReferenceGlyph layout:id="J1_SpeciesRef3" layout:speciesReference="Node14" layout:speciesGlyph="Node14_Glyph" layout:role="product">
+                <layout:curve>
+                  <layout:listOfCurveSegments>
+                    <layout:curveSegment xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:type="CubicBezier">
+                      <layout:start layout:x="304.567855826525" layout:y="646.277388497364"/>
+                      <layout:end layout:x="298.426843278761" layout:y="703.016438943298"/>
+                      <layout:basePoint1 layout:x="296.528467969016" layout:y="669.949486901952"/>
+                      <layout:basePoint2 layout:x="300.578926074451" layout:y="683.132562569701"/>
+                    </layout:curveSegment>
+                  </layout:listOfCurveSegments>
+                </layout:curve>
+              </layout:speciesReferenceGlyph>
+            </layout:listOfSpeciesReferenceGlyphs>
+          </layout:reactionGlyph>
+          <layout:reactionGlyph layout:id="J2_Glyph" layout:reaction="J2">
+            <layout:boundingBox>
+              <layout:position layout:x="0" layout:y="0"/>
+              <layout:dimensions layout:width="0" layout:height="0"/>
+            </layout:boundingBox>
+            <layout:listOfSpeciesReferenceGlyphs>
+              <layout:speciesReferenceGlyph layout:id="J2_SpeciesRef1" layout:speciesReference="Node0" layout:speciesGlyph="Node0_Glyph" layout:role="substrate">
+                <layout:curve>
+                  <layout:listOfCurveSegments>
+                    <layout:curveSegment xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:type="CubicBezier">
+                      <layout:start layout:x="752.886475256335" layout:y="682.851544256383"/>
+                      <layout:end layout:x="825.056189240535" layout:y="640.51139322061"/>
+                      <layout:basePoint1 layout:x="770.136912290433" layout:y="672.731147913719"/>
+                      <layout:basePoint2 layout:x="800.591965411866" layout:y="645.659378502326"/>
+                    </layout:curveSegment>
+                  </layout:listOfCurveSegments>
+                </layout:curve>
+              </layout:speciesReferenceGlyph>
+              <layout:speciesReferenceGlyph layout:id="J2_SpeciesRef2" layout:speciesReference="Node13" layout:speciesGlyph="Node13_Glyph" layout:role="substrate">
+                <layout:curve>
+                  <layout:listOfCurveSegments>
+                    <layout:curveSegment xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:type="CubicBezier">
+                      <layout:start layout:x="798.900727682072" layout:y="626.959351868608"/>
+                      <layout:end layout:x="825.056189240535" layout:y="640.51139322061"/>
+                      <layout:basePoint1 layout:x="816.658605782693" layout:y="636.160317326836"/>
+                      <layout:basePoint2 layout:x="800.591965411866" layout:y="645.659378502326"/>
+                    </layout:curveSegment>
+                  </layout:listOfCurveSegments>
+                </layout:curve>
+              </layout:speciesReferenceGlyph>
+              <layout:speciesReferenceGlyph layout:id="J2_SpeciesRef3" layout:speciesReference="Node7" layout:speciesGlyph="Node7_Glyph" layout:role="product">
+                <layout:curve>
+                  <layout:listOfCurveSegments>
+                    <layout:curveSegment xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:type="CubicBezier">
+                      <layout:start layout:x="825.056189240535" layout:y="640.51139322061"/>
+                      <layout:end layout:x="890.085318426282" layout:y="640.696508806406"/>
+                      <layout:basePoint1 layout:x="849.520413069205" layout:y="635.363407938894"/>
+                      <layout:basePoint2 layout:x="870.085399460315" layout:y="640.639575909386"/>
+                    </layout:curveSegment>
+                  </layout:listOfCurveSegments>
+                </layout:curve>
+              </layout:speciesReferenceGlyph>
+              <layout:speciesReferenceGlyph layout:id="J2_SpeciesRef4" layout:speciesReference="Node12" layout:speciesGlyph="Node12_Glyph" layout:role="product">
+                <layout:curve>
+                  <layout:listOfCurveSegments>
+                    <layout:curveSegment xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:type="CubicBezier">
+                      <layout:start layout:x="825.056189240535" layout:y="640.51139322061"/>
+                      <layout:end layout:x="812.5120844429" layout:y="579.343675754386"/>
+                      <layout:basePoint1 layout:x="849.520413069205" layout:y="635.363407938894"/>
+                      <layout:basePoint2 layout:x="816.530008532731" layout:y="598.935926416532"/>
+                    </layout:curveSegment>
+                  </layout:listOfCurveSegments>
+                </layout:curve>
+              </layout:speciesReferenceGlyph>
+            </layout:listOfSpeciesReferenceGlyphs>
+          </layout:reactionGlyph>
+          <layout:reactionGlyph layout:id="J3_Glyph" layout:reaction="J3">
+            <layout:boundingBox>
+              <layout:position layout:x="0" layout:y="0"/>
+              <layout:dimensions layout:width="0" layout:height="0"/>
+            </layout:boundingBox>
+            <layout:listOfSpeciesReferenceGlyphs>
+              <layout:speciesReferenceGlyph layout:id="J3_SpeciesRef1" layout:speciesReference="Node0" layout:speciesGlyph="Node0_Glyph" layout:role="substrate">
+                <layout:curve>
+                  <layout:listOfCurveSegments>
+                    <layout:curveSegment xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:type="CubicBezier">
+                      <layout:start layout:x="758.864796688013" layout:y="684.372324592174"/>
+                      <layout:end layout:x="777.02426234576" layout:y="661.842998613869"/>
+                      <layout:basePoint1 layout:x="771.415931430411" layout:y="668.800907936064"/>
+                      <layout:basePoint2 layout:x="762.731017095282" layout:y="682.354047836414"/>
+                    </layout:curveSegment>
+                  </layout:listOfCurveSegments>
+                </layout:curve>
+              </layout:speciesReferenceGlyph>
+              <layout:speciesReferenceGlyph layout:id="J3_SpeciesRef2" layout:speciesReference="Node13" layout:speciesGlyph="Node13_Glyph" layout:role="product">
+                <layout:curve>
+                  <layout:listOfCurveSegments>
+                    <layout:curveSegment xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:type="CubicBezier">
+                      <layout:start layout:x="777.02426234576" layout:y="661.842998613869"/>
+                      <layout:end layout:x="793.503601346451" layout:y="626.887405679432"/>
+                      <layout:basePoint1 layout:x="791.317507596239" layout:y="641.331949391324"/>
+                      <layout:basePoint2 layout:x="784.975100796251" layout:y="644.977863892679"/>
+                    </layout:curveSegment>
+                  </layout:listOfCurveSegments>
+                </layout:curve>
+              </layout:speciesReferenceGlyph>
+            </layout:listOfSpeciesReferenceGlyphs>
+          </layout:reactionGlyph>
+          <layout:reactionGlyph layout:id="J4_Glyph" layout:reaction="J4">
+            <layout:boundingBox>
+              <layout:position layout:x="0" layout:y="0"/>
+              <layout:dimensions layout:width="0" layout:height="0"/>
+            </layout:boundingBox>
+            <layout:listOfSpeciesReferenceGlyphs>
+              <layout:speciesReferenceGlyph layout:id="J4_SpeciesRef1" layout:speciesReference="Node8" layout:speciesGlyph="Node8_Glyph" layout:role="substrate">
+                <layout:curve>
+                  <layout:listOfCurveSegments>
+                    <layout:curveSegment xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:type="CubicBezier">
+                      <layout:start layout:x="465.141345855604" layout:y="772.32460796791"/>
+                      <layout:end layout:x="376.430924697066" layout:y="779.709994531237"/>
+                      <layout:basePoint1 layout:x="445.210297835954" layout:y="773.983922536762"/>
+                      <layout:basePoint2 layout:x="391.581396809423" layout:y="759.823738101917"/>
+                    </layout:curveSegment>
+                  </layout:listOfCurveSegments>
+                </layout:curve>
+              </layout:speciesReferenceGlyph>
+              <layout:speciesReferenceGlyph layout:id="J4_SpeciesRef2" layout:speciesReference="Node14" layout:speciesGlyph="Node14_Glyph" layout:role="substrate">
+                <layout:curve>
+                  <layout:listOfCurveSegments>
+                    <layout:curveSegment xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:type="CubicBezier">
+                      <layout:start layout:x="329.276199294482" layout:y="734.735254562819"/>
+                      <layout:end layout:x="376.430924697066" layout:y="779.709994531237"/>
+                      <layout:basePoint1 layout:x="343.748917831175" layout:y="748.538892422371"/>
+                      <layout:basePoint2 layout:x="391.581396809423" layout:y="759.823738101917"/>
+                    </layout:curveSegment>
+                  </layout:listOfCurveSegments>
+                </layout:curve>
+              </layout:speciesReferenceGlyph>
+              <layout:speciesReferenceGlyph layout:id="J4_SpeciesRef3" layout:speciesReference="Node6" layout:speciesGlyph="Node6_Glyph" layout:role="product">
+                <layout:curve>
+                  <layout:listOfCurveSegments>
+                    <layout:curveSegment xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:type="CubicBezier">
+                      <layout:start layout:x="376.430924697066" layout:y="779.709994531237"/>
+                      <layout:end layout:x="332.571328571202" layout:y="816.849046056845"/>
+                      <layout:basePoint1 layout:x="361.280452584708" layout:y="799.596250960557"/>
+                      <layout:basePoint2 layout:x="347.83440542522" layout:y="803.924709131945"/>
+                    </layout:curveSegment>
+                  </layout:listOfCurveSegments>
+                </layout:curve>
+              </layout:speciesReferenceGlyph>
+            </layout:listOfSpeciesReferenceGlyphs>
+          </layout:reactionGlyph>
+          <layout:reactionGlyph layout:id="J5_Glyph" layout:reaction="J5">
+            <layout:boundingBox>
+              <layout:position layout:x="0" layout:y="0"/>
+              <layout:dimensions layout:width="0" layout:height="0"/>
+            </layout:boundingBox>
+            <layout:listOfSpeciesReferenceGlyphs>
+              <layout:speciesReferenceGlyph layout:id="J5_SpeciesRef1" layout:speciesReference="Node12" layout:speciesGlyph="Node12_Glyph" layout:role="substrate">
+                <layout:curve>
+                  <layout:listOfCurveSegments>
+                    <layout:curveSegment xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:type="CubicBezier">
+                      <layout:start layout:x="770.656397653185" layout:y="572.563298357503"/>
+                      <layout:end layout:x="721.30621641099" layout:y="616.785558175557"/>
+                      <layout:basePoint1 layout:x="755.761599469762" layout:y="585.910394935977"/>
+                      <layout:basePoint2 layout:x="705.511338097448" layout:y="597.407172818144"/>
+                    </layout:curveSegment>
+                  </layout:listOfCurveSegments>
+                </layout:curve>
+              </layout:speciesReferenceGlyph>
+              <layout:speciesReferenceGlyph layout:id="J5_SpeciesRef2" layout:speciesReference="Node5" layout:speciesGlyph="Node5_Glyph" layout:role="substrate">
+                <layout:curve>
+                  <layout:listOfCurveSegments>
+                    <layout:curveSegment xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:type="CubicBezier">
+                      <layout:start layout:x="632.674218762264" layout:y="616.468302676096"/>
+                      <layout:end layout:x="721.30621641099" layout:y="616.785558175557"/>
+                      <layout:basePoint1 layout:x="652.674090637503" layout:y="616.539891600065"/>
+                      <layout:basePoint2 layout:x="705.511338097448" layout:y="597.407172818144"/>
+                    </layout:curveSegment>
+                  </layout:listOfCurveSegments>
+                </layout:curve>
+              </layout:speciesReferenceGlyph>
+              <layout:speciesReferenceGlyph layout:id="J5_SpeciesRef3" layout:speciesReference="Node13" layout:speciesGlyph="Node13_Glyph" layout:role="product">
+                <layout:curve>
+                  <layout:listOfCurveSegments>
+                    <layout:curveSegment xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:type="CubicBezier">
+                      <layout:start layout:x="721.30621641099" layout:y="616.785558175557"/>
+                      <layout:end layout:x="768.075002262822" layout:y="620.510478399391"/>
+                      <layout:basePoint1 layout:x="737.101094724531" layout:y="636.16394353297"/>
+                      <layout:basePoint2 layout:x="748.138136010158" layout:y="618.922598043897"/>
+                    </layout:curveSegment>
+                  </layout:listOfCurveSegments>
+                </layout:curve>
+              </layout:speciesReferenceGlyph>
+              <layout:speciesReferenceGlyph layout:id="J5_SpeciesRef4" layout:speciesReference="Node0" layout:speciesGlyph="Node0_Glyph" layout:role="product">
+                <layout:curve>
+                  <layout:listOfCurveSegments>
+                    <layout:curveSegment xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:type="CubicBezier">
+                      <layout:start layout:x="721.30621641099" layout:y="616.785558175557"/>
+                      <layout:end layout:x="733.773864764447" layout:y="679.029988298585"/>
+                      <layout:basePoint1 layout:x="737.101094724531" layout:y="636.16394353297"/>
+                      <layout:basePoint2 layout:x="729.845858396897" layout:y="659.419512374312"/>
+                    </layout:curveSegment>
+                  </layout:listOfCurveSegments>
+                </layout:curve>
+              </layout:speciesReferenceGlyph>
+            </layout:listOfSpeciesReferenceGlyphs>
+          </layout:reactionGlyph>
+          <layout:reactionGlyph layout:id="J6_Glyph" layout:reaction="J6">
+            <layout:boundingBox>
+              <layout:position layout:x="0" layout:y="0"/>
+              <layout:dimensions layout:width="0" layout:height="0"/>
+            </layout:boundingBox>
+            <layout:listOfSpeciesReferenceGlyphs>
+              <layout:speciesReferenceGlyph layout:id="J6_SpeciesRef1" layout:speciesReference="Node0" layout:speciesGlyph="Node0_Glyph" layout:role="substrate">
+                <layout:curve>
+                  <layout:listOfCurveSegments>
+                    <layout:curveSegment xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:type="CubicBezier">
+                      <layout:start layout:x="712.386630740525" layout:y="715.483564491765"/>
+                      <layout:end layout:x="625.119989720351" layout:y="767.238012595906"/>
+                      <layout:basePoint1 layout:x="695.184335609849" layout:y="725.68557616776"/>
+                      <layout:basePoint2 layout:x="650.086124091769" layout:y="768.538833316946"/>
+                    </layout:curveSegment>
+                  </layout:listOfCurveSegments>
+                </layout:curve>
+              </layout:speciesReferenceGlyph>
+              <layout:speciesReferenceGlyph layout:id="J6_SpeciesRef2" layout:speciesReference="Node3" layout:speciesGlyph="Node3_Glyph" layout:role="substrate">
+                <layout:curve>
+                  <layout:listOfCurveSegments>
+                    <layout:curveSegment xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:type="CubicBezier">
+                      <layout:start layout:x="655.916943016035" layout:y="822.058823632513"/>
+                      <layout:end layout:x="625.119989720351" layout:y="767.238012595906"/>
+                      <layout:basePoint1 layout:x="646.121324838906" layout:y="804.621912652414"/>
+                      <layout:basePoint2 layout:x="650.086124091769" layout:y="768.538833316946"/>
+                    </layout:curveSegment>
+                  </layout:listOfCurveSegments>
+                </layout:curve>
+              </layout:speciesReferenceGlyph>
+              <layout:speciesReferenceGlyph layout:id="J6_SpeciesRef3" layout:speciesReference="Node8" layout:speciesGlyph="Node8_Glyph" layout:role="product">
+                <layout:curve>
+                  <layout:listOfCurveSegments>
+                    <layout:curveSegment xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:type="CubicBezier">
+                      <layout:start layout:x="625.119989720351" layout:y="767.238012595906"/>
+                      <layout:end layout:x="524.943841370111" layout:y="773.941690590581"/>
+                      <layout:basePoint1 layout:x="600.153855348932" layout:y="765.937191874866"/>
+                      <layout:basePoint2 layout:x="544.899209817714" layout:y="772.606299217076"/>
+                    </layout:curveSegment>
+                  </layout:listOfCurveSegments>
+                </layout:curve>
+              </layout:speciesReferenceGlyph>
+            </layout:listOfSpeciesReferenceGlyphs>
+          </layout:reactionGlyph>
+          <layout:reactionGlyph layout:id="J7_Glyph" layout:reaction="J7">
+            <layout:boundingBox>
+              <layout:position layout:x="0" layout:y="0"/>
+              <layout:dimensions layout:width="0" layout:height="0"/>
+            </layout:boundingBox>
+            <layout:listOfSpeciesReferenceGlyphs>
+              <layout:speciesReferenceGlyph layout:id="J7_SpeciesRef1" layout:speciesReference="Node10" layout:speciesGlyph="Node10_Glyph" layout:role="substrate">
+                <layout:curve>
+                  <layout:listOfCurveSegments>
+                    <layout:curveSegment xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:type="CubicBezier">
+                      <layout:start layout:x="464.093049389545" layout:y="928.221495806979"/>
+                      <layout:end layout:x="476.809263402107" layout:y="868.464025293347"/>
+                      <layout:basePoint1 layout:x="468.255784346628" layout:y="908.659501080544"/>
+                      <layout:basePoint2 layout:x="471.648024293214" layout:y="892.925456381099"/>
+                    </layout:curveSegment>
+                  </layout:listOfCurveSegments>
+                </layout:curve>
+              </layout:speciesReferenceGlyph>
+              <layout:speciesReferenceGlyph layout:id="J7_SpeciesRef2" layout:speciesReference="Node8" layout:speciesGlyph="Node8_Glyph" layout:role="product">
+                <layout:curve>
+                  <layout:listOfCurveSegments>
+                    <layout:curveSegment xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:type="CubicBezier">
+                      <layout:start layout:x="476.809263402107" layout:y="868.464025293347"/>
+                      <layout:end layout:x="491.100322597298" layout:y="796.817903328393"/>
+                      <layout:basePoint1 layout:x="481.970502510999" layout:y="844.002594205595"/>
+                      <layout:basePoint2 layout:x="487.188046549726" layout:y="816.431523497234"/>
+                    </layout:curveSegment>
+                  </layout:listOfCurveSegments>
+                </layout:curve>
+              </layout:speciesReferenceGlyph>
+            </layout:listOfSpeciesReferenceGlyphs>
+          </layout:reactionGlyph>
+        </layout:listOfReactionGlyphs>
+        <layout:listOfTextGlyphs>
+          <layout:textGlyph layout:id="tNode0_Glyph" layout:text="Node0" layout:graphicalObject="Node0_Glyph">
+            <layout:boundingBox>
+              <layout:position layout:x="713" layout:y="690"/>
+              <layout:dimensions layout:width="40" layout:height="20"/>
+            </layout:boundingBox>
+          </layout:textGlyph>
+          <layout:textGlyph layout:id="tNode3_Glyph" layout:text="Node3" layout:graphicalObject="Node3_Glyph">
+            <layout:boundingBox>
+              <layout:position layout:x="638" layout:y="833"/>
+              <layout:dimensions layout:width="40" layout:height="20"/>
+            </layout:boundingBox>
+          </layout:textGlyph>
+          <layout:textGlyph layout:id="tNode5_Glyph" layout:text="Node5" layout:graphicalObject="Node5_Glyph">
+            <layout:boundingBox>
+              <layout:position layout:x="583" layout:y="615"/>
+              <layout:dimensions layout:width="40" layout:height="20"/>
+            </layout:boundingBox>
+          </layout:textGlyph>
+          <layout:textGlyph layout:id="tNode6_Glyph" layout:text="Node6" layout:graphicalObject="Node6_Glyph">
+            <layout:boundingBox>
+              <layout:position layout:x="289" layout:y="823"/>
+              <layout:dimensions layout:width="40" layout:height="20"/>
+            </layout:boundingBox>
+          </layout:textGlyph>
+          <layout:textGlyph layout:id="tNode7_Glyph" layout:text="Node7" layout:graphicalObject="Node7_Glyph">
+            <layout:boundingBox>
+              <layout:position layout:x="901" layout:y="636"/>
+              <layout:dimensions layout:width="40" layout:height="20"/>
+            </layout:boundingBox>
+          </layout:textGlyph>
+          <layout:textGlyph layout:id="tNode8_Glyph" layout:text="Node8" layout:graphicalObject="Node8_Glyph">
+            <layout:boundingBox>
+              <layout:position layout:x="476" layout:y="768"/>
+              <layout:dimensions layout:width="40" layout:height="20"/>
+            </layout:boundingBox>
+          </layout:textGlyph>
+          <layout:textGlyph layout:id="tNode9_Glyph" layout:text="Node9" layout:graphicalObject="Node9_Glyph">
+            <layout:boundingBox>
+              <layout:position layout:x="376" layout:y="626"/>
+              <layout:dimensions layout:width="40" layout:height="20"/>
+            </layout:boundingBox>
+          </layout:textGlyph>
+          <layout:textGlyph layout:id="tNode10_Glyph" layout:text="Node10" layout:graphicalObject="Node10_Glyph">
+            <layout:boundingBox>
+              <layout:position layout:x="440" layout:y="938"/>
+              <layout:dimensions layout:width="40" layout:height="20"/>
+            </layout:boundingBox>
+          </layout:textGlyph>
+          <layout:textGlyph layout:id="tNode11_Glyph" layout:text="Node11" layout:graphicalObject="Node11_Glyph">
+            <layout:boundingBox>
+              <layout:position layout:x="211" layout:y="592"/>
+              <layout:dimensions layout:width="40" layout:height="20"/>
+            </layout:boundingBox>
+          </layout:textGlyph>
+          <layout:textGlyph layout:id="tNode12_Glyph" layout:text="Node12" layout:graphicalObject="Node12_Glyph">
+            <layout:boundingBox>
+              <layout:position layout:x="781" layout:y="552"/>
+              <layout:dimensions layout:width="40" layout:height="20"/>
+            </layout:boundingBox>
+          </layout:textGlyph>
+          <layout:textGlyph layout:id="tNode13_Glyph" layout:text="Node13" layout:graphicalObject="Node13_Glyph">
+            <layout:boundingBox>
+              <layout:position layout:x="777" layout:y="597"/>
+              <layout:dimensions layout:width="40" layout:height="20"/>
+            </layout:boundingBox>
+          </layout:textGlyph>
+          <layout:textGlyph layout:id="tNode14_Glyph" layout:text="Node14" layout:graphicalObject="Node14_Glyph">
+            <layout:boundingBox>
+              <layout:position layout:x="281" layout:y="714"/>
+              <layout:dimensions layout:width="40" layout:height="20"/>
+            </layout:boundingBox>
+          </layout:textGlyph>
+        </layout:listOfTextGlyphs>
+        <render:listOfRenderInformation xmlns:render="http://www.sbml.org/sbml/level3/version1/render/version1">
+          <render:renderInformation render:id="localRenderInfo" render:name="Fill_Color Render Information">
+            <render:listOfStyles>
+              <render:style render:id="nodeStyle" render:typeList="SPECIESGLYPH" render:idList="Node0">
+                <render:g render:stroke="#0000ff30" render:fill="#0000ff30"/>
+              </render:style>
+              <render:style render:id="nodeStyle" render:typeList="TEXTGLYPH" render:idList="Node0">
+                <render:g render:stroke="black" render:font-family="Arial" render:font-style="normal" render:font-size="12"/>
+              </render:style>
+              <render:style render:id="nodeStyle" render:typeList="SPECIESGLYPH" render:idList="Node3">
+                <render:g render:stroke="#0000ff30" render:fill="#0000ff30"/>
+              </render:style>
+              <render:style render:id="nodeStyle" render:typeList="TEXTGLYPH" render:idList="Node3">
+                <render:g render:stroke="black" render:font-family="Arial" render:font-style="normal" render:font-size="12"/>
+              </render:style>
+              <render:style render:id="nodeStyle" render:typeList="SPECIESGLYPH" render:idList="Node5">
+                <render:g render:stroke="#0000ff30" render:fill="#0000ff30"/>
+              </render:style>
+              <render:style render:id="nodeStyle" render:typeList="TEXTGLYPH" render:idList="Node5">
+                <render:g render:stroke="black" render:font-family="Arial" render:font-style="normal" render:font-size="12"/>
+              </render:style>
+              <render:style render:id="nodeStyle" render:typeList="SPECIESGLYPH" render:idList="Node6">
+                <render:g render:stroke="#0000ff30" render:fill="#0000ff30"/>
+              </render:style>
+              <render:style render:id="nodeStyle" render:typeList="TEXTGLYPH" render:idList="Node6">
+                <render:g render:stroke="black" render:font-family="Arial" render:font-style="normal" render:font-size="12"/>
+              </render:style>
+              <render:style render:id="nodeStyle" render:typeList="SPECIESGLYPH" render:idList="Node7">
+                <render:g render:stroke="#0000ff30" render:fill="#0000ff30"/>
+              </render:style>
+              <render:style render:id="nodeStyle" render:typeList="TEXTGLYPH" render:idList="Node7">
+                <render:g render:stroke="black" render:font-family="Arial" render:font-style="normal" render:font-size="12"/>
+              </render:style>
+              <render:style render:id="nodeStyle" render:typeList="SPECIESGLYPH" render:idList="Node8">
+                <render:g render:stroke="#0000ff30" render:fill="#0000ff30"/>
+              </render:style>
+              <render:style render:id="nodeStyle" render:typeList="TEXTGLYPH" render:idList="Node8">
+                <render:g render:stroke="black" render:font-family="Arial" render:font-style="normal" render:font-size="12"/>
+              </render:style>
+              <render:style render:id="nodeStyle" render:typeList="SPECIESGLYPH" render:idList="Node9">
+                <render:g render:stroke="#0000ff30" render:fill="#0000ff30"/>
+              </render:style>
+              <render:style render:id="nodeStyle" render:typeList="TEXTGLYPH" render:idList="Node9">
+                <render:g render:stroke="black" render:font-family="Arial" render:font-style="normal" render:font-size="12"/>
+              </render:style>
+              <render:style render:id="nodeStyle" render:typeList="SPECIESGLYPH" render:idList="Node10">
+                <render:g render:stroke="#0000ff30" render:fill="#0000ff30"/>
+              </render:style>
+              <render:style render:id="nodeStyle" render:typeList="TEXTGLYPH" render:idList="Node10">
+                <render:g render:stroke="black" render:font-family="Arial" render:font-style="normal" render:font-size="12"/>
+              </render:style>
+              <render:style render:id="nodeStyle" render:typeList="SPECIESGLYPH" render:idList="Node11">
+                <render:g render:stroke="#0000ff30" render:fill="#0000ff30"/>
+              </render:style>
+              <render:style render:id="nodeStyle" render:typeList="TEXTGLYPH" render:idList="Node11">
+                <render:g render:stroke="black" render:font-family="Arial" render:font-style="normal" render:font-size="12"/>
+              </render:style>
+              <render:style render:id="nodeStyle" render:typeList="SPECIESGLYPH" render:idList="Node12">
+                <render:g render:stroke="#0000ff30" render:fill="#0000ff30"/>
+              </render:style>
+              <render:style render:id="nodeStyle" render:typeList="TEXTGLYPH" render:idList="Node12">
+                <render:g render:stroke="black" render:font-family="Arial" render:font-style="normal" render:font-size="12"/>
+              </render:style>
+              <render:style render:id="nodeStyle" render:typeList="SPECIESGLYPH" render:idList="Node13">
+                <render:g render:stroke="#0000ff30" render:fill="#0000ff30"/>
+              </render:style>
+              <render:style render:id="nodeStyle" render:typeList="TEXTGLYPH" render:idList="Node13">
+                <render:g render:stroke="black" render:font-family="Arial" render:font-style="normal" render:font-size="12"/>
+              </render:style>
+              <render:style render:id="nodeStyle" render:typeList="SPECIESGLYPH" render:idList="Node14">
+                <render:g render:stroke="#0000ff30" render:fill="#0000ff30"/>
+              </render:style>
+              <render:style render:id="nodeStyle" render:typeList="TEXTGLYPH" render:idList="Node14">
+                <render:g render:stroke="black" render:font-family="Arial" render:font-style="normal" render:font-size="12"/>
+              </render:style>
+              <render:style render:id="reactionStyle" render:typeList="REACTIONGLYPH" render:idList="J0">
+                <render:g render:stroke="blue" render:stroke-width="1" render:fill="blue"/>
+              </render:style>
+              <render:style render:id="reactionStyle" render:typeList="REACTIONGLYPH" render:idList="J1">
+                <render:g render:stroke="blue" render:stroke-width="1" render:fill="blue"/>
+              </render:style>
+              <render:style render:id="reactionStyle" render:typeList="REACTIONGLYPH" render:idList="J2">
+                <render:g render:stroke="blue" render:stroke-width="1" render:fill="blue"/>
+              </render:style>
+              <render:style render:id="reactionStyle" render:typeList="REACTIONGLYPH" render:idList="J3">
+                <render:g render:stroke="blue" render:stroke-width="1" render:fill="blue"/>
+              </render:style>
+              <render:style render:id="reactionStyle" render:typeList="REACTIONGLYPH" render:idList="J4">
+                <render:g render:stroke="blue" render:stroke-width="1" render:fill="blue"/>
+              </render:style>
+              <render:style render:id="reactionStyle" render:typeList="REACTIONGLYPH" render:idList="J5">
+                <render:g render:stroke="blue" render:stroke-width="1" render:fill="blue"/>
+              </render:style>
+              <render:style render:id="reactionStyle" render:typeList="REACTIONGLYPH" render:idList="J6">
+                <render:g render:stroke="blue" render:stroke-width="1" render:fill="blue"/>
+              </render:style>
+              <render:style render:id="reactionStyle" render:typeList="REACTIONGLYPH" render:idList="J7">
+                <render:g render:stroke="blue" render:stroke-width="1" render:fill="blue"/>
+              </render:style>
+            </render:listOfStyles>
+          </render:renderInformation>
+        </render:listOfRenderInformation>
+      </layout:layout>
+    </layout:listOfLayouts>
+  </model>
+</sbml>

@@ -15,7 +15,7 @@ sl._describeModel()
 print("node ids: ", sl.getNodeIds())
 print("reaction ids: ", sl.getReactionIds())
 
-sl.drawNetwork()
+sl.drawNetwork(figure_size=(15,15))
 
 sl._describeReaction(0)
 
@@ -101,5 +101,24 @@ sl.aliasNode("A")
 sl.drawNetwork()
 
 print(sl.getNodeIds())
+
+x = list()
+y = list()
+
+for node in sl.getNodeIds():
+    centroid = sl.getNodeCentroid(node)
+    x.append(centroid[0])
+    y.append(centroid[1])    
+    print("centroid: ", centroid[0], ", ", centroid[1])
+    print("width: ", sl.getNodeWidth(node))
+    print("height: ", sl.getNodeHeight(node))
+
+print()    
+print("min x, max x: ", min(x)-20, ", ", max(x)+20)
+print("min y, max y: ", min(y)-10, ", ", max(y)+10)
+print()
+print("width: ", max(x) - min(x))
+print("height: ", max(y) - min(y))
+print()
 
 
