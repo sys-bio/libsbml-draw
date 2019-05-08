@@ -98,7 +98,7 @@ class SBMLlayout:
             self.__numNodes = self.getNumberOfNodes()
             self.__numReactions = self.getNumberOfReactions()
             self.__numCompartments = self.getNumberOfCompartments()
-            self.__arrowhead_scale = {key: 10 for key in
+            self.__arrowhead_scale = {key: 15 for key in
                                       range(self.getNumberOfRoles())}
 
         else:  # User can separately load a file

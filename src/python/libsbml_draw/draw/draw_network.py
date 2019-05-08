@@ -6,11 +6,12 @@ from matplotlib.patches import BoxStyle, FancyArrowPatch, FancyBboxPatch
 from matplotlib.path import Path
 from matplotlib import pyplot as plt
 
+
 def get_ratio():
     """
     """
     axes = plt.gca()
-    t = axes.transAxes.transform([(0,0), (1,1)])
+    t = axes.transAxes.transform([(0, 0), (1, 1)])
     ratio = float(axes.get_figure().get_dpi() / (t[1,1] - t[0,1]) / 72.)*100.
 
     return ratio
@@ -44,7 +45,7 @@ def draw_compartments(compartments):
     return compartment_patches
 
 
-def draw_nodes(nodes):
+def draw_nodes(nodes, ratio=1):
     """Create a list of FancyBbox Patches, one for each node.
 
     Args:
@@ -54,26 +55,26 @@ def draw_nodes(nodes):
     """
     node_patches = []
    
-    #print('ratio',ratio)
+    print('ratio',ratio)
 
     for node in nodes:
         # https://stackoverflow.com/questions/33635439/matplotlib-patch-size-in-points
-        #print('node width',node.width)
+        #print('node width ', node.width)
         fbbp = FancyBboxPatch(
-            [x for x in node.lower_left_point],
-            node.width,
-            node.height,
+            [x*ratio for x in node.lower_left_point],
+            node.width*ratio,
+            node.height*ratio,
             edgecolor=node.edge_color,
             facecolor=node.fill_color,
             boxstyle=BoxStyle("round", pad=0.2, rounding_size=.6),
-            mutation_scale=10)
+            mutation_scale=2.5)
 
         node_patches.append(fbbp)
 
     return node_patches
 
 
-def draw_reactions(reactions, mutation_scale):
+def draw_reactions(reactions, mutation_scale, ratio=1):
     """Create a list of FancyArrow Patches, one for each curve in a reaction.
 
     Args:
@@ -89,12 +90,14 @@ def draw_reactions(reactions, mutation_scale):
 
         for curve in curves:
 
-            start_point = np.array([curve.start_point.x, curve.start_point.y])
-            end_point = np.array([curve.end_point.x, curve.end_point.y])
-            control_point_1 = np.array([curve.control_point_1.x,
-                                        curve.control_point_1.y])
-            control_point_2 = np.array([curve.control_point_2.x,
-                                        curve.control_point_2.y])
+            start_point = np.array([curve.start_point.x*ratio, 
+                                    curve.start_point.y*ratio])
+            end_point = np.array([curve.end_point.x*ratio, 
+                                  curve.end_point.y*ratio])
+            control_point_1 = np.array([curve.control_point_1.x*ratio,
+                                        curve.control_point_1.y*ratio])
+            control_point_2 = np.array([curve.control_point_2.x*ratio,
+                                        curve.control_point_2.y*ratio])
 
             cubic_bezier_curve_path = Path(
                     [start_point,
@@ -109,7 +112,7 @@ def draw_reactions(reactions, mutation_scale):
                     arrowstyle=curve.curveArrowStyle,
                     clip_on=False,
                     linewidth=reaction.curve_width,
-                    mutation_scale=mutation_scale.get(curve.role, 10),
+                    mutation_scale=mutation_scale.get(curve.role, 25),
                     path=cubic_bezier_curve_path
                     )
 
@@ -118,7 +121,7 @@ def draw_reactions(reactions, mutation_scale):
     return reaction_patches
 
 
-def add_labels(nodes):
+def add_labels(nodes, ratio=1):
     """Add text to the nodes.
 
     Args:
@@ -127,8 +130,8 @@ def add_labels(nodes):
     Returns: None
     """
     for node in nodes:
-        plt.text(node.center.x,
-                 node.center.y,
+        plt.text(node.center.x*ratio,
+                 node.center.y*ratio,
                  node.name,
                  fontsize=node.font_size,
                  color=node.font_color,
@@ -155,6 +158,9 @@ def createNetworkFigure(network, mutation_scale, figure_size=None):
         fig = plt.figure() # figsize=(20,10)
     ax = plt.gca()
 
+    ratio = get_ratio()
+    #ratio = 1
+
     # draw the compartments
     compartment_patches = draw_compartments(network.compartments.values())
 
@@ -162,19 +168,19 @@ def createNetworkFigure(network, mutation_scale, figure_size=None):
         ax.add_patch(compartment_patch)
 
     # draw the nodes
-    node_patches = draw_nodes(network.nodes.values())
+    node_patches = draw_nodes(network.nodes.values(), ratio)
     for node_patch in node_patches:
         ax.add_patch(node_patch)
 
     # draw the reactions
     reaction_patches = draw_reactions(
             network.reactions.values(),
-            mutation_scale)
+            mutation_scale, ratio)
     for reaction_patch in reaction_patches:
         ax.add_patch(reaction_patch)
 
     # add labels
-    add_labels(network.nodes.values())
+    add_labels(network.nodes.values(), ratio)
     # No axes and size it just bigger than the data (i.e. tight)
     plt.axis("off")
     plt.axis("tight")

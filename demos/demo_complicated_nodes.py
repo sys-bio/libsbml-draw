@@ -20,11 +20,11 @@ sl = SBMLlayout(str(model_file))
 
 sl._describeModel()
 
-sl.drawNetwork(figure_size=(20,10))
+sl.drawNetwork(figure_size=(15,15))
 
-sl.setNodeFontSize("all", 6)
+#sl.setNodeFontSize("all", 6)
 
-sl.drawNetwork()
+#sl.drawNetwork()
 
 
 #for node in sl.getNodeIds():
@@ -40,20 +40,20 @@ sl.drawNetwork()
 
 #ss = sl.getSBMLString()
 
-sls = sl._SBMLlayout__getSBMLWithLayoutString()
+#sls = sl._SBMLlayout__getSBMLWithLayoutString()
 
-print("sls: \n", sls)
+#print("sls: \n", sls)
 
-out_file = "complicated_nodes_out.xml"    
+#out_file = "complicated_nodes_out.xml"    
     
-sl.writeSBMLFile("complicated_nodes_out.xml")
+#sl.writeSBMLFile("complicated_nodes_out.xml")
 
 
-sl2 = SBMLlayout(out_file)
+#sl2 = SBMLlayout(out_file)
 
-sl2._describeModel()
+#sl2._describeModel()
 
-sl2.drawNetwork()
+#sl2.drawNetwork()
 
 #for node in sl2.getNodeIds():
 #    centroid = sl2.getNodeCentroid(node)
