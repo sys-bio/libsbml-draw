@@ -4,6 +4,7 @@ models defined in an SBML file, making use of a c API and libsbml."""
 from collections import namedtuple
 import os
 
+from matplotlib import pyplot as plt
 from matplotlib.colors import is_color_like
 
 import libsbml
@@ -1631,7 +1632,7 @@ class SBMLlayout:
         return sbnw.arrowheadNumStyles()
 
     def drawNetwork(self, save_file_name=None, bbox_inches="tight",
-                    figure_size=None):
+                    figure_size=None, show=True):
         """Draws the network to screen.  The figure can be saved.
 
         Args:
@@ -1644,10 +1645,10 @@ class SBMLlayout:
         Returns: matplotlib.figure.Figure
         """
         fig = createNetworkFigure(self.__network, self.__arrowhead_scale,
-                                  figure_size)
+                                  figure_size, show)
         if(save_file_name):
             fig.savefig(save_file_name, bbox_inches=bbox_inches)
-
+            
         return fig
 
     def __getLastError(self,):

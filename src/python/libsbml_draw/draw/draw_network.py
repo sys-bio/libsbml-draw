@@ -12,8 +12,10 @@ def get_ratio():
     """
     axes = plt.gca()
     t = axes.transAxes.transform([(0, 0), (1, 1)])
+    print("t: ", type(t), ", ", len(t), ", ", t, ", ", t[1,1], ", ", t[0,1])
+    print("dpi: ", axes.get_figure().get_dpi())
     ratio = float(axes.get_figure().get_dpi() / (t[1,1] - t[0,1]) / 72.)*100.
-
+    
     return ratio
 
 
@@ -55,15 +57,25 @@ def draw_nodes(nodes, ratio=1):
     """
     node_patches = []
    
-    print('ratio',ratio)
+    print('ratio', ratio)
 
     for node in nodes:
         # https://stackoverflow.com/questions/33635439/matplotlib-patch-size-in-points
         #print('node width ', node.width)
+        
+#        if len(node.name) > 10:
+#            node_width = max(0.045*((len(node.name)/2)+1), 0.13)*(node.font_size/20)
+#            node_height = 0.20*(node.font_size/20)
+#        else: 
+#            node_width = max(0.045*(len(node.name)+1), 0.13)*(node.font_size/20)
+#            node_height = 0.11*(node.font_size/20)
+        
         fbbp = FancyBboxPatch(
             [x*ratio for x in node.lower_left_point],
             node.width*ratio,
             node.height*ratio,
+#            node_width,
+#            node_height,
             edgecolor=node.edge_color,
             facecolor=node.fill_color,
             boxstyle=BoxStyle("round", pad=0.2, rounding_size=.6),
@@ -141,7 +153,7 @@ def add_labels(nodes, ratio=1):
                  verticalalignment="center")
 
 
-def createNetworkFigure(network, mutation_scale, figure_size=None):
+def createNetworkFigure(network, mutation_scale, figure_size=None, show=True):
     """Creates the figure, draws the nodes, draws the reactions, adds text to
     the nodes.
 
@@ -151,15 +163,19 @@ def createNetworkFigure(network, mutation_scale, figure_size=None):
 
     Returns: matplotlib.figure.Figure
     """
+    
+    
+    
     # initialize figure
     if figure_size and len(figure_size) == 2: 
         fig = plt.figure(figsize=figure_size)
     else:    
         fig = plt.figure() # figsize=(20,10)
-    ax = plt.gca()
 
-    #ratio = get_ratio()
-    ratio = 1
+    ax = plt.gca()
+    
+    ratio = get_ratio()
+    #ratio = 1
 
     # draw the compartments
     compartment_patches = draw_compartments(network.compartments.values())
@@ -186,6 +202,10 @@ def createNetworkFigure(network, mutation_scale, figure_size=None):
     plt.axis("tight")
     plt.axis("equal")
 
-    plt.show()
+    if show:
+        plt.show()
+        plt.close()
+    else:
+        plt.close()
 
     return fig
