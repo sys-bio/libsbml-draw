@@ -2,6 +2,7 @@
 Sets up the python bindings to the c api.
 """
 import ctypes
+from ctypes import POINTER
 from pathlib import Path
 import pkg_resources
 import platform
@@ -56,6 +57,14 @@ class curveCP(ctypes.Structure):
                 ("end", point)]
 
 
+class layout_info(ctypes.Structure):
+    _fields_ = [("net", ctypes.c_void_p), 
+                ("canv", ctypes.c_void_p),
+                ("cont", ctypes.c_char_p),
+                ("level", ctypes.c_int),
+                ("version", ctypes.c_int)
+               ]
+
 # Library Info Functions
 slib.gf_getCurrentLibraryVersion.restype = ctypes.c_char_p
 
@@ -66,7 +75,7 @@ def getCurrentLibraryVersion():
 
 
 # IO Functions
-slib.gf_getSBMLwithLayoutStr.argtypes = [ctypes.c_uint64, ctypes.c_uint64]
+slib.gf_getSBMLwithLayoutStr.argtypes = [ctypes.c_uint64, POINTER(layout_info)]
 slib.gf_getSBMLwithLayoutStr.restype = ctypes.c_char_p
 slib.gf_loadSBMLfile.argtypes = [ctypes.c_char_p]
 slib.gf_loadSBMLfile.restype = ctypes.c_uint64
@@ -117,10 +126,10 @@ def getLastError():
 slib.gf_nw_isLayoutSpecified.argtypes = [ctypes.c_uint64]
 slib.gf_nw_isLayoutSpecified.restype = ctypes.c_uint64
 slib.gf_processLayout.argtypes = [ctypes.c_uint64]
-slib.gf_processLayout.restype = ctypes.c_uint64
-slib.gf_randomizeLayout.argtypes = [ctypes.c_uint64]
+slib.gf_processLayout.restype = POINTER(layout_info)
+slib.gf_randomizeLayout.argtypes = [POINTER(layout_info)]
 slib.gf_randomizeLayout.restype = None
-slib.gf_doLayoutAlgorithm.argtypes = [fr_alg_options, ctypes.c_uint64]
+slib.gf_doLayoutAlgorithm.argtypes = [fr_alg_options, POINTER(layout_info)]
 slib.gf_doLayoutAlgorithm.restype = None
 
 
@@ -143,7 +152,7 @@ def doLayoutAlgorithm(layout_options, h_layout_info):
 
 # Model Functions
 slib.gf_SBMLModel_newp.restype = ctypes.c_uint64
-slib.gf_setModelNamespace.argtypes = [ctypes.c_uint64, ctypes.c_uint64,
+slib.gf_setModelNamespace.argtypes = [POINTER(layout_info), ctypes.c_uint64,
                                       ctypes.c_uint64]
 slib.gf_setModelNamespace.restype = None
 
@@ -158,7 +167,7 @@ def setModelNamespace(h_layout_info, level, version):
 
 
 # Network Functions
-slib.gf_getNetworkp.argtypes = [ctypes.c_uint64]
+slib.gf_getNetworkp.argtypes = [POINTER(layout_info)]
 slib.gf_getNetworkp.restype = ctypes.c_uint64
 slib.gf_nw_getNodep.argtypes = [ctypes.c_uint64, ctypes.c_uint64]
 slib.gf_nw_getNodep.restype = ctypes.c_uint64
@@ -492,3 +501,14 @@ def compartment_getID(h_compartment):
 
 # def RenderExtension_getXmlnsL3V1V1():
 #    return slib.RenderExtension.getXmlnsL3V1V()
+
+slib.gf_reaction_hasSpec.argtypes = [ctypes.c_uint64, ctypes.c_uint64]
+slib.gf_reaction_hasSpec.restype = ctypes.c_int
+
+def reaction_hasSpec(h_reaction, h_species):
+    return not not slib.gf_reaction_hasSpec(h_reaction, h_species)
+
+slib.gf_reaction_recenter.argtypes = [ctypes.c_uint64]
+
+def reaction_recenter(h_reaction):
+    return not not slib.gf_reaction_recenter(h_reaction)

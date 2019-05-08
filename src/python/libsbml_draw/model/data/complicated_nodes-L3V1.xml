@@ -1,0 +1,206 @@
+<?xml version='1.0' encoding='utf-8' standalone='no'?>
+<sbml xmlns="http://www.sbml.org/sbml/level3/version1/core" xmlns:jd2="http://www.sys-bio.org/sbml/jd2" level="3" version="1">
+  <model areaUnits="area" extentUnits="substance" substanceUnits="substance" volumeUnits="volume" id="untitled" lengthUnits="metre" timeUnits="second">
+    <notes>
+      <body xmlns="http://www.w3.org/1999/xhtml">
+        <p />
+      </body>
+    </notes>
+    <listOfUnitDefinitions>
+      <unitDefinition id="volume">
+        <listOfUnits>
+          <unit scale="0" kind="litre" multiplier="1" exponent="1" />
+        </listOfUnits>
+      </unitDefinition>
+      <unitDefinition id="substance">
+        <listOfUnits>
+          <unit scale="0" kind="mole" multiplier="1" exponent="1" />
+        </listOfUnits>
+      </unitDefinition>
+      <unitDefinition id="area">
+        <listOfUnits>
+          <unit scale="0" kind="metre" multiplier="1" exponent="2" />
+        </listOfUnits>
+      </unitDefinition>
+    </listOfUnitDefinitions>
+    <listOfCompartments>
+      <compartment constant="true" id="compartment" units="volume" size="1" spatialDimensions="3" />
+    </listOfCompartments>
+    <listOfSpecies>
+      <species boundaryCondition="false" constant="false" substanceUnits="substance" hasOnlySubstanceUnits="false" compartment="compartment" id="Node0" initialConcentration="0" />
+      <species boundaryCondition="false" constant="false" substanceUnits="substance" hasOnlySubstanceUnits="false" compartment="compartment" id="Node3" initialConcentration="0" />
+      <species boundaryCondition="false" constant="false" substanceUnits="substance" hasOnlySubstanceUnits="false" compartment="compartment" id="Node5" initialConcentration="0" />
+      <species boundaryCondition="false" constant="false" substanceUnits="substance" hasOnlySubstanceUnits="false" compartment="compartment" id="Node6" initialConcentration="0" />
+      <species boundaryCondition="false" constant="false" substanceUnits="substance" hasOnlySubstanceUnits="false" compartment="compartment" id="Node7" initialConcentration="0" />
+      <species boundaryCondition="false" constant="false" substanceUnits="substance" hasOnlySubstanceUnits="false" compartment="compartment" id="Node8" initialConcentration="0" />
+      <species boundaryCondition="false" constant="false" substanceUnits="substance" hasOnlySubstanceUnits="false" compartment="compartment" id="Node9" initialConcentration="0" />
+      <species boundaryCondition="false" constant="false" substanceUnits="substance" hasOnlySubstanceUnits="false" compartment="compartment" id="Node10" initialConcentration="0" />
+      <species boundaryCondition="false" constant="false" substanceUnits="substance" hasOnlySubstanceUnits="false" compartment="compartment" id="Node11" initialConcentration="0" />
+      <species boundaryCondition="false" constant="false" substanceUnits="substance" hasOnlySubstanceUnits="false" compartment="compartment" id="Node12" initialConcentration="0" />
+      <species boundaryCondition="false" constant="false" substanceUnits="substance" hasOnlySubstanceUnits="false" compartment="compartment" id="Node13" initialConcentration="0" />
+      <species boundaryCondition="false" constant="false" substanceUnits="substance" hasOnlySubstanceUnits="false" compartment="compartment" id="Node14" initialConcentration="0" />
+    </listOfSpecies>
+    <listOfParameters>
+      <parameter constant="true" id="J0_k" value="0.1" />
+      <parameter constant="true" id="J1_k" value="0.1" />
+      <parameter constant="true" id="J2_k" value="0.1" />
+      <parameter constant="true" id="J3_k" value="0.1" />
+      <parameter constant="true" id="J4_k" value="0.1" />
+      <parameter constant="true" id="J5_k" value="0.1" />
+      <parameter constant="true" id="J6_k" value="0.1" />
+      <parameter constant="true" id="J7_k" value="0.1" />
+    </listOfParameters>
+    <listOfReactions>
+      <reaction fast="false" id="J0" reversible="false">
+        <listOfReactants>
+          <speciesReference stoichiometry="1" constant="true" species="Node8" />
+          <speciesReference stoichiometry="1" constant="true" species="Node5" />
+        </listOfReactants>
+        <listOfProducts>
+          <speciesReference stoichiometry="1" constant="true" species="Node9" />
+        </listOfProducts>
+        <kineticLaw>
+          <math xmlns="http://www.w3.org/1998/Math/MathML">
+            <apply>
+              <times />
+              <ci>J0_k</ci>
+              <ci>Node8</ci>
+              <ci>Node5</ci>
+            </apply>
+          </math>
+        </kineticLaw>
+      </reaction>
+      <reaction fast="false" id="J1" reversible="false">
+        <listOfReactants>
+          <speciesReference stoichiometry="1" constant="true" species="Node11" />
+          <speciesReference stoichiometry="1" constant="true" species="Node9" />
+        </listOfReactants>
+        <listOfProducts>
+          <speciesReference stoichiometry="1" constant="true" species="Node14" />
+        </listOfProducts>
+        <kineticLaw>
+          <math xmlns="http://www.w3.org/1998/Math/MathML">
+            <apply>
+              <times />
+              <ci>J1_k</ci>
+              <ci>Node11</ci>
+              <ci>Node9</ci>
+            </apply>
+          </math>
+        </kineticLaw>
+      </reaction>
+      <reaction fast="false" id="J2" reversible="false">
+        <listOfReactants>
+          <speciesReference stoichiometry="1" constant="true" species="Node0" />
+          <speciesReference stoichiometry="1" constant="true" species="Node13" />
+        </listOfReactants>
+        <listOfProducts>
+          <speciesReference stoichiometry="1" constant="true" species="Node7" />
+          <speciesReference stoichiometry="1" constant="true" species="Node12" />
+        </listOfProducts>
+        <kineticLaw>
+          <math xmlns="http://www.w3.org/1998/Math/MathML">
+            <apply>
+              <times />
+              <ci>J2_k</ci>
+              <ci>Node0</ci>
+              <ci>Node13</ci>
+            </apply>
+          </math>
+        </kineticLaw>
+      </reaction>
+      <reaction fast="false" id="J3" reversible="false">
+        <listOfReactants>
+          <speciesReference stoichiometry="1" constant="true" species="Node0" />
+        </listOfReactants>
+        <listOfProducts>
+          <speciesReference stoichiometry="1" constant="true" species="Node13" />
+        </listOfProducts>
+        <kineticLaw>
+          <math xmlns="http://www.w3.org/1998/Math/MathML">
+            <apply>
+              <times />
+              <ci>J3_k</ci>
+              <ci>Node0</ci>
+            </apply>
+          </math>
+        </kineticLaw>
+      </reaction>
+      <reaction fast="false" id="J4" reversible="false">
+        <listOfReactants>
+          <speciesReference stoichiometry="1" constant="true" species="Node8" />
+          <speciesReference stoichiometry="1" constant="true" species="Node14" />
+        </listOfReactants>
+        <listOfProducts>
+          <speciesReference stoichiometry="1" constant="true" species="Node6" />
+        </listOfProducts>
+        <kineticLaw>
+          <math xmlns="http://www.w3.org/1998/Math/MathML">
+            <apply>
+              <times />
+              <ci>J4_k</ci>
+              <ci>Node8</ci>
+              <ci>Node14</ci>
+            </apply>
+          </math>
+        </kineticLaw>
+      </reaction>
+      <reaction fast="false" id="J5" reversible="false">
+        <listOfReactants>
+          <speciesReference stoichiometry="1" constant="true" species="Node12" />
+          <speciesReference stoichiometry="1" constant="true" species="Node5" />
+        </listOfReactants>
+        <listOfProducts>
+          <speciesReference stoichiometry="1" constant="true" species="Node13" />
+          <speciesReference stoichiometry="1" constant="true" species="Node0" />
+        </listOfProducts>
+        <kineticLaw>
+          <math xmlns="http://www.w3.org/1998/Math/MathML">
+            <apply>
+              <times />
+              <ci>J5_k</ci>
+              <ci>Node12</ci>
+              <ci>Node5</ci>
+            </apply>
+          </math>
+        </kineticLaw>
+      </reaction>
+      <reaction fast="false" id="J6" reversible="false">
+        <listOfReactants>
+          <speciesReference stoichiometry="1" constant="true" species="Node0" />
+          <speciesReference stoichiometry="1" constant="true" species="Node3" />
+        </listOfReactants>
+        <listOfProducts>
+          <speciesReference stoichiometry="1" constant="true" species="Node8" />
+        </listOfProducts>
+        <kineticLaw>
+          <math xmlns="http://www.w3.org/1998/Math/MathML">
+            <apply>
+              <times />
+              <ci>J6_k</ci>
+              <ci>Node0</ci>
+              <ci>Node3</ci>
+            </apply>
+          </math>
+        </kineticLaw>
+      </reaction>
+      <reaction fast="false" id="J7" reversible="false">
+        <listOfReactants>
+          <speciesReference stoichiometry="1" constant="true" species="Node10" />
+        </listOfReactants>
+        <listOfProducts>
+          <speciesReference stoichiometry="1" constant="true" species="Node8" />
+        </listOfProducts>
+        <kineticLaw>
+          <math xmlns="http://www.w3.org/1998/Math/MathML">
+            <apply>
+              <times />
+              <ci>J7_k</ci>
+              <ci>Node10</ci>
+            </apply>
+          </math>
+        </kineticLaw>
+      </reaction>
+    </listOfReactions>
+  </model>
+</sbml>

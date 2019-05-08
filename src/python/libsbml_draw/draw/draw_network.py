@@ -6,6 +6,15 @@ from matplotlib.patches import BoxStyle, FancyArrowPatch, FancyBboxPatch
 from matplotlib.path import Path
 from matplotlib import pyplot as plt
 
+def get_ratio():
+    """
+    """
+    axes = plt.gca()
+    t = axes.transAxes.transform([(0,0), (1,1)])
+    ratio = float(axes.get_figure().get_dpi() / (t[1,1] - t[0,1]) / 72.)*100.
+
+    return ratio
+
 
 def draw_compartments(compartments):
     """Create a list of FancyBbox Patches, one for each compartment.
@@ -44,11 +53,14 @@ def draw_nodes(nodes):
     Returns: list of matplotlib.patches.FancyBboxPatch
     """
     node_patches = []
+   
+    #print('ratio',ratio)
 
     for node in nodes:
-
+        # https://stackoverflow.com/questions/33635439/matplotlib-patch-size-in-points
+        #print('node width',node.width)
         fbbp = FancyBboxPatch(
-            node.lower_left_point,
+            [x for x in node.lower_left_point],
             node.width,
             node.height,
             edgecolor=node.edge_color,
@@ -126,7 +138,7 @@ def add_labels(nodes):
                  verticalalignment="center")
 
 
-def createNetworkFigure(network, mutation_scale):
+def createNetworkFigure(network, mutation_scale, figure_size=None):
     """Creates the figure, draws the nodes, draws the reactions, adds text to
     the nodes.
 
@@ -137,7 +149,10 @@ def createNetworkFigure(network, mutation_scale):
     Returns: matplotlib.figure.Figure
     """
     # initialize figure
-    fig = plt.figure()
+    if figure_size and len(figure_size) == 2: 
+        fig = plt.figure(figsize=figure_size)
+    else:    
+        fig = plt.figure() # figsize=(20,10)
     ax = plt.gca()
 
     # draw the compartments

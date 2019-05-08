@@ -101,20 +101,20 @@ class Render:
 
         return plot_color
 
-    def _updateNodesBasedOnSpeciesGlyph(self, global_style, network, idList):
+    def _updateNodesBasedOnSpeciesGlyph(self, render_style, network, idList):
         """Sets node values based on the SPECIESGLYPH settings.
 
         Args:
-            global_style(libsbml.GlobalStyle): contains global style info
+            render_style(libsbml.Style): contains style info
             network (libsbml_draw.model.Network): the model's network
             idList(list): list of ids to update
 
         Returns: None
         """
         node_fill_color = self._set_plot_color_and_validity(
-                global_style.getGroup().getFillColor())
+                render_style.getGroup().getFillColor())
         node_edge_color = self._set_plot_color_and_validity(
-                global_style.getGroup().getStroke())
+                render_style.getGroup().getStroke())
 
         nodes_to_update = {k: network.nodes[k]
                            for k in network.nodes.keys() & idList}
@@ -169,32 +169,32 @@ class Render:
 
     def _updateNodesBasedOnTextGlyph(
             self,
-            global_style,
+            render_style,
             network,
             idList):
         """Sets node values based on the TEXTGLYPH settings.
 
         Args:
-            global_style(libsbml.GlobalStyle): contains global style info
+            render_style(libsbml.Style): contains style info
             network (libsbml_draw.model.Network): the model's network
             idList(list): list of ids to update
 
         Returns: None
         """
         node_font_color = self._set_plot_color_and_validity(
-                global_style.getGroup().getStroke())
+                render_style.getGroup().getStroke())
 
         node_font_size = self._set_font_property(
                 "size",
-                global_style.getGroup().getFontSize().getAbsoluteValue())
+                render_style.getGroup().getFontSize().getAbsoluteValue())
 
         node_font_family = self._set_font_property(
                 "family",
-                global_style.getGroup().getFontFamily())
+                render_style.getGroup().getFontFamily())
 
         node_font_style = self._set_font_property(
                 "style",
-                global_style.getGroup().getFontStyle())
+                render_style.getGroup().getFontStyle())
 
         nodes_to_update = {k: network.nodes[k]
                            for k in network.nodes.keys() & idList}
@@ -215,23 +215,23 @@ class Render:
 
     def _updateReactionsBasedOnReactionGlyph(
             self,
-            global_style,
+            render_style,
             network,
             idList):
 
         """Sets reaction values based on the REACTIONGLYPH settings.
 
         Args:
-            global_style(libsbml.GlobalStyle): contains global style info
+            render_style(libsbml.Style): contains style info
             network (libsbml_draw.model.Network): the model's network
             idList(list): list of ids to update
 
         Returns: None
         """
         reaction_edge_color = self._set_plot_color_and_validity(
-                global_style.getGroup().getStroke())
+                render_style.getGroup().getStroke())
 
-        reaction_edge_width = global_style.getGroup().getStrokeWidth()
+        reaction_edge_width = render_style.getGroup().getStrokeWidth()
 
         reactions_to_update = {k: network.reactions[k]
                                for k in network.reactions.keys() & idList}
@@ -249,26 +249,26 @@ class Render:
 
     def _updateCompartmentsBasedOnCompartmentGlyph(
             self,
-            global_style,
+            render_style,
             network,
             idList):
 
         """Sets compartment values based on the COMPARTMENTGLYPH settings.
 
         Args:
-            global_style(libsbml.GlobalStyle): contains global style info
+            render_style(libsbml.Style): contains style info
             network (libsbml_draw.model.Network): the model's network
             idList(list): list of ids to update
 
         Returns: None
         """
         compartment_edge_color = self._set_plot_color_and_validity(
-                global_style.getGroup().getStroke())
+                render_style.getGroup().getStroke())
 
         compartment_fill_color = self._set_plot_color_and_validity(
-                global_style.getGroup().getFillColor())
+                render_style.getGroup().getFillColor())
 
-        compartment_line_width = global_style.getGroup().getStrokeWidth()
+        compartment_line_width = render_style.getGroup().getStrokeWidth()
 
         compartments_to_update = {k: network.compartments[k] for k in
                                   network.compartments.keys() & idList}

@@ -5,6 +5,7 @@ import pkg_resources
 
 from libsbml_draw.model.sbml_layout import SBMLlayout
 
+#model_file_name = "complicated_nodes-L3V1.xml"
 model_file_name = "complicated_nodes.xml"
 
 model_file = Path(pkg_resources.resource_filename(
@@ -19,11 +20,11 @@ sl = SBMLlayout(str(model_file))
 
 sl._describeModel()
 
+sl.drawNetwork(figure_size=(20,10))
+
+sl.setNodeFontSize("all", 6)
 
 sl.drawNetwork()
-
-#sl.setNodeFontSize("all", 6)
-#sl.drawNetwork()
 
 
 #for node in sl.getNodeIds():

@@ -50,15 +50,23 @@ class SBMLlayout:
         if isinstance(self.__sbml_source, str):
 
             if SBMLlayout._validate_sbml_filename(self.__sbml_source):
+
                 self.__h_model = sbnw.loadSBMLFile(self.__sbml_source)
             else:
                 if self.__sbml_source.startswith("<?xml"):
-                    self.__h_model = sbnw.loadSBMLString(self.__sbml_source)
+                        self.__h_model = sbnw.loadSBMLString(
+                                self.__sbml_source)
                 else:
-                    raise ValueError(f"""File {
-                            self.__sbml_source} does not exist.""")
+                    raise ValueError(f"File {self.__sbml_source} "
+                                     f"does not exist.")
 
             self.__h_layout_info = sbnw.processLayout(self.__h_model)
+
+#            if self.__h_layout_info.contents.level != 3:
+#                raise ValueError(f"SBML source is level "
+#                                 f"{self.__h_layout_info.contents.level}, "
+#                                 f"libsbml_draw supports level 3 only.")
+
             self.__h_network = sbnw.getNetworkp(self.__h_layout_info)
             self.__layoutSpecified = True if sbnw.isLayoutSpecified(
                     self.__h_network) else False
@@ -74,9 +82,14 @@ class SBMLlayout:
                     self.__doc = libsbml.readSBMLFromFile(sbml_source)
                 else:
                     self.__doc = libsbml.readSBMLFromString(sbml_source)
+
             if len(self.__fitWindow) == 4:
                 self.__fitToWindow(self.__fitWindow[0], self.__fitWindow[1],
                                    self.__fitWindow[2], self.__fitWindow[3])
+            else:
+                # don't call fit to window
+                pass
+
             self.__network = self.__createNetwork()
 
             # apply render information, if any
@@ -335,8 +348,8 @@ class SBMLlayout:
         if font_style in valid_font_styles:
             return True
         else:
-            raise ValueError(f"""Font Style, {font_style} is not valid, must be
-                             one of: {valid_font_styles}.""")
+            raise ValueError(f"Font Style, {font_style} is not valid, "
+                             f"must be one of: {valid_font_styles}.")
 
     # Layout Methods
 
@@ -592,7 +605,11 @@ class SBMLlayout:
             h_node = sbnw.nw_getNodepFromId(self.__h_network, h_node_id)
 
             sbnw.node_setCentroid(h_node, centroid)
-            sbnw.nw_recenterJunctions(self.__h_network)
+            for nr in range(sbnw.nw_getNumRxns(self.__h_network)):
+                # sbnw.nw_recenterJunctions(self.__h_network)
+                h_reaction = sbnw.nw_getReactionp(self.__h_network, nr)
+                if sbnw.reaction_hasSpec(h_reaction, h_node):
+                    sbnw.reaction_recenter(h_reaction)
             sbnw.nw_rebuildCurves(self.__h_network)
 
             self.__network = self.__createNetwork()
@@ -700,11 +717,11 @@ class SBMLlayout:
                         edge_color
                 else:
                     raise ValueError(
-                            f"""Id {this_id} in the input list is invalid,
-                            so cannot set color for this id.""")
+                            f"Id {this_id} in the input list is invalid, "
+                            f"so cannot set color for this id.")
         else:
-            raise ValueError(f"""Invalid input for compartment ids:
-                                 {compartment_id}""")
+            raise ValueError(f"Invalid input for compartment ids: "
+                             f"{compartment_id}")
 
     def getCompartmentEdgeColor(self, compartment_id):
         """Returns the color id for the compartment edge color.
@@ -749,11 +766,11 @@ class SBMLlayout:
                         fill_color
                 else:
                     raise ValueError(
-                            f"""Id {this_id} in the input list is invalid,
-                            so cannot set color for this id.""")
+                            f"Id {this_id} in the input list is invalid, "
+                            f"so cannot set color for this id.")
         else:
-            raise ValueError(f"""Invalid input for compartment ids:
-                                 {compartment_id}""")
+            raise ValueError(f"Invalid input for compartment ids: "
+                             f"{compartment_id}")
 
     def getCompartmentFillColor(self, compartment_id):
         """Returns the color id for the compartment fill color.
@@ -808,11 +825,11 @@ class SBMLlayout:
                         line_width
                 else:
                     raise ValueError(
-                            f"""Id in the input list is invalid {this_id}, so
-                            cannot set compartment line width for this id.""")
+                            f"Id in the input list is invalid {this_id}, so "
+                            f"cannot set compartment line width for this id.")
         else:
-            raise ValueError(f"""Invalid input for compartment ids:
-                                 {compartment_id}""")
+            raise ValueError(f"Invalid input for compartment ids: "
+                             f"{compartment_id}")
 
     # Node Methods
 
@@ -888,13 +905,12 @@ class SBMLlayout:
                     self.__network.nodes[this_id].fill_color = node_color
                 else:
                     raise ValueError(
-                            f"""This id in the input list is invalid {this_id},
-                            so cannot set color for this id.""")
+                            f"This id in the input list is invalid {this_id}, "
+                            f"so cannot set color for this id.")
         else:
-            raise ValueError(f"""Invalid input for node_id: {node_id}.
-                             node_id must be a Species id, a list of Species
-                             ids, or a node keyword (
-                             {SBMLlayout.NODE_KEYWORDS} ).""")
+            raise ValueError(f"Invalid input for node_id: {node_id}. Node id"
+                             f"must be a Species id, a list of Species ids, or"
+                             f"a node keyword ({SBMLlayout.NODE_KEYWORDS}).")
 
     def getNodeFillColor(self, node_id):
         """Returns the color id for the node fill color.
@@ -939,13 +955,13 @@ class SBMLlayout:
                     self.__network.nodes[this_id].fill_color = fill_color
                 else:
                     raise ValueError(
-                            f"""This id in the input list is invalid {this_id},
-                            so cannot set node fill color for this id.""")
+                            f"This id in the input list is invalid {this_id}, "
+                            f"so cannot set node fill color for this id.")
         else:
-            raise ValueError(f"""Invalid input for node_id: {node_id}.
-                             node_id must be a Species id, a list of Species
-                             ids, or a node keyword (
-                             {SBMLlayout.NODE_KEYWORDS} ).""")
+            raise ValueError(f"Invalid input for node_id: {node_id}. "
+                             f"Node id must be a Species id, a list of "
+                             f"Species ids, or a node keyword "
+                             f"({SBMLlayout.NODE_KEYWORDS} ).")
 
     def getNodeEdgeColor(self, node_id):
         """Returns the color id for the node edge color.
@@ -988,13 +1004,13 @@ class SBMLlayout:
                     self.__network.nodes[this_id].edge_color = edge_color
                 else:
                     raise ValueError(
-                            f"""This id in the input list is invalid {this_id},
-                            so cannot set node edge color for this id.""")
+                            f"This id in the input list is invalid {this_id}, "
+                            f"so cannot set node edge color for this id.")
         else:
-            raise ValueError(f"""Invalid input for node_id: {node_id}.
-                             node_id must be a Species id, a list of Species
-                             ids, or a node keyword (
-                             {SBMLlayout.NODE_KEYWORDS} ).""")
+            raise ValueError(f"Invalid input for node_id: {node_id}. "
+                             f"Node id must be a Species id, a list of "
+                             f"Species ids, or a node keyword "
+                             f"({SBMLlayout.NODE_KEYWORDS} ).")
 
     def getNodeFontSize(self, node_id):
         """Returns the font size of the node text.
@@ -1036,13 +1052,13 @@ class SBMLlayout:
                     self.__network.nodes[this_id].font_size = font_size
                 else:
                     raise ValueError(
-                            f"""This id in the input list is invalid {this_id},
-                            so cannot set node font size for this id.""")
+                            f"This id in the input list is invalid {this_id}, "
+                            f"so cannot set node font size for this id.")
         else:
-            raise ValueError(f"""Invalid input for node_id: {node_id}.
-                             node_id must be a Species id, a list of Species
-                             ids, or a node keyword (
-                             {SBMLlayout.NODE_KEYWORDS} ).""")
+            raise ValueError(f"Invalid input for node_id: {node_id}. "
+                             f"Node id must be a Species id, a list of "
+                             f"Species ids, or a node keyword "
+                             f"({SBMLlayout.NODE_KEYWORDS} ).")
 
     def getNodeFontName(self, node_id):
         """Returns the font family value, which can be the font family or
@@ -1085,13 +1101,13 @@ class SBMLlayout:
                     self.__network.nodes[this_id].font_family = font_name
                 else:
                     raise ValueError(
-                            f"""This id in the input list is invalid {this_id},
-                            so cannot set node font family for this id.""")
+                            f"This id in the input list is invalid {this_id}, "
+                            f"so cannot set node font family for this id.")
         else:
-            raise ValueError(f"""Invalid input for node_id: {node_id}.
-                             node_id must be a Species id, a list of Species
-                             ids, or a node keyword (
-                             {SBMLlayout.NODE_KEYWORDS} ).""")
+            raise ValueError(f"Invalid input for node_id: {node_id}. "
+                             f"Node id must be a Species id, a list of "
+                             f"Species ids, or a node keyword "
+                             f"({SBMLlayout.NODE_KEYWORDS} ).")
 
     def getNodeFontFamily(self, node_id):
         """Returns the font family value, which can be the font family or
@@ -1129,13 +1145,13 @@ class SBMLlayout:
                     self.__network.nodes[this_id].font_family = font_family
                 else:
                     raise ValueError(
-                            f"""This id in the input list is invalid {this_id},
-                            so cannot set node font family for this id.""")
+                            f"This id in the input list is invalid {this_id}, "
+                            f"so cannot set node font family for this id.")
         else:
-            raise ValueError(f"""Invalid input for node_id: {node_id}.
-                             node_id must be a Species id, a list of Species
-                             ids, or a node keyword (
-                             {SBMLlayout.NODE_KEYWORDS} ).""")
+            raise ValueError(f"Invalid input for node_id: {node_id}. "
+                             f"Node id must be a Species id, a list of "
+                             f"Species ids, or a node keyword "
+                             f"({SBMLlayout.NODE_KEYWORDS} ).")
 
     def getNodeFontColor(self, node_id):
         """Returns the color of the node's text.
@@ -1180,13 +1196,13 @@ class SBMLlayout:
                     self.__network.nodes[this_id].font_color = font_color
                 else:
                     raise ValueError(
-                            f"""This id in the input list is invalid {this_id},
-                            so cannot set node font color for this id.""")
+                            f"This id in the input list is invalid {this_id}, "
+                            f"so cannot set node font color for this id.")
         else:
-            raise ValueError(f"""Invalid input for node_id: {node_id}.
-                             node_id must be a Species id, a list of Species
-                             ids, or a node keyword (
-                             {SBMLlayout.NODE_KEYWORDS} ).""")
+            raise ValueError(f"Invalid input for node_id: {node_id}. "
+                             f"Node id must be a Species id, a list of "
+                             f"Species ids, or a node keyword "
+                             f"({SBMLlayout.NODE_KEYWORDS} ).")
 
     def getNodeFontStyle(self, node_id):
         """Returns the style of the font for the given node.
@@ -1232,13 +1248,13 @@ class SBMLlayout:
                     self.__network.nodes[this_id].font_style = font_style
                 else:
                     raise ValueError(
-                            f"""This id in the input list is invalid {this_id},
-                            so cannot set node font style for this id.""")
+                            f"This id in the input list is invalid {this_id}, "
+                            f"so cannot set node font style for this id.")
         else:
-            raise ValueError(f"""Invalid input for node_id: {node_id}.
-                             node_id must be a Species id, a list of Species
-                             ids, or a node keyword (
-                             {SBMLlayout.NODE_KEYWORDS} ).""")
+            raise ValueError(f"Invalid input for node_id: {node_id}. "
+                             f"Node id must be a Species id, a list of "
+                             f"Species ids, or a node keyword "
+                             f"({SBMLlayout.NODE_KEYWORDS} ).")
 
     def getNodeWidth(self, node_id):
         """Returns the width of the node.
@@ -1379,8 +1395,8 @@ class SBMLlayout:
                         reaction_color
                 else:
                     raise ValueError(
-                            f"""This id in the input list is invalid {this_id},
-                            so cannot set color for this id.""")
+                            f"This id in the input list is invalid {this_id}, "
+                            f"so cannot set color for this id.")
         else:
             raise ValueError(f"Invalid input for reaction ids: {reaction_id}")
 
@@ -1425,8 +1441,8 @@ class SBMLlayout:
                     self.__network.reactions[this_id].edge_color = edge_color
                 else:
                     raise ValueError(
-                            f"""This id in the input list is invalid {this_id},
-                            so cannot set color for this id.""")
+                            f"This id in the input list is invalid {this_id}, "
+                            f"so cannot set color for this id.")
         else:
             raise ValueError(f"Invalid input for reaction ids: {reaction_id}")
 
@@ -1471,8 +1487,8 @@ class SBMLlayout:
                     self.__network.reactions[this_id].fill_color = fill_color
                 else:
                     raise ValueError(
-                            f"""This id in the input list is invalid {this_id},
-                            so cannot set color for this id.""")
+                            f"This id in the input list is invalid {this_id}, "
+                            f"so cannot set color for this id.")
         else:
             raise ValueError(f"Invalid input for reaction ids: {reaction_id}")
 
@@ -1514,8 +1530,8 @@ class SBMLlayout:
                     self.__network.reactions[this_id].curve_width = curve_width
                 else:
                     raise ValueError(
-                            f"""This id in the input list is invalid {this_id},
-                            so cannot set reaction curve width for this id.""")
+                            f"This id in the input list is invalid {this_id}, "
+                            f"so cannot set reaction curve width for this id.")
         else:
             raise ValueError(f"Invalid input for reaction ids: {reaction_id}")
 
@@ -1599,10 +1615,10 @@ class SBMLlayout:
             elif number_of_arrowhead_vertices == 0:
                     raise ValueError(f"style {style} has no vertices")
             else:
-                raise ValueError(f"vertex_number must be in the range " +
+                raise ValueError(f"vertex_number must be in the range "
                                  f"0 - {number_of_arrowhead_vertices}")
         else:
-            raise ValueError(f"style {style} must be in range " +
+            raise ValueError(f"style {style} must be in range "
                              f"0 - {number_of_arrowhead_styles}")
 
     def getArrowheadNumStyles(self,):
@@ -1614,17 +1630,21 @@ class SBMLlayout:
         """
         return sbnw.arrowheadNumStyles()
 
-    def drawNetwork(self, save_file_name=None, bbox_inches="tight"):
+    def drawNetwork(self, save_file_name=None, bbox_inches="tight",
+                    figure_size=None):
         """Draws the network to screen.  The figure can be saved.
 
         Args:
             save_file_name (str): save figure to this file
             bbox_inches (str or matplotlib.transforms.Bbox): "tight", or a
                 value for inches or a Bbox.
+            figure_size (tuple): (width, height) of the figure in inches,
+                default value is (6.4, 4.8)
 
         Returns: matplotlib.figure.Figure
         """
-        fig = createNetworkFigure(self.__network, self.__arrowhead_scale)
+        fig = createNetworkFigure(self.__network, self.__arrowhead_scale,
+                                  figure_size)
         if(save_file_name):
             fig.savefig(save_file_name, bbox_inches=bbox_inches)
 
@@ -1664,9 +1684,9 @@ class SBMLlayout:
                 self.__arrowhead_scale[role] = arrowhead_scale
             else:
                 raise ValueError(f"Arrowhead scale {arrowhead_scale} must be "
-                                 "an" + f" integer greater than 0.")
+                                 f"an integer greater than 0.")
         else:
-            raise ValueError(f"Role {role} is not in the allowable range: " +
+            raise ValueError(f"Role {role} is not in the allowable range: "
                              f"{self.getNumberOfRoles()}")
 
     def getArrowheadScale(self, role):
@@ -1680,7 +1700,7 @@ class SBMLlayout:
         if role in self.__arrowhead_scale:
             return self.__arrowhead_scale[role]
         else:
-            raise ValueError(f"Role {role} must be in the range 0 - " +
+            raise ValueError(f"Role {role} must be in the range 0 - "
                              f"{self.getNumberOfRoles() - 1}")
 
     def getNumberOfRoles(self,):
