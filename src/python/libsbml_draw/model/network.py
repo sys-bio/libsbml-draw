@@ -105,9 +105,9 @@ class Network():
         self.compartments = {}
         self.nodes = {}
         self.reactions = {}
-        self._add_nodes(self.h_network)
-        self._add_reactions(self.h_network)
-        self._add_compartments(self.h_network)
+        self._add_nodes()
+        self._add_reactions()
+        self._add_compartments()
 
     def _remove_node(self, node_id):
         """Remove a node from the network.
@@ -122,24 +122,23 @@ class Network():
         else:
             raise ValueError(f"species {node_id} is not in the network.")
 
-    def _add_alias_nodes(self, node_id, h_network):
+    def _add_alias_nodes(self, node_id):
         """Add alias nodes to the network for the given node.
 
         Args:
             node_id (str): id for the node
-            h_network (int): C pointer to the network
 
         Returns: None
         """
         if node_id in self.nodes:
 
             h_node_id = node_id.encode('utf-8')
-            h_node = sbnw.nw_getNodepFromId(h_network, h_node_id)
-            num_aliases = sbnw.nw_getNumAliasInstances(h_network, h_node)
+            h_node = sbnw.nw_getNodepFromId(self.h_network, h_node_id)
+            num_aliases = sbnw.nw_getNumAliasInstances(self.h_network, h_node)
 
             for alias_index in range(num_aliases):
-                h_alias_node = sbnw.nw_getAliasInstancep(h_network, h_node,
-                                                         alias_index)
+                h_alias_node = sbnw.nw_getAliasInstancep(self.h_network, 
+                                                         h_node, alias_index)
 
                 alias_node_id = sbnw.node_getID(
                         h_alias_node) + "_" + str(alias_index)
@@ -148,42 +147,40 @@ class Network():
         else:
             raise ValueError(f"species {node_id} is not in the network.")
 
-    def _add_compartments(self, h_network):
+    def _add_compartments(self,):
         """Populates the collection of compartments.
 
-        Args:
-            h_network(int): C pointer to the network
+        Args: None
 
         Returns: None
         """
-        for compartment_index in range(sbnw.nw_getNumCompartments(h_network)):
-            h_compartment = sbnw.nw_getCompartmentp(h_network,
+        for compartment_index in range(
+                sbnw.nw_getNumCompartments(self.h_network)):
+            h_compartment = sbnw.nw_getCompartmentp(self.h_network,
                                                     compartment_index)
             compartment_id = sbnw.compartment_getID(h_compartment)
             self.compartments[compartment_id] = Compartment(h_compartment)
 
-    def _add_nodes(self, h_network):
+    def _add_nodes(self,):
         """Populates the collection of nodes.
 
-        Args:
-            h_network(int): C pointer to the network
+        Args: None
 
         Returns: None
         """
-        for node_index in range(sbnw.nw_getNumNodes(h_network)):
-            h_node = sbnw.nw_getNodep(h_network, node_index)
+        for node_index in range(sbnw.nw_getNumNodes(self.h_network)):
+            h_node = sbnw.nw_getNodep(self.h_network, node_index)
             node_id = sbnw.node_getID(h_node)
             self.nodes[node_id] = Node(h_node)
 
-    def _add_reactions(self, h_network):
+    def _add_reactions(self,):
         """Populates the collection of reactions.
 
-        Args:
-            h_network(int): C pointer to the network
+        Args: None
 
         Returns: None
         """
-        for reaction_index in range(sbnw.nw_getNumRxns(h_network)):
-            h_reaction = sbnw.nw_getReactionp(h_network, reaction_index)
+        for reaction_index in range(sbnw.nw_getNumRxns(self.h_network)):
+            h_reaction = sbnw.nw_getReactionp(self.h_network, reaction_index)
             reaction_id = sbnw.reaction_getID(h_reaction)
             self.reactions[reaction_id] = Reaction(h_reaction)

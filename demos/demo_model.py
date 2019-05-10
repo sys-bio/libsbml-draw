@@ -15,7 +15,7 @@ sl._describeModel()
 print("node ids: ", sl.getNodeIds())
 print("reaction ids: ", sl.getReactionIds())
 
-sl.drawNetwork(figure_size=(15,15))
+sl.drawNetwork()
 
 sl._describeReaction(0)
 

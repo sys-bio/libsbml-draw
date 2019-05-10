@@ -363,14 +363,14 @@ def curve_getRole(h_curve):
 
 
 # Model Sizing Functions
-slib.gf_fit_to_window.argtypes = [ctypes.c_uint64, ctypes.c_double,
+slib.gf_fit_to_window.argtypes = [POINTER(layout_info), ctypes.c_double,
                                   ctypes.c_double, ctypes.c_double,
                                   ctypes.c_double]
 
 
 # Model Sizing Functions
-def fit_to_window(h_layoutInfo, left, top, right, bottom):
-    return slib.gf_fit_to_window(h_layoutInfo, left, top, right, bottom)
+def fit_to_window(h_layout_info, left, top, right, bottom):
+    return slib.gf_fit_to_window(h_layout_info, left, top, right, bottom)
 
 
 # Styling Functions

@@ -138,73 +138,73 @@
         <layout:listOfSpeciesGlyphs>
           <layout:speciesGlyph layout:id="Node0_Glyph" layout:species="Node0">
             <layout:boundingBox>
-              <layout:position layout:x="454" layout:y="844"/>
+              <layout:position layout:x="667" layout:y="17"/>
               <layout:dimensions layout:width="40" layout:height="20"/>
             </layout:boundingBox>
           </layout:speciesGlyph>
           <layout:speciesGlyph layout:id="Node3_Glyph" layout:species="Node3">
             <layout:boundingBox>
-              <layout:position layout:x="615" layout:y="862"/>
+              <layout:position layout:x="543" layout:y="-86"/>
               <layout:dimensions layout:width="40" layout:height="20"/>
             </layout:boundingBox>
           </layout:speciesGlyph>
           <layout:speciesGlyph layout:id="Node5_Glyph" layout:species="Node5">
             <layout:boundingBox>
-              <layout:position layout:x="432" layout:y="992"/>
+              <layout:position layout:x="756" layout:y="-89"/>
               <layout:dimensions layout:width="40" layout:height="20"/>
             </layout:boundingBox>
           </layout:speciesGlyph>
           <layout:speciesGlyph layout:id="Node6_Glyph" layout:species="Node6">
             <layout:boundingBox>
-              <layout:position layout:x="733" layout:y="1191"/>
+              <layout:position layout:x="616" layout:y="-425"/>
               <layout:dimensions layout:width="40" layout:height="20"/>
             </layout:boundingBox>
           </layout:speciesGlyph>
           <layout:speciesGlyph layout:id="Node7_Glyph" layout:species="Node7">
             <layout:boundingBox>
-              <layout:position layout:x="333" layout:y="690"/>
+              <layout:position layout:x="752" layout:y="206"/>
               <layout:dimensions layout:width="40" layout:height="20"/>
             </layout:boundingBox>
           </layout:speciesGlyph>
           <layout:speciesGlyph layout:id="Node8_Glyph" layout:species="Node8">
             <layout:boundingBox>
-              <layout:position layout:x="614" layout:y="1037"/>
+              <layout:position layout:x="636" layout:y="-231"/>
               <layout:dimensions layout:width="40" layout:height="20"/>
             </layout:boundingBox>
           </layout:speciesGlyph>
           <layout:speciesGlyph layout:id="Node9_Glyph" layout:species="Node9">
             <layout:boundingBox>
-              <layout:position layout:x="517" layout:y="1181"/>
+              <layout:position layout:x="792" layout:y="-300"/>
               <layout:dimensions layout:width="40" layout:height="20"/>
             </layout:boundingBox>
           </layout:speciesGlyph>
           <layout:speciesGlyph layout:id="Node10_Glyph" layout:species="Node10">
             <layout:boundingBox>
-              <layout:position layout:x="785" layout:y="1008"/>
+              <layout:position layout:x="477" layout:y="-298"/>
               <layout:dimensions layout:width="40" layout:height="20"/>
             </layout:boundingBox>
           </layout:speciesGlyph>
           <layout:speciesGlyph layout:id="Node11_Glyph" layout:species="Node11">
             <layout:boundingBox>
-              <layout:position layout:x="546" layout:y="1347"/>
+              <layout:position layout:x="853" layout:y="-460"/>
               <layout:dimensions layout:width="40" layout:height="20"/>
             </layout:boundingBox>
           </layout:speciesGlyph>
           <layout:speciesGlyph layout:id="Node12_Glyph" layout:species="Node12">
             <layout:boundingBox>
-              <layout:position layout:x="301" layout:y="830"/>
+              <layout:position layout:x="792" layout:y="97"/>
               <layout:dimensions layout:width="40" layout:height="20"/>
             </layout:boundingBox>
           </layout:speciesGlyph>
           <layout:speciesGlyph layout:id="Node13_Glyph" layout:species="Node13">
             <layout:boundingBox>
-              <layout:position layout:x="345" layout:y="819"/>
+              <layout:position layout:x="685" layout:y="119"/>
               <layout:dimensions layout:width="40" layout:height="20"/>
             </layout:boundingBox>
           </layout:speciesGlyph>
           <layout:speciesGlyph layout:id="Node14_Glyph" layout:species="Node14">
             <layout:boundingBox>
-              <layout:position layout:x="634" layout:y="1238"/>
+              <layout:position layout:x="724" layout:y="-413"/>
               <layout:dimensions layout:width="40" layout:height="20"/>
             </layout:boundingBox>
           </layout:speciesGlyph>
@@ -220,10 +220,10 @@
                 <layout:curve>
                   <layout:listOfCurveSegments>
                     <layout:curveSegment xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:type="CubicBezier">
-                      <layout:start layout:x="603.06844398003" layout:y="1049.16798759505"/>
-                      <layout:end layout:x="535.503504448893" layout:y="1081.55221553641"/>
-                      <layout:basePoint1 layout:x="585.033097279469" layout:y="1057.81242334243"/>
-                      <layout:basePoint2 layout:x="538.620555564198" layout:y="1056.74729682369"/>
+                      <layout:start layout:x="681.853645356103" layout:y="-206.351025499279"/>
+                      <layout:end layout:x="754.633544421842" layout:y="-195.644821410971"/>
+                      <layout:basePoint1 layout:x="701.640699768228" layout:y="-203.440273415777"/>
+                      <layout:basePoint2 layout:x="738.319951596162" layout:y="-176.70104435575"/>
                     </layout:curveSegment>
                   </layout:listOfCurveSegments>
                 </layout:curve>
@@ -232,10 +232,10 @@
                 <layout:curve>
                   <layout:listOfCurveSegments>
                     <layout:curveSegment xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:type="CubicBezier">
-                      <layout:start layout:x="475.427511382901" layout:y="1016.38303370703"/>
-                      <layout:end layout:x="535.503504448893" layout:y="1081.55221553641"/>
-                      <layout:basePoint1 layout:x="488.983342448607" layout:y="1031.08811596175"/>
-                      <layout:basePoint2 layout:x="538.620555564198" layout:y="1056.74729682369"/>
+                      <layout:start layout:x="768.378995284492" layout:y="-99.3213907143874"/>
+                      <layout:end layout:x="754.633544421842" layout:y="-195.644821410971"/>
+                      <layout:basePoint1 layout:x="765.553597703304" layout:y="-119.12081314304"/>
+                      <layout:basePoint2 layout:x="738.319951596162" layout:y="-176.70104435575"/>
                     </layout:curveSegment>
                   </layout:listOfCurveSegments>
                 </layout:curve>
@@ -244,10 +244,10 @@
                 <layout:curve>
                   <layout:listOfCurveSegments>
                     <layout:curveSegment xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:type="CubicBezier">
-                      <layout:start layout:x="535.503504448893" layout:y="1081.55221553641"/>
-                      <layout:end layout:x="536.37475005263" layout:y="1170.01956601628"/>
-                      <layout:basePoint1 layout:x="532.386453333587" layout:y="1106.35713424913"/>
-                      <layout:basePoint2 layout:x="536.177795277297" layout:y="1150.02053581939"/>
+                      <layout:start layout:x="754.633544421842" layout:y="-195.644821410971"/>
+                      <layout:end layout:x="801.332163750815" layout:y="-272.156284448785"/>
+                      <layout:basePoint1 layout:x="770.947137247522" layout:y="-214.588598466192"/>
+                      <layout:basePoint2 layout:x="790.912650145383" layout:y="-255.084854039291"/>
                     </layout:curveSegment>
                   </layout:listOfCurveSegments>
                 </layout:curve>
@@ -264,10 +264,10 @@
                 <layout:curve>
                   <layout:listOfCurveSegments>
                     <layout:curveSegment xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:type="CubicBezier">
-                      <layout:start layout:x="563.69218026445" layout:y="1336.08588846445"/>
-                      <layout:end layout:x="580.444894475487" layout:y="1272.64024236398"/>
-                      <layout:basePoint1 layout:x="568.798147094084" layout:y="1316.74864195067"/>
-                      <layout:basePoint2 layout:x="555.469738863997" layout:y="1273.75451440521"/>
+                      <layout:start layout:x="865.174207675549" layout:y="-431.760773133526"/>
+                      <layout:end layout:x="818.83378423432" layout:y="-384.609192743562"/>
+                      <layout:basePoint1 layout:x="851.155299933702" layout:y="-417.496474141793"/>
+                      <layout:basePoint2 layout:x="840.446480105823" layout:y="-372.043709180803"/>
                     </layout:curveSegment>
                   </layout:listOfCurveSegments>
                 </layout:curve>
@@ -276,10 +276,10 @@
                 <layout:curve>
                   <layout:listOfCurveSegments>
                     <layout:curveSegment xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:type="CubicBezier">
-                      <layout:start layout:x="541.179372001897" layout:y="1209.75962794769"/>
-                      <layout:end layout:x="580.444894475487" layout:y="1272.64024236398"/>
-                      <layout:basePoint1 layout:x="551.772586748898" layout:y="1226.7238196857"/>
-                      <layout:basePoint2 layout:x="555.469738863997" layout:y="1273.75451440521"/>
+                      <layout:start layout:x="818.372027229758" layout:y="-310.414320600116"/>
+                      <layout:end layout:x="818.83378423432" layout:y="-384.609192743562"/>
+                      <layout:basePoint1 layout:x="818.49649622577" layout:y="-330.413933283092"/>
+                      <layout:basePoint2 layout:x="840.446480105823" layout:y="-372.043709180803"/>
                     </layout:curveSegment>
                   </layout:listOfCurveSegments>
                 </layout:curve>
@@ -288,10 +288,10 @@
                 <layout:curve>
                   <layout:listOfCurveSegments>
                     <layout:curveSegment xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:type="CubicBezier">
-                      <layout:start layout:x="580.444894475487" layout:y="1272.64024236398"/>
-                      <layout:end layout:x="625.085366544438" layout:y="1261.53092819994"/>
-                      <layout:basePoint1 layout:x="605.420050086976" layout:y="1271.52597032275"/>
-                      <layout:basePoint2 layout:x="605.677330584431" layout:y="1266.36084954247"/>
+                      <layout:start layout:x="818.83378423432" layout:y="-384.609192743562"/>
+                      <layout:end layout:x="773.934357368013" layout:y="-399.856084057021"/>
+                      <layout:basePoint1 layout:x="797.221088362818" layout:y="-397.17467630632"/>
+                      <layout:basePoint2 layout:x="792.872242224294" layout:y="-393.425180763527"/>
                     </layout:curveSegment>
                   </layout:listOfCurveSegments>
                 </layout:curve>
@@ -308,10 +308,10 @@
                 <layout:curve>
                   <layout:listOfCurveSegments>
                     <layout:curveSegment xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:type="CubicBezier">
-                      <layout:start layout:x="447.369639863098" layout:y="838.94857605151"/>
-                      <layout:end layout:x="385.264947878868" layout:y="789.892008922003"/>
-                      <layout:basePoint1 layout:x="431.675247856247" layout:y="826.551557880381"/>
-                      <layout:basePoint2 layout:x="399.11513608504" layout:y="810.704800341071"/>
+                      <layout:start layout:x="695.644873392926" layout:y="44.8557976017799"/>
+                      <layout:end layout:x="746.510720844046" layout:y="122.69606764769"/>
+                      <layout:basePoint1 layout:x="706.5853832531" layout:y="61.5981165570331"/>
+                      <layout:basePoint2 layout:x="727.784764983662" layout:y="106.132898352082"/>
                     </layout:curveSegment>
                   </layout:listOfCurveSegments>
                 </layout:curve>
@@ -320,10 +320,10 @@
                 <layout:curve>
                   <layout:listOfCurveSegments>
                     <layout:curveSegment xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:type="CubicBezier">
-                      <layout:start layout:x="393.00592748703" layout:y="813.653361057282"/>
-                      <layout:end layout:x="385.264947878868" layout:y="789.892008922003"/>
-                      <layout:basePoint1 layout:x="386.810787318667" layout:y="794.637046001669"/>
-                      <layout:basePoint2 layout:x="399.11513608504" layout:y="810.704800341071"/>
+                      <layout:start layout:x="721.578534110822" layout:y="111.475751328229"/>
+                      <layout:end layout:x="746.510720844046" layout:y="122.69606764769"/>
+                      <layout:basePoint1 layout:x="739.816736370688" layout:y="119.683551175216"/>
+                      <layout:basePoint2 layout:x="727.784764983662" layout:y="106.132898352082"/>
                     </layout:curveSegment>
                   </layout:listOfCurveSegments>
                 </layout:curve>
@@ -332,10 +332,10 @@
                 <layout:curve>
                   <layout:listOfCurveSegments>
                     <layout:curveSegment xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:type="CubicBezier">
-                      <layout:start layout:x="385.264947878868" layout:y="789.892008922003"/>
-                      <layout:end layout:x="357.635585212518" layout:y="718.646434086623"/>
-                      <layout:basePoint1 layout:x="371.414759672696" layout:y="769.079217502936"/>
-                      <layout:basePoint2 layout:x="364.866944874685" layout:y="737.293349044234"/>
+                      <layout:start layout:x="746.510720844046" layout:y="122.69606764769"/>
+                      <layout:end layout:x="769.288105554204" layout:y="196.025371871691"/>
+                      <layout:basePoint1 layout:x="765.23667670443" layout:y="139.259236943298"/>
+                      <layout:basePoint2 layout:x="763.355366339027" layout:y="176.925565448465"/>
                     </layout:curveSegment>
                   </layout:listOfCurveSegments>
                 </layout:curve>
@@ -344,10 +344,10 @@
                 <layout:curve>
                   <layout:listOfCurveSegments>
                     <layout:curveSegment xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:type="CubicBezier">
-                      <layout:start layout:x="385.264947878868" layout:y="789.892008922003"/>
-                      <layout:end layout:x="333.867212180449" layout:y="820.902110075484"/>
-                      <layout:basePoint1 layout:x="371.414759672696" layout:y="769.079217502936"/>
-                      <layout:basePoint2 layout:x="350.991816323099" layout:y="810.570220947278"/>
+                      <layout:start layout:x="746.510720844046" layout:y="122.69606764769"/>
+                      <layout:end layout:x="788.810699221756" layout:y="122.738933068389"/>
+                      <layout:basePoint1 layout:x="765.23667670443" layout:y="139.259236943298"/>
+                      <layout:basePoint2 layout:x="768.810709490883" layout:y="122.718665730043"/>
                     </layout:curveSegment>
                   </layout:listOfCurveSegments>
                 </layout:curve>
@@ -364,10 +364,10 @@
                 <layout:curve>
                   <layout:listOfCurveSegments>
                     <layout:curveSegment xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:type="CubicBezier">
-                      <layout:start layout:x="453.432565180214" layout:y="837.462880584823"/>
-                      <layout:end layout:x="423.479222370564" layout:y="826.888490627011"/>
-                      <layout:basePoint1 layout:x="434.573276666361" layout:y="830.805010298368"/>
-                      <layout:basePoint2 layout:x="447.815554987451" layout:y="832.610633124382"/>
+                      <layout:start layout:x="678.425312189714" layout:y="45.3392508831808"/>
+                      <layout:end layout:x="676.56604704619" layout:y="86.2323916544889"/>
+                      <layout:basePoint1 layout:x="677.516922005052" layout:y="65.3186109147837"/>
+                      <layout:basePoint2 layout:x="672.194640028419" layout:y="61.6175424637059"/>
                     </layout:curveSegment>
                   </layout:listOfCurveSegments>
                 </layout:curve>
@@ -376,10 +376,10 @@
                 <layout:curve>
                   <layout:listOfCurveSegments>
                     <layout:curveSegment xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:type="CubicBezier">
-                      <layout:start layout:x="423.479222370564" layout:y="826.888490627011"/>
-                      <layout:end layout:x="394.805129692824" layout:y="822.03545636167"/>
-                      <layout:basePoint1 layout:x="399.142889753676" layout:y="821.16634812964"/>
-                      <layout:basePoint2 layout:x="414.524691336829" layout:y="825.372953712725"/>
+                      <layout:start layout:x="676.56604704619" layout:y="86.2323916544889"/>
+                      <layout:end layout:x="682.849364635929" layout:y="112.206284166275"/>
+                      <layout:basePoint1 layout:x="680.93745406396" layout:y="110.847240845272"/>
+                      <layout:basePoint2 layout:x="678.146825218299" layout:y="92.7669908914253"/>
                     </layout:curveSegment>
                   </layout:listOfCurveSegments>
                 </layout:curve>
@@ -396,10 +396,10 @@
                 <layout:curve>
                   <layout:listOfCurveSegments>
                     <layout:curveSegment xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:type="CubicBezier">
-                      <layout:start layout:x="637.07054098478" layout:y="1066.78329494753"/>
-                      <layout:end layout:x="678.839515818808" layout:y="1157.47022518812"/>
-                      <layout:basePoint1 layout:x="645.437412472778" layout:y="1084.94907215367"/>
-                      <layout:basePoint2 layout:x="654.806357156136" layout:y="1150.58493037273"/>
+                      <layout:start layout:x="662.519106882144" layout:y="-240.360335824747"/>
+                      <layout:end layout:x="675.93084230139" layout:y="-339.165564985736"/>
+                      <layout:basePoint1 layout:x="665.209219699991" layout:y="-260.178592383467"/>
+                      <layout:basePoint2 layout:x="692.692324824871" layout:y="-320.616907254918"/>
                     </layout:curveSegment>
                   </layout:listOfCurveSegments>
                 </layout:curve>
@@ -408,10 +408,10 @@
                 <layout:curve>
                   <layout:listOfCurveSegments>
                     <layout:curveSegment xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:type="CubicBezier">
-                      <layout:start layout:x="654.092240714902" layout:y="1228.00042542652"/>
-                      <layout:end layout:x="678.839515818808" layout:y="1157.47022518812"/>
-                      <layout:basePoint1 layout:x="660.713956004683" layout:y="1209.12841210995"/>
-                      <layout:basePoint2 layout:x="654.806357156136" layout:y="1150.58493037273"/>
+                      <layout:start layout:x="731.779190261808" layout:y="-384.471040762344"/>
+                      <layout:end layout:x="675.93084230139" layout:y="-339.165564985736"/>
+                      <layout:basePoint1 layout:x="716.24720924815" layout:y="-371.871137358295"/>
+                      <layout:basePoint2 layout:x="692.692324824871" layout:y="-320.616907254918"/>
                     </layout:curveSegment>
                   </layout:listOfCurveSegments>
                 </layout:curve>
@@ -420,10 +420,10 @@
                 <layout:curve>
                   <layout:listOfCurveSegments>
                     <layout:curveSegment xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:type="CubicBezier">
-                      <layout:start layout:x="678.839515818808" layout:y="1157.47022518812"/>
-                      <layout:end layout:x="730.845539324693" layout:y="1184.21166940346"/>
-                      <layout:basePoint1 layout:x="702.872674481481" layout:y="1164.35552000351"/>
-                      <layout:basePoint2 layout:x="713.059155883327" layout:y="1175.06592918865"/>
+                      <layout:start layout:x="675.93084230139" layout:y="-339.165564985736"/>
+                      <layout:end layout:x="643.756958520971" layout:y="-395.732569791377"/>
+                      <layout:basePoint1 layout:x="659.16935977791" layout:y="-357.714222716555"/>
+                      <layout:basePoint2 layout:x="653.644937964273" layout:y="-378.347867823013"/>
                     </layout:curveSegment>
                   </layout:listOfCurveSegments>
                 </layout:curve>
@@ -440,10 +440,10 @@
                 <layout:curve>
                   <layout:listOfCurveSegments>
                     <layout:curveSegment xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:type="CubicBezier">
-                      <layout:start layout:x="335.623590704611" layout:y="856.491865333666"/>
-                      <layout:end layout:x="401.485977220298" layout:y="895.169434734616"/>
-                      <layout:basePoint1 layout:x="352.869709794634" layout:y="866.619618111688"/>
-                      <layout:basePoint2 layout:x="388.932795384055" layout:y="916.789278068605"/>
+                      <layout:start layout:x="802.948654133023" layout:y="87.8574294278835"/>
+                      <layout:end layout:x="754.357961249931" layout:y="39.1450529554754"/>
+                      <layout:basePoint1 layout:x="788.824215181279" layout:y="73.6976192491257"/>
+                      <layout:basePoint2 layout:x="775.338533973332" layout:y="25.5503639852164"/>
                     </layout:curveSegment>
                   </layout:listOfCurveSegments>
                 </layout:curve>
@@ -452,10 +452,10 @@
                 <layout:curve>
                   <layout:listOfCurveSegments>
                     <layout:curveSegment xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:type="CubicBezier">
-                      <layout:start layout:x="438.040997773915" layout:y="982.969415185087"/>
-                      <layout:end layout:x="401.485977220298" layout:y="895.169434734616"/>
-                      <layout:basePoint1 layout:x="430.353762106199" layout:y="964.505764197565"/>
-                      <layout:basePoint2 layout:x="388.932795384055" layout:y="916.789278068605"/>
+                      <layout:start layout:x="775.930774708782" layout:y="-60.0002396099179"/>
+                      <layout:end layout:x="754.357961249931" layout:y="39.1450529554754"/>
+                      <layout:basePoint1 layout:x="771.678513736577" layout:y="-40.4575101018818"/>
+                      <layout:basePoint2 layout:x="775.338533973332" layout:y="25.5503639852164"/>
                     </layout:curveSegment>
                   </layout:listOfCurveSegments>
                 </layout:curve>
@@ -464,10 +464,10 @@
                 <layout:curve>
                   <layout:listOfCurveSegments>
                     <layout:curveSegment xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:type="CubicBezier">
-                      <layout:start layout:x="401.485977220298" layout:y="895.169434734616"/>
-                      <layout:end layout:x="382.393794195926" layout:y="844.732889972983"/>
-                      <layout:basePoint1 layout:x="414.039159056541" layout:y="873.549591400627"/>
-                      <layout:basePoint2 layout:x="389.474258937944" layout:y="863.43762250347"/>
+                      <layout:start layout:x="754.357961249931" layout:y="39.1450529554754"/>
+                      <layout:end layout:x="711.624264035215" layout:y="108.679876062892"/>
+                      <layout:basePoint1 layout:x="733.37738852653" layout:y="52.7397419257343"/>
+                      <layout:basePoint2 layout:x="722.096086125633" layout:y="91.6404822325169"/>
                     </layout:curveSegment>
                   </layout:listOfCurveSegments>
                 </layout:curve>
@@ -476,10 +476,10 @@
                 <layout:curve>
                   <layout:listOfCurveSegments>
                     <layout:curveSegment xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:type="CubicBezier">
-                      <layout:start layout:x="401.485977220298" layout:y="895.169434734616"/>
-                      <layout:end layout:x="444.52959657633" layout:y="863.211146055995"/>
-                      <layout:basePoint1 layout:x="414.039159056541" layout:y="873.549591400627"/>
-                      <layout:basePoint2 layout:x="428.471689334259" layout:y="875.133545772707"/>
+                      <layout:start layout:x="754.357961249931" layout:y="39.1450529554754"/>
+                      <layout:end layout:x="712.688455834873" layout:y="40.9508317690518"/>
+                      <layout:basePoint1 layout:x="733.37738852653" layout:y="52.7397419257343"/>
+                      <layout:basePoint2 layout:x="732.669702381987" layout:y="40.0849296825205"/>
                     </layout:curveSegment>
                   </layout:listOfCurveSegments>
                 </layout:curve>
@@ -496,10 +496,10 @@
                 <layout:curve>
                   <layout:listOfCurveSegments>
                     <layout:curveSegment xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:type="CubicBezier">
-                      <layout:start layout:x="500.747514847452" layout:y="868.845718109178"/>
-                      <layout:end layout:x="576.562970619893" layout:y="930.213098099536"/>
-                      <layout:basePoint1 layout:x="516.293117835034" layout:y="881.428811041859"/>
-                      <layout:basePoint2 layout:x="568.692737474188" layout:y="906.484224754342"/>
+                      <layout:start layout:x="676.313926393437" layout:y="7.16593444931056"/>
+                      <layout:end layout:x="642.430913748001" layout:y="-92.9246000862187"/>
+                      <layout:basePoint1 layout:x="669.900947289624" layout:y="-11.7780276234463"/>
+                      <layout:basePoint2 layout:x="636.041333065045" layout:y="-68.7549236569408"/>
                     </layout:curveSegment>
                   </layout:listOfCurveSegments>
                 </layout:curve>
@@ -508,10 +508,10 @@
                 <layout:curve>
                   <layout:listOfCurveSegments>
                     <layout:curveSegment xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:type="CubicBezier">
-                      <layout:start layout:x="606.23905793023" layout:y="885.821399594531"/>
-                      <layout:end layout:x="576.562970619893" layout:y="930.213098099536"/>
-                      <layout:basePoint1 layout:x="595.123898208987" layout:y="902.448282175798"/>
-                      <layout:basePoint2 layout:x="568.692737474188" layout:y="906.484224754342"/>
+                      <layout:start layout:x="591.953230104591" layout:y="-73.0339717990343"/>
+                      <layout:end layout:x="642.430913748001" layout:y="-92.9246000862187"/>
+                      <layout:basePoint1 layout:x="610.560708972698" layout:y="-80.366210895855"/>
+                      <layout:basePoint2 layout:x="636.041333065045" layout:y="-68.7549236569408"/>
                     </layout:curveSegment>
                   </layout:listOfCurveSegments>
                 </layout:curve>
@@ -520,10 +520,10 @@
                 <layout:curve>
                   <layout:listOfCurveSegments>
                     <layout:curveSegment xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:type="CubicBezier">
-                      <layout:start layout:x="576.562970619893" layout:y="930.213098099536"/>
-                      <layout:end layout:x="623.354893363734" layout:y="1028.14432473847"/>
-                      <layout:basePoint1 layout:x="584.433203765597" layout:y="953.94197144473"/>
-                      <layout:basePoint2 layout:x="614.732495226344" layout:y="1010.09843184395"/>
+                      <layout:start layout:x="642.430913748001" layout:y="-92.9246000862187"/>
+                      <layout:end layout:x="654.343365993354" layout:y="-201.021581699422"/>
+                      <layout:basePoint1 layout:x="648.820494430957" layout:y="-117.094276515497"/>
+                      <layout:basePoint2 layout:x="652.152598098655" layout:y="-181.141930393839"/>
                     </layout:curveSegment>
                   </layout:listOfCurveSegments>
                 </layout:curve>
@@ -540,10 +540,10 @@
                 <layout:curve>
                   <layout:listOfCurveSegments>
                     <layout:curveSegment xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:type="CubicBezier">
-                      <layout:start layout:x="775.16300547225" layout:y="1022.7982042879"/>
-                      <layout:end layout:x="724.843040546491" layout:y="1031.59545339967"/>
-                      <layout:basePoint1 layout:x="755.461815060227" layout:y="1026.24248887968"/>
-                      <layout:basePoint2 layout:x="749.503438226691" layout:y="1027.48877758408"/>
+                      <layout:start layout:x="525.296635778673" layout:y="-276.315904018801"/>
+                      <layout:end layout:x="571.110953352273" layout:y="-257.536948637962"/>
+                      <layout:basePoint1 layout:x="543.802370618922" layout:y="-268.730537974739"/>
+                      <layout:basePoint2 layout:x="548.089170941961" layout:y="-267.283616512278"/>
                     </layout:curveSegment>
                   </layout:listOfCurveSegments>
                 </layout:curve>
@@ -552,10 +552,10 @@
                 <layout:curve>
                   <layout:listOfCurveSegments>
                     <layout:curveSegment xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:type="CubicBezier">
-                      <layout:start layout:x="724.843040546491" layout:y="1031.59545339967"/>
-                      <layout:end layout:x="662.882486017854" layout:y="1041.47144836302"/>
-                      <layout:basePoint1 layout:x="700.18264286629" layout:y="1035.70212921526"/>
-                      <layout:basePoint2 layout:x="682.633169650347" layout:y="1038.32335432866"/>
+                      <layout:start layout:x="571.110953352273" layout:y="-257.536948637962"/>
+                      <layout:end layout:x="626.876713100051" layout:y="-233.094586199022"/>
+                      <layout:basePoint1 layout:x="594.132735762585" layout:y="-247.790280763645"/>
+                      <layout:basePoint2 layout:x="608.558979518332" layout:y="-241.123324358232"/>
                     </layout:curveSegment>
                   </layout:listOfCurveSegments>
                 </layout:curve>
@@ -566,73 +566,73 @@
         <layout:listOfTextGlyphs>
           <layout:textGlyph layout:id="tNode0_Glyph" layout:text="Node0" layout:graphicalObject="Node0_Glyph">
             <layout:boundingBox>
-              <layout:position layout:x="454" layout:y="844"/>
+              <layout:position layout:x="667" layout:y="17"/>
               <layout:dimensions layout:width="40" layout:height="20"/>
             </layout:boundingBox>
           </layout:textGlyph>
           <layout:textGlyph layout:id="tNode3_Glyph" layout:text="Node3" layout:graphicalObject="Node3_Glyph">
             <layout:boundingBox>
-              <layout:position layout:x="615" layout:y="862"/>
+              <layout:position layout:x="543" layout:y="-86"/>
               <layout:dimensions layout:width="40" layout:height="20"/>
             </layout:boundingBox>
           </layout:textGlyph>
           <layout:textGlyph layout:id="tNode5_Glyph" layout:text="Node5" layout:graphicalObject="Node5_Glyph">
             <layout:boundingBox>
-              <layout:position layout:x="432" layout:y="992"/>
+              <layout:position layout:x="756" layout:y="-89"/>
               <layout:dimensions layout:width="40" layout:height="20"/>
             </layout:boundingBox>
           </layout:textGlyph>
           <layout:textGlyph layout:id="tNode6_Glyph" layout:text="Node6" layout:graphicalObject="Node6_Glyph">
             <layout:boundingBox>
-              <layout:position layout:x="733" layout:y="1191"/>
+              <layout:position layout:x="616" layout:y="-425"/>
               <layout:dimensions layout:width="40" layout:height="20"/>
             </layout:boundingBox>
           </layout:textGlyph>
           <layout:textGlyph layout:id="tNode7_Glyph" layout:text="Node7" layout:graphicalObject="Node7_Glyph">
             <layout:boundingBox>
-              <layout:position layout:x="333" layout:y="690"/>
+              <layout:position layout:x="752" layout:y="206"/>
               <layout:dimensions layout:width="40" layout:height="20"/>
             </layout:boundingBox>
           </layout:textGlyph>
           <layout:textGlyph layout:id="tNode8_Glyph" layout:text="Node8" layout:graphicalObject="Node8_Glyph">
             <layout:boundingBox>
-              <layout:position layout:x="614" layout:y="1037"/>
+              <layout:position layout:x="636" layout:y="-231"/>
               <layout:dimensions layout:width="40" layout:height="20"/>
             </layout:boundingBox>
           </layout:textGlyph>
           <layout:textGlyph layout:id="tNode9_Glyph" layout:text="Node9" layout:graphicalObject="Node9_Glyph">
             <layout:boundingBox>
-              <layout:position layout:x="517" layout:y="1181"/>
+              <layout:position layout:x="792" layout:y="-300"/>
               <layout:dimensions layout:width="40" layout:height="20"/>
             </layout:boundingBox>
           </layout:textGlyph>
           <layout:textGlyph layout:id="tNode10_Glyph" layout:text="Node10" layout:graphicalObject="Node10_Glyph">
             <layout:boundingBox>
-              <layout:position layout:x="785" layout:y="1008"/>
+              <layout:position layout:x="477" layout:y="-298"/>
               <layout:dimensions layout:width="40" layout:height="20"/>
             </layout:boundingBox>
           </layout:textGlyph>
           <layout:textGlyph layout:id="tNode11_Glyph" layout:text="Node11" layout:graphicalObject="Node11_Glyph">
             <layout:boundingBox>
-              <layout:position layout:x="546" layout:y="1347"/>
+              <layout:position layout:x="853" layout:y="-460"/>
               <layout:dimensions layout:width="40" layout:height="20"/>
             </layout:boundingBox>
           </layout:textGlyph>
           <layout:textGlyph layout:id="tNode12_Glyph" layout:text="Node12" layout:graphicalObject="Node12_Glyph">
             <layout:boundingBox>
-              <layout:position layout:x="301" layout:y="830"/>
+              <layout:position layout:x="792" layout:y="97"/>
               <layout:dimensions layout:width="40" layout:height="20"/>
             </layout:boundingBox>
           </layout:textGlyph>
           <layout:textGlyph layout:id="tNode13_Glyph" layout:text="Node13" layout:graphicalObject="Node13_Glyph">
             <layout:boundingBox>
-              <layout:position layout:x="345" layout:y="819"/>
+              <layout:position layout:x="685" layout:y="119"/>
               <layout:dimensions layout:width="40" layout:height="20"/>
             </layout:boundingBox>
           </layout:textGlyph>
           <layout:textGlyph layout:id="tNode14_Glyph" layout:text="Node14" layout:graphicalObject="Node14_Glyph">
             <layout:boundingBox>
-              <layout:position layout:x="634" layout:y="1238"/>
+              <layout:position layout:x="724" layout:y="-413"/>
               <layout:dimensions layout:width="40" layout:height="20"/>
             </layout:boundingBox>
           </layout:textGlyph>

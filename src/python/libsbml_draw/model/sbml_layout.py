@@ -26,11 +26,11 @@ class SBMLlayout:
     NODE_KEYWORDS = {"all", "boundary", "floating"}
 
     def __init__(self, sbml_source=None, layout_alg_options=None,
-                 layout_number=0, fitWindow=tuple()):
+                 layout_number=0, fitToWindow=tuple()):
 
         self.__sbml_source = sbml_source
         self.__layout_number = layout_number
-        self.__fitWindow = fitWindow
+        self.__fitWindow = fitToWindow
 
         if self._validate_layout_alg_options(layout_alg_options):
             self.__layout_alg_options = layout_alg_options
@@ -99,7 +99,7 @@ class SBMLlayout:
             self.__numNodes = self.getNumberOfNodes()
             self.__numReactions = self.getNumberOfReactions()
             self.__numCompartments = self.getNumberOfCompartments()
-            self.__arrowhead_scale = {key: 15 for key in
+            self.__arrowhead_scale = {key: 10 for key in
                                       range(self.getNumberOfRoles())}
 
         else:  # User can separately load a file
@@ -483,8 +483,8 @@ class SBMLlayout:
 
             sbnw.node_make_alias(h_node, self.__h_network)
 
-            self.__network._add_alias_nodes(node_id, self.__h_network)
-            self.__network._add_reactions(self.__h_network)
+            self.__network._add_alias_nodes(node_id)
+            self.__network._add_reactions()
             self.__network._remove_node(node_id)
             self.__doc = libsbml.readSBMLFromString(
                         self.__getSBMLWithLayoutString())
@@ -1630,6 +1630,56 @@ class SBMLlayout:
         Returns: int
         """
         return sbnw.arrowheadNumStyles()
+    
+    def __computeFigureSize(self, box_padding_multiplier=1.20):
+        """Computes the estimated figure size in inches required so that the
+        node boxes are large enough to contain the node name.  
+
+        Args:
+            box_padding_multiplier (float): makes the box 5% wider than the 
+            text length
+        
+        Returns: tuple(float, float)
+        """
+        
+        length_longest_node_name = 0
+        node_with_longest_name = None
+        for node in self.__network.nodes.values():
+            if len(node.name) > length_longest_node_name: 
+                length_longest_node_name = len(node.name)     
+                node_with_longest_name = node
+
+        length_of_one_font_point_inches = 1/72        
+        length_of_node_name_inches = (length_longest_node_name*
+                                      node_with_longest_name.font_size*
+                                      length_of_one_font_point_inches)
+        
+        max_x_in_network = max([n.center.x 
+                for n in self.__network.nodes.values()])
+
+        min_x_in_network = min([n.center.x
+                for n in self.__network.nodes.values()])
+    
+        figure_width_data_units = max_x_in_network - min_x_in_network
+
+        fig_width_inches = (length_of_node_name_inches*box_padding_multiplier*
+                           figure_width_data_units/
+                           node_with_longest_name.width)
+
+        default_matplotlib_h_w_ratio = 4.8/6.4  # inches
+
+        fig_height_inches = fig_width_inches
+
+#        fig_height_inches = max(fig_width_inches/
+#                                node_with_longest_name.font_size, 
+#                                default_matplotlib_h_w_ratio*fig_width_inches)
+
+        print("max x", max_x_in_network, "min x", min_x_in_network)
+        print("fig width", figure_width_data_units)
+        print("fig width inches", fig_width_inches)
+        print("fig height inches", fig_height_inches) 
+
+        return (fig_width_inches, fig_height_inches)
 
     def drawNetwork(self, save_file_name=None, bbox_inches="tight",
                     figure_size=None, show=True):
@@ -1643,7 +1693,16 @@ class SBMLlayout:
                 default value is (6.4, 4.8)
 
         Returns: matplotlib.figure.Figure
-        """
+        """        
+        matplotlib_default_size = (6.4, 4.8)
+
+        if not figure_size:            
+            figure_size = max(matplotlib_default_size, 
+                              self.__computeFigureSize())
+            print("fig size: ", figure_size)
+        else:
+            pass
+        
         fig = createNetworkFigure(self.__network, self.__arrowhead_scale,
                                   figure_size, show)
         if(save_file_name):

@@ -78,8 +78,8 @@ def draw_nodes(nodes, ratio=1):
 #            node_height,
             edgecolor=node.edge_color,
             facecolor=node.fill_color,
-            boxstyle=BoxStyle("round", pad=0.2, rounding_size=.6),
-            mutation_scale=20*ratio)
+            boxstyle=BoxStyle("round", pad=0.6, rounding_size=.8),
+            mutation_scale=10*ratio)
 
         node_patches.append(fbbp)
 
@@ -124,7 +124,7 @@ def draw_reactions(reactions, mutation_scale, ratio=1):
                     arrowstyle=curve.curveArrowStyle,
                     clip_on=False,
                     linewidth=reaction.curve_width,
-                    mutation_scale=mutation_scale.get(curve.role, 25),
+                    mutation_scale=mutation_scale.get(curve.role, 10),
                     path=cubic_bezier_curve_path
                     )
 
@@ -133,7 +133,7 @@ def draw_reactions(reactions, mutation_scale, ratio=1):
     return reaction_patches
 
 
-def add_labels(nodes, ratio=1):
+def add_labels(nodes, ratio=1., fratio=1.):
     """Add text to the nodes.
 
     Args:
@@ -145,7 +145,7 @@ def add_labels(nodes, ratio=1):
         plt.text(node.center.x*ratio,
                  node.center.y*ratio,
                  node.name,
-                 fontsize=node.font_size,
+                 fontsize=node.font_size/fratio,
                  color=node.font_color,
                  fontname=node.font_family,
                  fontstyle=node.font_style,
@@ -174,8 +174,11 @@ def createNetworkFigure(network, mutation_scale, figure_size=None, show=True):
 
     ax = plt.gca()
     
-    ratio = get_ratio()
-    #ratio = 1
+    #ratio = get_ratio()
+    #fratio = 7/get_ratio()
+    fratio = 1
+    print('fratio', fratio)
+    ratio = 1
 
     # draw the compartments
     compartment_patches = draw_compartments(network.compartments.values())
@@ -196,16 +199,21 @@ def createNetworkFigure(network, mutation_scale, figure_size=None, show=True):
         ax.add_patch(reaction_patch)
 
     # add labels
-    add_labels(network.nodes.values(), ratio)
+    add_labels(network.nodes.values(), ratio, fratio)
     # No axes and size it just bigger than the data (i.e. tight)
+    ax.autoscale()
+    
+#    fig.set_figwidth(10)
+#    fig.set_figheight(10)
+    
     plt.axis("off")
     plt.axis("tight")
     plt.axis("equal")
 
     if show:
         plt.show()
-        plt.close()
+#        plt.close()
     else:
         plt.close()
-
+#
     return fig
