@@ -4,7 +4,6 @@ models defined in an SBML file, making use of a c API and libsbml."""
 from collections import namedtuple
 import os
 
-from matplotlib import pyplot as plt
 from matplotlib.colors import is_color_like
 
 import libsbml
@@ -1631,7 +1630,7 @@ class SBMLlayout:
         """
         return sbnw.arrowheadNumStyles()
     
-    def __computeFigureSize(self, box_padding_multiplier=1.20):
+    def __computeFigureSize(self, box_padding_multiplier=1.15):
         """Computes the estimated figure size in inches required so that the
         node boxes are large enough to contain the node name.  
 
@@ -1666,7 +1665,7 @@ class SBMLlayout:
                            figure_width_data_units/
                            node_with_longest_name.width)
 
-        default_matplotlib_h_w_ratio = 4.8/6.4  # inches
+#        default_matplotlib_h_w_ratio = 4.8/6.4  # inches
 
         fig_height_inches = fig_width_inches
 

@@ -11,6 +11,7 @@ model_file_name = "complicated_nodes-L3V1.xml"
 model_file = Path(pkg_resources.resource_filename(
         "libsbml_draw", "model/data/" + model_file_name))
 
+# https://stackoverflow.com/questions/33635439/matplotlib-patch-size-in-points
 
 print("validate: ", SBMLlayout._validate_sbml_filename(str(model_file)))
 
@@ -20,7 +21,7 @@ sl = SBMLlayout(str(model_file))
 
 sl._describeModel()
 
-sl.drawNetwork(figure_size=(13,13))
+sl.drawNetwork(figure_size=(1000,1000))
 
 #sl.setNodeFontSize("all", 6)
 
@@ -57,23 +58,23 @@ sl2._describeModel()
 #sl2.drawNetwork(figure_size=(15,15))
 sl2.drawNetwork(show=True)
 
-x = list()
-y = list()
+#x = list()
+#y = list()
 
-for node in sl2.getNodeIds():
-    centroid = sl2.getNodeCentroid(node)
-    x.append(centroid[0])
-    y.append(centroid[1])    
-    print("centroid: ", centroid[0], ", ", centroid[1])
-    print("width: ", sl2.getNodeWidth(node))
-    print("height: ", sl2.getNodeHeight(node))
+#for node in sl2.getNodeIds():
+#    centroid = sl2.getNodeCentroid(node)
+#    x.append(centroid[0])
+#    y.append(centroid[1])    
+#    print("centroid: ", centroid[0], ", ", centroid[1])
+#    print("width: ", sl2.getNodeWidth(node))
+#    print("height: ", sl2.getNodeHeight(node))
 
-print()    
-print("min x, max x: ", min(x)-20, ", ", max(x)+20)
-print("min y, max y: ", min(y)-10, ", ", max(y)+10)
-print()
-print("width: ", max(x) - min(x))
-print("height: ", max(y) - min(y))
+#print()    
+#print("min x, max x: ", min(x)-20, ", ", max(x)+20)
+#print("min y, max y: ", min(y)-10, ", ", max(y)+10)
+#print()
+#print("width: ", max(x) - min(x))
+#print("height: ", max(y) - min(y))
 
 #    centroid = sl2.getNodeCentroid(node)
 #    print("centroid: ", centroid[0], ", ", centroid[1])

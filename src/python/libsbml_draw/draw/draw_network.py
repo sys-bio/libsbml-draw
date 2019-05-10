@@ -7,18 +7,6 @@ from matplotlib.path import Path
 from matplotlib import pyplot as plt
 
 
-def get_ratio():
-    """
-    """
-    axes = plt.gca()
-    t = axes.transAxes.transform([(0, 0), (1, 1)])
-    print("t: ", type(t), ", ", len(t), ", ", t, ", ", t[1,1], ", ", t[0,1])
-    print("dpi: ", axes.get_figure().get_dpi())
-    ratio = float(axes.get_figure().get_dpi() / (t[1,1] - t[0,1]) / 72.)*100.
-    
-    return ratio
-
-
 def draw_compartments(compartments):
     """Create a list of FancyBbox Patches, one for each compartment.
 
@@ -47,7 +35,7 @@ def draw_compartments(compartments):
     return compartment_patches
 
 
-def draw_nodes(nodes, ratio=1):
+def draw_nodes(nodes):
     """Create a list of FancyBbox Patches, one for each node.
 
     Args:
@@ -56,37 +44,25 @@ def draw_nodes(nodes, ratio=1):
     Returns: list of matplotlib.patches.FancyBboxPatch
     """
     node_patches = []
-   
-    print('ratio', ratio)
 
     for node in nodes:
-        # https://stackoverflow.com/questions/33635439/matplotlib-patch-size-in-points
-        #print('node width ', node.width)
-        
-#        if len(node.name) > 10:
-#            node_width = max(0.045*((len(node.name)/2)+1), 0.13)*(node.font_size/20)
-#            node_height = 0.20*(node.font_size/20)
-#        else: 
-#            node_width = max(0.045*(len(node.name)+1), 0.13)*(node.font_size/20)
-#            node_height = 0.11*(node.font_size/20)
         
         fbbp = FancyBboxPatch(
-            [x*ratio for x in node.lower_left_point],
-            node.width*ratio,
-            node.height*ratio,
-#            node_width,
-#            node_height,
+            node.lower_left_point,
+            node.width,
+            node.height,
             edgecolor=node.edge_color,
             facecolor=node.fill_color,
-            boxstyle=BoxStyle("round", pad=0.6, rounding_size=.8),
-            mutation_scale=10*ratio)
+            boxstyle=BoxStyle("round", pad=0.4, rounding_size=.8),
+            mutation_scale=10
+            )
 
         node_patches.append(fbbp)
 
     return node_patches
 
 
-def draw_reactions(reactions, mutation_scale, ratio=1):
+def draw_reactions(reactions, mutation_scale):
     """Create a list of FancyArrow Patches, one for each curve in a reaction.
 
     Args:
@@ -102,14 +78,14 @@ def draw_reactions(reactions, mutation_scale, ratio=1):
 
         for curve in curves:
 
-            start_point = np.array([curve.start_point.x*ratio, 
-                                    curve.start_point.y*ratio])
-            end_point = np.array([curve.end_point.x*ratio, 
-                                  curve.end_point.y*ratio])
-            control_point_1 = np.array([curve.control_point_1.x*ratio,
-                                        curve.control_point_1.y*ratio])
-            control_point_2 = np.array([curve.control_point_2.x*ratio,
-                                        curve.control_point_2.y*ratio])
+            start_point = np.array([curve.start_point.x, 
+                                    curve.start_point.y])
+            end_point = np.array([curve.end_point.x, 
+                                  curve.end_point.y])
+            control_point_1 = np.array([curve.control_point_1.x,
+                                        curve.control_point_1.y])
+            control_point_2 = np.array([curve.control_point_2.x,
+                                        curve.control_point_2.y])
 
             cubic_bezier_curve_path = Path(
                     [start_point,
@@ -133,7 +109,7 @@ def draw_reactions(reactions, mutation_scale, ratio=1):
     return reaction_patches
 
 
-def add_labels(nodes, ratio=1., fratio=1.):
+def add_labels(nodes):
     """Add text to the nodes.
 
     Args:
@@ -142,10 +118,10 @@ def add_labels(nodes, ratio=1., fratio=1.):
     Returns: None
     """
     for node in nodes:
-        plt.text(node.center.x*ratio,
-                 node.center.y*ratio,
+        plt.text(node.center.x,
+                 node.center.y,
                  node.name,
-                 fontsize=node.font_size/fratio,
+                 fontsize=node.font_size,
                  color=node.font_color,
                  fontname=node.font_family,
                  fontstyle=node.font_style,
@@ -160,25 +136,23 @@ def createNetworkFigure(network, mutation_scale, figure_size=None, show=True):
     Args:
         network (libsbml_draw.model.network.Network): the model's network which
             contains Nodes and Reactions.
+        mutation_scale (dict): keys are roles (int), values are for 
+            matplotlib's mutation_scale parameter
+        figure_size (tuple): (width, height) in inches    
+        show (bool): displays the figure if True 
 
     Returns: matplotlib.figure.Figure
     """
-    
-    
+    fig = plt.figure()
+    fig.set_dpi(72)    
     
     # initialize figure
     if figure_size and len(figure_size) == 2: 
         fig = plt.figure(figsize=figure_size)
     else:    
-        fig = plt.figure() # figsize=(20,10)
+        fig = plt.figure()
 
     ax = plt.gca()
-    
-    #ratio = get_ratio()
-    #fratio = 7/get_ratio()
-    fratio = 1
-    print('fratio', fratio)
-    ratio = 1
 
     # draw the compartments
     compartment_patches = draw_compartments(network.compartments.values())
@@ -187,24 +161,21 @@ def createNetworkFigure(network, mutation_scale, figure_size=None, show=True):
         ax.add_patch(compartment_patch)
 
     # draw the nodes
-    node_patches = draw_nodes(network.nodes.values(), ratio)
+    node_patches = draw_nodes(network.nodes.values())
     for node_patch in node_patches:
         ax.add_patch(node_patch)
 
     # draw the reactions
     reaction_patches = draw_reactions(
             network.reactions.values(),
-            mutation_scale, ratio)
+            mutation_scale)
     for reaction_patch in reaction_patches:
         ax.add_patch(reaction_patch)
 
     # add labels
-    add_labels(network.nodes.values(), ratio, fratio)
+    add_labels(network.nodes.values())
     # No axes and size it just bigger than the data (i.e. tight)
-    ax.autoscale()
-    
-#    fig.set_figwidth(10)
-#    fig.set_figheight(10)
+    #ax.autoscale()
     
     plt.axis("off")
     plt.axis("tight")
@@ -212,8 +183,7 @@ def createNetworkFigure(network, mutation_scale, figure_size=None, show=True):
 
     if show:
         plt.show()
-#        plt.close()
     else:
         plt.close()
-#
+
     return fig
