@@ -1,13 +1,22 @@
+# CMake -- if these variables don't show-up in the GUI, need to add them and set their values:
+#
+# LIBSBML_PREFIX, LIBSBML_INCLUDE_DIR
+# PYTHON_INCLUDE_DIR
+#
+# LIBXML2_PATH (needed to parse an SBML file)
+# LIBBZ2_PATH, ZLIB_PATH (needed if the SBML file is compressed)
+#
+# On Windows, also need: LIBICONV_PATH (for unicode), ws2_32.lib (for networking)
+#
+
 cmake_minimum_required(VERSION 2.8.12)
 project(libsbml_draw)
 
 set(SBNW_MAJOR_VER 1)
-set(SBNW_MINOR_VER 3)
-set(SBNW_PATCHLEVEL 27)
+set(SBNW_MINOR_VER 0)
+set(SBNW_PATCHLEVEL 0)
 set(SBNW_VER_STRING "${SBNW_MAJOR_VER}.${SBNW_MINOR_VER}.${SBNW_PATCHLEVEL}")
 
-set(LINK_WITH_LIBSBML ON)
-set(SBNW_LINK_TO_STATIC_LIBSBML ON)
 
 if(${CMAKE_SYSTEM_NAME} MATCHES "Linux")
     set(FPIC_FLAG "-fPIC")
@@ -15,15 +24,23 @@ else()
     set(FPIC_FLAG)
 endif()
 
-# User Configuration
+# <pulling in user config from previously external files>
+
+set(SBNW_CLIENT_BUILD 0)
+set(SBNW_DEBUG_LEVEL 2 CACHE INTEGER "Verbosity of debug checks, must be greater than zero")
+
 if(${WIN32})
-    include( "UserConfigWin.txt" )
+    set(SBNW_WINDOWS_BUILD ON)
+    # Internal Options
+    set(SBNW_WIN_COPY_DEPS_TO_INSTALL ON CACHE BOOL "When true, libraries that graphfab depends on (libSBML and its dependencies) will be copied to the graphfab installation directory")
 else()
-    include( "UserConfigLinux.txt" )
+    # Internal Options
+    set(ENABLE_FULL_RPATH 1 CACHE BOOL "Enable full RPath in generated executable code")
 endif()
 
-set(SBNW_SPYDER_DIST ON CACHE BOOL "Install Spyder plugin files")
+
 set(BUILD_STATIC_LIB ON CACHE BOOL "Build the static version of the library")
+
 
 set(ENABLE_PYTHON FALSE CACHE BOOL "Enable Python bindings")
 if(ENABLE_PYTHON)
@@ -35,9 +52,11 @@ if(ENABLE_PYTHON)
     endif()
 endif()
 
+
 # Find Python Libs
 find_package(PythonLibs)
 message(STATUS "Using Python include directory ${PYTHON_INCLUDE_DIR}")
+
 
 # Dependencies
 
@@ -46,17 +65,9 @@ message(STATUS "Using Python include directory ${PYTHON_INCLUDE_DIR}")
 find_library(LIBSBML_LIBRARY sbml libsbml HINTS ${LIBSBML_PREFIX}/lib)
 find_library(LIBSBML_STATIC_LIBRARY sbml-static REQUIRED libsbml-static HINTS ${LIBSBML_PREFIX}/lib)
 find_path(LIBSBML_INCLUDE_DIR sbml/SBMLTypes.h HINTS ${LIBSBML_PREFIX}/include)
-#find_path(LIBSBML_EXTRA_LIBS libbz2.lib HINTS ${LIBSBML_PREFIX}/lib)
+
 message(STATUS "LIBSBML_INCLUDE_DIR ${LIBSBML_INCLUDE_DIR}")
 include_directories(${LIBSBML_INCLUDE_DIR})
-
-# Image Magick
-if(LINK_WITH_MAGICK)
-    set(SBNW_USE_MAGICK 1)
-    include_directories(${MAGICK_INCLUDE})
-else()
-    set(SBNW_USE_MAGICK 0)
-endif()
 
 
 # Source Code
@@ -131,57 +142,52 @@ set(SBNW_SOURCES ${SOURCES} )
 set(SBNW_HEADERS ${HEADERS} )
 
 
-# Sphinx 
-
-configure_file(docs/source/conf.py docs/source/conf.py)
-configure_file(docs/source/index.rst docs/source/index.rst COPYONLY)
-configure_file(docs/Makefile docs/Makefile COPYONLY)
-
 # Shared Library
 
 add_library(libsbml_draw SHARED ${SBNW_SOURCES})
 
 set_target_properties(libsbml_draw PROPERTIES COMPILE_DEFINITIONS SBNW_CLIENT_BUILD=0 )
 
-# Link in dependencies
 
-if(LINK_WITH_LIBSBML)
-    # libxml2 libbz2 zdll libiconv Ws2_32
-    target_link_libraries(libsbml_draw ${LIBSBML_STATIC_LIBRARY} ${LIBXML2_DIR}) 
-    target_link_libraries(libsbml_draw ${LIBSBML_STATIC_LIBRARY} ${LIBBZ2_DIR}) 
-    target_link_libraries(libsbml_draw ${LIBSBML_STATIC_LIBRARY} ${ZLIB_DIR}) 
-    if(${WIN32})
-        target_link_libraries(libsbml_draw ${LIBSBML_STATIC_LIBRARY} ${LIBICONV_DIR}) 
-        target_link_libraries(libsbml_draw ${LIBSBML_STATIC_LIBRARY} ws2_32.lib) 
-    endif()
+# Link in dependencies - libxml2 libbz2 zdll libiconv Ws2_32
+
+target_link_libraries(libsbml_draw ${LIBSBML_STATIC_LIBRARY} ${LIBXML2_PATH}) 
+target_link_libraries(libsbml_draw ${LIBSBML_STATIC_LIBRARY} ${LIBBZ2_PATH}) 
+target_link_libraries(libsbml_draw ${LIBSBML_STATIC_LIBRARY} ${ZLIB_PATH}) 
+if(${WIN32})
+    target_link_libraries(libsbml_draw ${LIBSBML_STATIC_LIBRARY} ${LIBICONV_PATH}) 
+    target_link_libraries(libsbml_draw ${LIBSBML_STATIC_LIBRARY} ws2_32.lib) 
 endif()
+
 
 # Static Library
 
 if(BUILD_STATIC_LIB)
+
     add_library(libsbml_draw_static STATIC ${SBNW_SOURCES})
     set_target_properties(libsbml_draw_static PROPERTIES COMPILE_DEFINITIONS SBNW_CLIENT_BUILD=0 )
-    if(${CMAKE_SYSTEM_NAME} MATCHES "Windows")
-        set_target_properties(libsbml_draw_static PROPERTIES OUTPUT_NAME "libsbnw_static" COMPILE_FLAGS
-"/DPY_MAJOR_VERSION=${PYTHON_VERSION_MAJOR}) /DPYTHON_SCREWED_IT_UP=1" PREFIX "" )
-    else()
+
+    if(${CMAKE_SYSTEM_NAME} MATCHES "Linux")
         set_target_properties(libsbml_draw_static PROPERTIES COMPILE_FLAGS "-fPIC")
     endif()
 
     # Link in dependencies
 
     # SBML
-    target_link_libraries(libsbml_draw_static ${LIBSBML_STATIC_LIBRARY} ${LIBXML2_DIR})
-    target_link_libraries(libsbml_draw_static ${LIBSBML_STATIC_LIBRARY} ${LIBBZ2_DIR}) 
-    target_link_libraries(libsbml_draw_static ${LIBSBML_STATIC_LIBRARY} ${ZLIB_DIR}) 
+    target_link_libraries(libsbml_draw_static ${LIBSBML_STATIC_LIBRARY} ${LIBXML2_PATH})
+    target_link_libraries(libsbml_draw_static ${LIBSBML_STATIC_LIBRARY} ${LIBBZ2_PATH}) 
+    target_link_libraries(libsbml_draw_static ${LIBSBML_STATIC_LIBRARY} ${ZLIB_PATH}) 
     if(${WIN32})
-        target_link_libraries(libsbml_draw_static ${LIBSBML_STATIC_LIBRARY} ${LIBICONV_DIR})
+        target_link_libraries(libsbml_draw_static ${LIBSBML_STATIC_LIBRARY} ${LIBICONV_PATH})
         target_link_libraries(libsbml_draw_static ${LIBSBML_STATIC_LIBRARY} ws2_32.lib) 
     endif()
+
 endif()
+
 
 # Library dist
 install(TARGETS libsbml_draw RUNTIME DESTINATION bin LIBRARY DESTINATION lib ARCHIVE DESTINATION lib)
+
 
 # Header dist
 add_custom_target(headers)
@@ -190,19 +196,7 @@ foreach(f ${SBNW_HEADERS})
     ${CMAKE_CURRENT_BINARY_DIR}/../include/libsbml_draw/${f})
 endforeach()
 
+
 message(STATUS "PYTHON_VERSION_MAJOR ${PYTHON_VERSION_MAJOR}")
-
-# Python
-
-
-# Doxygen
-
-set(DOXYGEN_OTHER_FILES)
-set(SBNW_DOXY_INPUT "")
-foreach(f ${HEADERS} ${DOXYGEN_OTHER_FILES})
-    set(SBNW_DOXY_INPUT "${SBNW_DOXY_INPUT} ${CMAKE_CURRENT_SOURCE_DIR}/${f}")
-endforeach()
-configure_file(doxy/doxy.cfg doxy/doxy.cfg)
-add_custom_target(docs COMMAND doxygen doxy/doxy.cfg)
 
 

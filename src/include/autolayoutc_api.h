@@ -16,7 +16,7 @@
 
 #include "SagittariusCore.h"
 #include "autolayoutSBML.h"
-#include "layout.h"  //says, graphfab/sbml/layout, is this the right one?
+#include "layout.h"
 #include "fr.h"
 
 #endif

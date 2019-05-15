@@ -36,7 +36,7 @@ class SBMLlayout:
         else:
             self.__layout_alg_options = sbnw.fr_alg_options(
                 20.0,        # k
-                1,           # boundary
+                0,           # boundary
                 0,           # mag
                 0,           # grav
                 500.0,       # baryx

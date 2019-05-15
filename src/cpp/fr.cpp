@@ -13,9 +13,9 @@
 #include "dist.h"
 #include "transform.h"
 
-#if SBNW_USE_MAGICK
-#include "magick.h"
-#endif
+//#if SBNW_USE_MAGICK
+//#include "magick.h"
+//#endif
 
 #include <sstream>
 
@@ -29,13 +29,9 @@ static bool dumpForces_ = false;
 
 void gf_getLayoutOptDefaults(fr_options* opt) {
     opt->k = 50.;
-    opt->boundary = 0;
-    opt->mag = 0;
     opt->grav = 0.;
     opt->baryx = opt->baryy = 500.;
     opt->autobary = 1;
-    opt->enable_comps = 0;
-    opt->prerandomize = 0;
     opt->padding = 15;
 }
 
@@ -50,10 +46,6 @@ void gf_doLayoutAlgorithm(fr_options opt, gf_layoutInfo* l) {
     AN(net, "No network");
     Canvas* can = (Canvas*)l->canv;
     AN(can, "No canvas");
-    
-    if(opt.prerandomize)
-        //TODO: use canvas width, height
-        net->randomizePositions(LibsbmlDraw::Box(LibsbmlDraw::Point(0.,0.), LibsbmlDraw::Point(1024., 1024.)));
     
 	FruchtermanReingold(opt, *net, can, l);
 }
@@ -71,10 +63,6 @@ void gf_doLayoutAlgorithm2(fr_options opt, gf_network* n, gf_canvas* c) {
         AN(can, "No canvas");
     }
     
-    if(opt.prerandomize)
-        //TODO: use canvas width, height
-        net->randomizePositions(LibsbmlDraw::Box(LibsbmlDraw::Point(0.,0.), LibsbmlDraw::Point(1024., 1024.)));
-    
     FruchtermanReingold(opt, *net, can, NULL);
 }
 
@@ -83,7 +71,7 @@ namespace LibsbmlDraw {
     bool eltTypesInteract(const NetworkEltType a, const NetworkEltType b, fr_options* opt) {
 //         if (a == b && b == NET_ELT_TYPE_SPEC)
 //           return false;
-        if(!opt->enable_comps && typeMatchEither(a,b,NET_ELT_TYPE_COMP))
+        if(typeMatchEither(a,b,NET_ELT_TYPE_COMP))
             return false;
         if(typeMatchEither(a,b,NET_ELT_TYPE_RXN) && typeMatchEither(a,b,NET_ELT_TYPE_COMP))
             //reactions & comps don't interact
@@ -206,29 +194,6 @@ namespace LibsbmlDraw {
                 if(!eltTypesInteract(u->getType(), v->getType(), &opt))
                     continue; // elements do not interact
                 
-                if(opt.enable_comps) {
-                    if(u->getType() == NET_ELT_TYPE_COMP && v->getType() == NET_ELT_TYPE_COMP) {
-                        // comp-comp interaction
-                        //AN(0);
-                        do_repulForce(*u, *v, k, num);
-                        continue;
-                    }
-                    
-                    if(!comp && v->getType() == NET_ELT_TYPE_COMP) {
-                        comp = dynamic_cast<Compartment*>(v); //get the associated compartment
-                        v = u;
-                    }
-                    
-                    if(comp) {
-                        if(v->getType() != NET_ELT_TYPE_COMP) {
-                            if(comp->contains(v)) {
-                                // node inside a compartment
-                                do_internalForce(v, *comp, k);
-                                continue;
-                            }
-                        }
-                    }
-                }
                 do_repulForce(*u, *v, k, num);
             }
         }
@@ -256,27 +221,12 @@ namespace LibsbmlDraw {
         //net.updatePositions(0.000025*T);
 //         net.updatePositions(0.0001*T);
         net.updatePositions(T);
-        
-        //boundary
-        /*if(opt.boundary) {
-            net.doNodeBoxContactForce(bound, T, 10.);
-        }*/
+
     }
     
     void FruchtermanReingold(fr_options opt, Network& net, Canvas* can, gf_layoutInfo* l) {
         //AT(feenableexcept(FE_DIVBYZERO) != -1);
         Box bound;
-        if(opt.boundary) {
-            AN(can, "Boundary specified but no canvas");
-            bound = can->getBox();
-            if(bound.canShrink(20.))
-                bound.shrink_(20.);
-            if(opt.autobary) {
-                //adjust barycenter
-                opt.baryx = can->getWidth() *0.5;
-                opt.baryy = can->getHeight()*0.5;
-            }
-        }
         
         uint64 num = net.getTotalNumPts();
         uint64 m = 100.*log((Real)num+2);
@@ -321,7 +271,7 @@ namespace LibsbmlDraw {
 //             std::cout << "Network mean: " << net.pmean() << "\n";
 //             std::cout << "Network variance: " << net.pvariance() << "\n";
             
-            #if SBNW_USE_MAGICK && 0
+            /*#if SBNW_USE_MAGICK && 0
             if(!(z % 10)) {
                 net.rebuildCurves();
                 std::stringstream ss;
@@ -338,11 +288,10 @@ namespace LibsbmlDraw {
                 AN(l, "Need layout to write images");
                 gf_MagickRenderToFile(l, ss.str().c_str(), &view);
             }
-            #endif
+            #endif  */
         }
         
-        if(!opt.enable_comps)
-            net.resizeCompsEnclose(opt.padding);
+        net.resizeCompsEnclose(opt.padding);
         
         net.rebuildCurves();
     }

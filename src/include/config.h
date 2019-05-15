@@ -13,12 +13,12 @@
 #define __SAGITTARIUS_CONFIGURE_HEADER__
 
 #define SBNW_MAJOR_VER      1
-#define SBNW_MINOR_VER      3
-#define SBNW_PATCHLEVEL     27
+#define SBNW_MINOR_VER      0
+#define SBNW_PATCHLEVEL     0
 
 //#define SAGITTARIUS_BIN_PATH 
 
-#define SBNW_USE_MAGICK     0
+#define SBNW_USE_MAGICK     
 #define SBNW_DEBUG_LEVEL    2
 
 #endif //#ifndef __SAGITTARIUS_CONFIGURE_HEADER__
