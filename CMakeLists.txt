@@ -10,7 +10,7 @@
 #
 
 cmake_minimum_required(VERSION 2.8.12)
-project(libsbml_draw)
+project(sbml_draw)
 
 set(SBNW_MAJOR_VER 1)
 set(SBNW_MINOR_VER 0)
@@ -144,19 +144,19 @@ set(SBNW_HEADERS ${HEADERS} )
 
 # Shared Library
 
-add_library(libsbml_draw SHARED ${SBNW_SOURCES})
+add_library(sbml_draw SHARED ${SBNW_SOURCES})
 
-set_target_properties(libsbml_draw PROPERTIES COMPILE_DEFINITIONS SBNW_CLIENT_BUILD=0 )
+set_target_properties(sbml_draw PROPERTIES COMPILE_DEFINITIONS SBNW_CLIENT_BUILD=0 )
 
 
 # Link in dependencies - libxml2 libbz2 zdll libiconv Ws2_32
 
-target_link_libraries(libsbml_draw ${LIBSBML_STATIC_LIBRARY} ${LIBXML2_PATH}) 
-target_link_libraries(libsbml_draw ${LIBSBML_STATIC_LIBRARY} ${LIBBZ2_PATH}) 
-target_link_libraries(libsbml_draw ${LIBSBML_STATIC_LIBRARY} ${ZLIB_PATH}) 
+target_link_libraries(sbml_draw ${LIBSBML_STATIC_LIBRARY} ${LIBXML2_PATH}) 
+target_link_libraries(sbml_draw ${LIBSBML_STATIC_LIBRARY} ${LIBBZ2_PATH}) 
+target_link_libraries(sbml_draw ${LIBSBML_STATIC_LIBRARY} ${ZLIB_PATH}) 
 if(${WIN32})
-    target_link_libraries(libsbml_draw ${LIBSBML_STATIC_LIBRARY} ${LIBICONV_PATH}) 
-    target_link_libraries(libsbml_draw ${LIBSBML_STATIC_LIBRARY} ws2_32.lib) 
+    target_link_libraries(sbml_draw ${LIBSBML_STATIC_LIBRARY} ${LIBICONV_PATH}) 
+    target_link_libraries(sbml_draw ${LIBSBML_STATIC_LIBRARY} ws2_32.lib) 
 endif()
 
 
@@ -164,36 +164,36 @@ endif()
 
 if(BUILD_STATIC_LIB)
 
-    add_library(libsbml_draw_static STATIC ${SBNW_SOURCES})
-    set_target_properties(libsbml_draw_static PROPERTIES COMPILE_DEFINITIONS SBNW_CLIENT_BUILD=0 )
+    add_library(sbml_draw_static STATIC ${SBNW_SOURCES})
+    set_target_properties(sbml_draw_static PROPERTIES COMPILE_DEFINITIONS SBNW_CLIENT_BUILD=0 )
 
     if(${CMAKE_SYSTEM_NAME} MATCHES "Linux")
-        set_target_properties(libsbml_draw_static PROPERTIES COMPILE_FLAGS "-fPIC")
+        set_target_properties(sbml_draw_static PROPERTIES COMPILE_FLAGS "-fPIC")
     endif()
 
     # Link in dependencies
 
     # SBML
-    target_link_libraries(libsbml_draw_static ${LIBSBML_STATIC_LIBRARY} ${LIBXML2_PATH})
-    target_link_libraries(libsbml_draw_static ${LIBSBML_STATIC_LIBRARY} ${LIBBZ2_PATH}) 
-    target_link_libraries(libsbml_draw_static ${LIBSBML_STATIC_LIBRARY} ${ZLIB_PATH}) 
+    target_link_libraries(sbml_draw_static ${LIBSBML_STATIC_LIBRARY} ${LIBXML2_PATH})
+    target_link_libraries(sbml_draw_static ${LIBSBML_STATIC_LIBRARY} ${LIBBZ2_PATH}) 
+    target_link_libraries(sbml_draw_static ${LIBSBML_STATIC_LIBRARY} ${ZLIB_PATH}) 
     if(${WIN32})
-        target_link_libraries(libsbml_draw_static ${LIBSBML_STATIC_LIBRARY} ${LIBICONV_PATH})
-        target_link_libraries(libsbml_draw_static ${LIBSBML_STATIC_LIBRARY} ws2_32.lib) 
+        target_link_libraries(sbml_draw_static ${LIBSBML_STATIC_LIBRARY} ${LIBICONV_PATH})
+        target_link_libraries(sbml_draw_static ${LIBSBML_STATIC_LIBRARY} ws2_32.lib) 
     endif()
 
 endif()
 
 
 # Library dist
-install(TARGETS libsbml_draw RUNTIME DESTINATION bin LIBRARY DESTINATION lib ARCHIVE DESTINATION lib)
+install(TARGETS sbml_draw RUNTIME DESTINATION bin LIBRARY DESTINATION lib ARCHIVE DESTINATION lib)
 
 
 # Header dist
 add_custom_target(headers)
 foreach(f ${SBNW_HEADERS})
     add_custom_command(TARGET headers COMMAND ${CMAKE_COMMAND} -E copy ${CMAKE_CURRENT_SOURCE_DIR}/${f}
-    ${CMAKE_CURRENT_BINARY_DIR}/../include/libsbml_draw/${f})
+    ${CMAKE_CURRENT_BINARY_DIR}/../include/sbml_draw/${f})
 endforeach()
 
 

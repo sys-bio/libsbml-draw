@@ -36,15 +36,11 @@ class SBMLlayout:
         else:
             self.__layout_alg_options = sbnw.fr_alg_options(
                 20.0,        # k
-                0,           # boundary
-                0,           # mag
-                0,           # grav
+                0,           # grav, has to be > 5 for effect
                 500.0,       # baryx
-                0.0,         # baryy
+                500.0,       # baryy
                 1,           # autobary
-                0,           # enable_comps
-                0,           # prerandom
-                20.0          # padding
+                20.0         # padding
             )
 
         if isinstance(self.__sbml_source, str):
@@ -61,12 +57,6 @@ class SBMLlayout:
                                      f"does not exist.")
 
             self.__h_layout_info = sbnw.processLayout(self.__h_model)
-
-#            if self.__h_layout_info.contents.level != 3:
-#                raise ValueError(f"SBML source is level "
-#                                 f"{self.__h_layout_info.contents.level}, "
-#                                 f"libsbml_draw supports level 3 only.")
-
             self.__h_network = sbnw.getNetworkp(self.__h_layout_info)
             self.__layoutSpecified = True if sbnw.isLayoutSpecified(
                     self.__h_network) else False
@@ -124,16 +114,14 @@ class SBMLlayout:
         """
         self.__init__(sbml_string)
 
-    def setLayoutAlgorithmOptions(self, k=None, boundary=None,
-                                  grav=None, baryx=None, baryy=None,
-                                  autobary=None, padding=None
+    def setLayoutAlgorithmOptions(self, k=None, grav=None, baryx=None,
+                                  baryy=None, autobary=None, padding=None
                                   ):
         """
         Set values for the Fruchterman-Reingold layout algorithm parameters.
 
         Args:
             k (float):
-            boundary (int):
             gravity (float):
             baryx (float):
             baryy (float):
@@ -144,8 +132,6 @@ class SBMLlayout:
         """
         if k:
             self.__layout_alg_options.k = k
-        if boundary:
-            self.__layout_alg_options.boundary = boundary
         if grav:
             self.__layout_alg_options.grav = grav
         if baryx:
@@ -166,26 +152,6 @@ class SBMLlayout:
         Returns: None
         """
         self.__layout_alg_options.k = k
-
-    def setLayoutAlgorithm_boundary(self, boundary):
-        """Set the Fruchterman-Reingold layout algorithm parameter 'boundary'.
-
-        Args:
-            boundary (int):
-
-        Returns: None
-        """
-        self.__layout_alg_options.boundary = boundary
-
-#    def setLayoutAlgorithm_mag(self, magnitude):
-#        """Set the Fruchterman-Reingold layout algorithm parameter 'mag'.
-#
-#        Args:
-#            mag (int):
-#
-#        Returns: None
-#        """
-#        self.__layout_alg_options.mag = magnitude
 
     def setLayoutAlgorithm_grav(self, gravity):
         """Set the Fruchterman-Reingold layout algorithm parameter 'grav'.
@@ -227,27 +193,6 @@ class SBMLlayout:
         """
         self.__layout_alg_options.autobary = autobary
 
-#    def setLayoutAlgorithm_enable_comps(self, enable_comps):
-#        """Set the Fruchterman-Reingold layout algorithm parameter
-#        'enable_comps'.
-#
-#        Args:
-#            enable_comps (int):
-#
-#        Returns: None
-#        """
-#        self.__layout_alg_options.enable_comps = enable_comps
-
-#    def setLayoutAlgorithm_prerandom(self, prerandom):
-#       """Set the Fruchterman-Reingold layout algorithm parameter 'prerandom'.
-#
-#        Args:
-#            prerandom (int):
-#
-#        Returns: None
-#        """
-#        self.__layout_alg_options.prerandom = prerandom
-
     def setLayoutAlgorithm_padding(self, padding):
         """Set the Fruchterman-Reingold layout algorithm parameter 'padding'.
 
@@ -269,8 +214,7 @@ class SBMLlayout:
 
     def showLayoutAlgorithmOptions(self,):
         """Prints out the values of the Fruchterman-Reingold algorithm
-        paramters, which are: k, boundary, mag, grav, baryx, baryy, autobary,
-        enable_comps, prerandom, and padding.
+        paramters, which are: k, grav, baryx, baryy, autobary, and padding.
 
         Args: None
 
@@ -278,14 +222,10 @@ class SBMLlayout:
         """
         print("layout algorithm options: \n",
               "k ", self.__layout_alg_options.k, "\n",
-              "boundary ", self.__layout_alg_options.boundary, "\n",
-              "magnitude ", self.__layout_alg_options.mag, "\n",
               "gravity ", self.__layout_alg_options.grav, "\n",
               "baryx ", self.__layout_alg_options.baryx, "\n",
               "baryy ", self.__layout_alg_options.baryy, "\n",
               "autobary ", self.__layout_alg_options.autobary, "\n",
-              "enable_comps ", self.__layout_alg_options.enable_comps, "\n",
-              "prerandom ", self.__layout_alg_options.prerandom, "\n",
               "padding ", self.__layout_alg_options.padding, "\n"
               )
 

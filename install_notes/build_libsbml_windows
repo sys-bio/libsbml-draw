@@ -1,0 +1,48 @@
+1. Download the Source Files
+https://sourceforge.net/projects/sbml/files/libsbml/5.18.0/stable/
+
+2. Extract to location: (like)
+   C:/Users/nrhaw/Documents/libsbml-5.18.0.src-plus-pkgs.../libsbml-5.18.0.Source
+
+3. Follow the install instructions - Building under Linux
+http://sbml.org/Software/libSBML/5.18.0/docs/cpp-api/libsbml-installation.html
+
+4. configure using CMake
+
+5. start-up CMake 
+
+6. CMake instructions:
+    -specify location of the source code, C:/Users/nrhaw/Documents/libsbml-5.18.0.etc
+    -specify location for where to build the binaries, <inside the above>/build
+
+    -choose default native compilers in pop-up window (looks like Vis Studio 2017 is the latest...)
+        -linker? Used 2017, seemed to work 
+        -C:\Program Files (x86)\Microsoft Visual Studio\2019\Community\VC\Tools\MSVC\number\bin\Hostx64\x64
+
+    -specify location for: 
+     CMAKE_INSTALL_PREFIX = <inside the above>/install
+    -LIBXML_INCLUDE_DIR = used what's in Anaconda3/Library/include
+    -WITH_PYTHON = True
+    -LIBZ_LIBRARY - these 2 are in the dependencies dir mentioned above
+    -LIBBZ_LIBRARY - ""
+    -Configure, now ENABLE vars appear:
+        ENABLE_FBC, ENABLE_L3v2EXTENDEDMATH (already checked), ENABLE_LAYOUT, ENABLE_RENDER
+    -PYTHON_LIBRARY - these are inside Anaconda3
+    -PYTHON_INCLUDE_DIR - ""
+    -WITH_BZIP2 = WITH_ZLIB = True
+    -WITH_LIBXML = True, used what's in Anaconda3/Library/lib
+
+    -used Anaconda3 for libxml2 and for python
+    -copied and used the dependencies directory for the others
+
+7. Click on Generate - generating done (generates config files)
+
+8. Click on Open Project:
+    -select Visual Studio 2019 (community edition)
+    -select Release, x64
+    -right click on the ALL_BUILD target, select Build   
+    -right click on the INSTALL target, select Build 
+
+
+
+    

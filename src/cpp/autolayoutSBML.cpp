@@ -28,18 +28,18 @@ extern "C" gf_SBMLModel* gf_loadSBMLbuf(const char* buf) {
 
     if(doc->getLevel() == 2) {
         success = doc->setLevelAndVersion(SBMLDocument::getDefaultLevel(), SBMLDocument::getDefaultVersion());
-    }
 
-    if (!success) {
-        std::cerr << "Unable to perform conversion due to the following:" << std::endl;
-        doc->printErrors(std::cerr);    
-        std::cout << std::endl;
-        std::cout << "Conversion skipped.  Either libSBML does not (yet)" << std::endl
+        if (!success) {
+            std::cerr << "Unable to perform conversion due to the following:" << std::endl;
+            doc->printErrors(std::cerr);    
+            std::cout << std::endl;
+            std::cout << "Conversion skipped.  Either libSBML does not (yet)" << std::endl
             << "have the ability to convert this model or (automatic)" << std::endl
             << "conversion is not possible in this case." << std::endl;
 
-        delete doc;
-        return NULL;    
+            delete doc;
+            return NULL;    
+        }    
     }
 
     AN(doc, "Failed to parse SBML"); //not libSBML's documented way of failing, but just in case...

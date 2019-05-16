@@ -31,17 +31,12 @@ ROLES = (GF_ROLE_SUBSTRATE,
 
 
 # Classes
-# The default values for the fr_alg_options are 0's
 class fr_alg_options(ctypes.Structure):
     _fields_ = [("k", ctypes.c_double),
-                ("boundary", ctypes.c_int),
-                ("mag", ctypes.c_int),
                 ("grav", ctypes.c_double),
                 ("baryx", ctypes.c_double),
                 ("baryy", ctypes.c_double),
                 ("autobary", ctypes.c_int),
-                ("enable_comps", ctypes.c_int),
-                ("prerandom", ctypes.c_int),
                 ("padding", ctypes.c_double)]
 
 
@@ -501,6 +496,11 @@ def compartment_getID(h_compartment):
 
 # def RenderExtension_getXmlnsL3V1V1():
 #    return slib.RenderExtension.getXmlnsL3V1V()
+
+#            if self.__h_layout_info.contents.level != 3:
+#                raise ValueError(f"SBML source is level "
+#                                 f"{self.__h_layout_info.contents.level}, "
+#                                 f"libsbml_draw supports level 3 only.")
 
 slib.gf_reaction_hasSpec.argtypes = [ctypes.c_uint64, ctypes.c_uint64]
 slib.gf_reaction_hasSpec.restype = ctypes.c_int
