@@ -21,7 +21,7 @@ sl = SBMLlayout(str(model_file))
 
 sl._describeModel()
 
-sl.drawNetwork(figure_size=(13,13))
+sl.drawNetwork("complicated_nodes.png", figure_size=(13,13))
 
 #sl.setNodeFontSize("all", 6)
 
