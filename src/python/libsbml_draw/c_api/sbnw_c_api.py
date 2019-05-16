@@ -9,7 +9,8 @@ import platform
 
 if platform.system() == "Windows":
     DLL_FILE = Path(pkg_resources.resource_filename(
-            "libsbml_draw", "c_api/data/sbnw.dll"))
+            "libsbml_draw", "c_api/data/sbml_draw.dll"))
+    print('dll file is', str(DLL_FILE))
     slib = ctypes.CDLL(str(DLL_FILE))
 elif platform.system() == "Linux":
     SO_FILE = Path(pkg_resources.resource_filename(
@@ -53,12 +54,13 @@ class curveCP(ctypes.Structure):
 
 
 class layout_info(ctypes.Structure):
-    _fields_ = [("net", ctypes.c_void_p), 
+    _fields_ = [("net", ctypes.c_void_p),
                 ("canv", ctypes.c_void_p),
                 ("cont", ctypes.c_char_p),
                 ("level", ctypes.c_int),
                 ("version", ctypes.c_int)
-               ]
+                ]
+
 
 # Library Info Functions
 slib.gf_getCurrentLibraryVersion.restype = ctypes.c_char_p
@@ -505,10 +507,13 @@ def compartment_getID(h_compartment):
 slib.gf_reaction_hasSpec.argtypes = [ctypes.c_uint64, ctypes.c_uint64]
 slib.gf_reaction_hasSpec.restype = ctypes.c_int
 
+
 def reaction_hasSpec(h_reaction, h_species):
     return not not slib.gf_reaction_hasSpec(h_reaction, h_species)
 
+
 slib.gf_reaction_recenter.argtypes = [ctypes.c_uint64]
+
 
 def reaction_recenter(h_reaction):
     return not not slib.gf_reaction_recenter(h_reaction)

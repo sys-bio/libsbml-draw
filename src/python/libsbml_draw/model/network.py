@@ -137,7 +137,7 @@ class Network():
             num_aliases = sbnw.nw_getNumAliasInstances(self.h_network, h_node)
 
             for alias_index in range(num_aliases):
-                h_alias_node = sbnw.nw_getAliasInstancep(self.h_network, 
+                h_alias_node = sbnw.nw_getAliasInstancep(self.h_network,
                                                          h_node, alias_index)
 
                 alias_node_id = sbnw.node_getID(

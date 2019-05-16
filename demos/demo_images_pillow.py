@@ -9,7 +9,7 @@ from IPython.display import display   # to display images
 
 im = Image.open("complicated_nodes.png")
 
-display(im)
+#display(im)
 
 # opens ImageMagick
 # im.show()
@@ -18,20 +18,24 @@ print(im.format, im.size, im.mode)
 
 out = im.resize((1000, 1000))
 type(out)
-display(out)
+
+#display(out)
 
 
 ## 
 ## Option 2
 ##
 
-from matplotlib.pyplot import imshow
+import matplotlib.pyplot as plt
+from matplotlib.pyplot import imshow, figure
 import numpy as np
 from PIL import Image
 
 #%matplotlib inline
 pil_im = Image.open("complicated_nodes.png", 'r')
+figure(figsize=(12, 12))
 imshow(np.asarray(pil_im))
+plt.axis('off')
 # unknown property width
 #imshow(np.asarray(pil_im), width=1000, height=1000)
 #imshow(random.rand(8, 90), interpolation='nearest', aspect='auto')
@@ -45,7 +49,7 @@ imshow(np.asarray(pil_im))
 from IPython.display import Image 
 im = Image(filename="complicated_nodes.png", width=500, height=500)
 type(im)
-display(im)
+#display(im)
 
 
 #from PIL import Image               # to load images
@@ -58,3 +62,13 @@ display(im)
 # To see methods:
 # -------------------------------
 # PIL.Image.Image.tab
+
+def run_from_ipython():
+    try:
+        __IPYTHON__
+        return True
+    except NameError:
+        return False
+
+
+print("running from ipython: ", run_from_ipython())

@@ -46,7 +46,7 @@ def draw_nodes(nodes):
     node_patches = []
 
     for node in nodes:
-        
+
         fbbp = FancyBboxPatch(
             node.lower_left_point,
             node.width,
@@ -78,9 +78,9 @@ def draw_reactions(reactions, mutation_scale):
 
         for curve in curves:
 
-            start_point = np.array([curve.start_point.x, 
+            start_point = np.array([curve.start_point.x,
                                     curve.start_point.y])
-            end_point = np.array([curve.end_point.x, 
+            end_point = np.array([curve.end_point.x,
                                   curve.end_point.y])
             control_point_1 = np.array([curve.control_point_1.x,
                                         curve.control_point_1.y])
@@ -136,20 +136,20 @@ def createNetworkFigure(network, mutation_scale, figure_size=None, show=True):
     Args:
         network (libsbml_draw.model.network.Network): the model's network which
             contains Nodes and Reactions.
-        mutation_scale (dict): keys are roles (int), values are for 
+        mutation_scale (dict): keys are roles (int), values are for
             matplotlib's mutation_scale parameter
-        figure_size (tuple): (width, height) in inches    
-        show (bool): displays the figure if True 
+        figure_size (tuple): (width, height) in inches
+        show (bool): displays the figure if True
 
     Returns: matplotlib.figure.Figure
     """
     fig = plt.figure()
-    fig.set_dpi(72)    
-    
+    fig.set_dpi(72)
+
     # initialize figure
-    if figure_size and len(figure_size) == 2: 
+    if figure_size and len(figure_size) == 2:
         fig = plt.figure(figsize=figure_size)
-    else:    
+    else:
         fig = plt.figure()
 
     ax = plt.gca()
@@ -175,8 +175,8 @@ def createNetworkFigure(network, mutation_scale, figure_size=None, show=True):
     # add labels
     add_labels(network.nodes.values())
     # No axes and size it just bigger than the data (i.e. tight)
-    #ax.autoscale()
-    
+    # ax.autoscale()
+
     plt.axis("off")
     plt.axis("tight")
     plt.axis("equal")

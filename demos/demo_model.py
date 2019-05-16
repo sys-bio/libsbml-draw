@@ -19,6 +19,12 @@ sl.drawNetwork()
 
 sl._describeReaction(0)
 
+
+out_file = "model_out.xml"        
+sl.writeSBMLFile("model_out.xml")
+sl2 = SBMLlayout(out_file)
+sl2.drawNetwork()
+
 sl.getArrowheadVert(1,1)
 
 centroid = sl.getNodeCentroid("X0")
