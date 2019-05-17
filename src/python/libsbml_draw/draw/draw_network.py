@@ -6,6 +6,8 @@ from matplotlib.patches import BoxStyle, FancyArrowPatch, FancyBboxPatch
 from matplotlib.path import Path
 from matplotlib import pyplot as plt
 
+import pathlib
+import tempfile
 
 def draw_compartments(compartments):
     """Create a list of FancyBbox Patches, one for each compartment.
@@ -143,6 +145,8 @@ def createNetworkFigure(network, mutation_scale, figure_size=None, show=True):
 
     Returns: matplotlib.figure.Figure
     """
+    MAX_FIGURE_DIM_TO_DISPLAY = 7  # inches
+    
     fig = plt.figure()
     fig.set_dpi(72)
 
@@ -182,8 +186,52 @@ def createNetworkFigure(network, mutation_scale, figure_size=None, show=True):
     plt.axis("equal")
 
     if show:
-        plt.show()
+        if ((fig.get_figheight() > MAX_FIGURE_DIM_TO_DISPLAY or 
+             fig.get_figwidth() > MAX_FIGURE_DIM_TO_DISPLAY) and 
+            running_ipython()):
+        
+            save_png_and_display_scaled_down_image(fig)    
+            
+            plt.close()
+           
+        else:
+            plt.show()
     else:
         plt.close()
 
-    return fig
+    return fig 
+
+def save_png_and_display_scaled_down_image(figure):
+    """Temporarily saves a figure as a png file, and then displays that png.
+
+    Args:
+        figure (matplotlib.figure.Figure): the figure to display
+
+    Returns: None
+    """
+    NETWORK_IMAGE = "network_image.png"
+
+    with tempfile.TemporaryDirectory() as tmpdirname:
+        file_path = str(pathlib.Path(tmpdirname) / NETWORK_IMAGE)
+        
+        # print("filepath: ", file_path)
+        
+        figure.savefig(file_path)
+        from IPython.display import Image 
+        from IPython.display import display
+        im = Image(filename=file_path, width=500, height=500)
+        display(im)    
+    
+def running_ipython():
+    """Check if the user is running in iPython
+    
+    Args: None
+    
+    Returns: bool, True if running in iPython
+    """
+    try:
+        __IPYTHON__
+        return True
+    except NameError:
+        return False
+    

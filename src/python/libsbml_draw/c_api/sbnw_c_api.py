@@ -10,7 +10,6 @@ import platform
 if platform.system() == "Windows":
     DLL_FILE = Path(pkg_resources.resource_filename(
             "libsbml_draw", "c_api/data/sbml_draw.dll"))
-    print('dll file is', str(DLL_FILE))
     slib = ctypes.CDLL(str(DLL_FILE))
 elif platform.system() == "Linux":
     SO_FILE = Path(pkg_resources.resource_filename(

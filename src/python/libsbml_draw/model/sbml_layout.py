@@ -1613,10 +1613,10 @@ class SBMLlayout:
 #                                node_with_longest_name.font_size,
 #                                default_matplotlib_h_w_ratio*fig_width_inches)
 
-        print("max x", max_x_in_network, "min x", min_x_in_network)
-        print("fig width", figure_width_data_units)
-        print("fig width inches", fig_width_inches)
-        print("fig height inches", fig_height_inches)
+        # print("max x", max_x_in_network, "min x", min_x_in_network)
+        # print("fig width", figure_width_data_units)
+        # print("fig width inches", fig_width_inches)
+        # print("fig height inches", fig_height_inches)
 
         return (fig_width_inches, fig_height_inches)
 
