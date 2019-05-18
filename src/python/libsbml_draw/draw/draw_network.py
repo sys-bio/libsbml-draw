@@ -55,6 +55,7 @@ def draw_nodes(nodes):
             node.height,
             edgecolor=node.edge_color,
             facecolor=node.fill_color,
+            linewidth=node.edge_width,
             boxstyle=BoxStyle("round", pad=0.4, rounding_size=.8),
             mutation_scale=10
             )
@@ -145,6 +146,13 @@ def createNetworkFigure(network, mutation_scale, figure_size=None, show=True):
 
     Returns: matplotlib.figure.Figure
     """
+    # SUPPRESS MAtPLOTLIB OUTPUT
+    if running_ipython():
+        from IPython.core.interactiveshell import InteractiveShell
+        InteractiveShell.ast_node_interactivity = "last_expr"
+    else:
+        pass
+    
     MAX_FIGURE_DIM_TO_DISPLAY = 7  # inches
     
     fig = plt.figure()
@@ -154,7 +162,7 @@ def createNetworkFigure(network, mutation_scale, figure_size=None, show=True):
     if figure_size and len(figure_size) == 2:
         fig = plt.figure(figsize=figure_size)
     else:
-        fig = plt.figure()
+        pass
 
     ax = plt.gca()
 
@@ -180,6 +188,10 @@ def createNetworkFigure(network, mutation_scale, figure_size=None, show=True):
     add_labels(network.nodes.values())
     # No axes and size it just bigger than the data (i.e. tight)
     # ax.autoscale()
+    
+    # WHITE SPACE
+    # plt.subplots_adjust(left=0.1, right=0.9, top=0.9, bottom=0.1)
+    #fig.tight_layout()
 
     plt.axis("off")
     plt.axis("tight")
@@ -189,17 +201,20 @@ def createNetworkFigure(network, mutation_scale, figure_size=None, show=True):
         if ((fig.get_figheight() > MAX_FIGURE_DIM_TO_DISPLAY or 
              fig.get_figwidth() > MAX_FIGURE_DIM_TO_DISPLAY) and 
             running_ipython()):
-        
-            save_png_and_display_scaled_down_image(fig)    
-            
+
+            save_png_and_display_scaled_down_image(fig)
+
             plt.close()
-           
+
         else:
             plt.show()
     else:
         plt.close()
 
-    return fig 
+    # SUPPRESS MAtPLOTLIB OUTPUT
+    pass;
+
+    return fig;
 
 def save_png_and_display_scaled_down_image(figure):
     """Temporarily saves a figure as a png file, and then displays that png.

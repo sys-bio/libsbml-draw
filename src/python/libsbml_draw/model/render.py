@@ -118,6 +118,8 @@ class Render:
         node_edge_color = self._set_plot_color_and_validity(
                 render_style.getGroup().getStroke())
 
+        node_edge_width = render_style.getGroup().getStrokeWidth()
+
         nodes_to_update = {k: network.nodes[k]
                            for k in network.nodes.keys() & idList}
 
@@ -134,6 +136,8 @@ class Render:
             else:
                 pass
                 # stick with default value
+
+            node.edge_width = node_edge_width
 
     def _set_font_property(self, font_property, property_value):
         """Determines if the font property of is valid.  Font properties which
@@ -476,6 +480,7 @@ class Render:
             # LocalStyle, RenderGroup
             style.getGroup().setFillColor(node.fill_color)
             style.getGroup().setStroke(node.edge_color)
+            style.getGroup().setStrokeWidth(node.edge_width)
             style.addId(node.id)
             style.addType("SPECIESGLYPH")
 

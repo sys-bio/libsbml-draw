@@ -293,9 +293,9 @@ class SBMLlayout:
 
     # Layout Methods
 
-    def regenerateLayoutAndNetwork(self,):
-        """Use this to generate a new layout, and update the network's node
-        and reaction layout values.
+    def regenerateLayoutAndResetRenderInfo(self,):
+        """Use this to generate a new layout, and reset the network's node
+        and reaction layout and render values.
 
         Args: None
 
@@ -314,6 +314,25 @@ class SBMLlayout:
 
         # apply render information, if any
         self.__applyRenderInformation()
+
+    def regenerateLayout(self,):
+        """Use this to generate a new layout, and update the network's node
+        and reaction layout values.
+
+        Args: None
+
+        Returns: None
+        """
+        self.__randomizeLayout()
+        self.__doLayoutAlgorithm()
+        self.__doc = libsbml.readSBMLFromString(
+                self.__getSBMLWithLayoutString())
+
+        if len(self.__fitWindow) == 4:
+                self.__fitToWindow(self.__fitWindow[0], self.__fitWindow[1],
+                                   self.__fitWindow[2], self.__fitWindow[3])
+
+        self.__updateNetworkLayout()
 
     def __randomizeLayout(self,):
         """Give the layout a starting point
@@ -337,9 +356,18 @@ class SBMLlayout:
         """Creates a network for this model based on the existing layout.
 
         Args: None
-        Returns: None
+        Returns: libsbml_draw.Network
         """
         return Network(self.__h_network)
+
+    def __updateNetworkLayout(self,):
+        """Updates a network's layout values.
+
+        Args: None
+        Returns: None
+        """
+        network = self.__network
+        network.updateNetwork()
 
     def _describeModel(self,):
         """Provides a summary of the model built from the SBML file.
@@ -946,6 +974,54 @@ class SBMLlayout:
                     raise ValueError(
                             f"This id in the input list is invalid {this_id}, "
                             f"so cannot set node edge color for this id.")
+        else:
+            raise ValueError(f"Invalid input for node_id: {node_id}. "
+                             f"Node id must be a Species id, a list of "
+                             f"Species ids, or a node keyword "
+                             f"({SBMLlayout.NODE_KEYWORDS} ).")
+
+    def getNodeEdgeWidth(self, node_id):
+        """Returns the line width for the node edge.
+
+        Args:
+            node_id(str): id for the node
+
+        Returns: float
+        """
+        if node_id in self.__network.nodes:
+            return self.__network.nodes[node_id].edge_width
+        else:
+            raise ValueError(f"Species {node_id} not found in network.")
+
+    def setNodeEdgeWidth(self, node_id, edge_width):
+        """
+        Sets the line width of the node edge.
+
+        Args:
+            node_id (str or list of str): id of the node to change,
+                or keyword 'all', 'boundary', or 'floating' to change the color
+                of all the nodes of that type, or a list of node ids to change.
+            edge_width (float): line width of the edge
+
+        Returns: None
+        """
+
+        if (isinstance(node_id, str) and
+                node_id.lower() in SBMLlayout.NODE_KEYWORDS):
+            for node_id in self.getNodeKeywordIds(str(node_id).lower()):
+                self.__network.nodes[node_id].edge_width = edge_width
+        elif (isinstance(node_id, str) and
+              node_id in self.getNodeIds()):
+            self.__network.nodes[node_id].edge_width = edge_width
+        elif isinstance(node_id, list):
+            full_model_nodeIds = self.getNodeIds()
+            for this_id in node_id:
+                if this_id in full_model_nodeIds:
+                    self.__network.nodes[this_id].edge_width = edge_width
+                else:
+                    raise ValueError(
+                            f"This id in the input list is invalid {this_id}, "
+                            f"so cannot set node edge width for this id.")
         else:
             raise ValueError(f"Invalid input for node_id: {node_id}. "
                              f"Node id must be a Species id, a list of "
@@ -1621,31 +1697,32 @@ class SBMLlayout:
         return (fig_width_inches, fig_height_inches)
 
     def drawNetwork(self, save_file_name=None, bbox_inches="tight",
-                    figure_size=None, show=True):
+                    figsize=None, show=True):
         """Draws the network to screen.  The figure can be saved.
 
         Args:
             save_file_name (str): save figure to this file
             bbox_inches (str or matplotlib.transforms.Bbox): "tight", or a
                 value for inches or a Bbox.
-            figure_size (tuple): (width, height) of the figure in inches,
+            figsize (tuple): (width, height) of the figure in inches,
                 default value is (6.4, 4.8)
 
         Returns: matplotlib.figure.Figure
         """
         matplotlib_default_size = (6.4, 4.8)
 
-        if not figure_size:
-            figure_size = max(matplotlib_default_size,
+        if not figsize:
+            figsize = max(matplotlib_default_size,
                               self.__computeFigureSize())
-            print("fig size: ", figure_size)
         else:
             pass
 
         fig = createNetworkFigure(self.__network, self.__arrowhead_scale,
-                                  figure_size, show)
+                                  figsize, show)
         if(save_file_name):
             fig.savefig(save_file_name, bbox_inches=bbox_inches)
+
+        # print("fig size: ", fig.get_figwidth(), fig.get_figheight())
 
         return fig
 

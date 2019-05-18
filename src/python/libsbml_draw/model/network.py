@@ -45,7 +45,8 @@ class Node():
                                  self.center.y - self.height/2]
         self.name = sbnw.node_getName(h_node)
         self.id = sbnw.node_getID(h_node)
-        self.edge_color = "#0000ff30"
+        self.edge_width = 1
+        self.edge_color = "#0000ff"
         self.fill_color = "#0000ff30"
         self.font_size = 12
         self.font_family = "Arial"
@@ -184,3 +185,72 @@ class Network():
             h_reaction = sbnw.nw_getReactionp(self.h_network, reaction_index)
             reaction_id = sbnw.reaction_getID(h_reaction)
             self.reactions[reaction_id] = Reaction(h_reaction)
+
+    def _update_compartments_layout(self,):
+        """Updates the layout information for the compartments.
+        
+        Args: None
+        
+        Returns: None
+        """
+        for compartment_index in range(
+                sbnw.nw_getNumCompartments(self.h_network)):
+            h_compartment = sbnw.nw_getCompartmentp(self.h_network,
+                                                    compartment_index)
+            compartment_id = sbnw.compartment_getID(h_compartment)
+            compartment = self.compartments[compartment_id]
+
+            compartment.min_corner = sbnw.compartment_getMinCorner(
+                    h_compartment)
+            compartment.max_corner = sbnw.compartment_getMaxCorner(
+                    h_compartment)
+            compartment.lower_left_point = [compartment.min_corner.x, 
+                                            compartment.min_corner.y]
+                
+    def _update_nodes_layout(self,):
+        """Updates the layout information for the nodes.
+        
+        Args: None
+        
+        Returns: None
+        """
+        for node_index in range(sbnw.nw_getNumNodes(self.h_network)):
+            h_node = sbnw.nw_getNodep(self.h_network, node_index)
+            node_id = sbnw.node_getID(h_node)
+            node = self.nodes[node_id]
+
+            node.center = sbnw.node_getCentroid(h_node)
+            node.lower_left_point = [node.center.x - node.width/2,
+                                     node.center.y - node.height/2]
+
+    def _update_reactions_layout(self,):
+        """Updates the layout information for the reactions.
+        
+        Args: None
+        
+        Returns: None
+        """
+        for reaction_index in range(sbnw.nw_getNumRxns(self.h_network)):
+            h_reaction = sbnw.nw_getReactionp(self.h_network, reaction_index)
+            reaction_id = sbnw.reaction_getID(h_reaction)
+            reaction = self.reactions[reaction_id]
+
+            reaction.centroid = sbnw.reaction_getCentroid(h_reaction)
+
+            reaction.curves = []
+            for curve_index in range(sbnw.reaction_getNumCurves(h_reaction)):
+                h_curve = sbnw.reaction_getCurvep(h_reaction, curve_index)
+                reaction.curves.append(Curve(h_curve))
+
+    def updateNetwork(self,):
+        """Updates the layout position values for the compartments, nodes, 
+        reactions (and the curves making up each reaction).
+        
+        Args: None
+        
+        Returns: None
+        """
+        self._update_compartments_layout()
+        self._update_nodes_layout()
+        self._update_reactions_layout()        
+        

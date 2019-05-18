@@ -7,7 +7,7 @@ setup(
     version=__version__,
     packages=PEP420PackageFinder.find("src/python"),
     package_dir={"": "src/python"},
-    package_data={"libsbml_draw.c_api": ["data/sbnw.dll", "data/libsbml_draw.dylib", "data/libsbml_draw.so"]},
+    package_data={"libsbml_draw.c_api": ["data/sbml_draw.dll", "data/libsbml_draw.dylib", "data/libsbml_draw.so"]},
     install_requires=["matplotlib", "numpy", "python-libsbml"],
     extras_require={
         "testing": ["pytest", "pytest-mock"],

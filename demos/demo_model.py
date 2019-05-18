@@ -15,10 +15,13 @@ sl._describeModel()
 print("node ids: ", sl.getNodeIds())
 print("reaction ids: ", sl.getReactionIds())
 
+
+
 sl.drawNetwork()
 
 sl._describeReaction(0)
 
+sl.setNodeEdgeWidth("all", 2)
 
 out_file = "model_out.xml"        
 sl.writeSBMLFile("model_out.xml")
@@ -39,8 +42,12 @@ print("X0", sl.getNodeColor("X0"))
 #print("X", sl.getNodeColor("X"))
 
 sl.setNodeColor("all", "lightpink")
+sl.setNodeEdgeColor("all", "purple")
 sl.setNodeEdgeColor("X0", "green")
 sl.setNodeFillColor("X0", "yellow")
+sl.setNodeEdgeWidth("all", 2)
+sl.setNodeEdgeWidth("X1", 5)
+sl.setNodeEdgeWidth(["A","B","C"], 3)
 
 sl.setReactionCurveWidth("_J0", 3)
 sl.setReactionColor("all", "purple")
