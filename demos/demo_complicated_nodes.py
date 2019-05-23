@@ -47,18 +47,18 @@ sl.drawNetwork("complicated_nodes.png")
 
 #print("sls: \n", sls)
 
-#out_file = "complicated_nodes_out.xml"    
+out_file = "complicated_nodes_out.xml"    
     
-#sl.writeSBMLFile("complicated_nodes_out.xml")
+sl.writeSBMLFile("complicated_nodes_out.xml")
 
 
 #sl2 = SBMLlayout(out_file, fitToWindow=(0.,0.,500.,500.))
-#sl2 = SBMLlayout(out_file)
+sl2 = SBMLlayout(out_file)
 
 #sl2._describeModel()
 
 #sl2.drawNetwork(figure_size=(15,15))
-#sl2.drawNetwork("complicated_nodes_with_close.png", show=True)
+sl2.drawNetwork("complicated_nodes_with_close.png", show=True)
 
 #x = list()
 #y = list()

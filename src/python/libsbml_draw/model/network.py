@@ -184,6 +184,24 @@ class Network():
             node_id = sbnw.node_getID(h_node)
             self.nodes[node_id] = Node(h_node)
 
+    def _add_reactions_after_node_alias(self,):
+        """Updates the reactions in the network after a node has been aliased.
+        
+        Args: None
+            
+        Returns: None
+        """
+        existing_reactions = [reaction for reaction in self.reactions.values()]
+        
+        # Acquire new curve layout data for the reactions
+        self._add_reactions()
+        
+        # Restore the current render data for the reactions
+        for reaction in existing_reactions:
+            self.reactions[reaction.id].edge_color = reaction.edge_color
+            self.reactions[reaction.id].fill_color = reaction.fill_color
+            self.reactions[reaction.id].curve_width = reaction.curve_width
+
     def _add_reactions(self,):
         """Populates the collection of reactions.
 

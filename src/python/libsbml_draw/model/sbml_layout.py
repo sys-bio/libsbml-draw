@@ -451,7 +451,7 @@ class SBMLlayout:
             sbnw.node_make_alias(h_node, self.__h_network)
 
             self.__network._add_alias_nodes(node_id)
-            self.__network._add_reactions()
+            self.__network._add_reactions_after_node_alias()
             self.__network._remove_node(node_id)
             self.__doc = libsbml.readSBMLFromString(
                         self.__getSBMLWithLayoutString())
