@@ -580,7 +580,7 @@ class SBMLlayout:
                     sbnw.reaction_recenter(h_reaction)
             sbnw.nw_rebuildCurves(self.__h_network)
 
-            self.__network = self.__createNetwork()
+            self.__updateNetworkLayout()
             self.__doc = libsbml.readSBMLFromString(
                         self.__getSBMLWithLayoutString())
         else:
@@ -1709,20 +1709,20 @@ class SBMLlayout:
 
         Returns: matplotlib.figure.Figure
         """
-        matplotlib_default_size = (6.4, 4.8)
+#        matplotlib_default_size = (6.4, 4.8)
 
-        if not figsize:
-            figsize = max(matplotlib_default_size,
-                              self.__computeFigureSize())
-        else:
-            pass
+#        if not figsize:
+#            figsize = max(matplotlib_default_size,
+#                              self.__computeFigureSize())
+#        else:
+#            pass
 
         fig = createNetworkFigure(self.__network, self.__arrowhead_scale,
                                   figsize, show)
         if(save_file_name):
             fig.savefig(save_file_name, bbox_inches=bbox_inches)
 
-        # print("fig size: ", fig.get_figwidth(), fig.get_figheight())
+        print("fig size: ", fig.get_figwidth(), fig.get_figheight())
 
         return fig
 

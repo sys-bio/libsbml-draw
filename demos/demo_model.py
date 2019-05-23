@@ -61,7 +61,7 @@ sl.setReactionColor("_J0", "green")
 print("reaction edge: ", sl.getReactionEdgeColor("_J0"))
 print("reaction fill: ", sl.getReactionFillColor("_J0"))
 
-sl.drawNetwork()
+sl.drawNetwork(figsize=(8,8))
 
 sl.showLayoutAlgorithmOptions()
 
@@ -73,7 +73,7 @@ sl.setLayoutAlgorithmOptions(k=40, grav=20)
 
 sl.showLayoutAlgorithmOptions()
 
-sl.regenerateLayoutAndNetwork()
+sl.regenerateLayout()
 
 sl.drawNetwork()
 
@@ -96,16 +96,17 @@ sl.lockNode("X1")
 print("X1 locked, True: ", sl.getIsNodeLocked("X1"))
 
 
-sl.regenerateLayoutAndNetwork()
+sl.regenerateLayout()
 sl.drawNetwork()
 
-sl.regenerateLayoutAndNetwork()
+sl.regenerateLayout()
 sl.drawNetwork()
 
 sl.unlockNode("X1")
 
 print("X1 locked, False: ", sl.getIsNodeLocked("X1"))
 
+print(sl.getReactionIds())
 
 sl.aliasNode("A")
 
@@ -114,6 +115,9 @@ sl.aliasNode("A")
 sl.drawNetwork()
 
 print(sl.getNodeIds())
+print(sl.getReactionIds())
+
+print(sl._describeModel())
 
 x = list()
 y = list()

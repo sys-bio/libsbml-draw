@@ -133,6 +133,8 @@ class Network():
         """
         if node_id in self.nodes:
 
+            aliased_node = self.nodes[node_id]
+            
             h_node_id = node_id.encode('utf-8')
             h_node = sbnw.nw_getNodepFromId(self.h_network, h_node_id)
             num_aliases = sbnw.nw_getNumAliasInstances(self.h_network, h_node)
@@ -145,6 +147,14 @@ class Network():
                         h_alias_node) + "_" + str(alias_index)
 
                 self.nodes[alias_node_id] = Node(h_alias_node)
+
+                self.nodes[alias_node_id].edge_width = aliased_node.edge_width
+                self.nodes[alias_node_id].edge_color = aliased_node.edge_color
+                self.nodes[alias_node_id].fill_color = aliased_node.fill_color
+                self.nodes[alias_node_id].font_size = aliased_node.font_size
+                self.nodes[alias_node_id].font_family = aliased_node.font_family  # noqa
+                self.nodes[alias_node_id].font_color = aliased_node.font_color
+                self.nodes[alias_node_id].font_style = aliased_node.font_style
         else:
             raise ValueError(f"species {node_id} is not in the network.")
 

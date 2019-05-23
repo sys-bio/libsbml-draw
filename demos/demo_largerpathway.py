@@ -18,7 +18,10 @@ sl = SBMLlayout(model_file)
 #sl.describeModel()
 
 
-sl.drawNetwork()
+sl.setNodeFontSize("all", 24)
+
+
+sl.drawNetwork(figsize=(12,12))
 
 
 print("node ids: ", sl.getNodeIds())

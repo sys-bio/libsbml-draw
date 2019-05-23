@@ -40,7 +40,7 @@ sl = SBMLlayout(r.getSBML())
 
 sl._describeModel()
 
-sl.drawNetwork()
+sl.drawNetwork(figsize=(18,18))
 
 #sl.drawNetwork("complicated_nodes_antimony.png", show=False)    
 
