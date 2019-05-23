@@ -1,18 +1,17 @@
-import platform
+from pathlib import Path
+import pkg_resources
 
 from libsbml_draw.model.sbml_layout import SBMLlayout
 
+MODEL_FILE_NAME = "largerpathway.xml"
 
-if platform.system() == "Windows":
-    model_file = "C:\\tmp\\largerpathway.xml"
-elif platform.system() == "Linux":    
-    model_file = "/home/radix/repos/libsbml-draw/model_files/largerpathway.xml"
-else:
-    model_file = "/Users/natalieh/repos/libsbml-draw/model_files/largerpathway.xml"
+MODEL_FILE = Path(pkg_resources.resource_filename(
+        "libsbml_draw",
+        "model/data/" + MODEL_FILE_NAME))
 
+print("model file: ", str(MODEL_FILE))
 
-
-sl = SBMLlayout(model_file)
+sl = SBMLlayout(str(MODEL_FILE))
 
 
 #sl.describeModel()

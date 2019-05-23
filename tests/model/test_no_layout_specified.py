@@ -33,14 +33,47 @@ def test_network_properties():
 def test_draw_network():
     """Test that a call to drawNetwork() is successful 
     """       
-    fig = SL.drawNetwork()
+    fig = SL.drawNetwork(show=False)
     assert isinstance(fig, Figure)
     
-@pytest.mark.skip    
 def test_style_changes():
-    pass
+    SL.setNodeColor("all", "lightpink")
+    SL.setNodeEdgeColor("all", "purple")
+    SL.setNodeEdgeColor("X0", "green")
+    SL.setNodeFillColor("X0", "yellow")
+    SL.setNodeEdgeWidth("all", 2)
+    SL.setNodeEdgeWidth("X1", 5)
+    SL.setNodeEdgeWidth(["A","B","C"], 3)
 
-@pytest.mark.skip    
+    SL.setReactionCurveWidth("_J0", 3)
+    SL.setReactionColor("all", "purple")
+    SL.setReactionColor("_J0", "green")
+
+    for node in SL._SBMLlayout__network.nodes.values():
+        if node.id == "X0":
+            assert node.fill_color == "yellow"
+            assert node.edge_color == "green"
+        if node.id != "X0":
+            assert node.fill_color == "lightpink"
+            assert node.edge_color == "purple"
+        if node.id in ("X0", "D"):
+            assert node.edge_width == 2
+        if node.id in ("A", "B", "C"):
+            assert node.edge_width == 3
+        if node.id == "X1":
+            assert node.edge_width == 5
+
+    for reaction in SL._SBMLlayout__network.reactions.values():
+        if reaction.id != "_J0":
+            assert reaction.edge_color == "purple"
+            assert reaction.fill_color == "purple"
+        if reaction.id == "_J0":
+            assert reaction.curve_width == 3
+            assert reaction.edge_color == "green"
+            assert reaction.fill_color == "green"
+
 def test_fr_alg_options_changes():
-    pass
-    
+    SL.setLayoutAlgorithmOptions(k=40, grav=20)
+    fr_alg_options = SL.getLayoutAlgorithmOptions()
+    assert fr_alg_options.k == 40
+    assert fr_alg_options.grav == 20

@@ -64,9 +64,7 @@ class Curve():
                         "-|>",                                # PRODUCT
                         "-",                                  # SIDESUBSTRATE
                         "-|>",                                # SIDEPRODUCT
-                        ArrowStyle("|-|",
-                                   widthA=0, angleA=None,
-                                   widthB=1.0, angleB=None),  # MODIFIER
+                        "-|>",                                # MODIFIER
                         "-|>",                                # ACTIVATOR
                         ArrowStyle("|-|",
                                    widthA=0, angleA=None,

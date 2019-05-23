@@ -18,7 +18,7 @@ s.drawNetwork()
 
 s.setLayoutAlgorithmOptions(padding=20)
 
-s.regenerateLayoutAndNetwork()
+s.regenerateLayout()
 
 s.drawNetwork()
 
