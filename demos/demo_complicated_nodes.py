@@ -60,6 +60,8 @@ sl2 = SBMLlayout(out_file)
 #sl2.drawNetwork(figure_size=(15,15))
 sl2.drawNetwork("complicated_nodes_with_close.png", show=True)
 
+sl2.drawNetwork(figsize=(8,8), show=True)
+
 #x = list()
 #y = list()
 

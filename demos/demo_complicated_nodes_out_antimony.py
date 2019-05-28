@@ -42,6 +42,8 @@ sl._describeModel()
 
 sl.drawNetwork(figsize=(6,4))
 
+sl.drawNetwork(figsize=(8,8))
+
 #sl.drawNetwork("complicated_nodes_antimony.png", show=False)    
 
 # plt.show?

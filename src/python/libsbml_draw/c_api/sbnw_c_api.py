@@ -248,8 +248,12 @@ slib.gf_node_setCentroid.argtypes = [ctypes.c_uint64, point]
 
 slib.gf_node_getHeight.argtypes = [ctypes.c_uint64]
 slib.gf_node_getHeight.restype = ctypes.c_double
+slib.gf_node_setHeight.argtypes = [ctypes.c_uint64, ctypes.c_double]
+
 slib.gf_node_getWidth.argtypes = [ctypes.c_uint64]
 slib.gf_node_getWidth.restype = ctypes.c_double
+slib.gf_node_setWidth.argtypes = [ctypes.c_uint64, ctypes.c_double]
+
 slib.gf_node_getName.argtypes = [ctypes.c_uint64]
 slib.gf_node_getName.restype = ctypes.c_char_p
 slib.gf_node_getID.argtypes = [ctypes.c_uint64]
@@ -278,8 +282,16 @@ def node_getHeight(h_node):
     return slib.gf_node_getHeight(h_node)
 
 
+def node_setHeight(h_node, height):
+    return slib.gf_node_setHeight(h_node, height)
+
+
 def node_getWidth(h_node):
     return slib.gf_node_getWidth(h_node)
+
+
+def node_setWidth(h_node, width):
+    return slib.gf_node_setWidth(h_node, width)
 
 
 def node_getName(h_node):

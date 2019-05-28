@@ -10,7 +10,7 @@ import pathlib
 import tempfile
 
 
-def get_figure_width_height_in_pixels(fig):
+def get_figure_width_height_in_pixels(fig=None):
     """Returns the width and height of the figure in pixels.
     
     Args: matplotlib.figure.Figure
@@ -19,6 +19,12 @@ def get_figure_width_height_in_pixels(fig):
     """
 #    ax = fig.get_axes()
     ax = plt.gca()
+    
+    if not fig:
+        fig = plt.figure(frameon=False)
+        plt.close(fig)
+    else:
+        pass
     
     fig_bbox = ax.get_window_extent(
             ).transformed(fig.dpi_scale_trans.inverted())
@@ -31,23 +37,31 @@ def get_figure_width_height_in_pixels(fig):
     return (fig_width_pixels, fig_height_pixels)        
     
 
-def get_node_dimensions(text_length_points, text_height_points, fig, 
+def get_node_dimensions(text_length_points, text_height_points, fig_dpi,
+                        fig_width_pixels, fig_height_pixels,
                         network_width_data_coords, network_height_data_coords):
     """Returns the width and height needed in data coordinates for the text to
     fit inside the node.
 
     Args:
-
+            
+        
     Returns: 
+        width (float): width of the node box in data coordinates
+        height (float): height of node box in data coordinates    
     """
     
-    text_length_pixels = fig.get_dpi()*text_length_points/72  # 1/72 inches per point
+    text_length_pixels = fig_dpi*text_length_points/72  # 1/72 inches per point
 
-    text_height_pixels = fig.get_dpi()*text_height_points/72  # 1/71
+    text_height_pixels = fig_dpi*text_height_points/72  # 1/71
 
-    fig_width_pixels, fig_height_pixels = get_figure_width_height_in_pixels(fig)
+#    fig_width_pixels, fig_height_pixels = get_figure_width_height_in_pixels(fig)
 
     network_width_to_height_ratio = network_width_data_coords/network_height_data_coords
+
+    print()
+    print("nw w_to_h: ", network_width_to_height_ratio)
+    print()
 
     
     if network_width_to_height_ratio > 1:  # horizontal figure, uses all the width available, not all of the height
@@ -65,6 +79,11 @@ def get_node_dimensions(text_length_points, text_height_points, fig,
         width = text_length_pixels*network_width_data_coords/used_fig_width_pixels
         
         height = text_height_pixels*network_height_data_coords/fig_height_pixels
+
+        print("text_length_pixels: ", text_length_pixels)
+        print("used fig width pixels: ", used_fig_width_pixels)
+        print("network_width_data_coords: ", network_width_data_coords)
+        print("width: ", width)
 
         
     return (width, height)
@@ -132,7 +151,8 @@ def draw_compartments(compartments):
     return compartment_patches
 
 
-def draw_nodes(nodes, fig):
+def draw_nodes(nodes, fig, node_multiplier, node_padding, node_mutation_scale, 
+               use_node_dims):
     """Create a list of FancyBbox Patches, one for each node.
 
     Args:
@@ -149,6 +169,8 @@ def draw_nodes(nodes, fig):
 
     print("fig width data coords: ", fig_width_data_coords)
     print("fig height data coords: ", fig_height_data_coords)
+
+    fig_width_pixels, fig_height_pixels = get_figure_width_height_in_pixels(fig)
       
     node_patches = []
 
@@ -160,10 +182,17 @@ def draw_nodes(nodes, fig):
 #            width = get_box_length(1.1*(len(node.name))*node.font_size, figwidth, figheight, fig_width_data_coords, fig_height_data_coords)[1]
 #        height = get_box_length(node.font_size+4, figwidth, figheight, fig_width_data_coords, fig_height_data_coords)[1]
 
-        width, height = get_node_dimensions(
-                1.2*len(node.name)*node.font_size,
-                1.2*node.font_size, 
-                fig, 
+        percent_text_length = node_multiplier if node_multiplier else 1.1
+        
+        if use_node_dims:
+            width = node.width
+            height = node.height
+        else:        
+            width, height = get_node_dimensions(
+                percent_text_length*len(node.name)*node.font_size,
+                percent_text_length*node.font_size, 
+                fig.get_dpi(),
+                fig_width_pixels, fig_height_pixels,
                 fig_width_data_coords, 
                 fig_height_data_coords)
         
@@ -181,8 +210,10 @@ def draw_nodes(nodes, fig):
             edgecolor=node.edge_color,
             facecolor=node.fill_color,
             linewidth=node.edge_width,
-            boxstyle=BoxStyle("round", pad=0.7, rounding_size=.8),
-            mutation_scale=10
+            boxstyle=BoxStyle("round", 
+                              pad=node_padding if node_padding else 0.6, 
+                              rounding_size=.8),
+            mutation_scale=node_mutation_scale if node_mutation_scale else 10
             )
 
         node_patches.append(fbbp)
@@ -257,7 +288,9 @@ def add_labels(nodes):
                  verticalalignment="center")
 
 
-def createNetworkFigure(network, mutation_scale, figure_size=None, show=True):
+def createNetworkFigure(network, mutation_scale, figsize=None, show=True, 
+                        dpi=None, node_multiplier=None, node_padding=None, 
+                        node_mutation_scale=None, use_node_dims=None):
     """Creates the figure, draws the nodes, draws the reactions, adds text to
     the nodes.
 
@@ -266,26 +299,30 @@ def createNetworkFigure(network, mutation_scale, figure_size=None, show=True):
             contains Nodes and Reactions.
         mutation_scale (dict): keys are roles (int), values are for
             matplotlib's mutation_scale parameter
-        figure_size (tuple): (width, height) in inches
+        figsize (tuple): (width, height) in inches
         show (bool): displays the figure if True
 
     Returns: matplotlib.figure.Figure
     """
     # SUPPRESS MAtPLOTLIB OUTPUT
-    if running_ipython():
-        from IPython.core.interactiveshell import InteractiveShell
-        InteractiveShell.ast_node_interactivity = "last_expr"
-    else:
-        pass
+#    if running_ipython():
+#        from IPython.core.interactiveshell import InteractiveShell
+#        InteractiveShell.ast_node_interactivity = "last_expr"
+#    else:
+#        pass
     
 #    MAX_FIGURE_DIM_TO_DISPLAY = 777 # inches
-#    fig.set_dpi(72)
 
     # initialize figure
-    if figure_size and len(figure_size) == 2:
-        fig = plt.figure(figsize=figure_size);
+    if figsize and len(figsize) == 2:
+        fig = plt.figure(figsize=figsize);
     else:
         fig = plt.figure()
+
+    if dpi:   
+        fig.set_dpi(dpi)
+    else:
+        pass
 
 #    ax = plt.gca()
     
@@ -293,7 +330,7 @@ def createNetworkFigure(network, mutation_scale, figure_size=None, show=True):
     ax.set_axis_off()
     fig.add_axes(ax)
 
-    print("dn: fig_size: ", figure_size)
+    print("dn: fig_size: ", figsize)
     
     bbox = ax.get_window_extent().transformed(fig.dpi_scale_trans.inverted())
     width, height = bbox.width, bbox.height
@@ -312,7 +349,9 @@ def createNetworkFigure(network, mutation_scale, figure_size=None, show=True):
 #    figheight = fig.get_dpi()*fig.get_figheight()
 
     # draw the nodes
-    node_patches = draw_nodes(network.nodes.values(), fig)
+    node_patches = draw_nodes(network.nodes.values(), fig, 
+                              node_multiplier, node_padding, 
+                              node_mutation_scale, use_node_dims)
     for node_patch in node_patches:
         ax.add_patch(node_patch)
 
