@@ -46,7 +46,6 @@ class SBMLlayout:
         if isinstance(self.__sbml_source, str):
 
             if SBMLlayout._validate_sbml_filename(self.__sbml_source):
-
                 self.__h_model = sbnw.loadSBMLFile(self.__sbml_source)
             else:
                 if self.__sbml_source.startswith("<?xml"):
@@ -55,6 +54,9 @@ class SBMLlayout:
                 else:
                     raise ValueError(f"File {self.__sbml_source} "
                                      f"does not exist.")
+
+            if self.__h_model == 0:
+                raise ValueError("SBML source cannot be parsed by libsbml.")
 
             self.__h_layout_info = sbnw.processLayout(self.__h_model)
             self.__h_network = sbnw.getNetworkp(self.__h_layout_info)
@@ -66,53 +68,33 @@ class SBMLlayout:
                 self.__randomizeLayout()
                 self.__doLayoutAlgorithm()
 
-                # capture the render info here                
+                # capture the render info here
                 self.__doc = libsbml.readSBMLFromString(
                         self.__getSBMLWithLayoutString())
-                
-                if len(self.__fitWindow) == 4:
-                    self.__fitToWindow(self.__fitWindow[0], 
-                                       self.__fitWindow[1],
-                                       self.__fitWindow[2], 
-                                       self.__fitWindow[3])
-                else:
-                    # don't call fit to window
-                    pass
-                                
-                self.__network = self.__createNetwork()
 
-                # apply render information, if any
-                self.__applyRenderInformation()
-                
             else:
                 if SBMLlayout._validate_sbml_filename(sbml_source):
                     self.__doc = libsbml.readSBMLFromFile(sbml_source)
                 else:
                     self.__doc = libsbml.readSBMLFromString(sbml_source)
 
-                if len(self.__fitWindow) == 4:
-                    self.__fitToWindow(self.__fitWindow[0], self.__fitWindow[1],
+            if len(self.__fitWindow) == 4:
+                self.__fitToWindow(self.__fitWindow[0], self.__fitWindow[1],
                                    self.__fitWindow[2], self.__fitWindow[3])
-                else:
-                    # don't call fit to window
-                    pass
+            else:
+                # don't call fit to window
+                pass
 
-                self.__network = self.__createNetwork()
+            self.__network = self.__createNetwork()
 
-                # apply render information, if any
-                self.__applyRenderInformation()
-                
-                
+            # apply render information, if any
+            self.__applyRenderInformation()
 
-            self.__numNodes = self.getNumberOfNodes()
-            self.__numReactions = self.getNumberOfReactions()
-            self.__numCompartments = self.getNumberOfCompartments()
             self.__arrowhead_scale = {key: 10 for key in
                                       range(self.getNumberOfRoles())}
 
         else:  # User can separately load a file
             pass
-        
 
     def loadSBMLFile(self, sbml_file):
         """Loads the SBML model into SBMLlayout.
@@ -323,12 +305,13 @@ class SBMLlayout:
         """
         self.__randomizeLayout()
         self.__doLayoutAlgorithm()
-        self.__doc = libsbml.readSBMLFromString(
-                self.__getSBMLWithLayoutString())
 
         if len(self.__fitWindow) == 4:
                 self.__fitToWindow(self.__fitWindow[0], self.__fitWindow[1],
                                    self.__fitWindow[2], self.__fitWindow[3])
+
+        self.__doc = libsbml.readSBMLFromString(
+            self.__getSBMLWithLayoutString())
 
         self.__network = self.__createNetwork()
 
@@ -345,12 +328,13 @@ class SBMLlayout:
         """
         self.__randomizeLayout()
         self.__doLayoutAlgorithm()
-        self.__doc = libsbml.readSBMLFromString(
-                self.__getSBMLWithLayoutString())
 
         if len(self.__fitWindow) == 4:
                 self.__fitToWindow(self.__fitWindow[0], self.__fitWindow[1],
                                    self.__fitWindow[2], self.__fitWindow[3])
+
+        self.__doc = libsbml.readSBMLFromString(
+                self.__getSBMLWithLayoutString())
 
         self.__updateNetworkLayout()
 
@@ -399,9 +383,9 @@ class SBMLlayout:
         # print("sbml filename: ", self.__sbml_source)
         print("layout number: ", self.__layout_number)
         print("layout is specified: ", self.__layoutSpecified)
-        print("number of Compartments: ", self.__numCompartments)
-        print("number of Nodes: ", self.__numNodes)
-        print("number of Reactions: ", self.__numReactions)
+        print("number of Compartments: ", self.getNumberOfCompartments())
+        print("number of Nodes: ", self.getNumberOfNodes())
+        print("number of Reactions: ", self.getNumberOfReactions())
 
     def getNumberOfCompartments(self,):
         """Returns the number of compartments in the model.
@@ -479,7 +463,7 @@ class SBMLlayout:
             raise ValueError(f"species {node_id} is not in the network.")
 
     def getIsNodeAliased(self, node_id):
-        """Returns True if this node has been aliased.
+        """Returns True if this node is an alias of earlier node.
 
         Args:
             node_id (str):
@@ -488,15 +472,12 @@ class SBMLlayout:
         """
         if node_id in self.getNodeIds():
 
-            h_node_id = node_id.encode('utf-8')
-            h_node = sbnw.nw_getNodepFromId(self.__h_network, h_node_id)
+            node = self.__network.nodes[node_id]
 
-            is_aliased = sbnw.node_isAliased(h_node)
-
-            if is_aliased == 0:
-                return False
-            else:
+            if node.id in self.__network.aliasedNodes:
                 return True
+            else:
+                return False
         else:
             raise ValueError(f"species {node_id} is not in the network.")
 
@@ -510,10 +491,23 @@ class SBMLlayout:
         """
         if node_id in self.getNodeIds():
 
-            h_node_id = node_id.encode('utf-8')
-            h_node = sbnw.nw_getNodepFromId(self.__h_network, h_node_id)
+            node = self.__network.nodes[node_id]
 
-            is_locked = sbnw.node_isLocked(h_node)
+            # aliased nodes have the id of the original node
+            if node.id in self.__network.aliasedNodes:
+                alias_index = node_id.split("_")[1]
+                h_node_id = node.id.encode('utf-8')
+                h_node = sbnw.nw_getNodepFromId(self.__h_network, h_node_id)
+                h_alias_node = sbnw.nw_getAliasInstancep(
+                        self.__h_network,
+                        h_node,
+                        alias_index)
+                is_locked = sbnw.node_isLocked(h_alias_node)
+            # node is not an alias
+            else:
+                h_node_id = node_id.encode('utf-8')
+                h_node = sbnw.nw_getNodepFromId(self.__h_network, h_node_id)
+                is_locked = sbnw.node_isLocked(h_node)
 
             if is_locked == 0:
                 return False
@@ -532,13 +526,24 @@ class SBMLlayout:
         Returns: None
         """
         if node_id in self.getNodeIds():
-            # Aliases of a node all have the same node id 
-            # If a node has 3 aliases, all three will be locked
-            node = self.__network.nodes[node_id]            
-            h_node_id = node.id.encode('utf-8')
-            h_node = sbnw.nw_getNodepFromId(self.__h_network, h_node_id)
-            sbnw.node_lock(h_node)
 
+            node = self.__network.nodes[node_id]
+
+            # aliased nodes have the id of the original node
+            if node.id in self.__network.aliasedNodes:
+                alias_index = node_id.split("_")[1]
+                h_node_id = node.id.encode('utf-8')
+                h_node = sbnw.nw_getNodepFromId(self.__h_network, h_node_id)
+                h_alias_node = sbnw.nw_getAliasInstancep(
+                        self.__h_network,
+                        h_node,
+                        alias_index)
+                sbnw.node_lock(h_alias_node)
+            # node is not an alias
+            else:
+                h_node_id = node.id.encode('utf-8')
+                h_node = sbnw.nw_getNodepFromId(self.__h_network, h_node_id)
+                sbnw.node_lock(h_node)
         else:
             raise ValueError(f"species {node_id} is not in the network.")
 
@@ -552,10 +557,23 @@ class SBMLlayout:
         """
         if node_id in self.getNodeIds():
 
-            h_node_id = node_id.encode('utf-8')
-            h_node = sbnw.nw_getNodepFromId(self.__h_network, h_node_id)
-            sbnw.node_unlock(h_node)
+            node = self.__network.nodes[node_id]
 
+            # aliased nodes have the id of the original node
+            if node.id in self.__network.aliasedNodes:
+                alias_index = node_id.split("_")[1]
+                h_node_id = node.id.encode('utf-8')
+                h_node = sbnw.nw_getNodepFromId(self.__h_network, h_node_id)
+                h_alias_node = sbnw.nw_getAliasInstancep(
+                        self.__h_network,
+                        h_node,
+                        alias_index)
+                sbnw.node_unlock(h_alias_node)
+            # node is not an alias
+            else:
+                h_node_id = node.id.encode('utf-8')
+                h_node = sbnw.nw_getNodepFromId(self.__h_network, h_node_id)
+                sbnw.node_unlock(h_node)
         else:
             raise ValueError(f"species {node_id} is not in the network.")
 
@@ -587,14 +605,29 @@ class SBMLlayout:
         """
         if node_id in self.getNodeIds():
 
-            centroid = self.__network.nodes[node_id].center
+            node = self.__network.nodes[node_id]
+
+            centroid = node.center
             centroid.x = x
             centroid.y = y
 
-            h_node_id = node_id.encode('utf-8')
-            h_node = sbnw.nw_getNodepFromId(self.__h_network, h_node_id)
+            # aliased nodes have the id of the original node
+            if node.id in self.__network.aliasedNodes:
 
-            sbnw.node_setCentroid(h_node, centroid)
+                alias_index = node_id.split("_")[1]
+                h_node_id = node.id.encode('utf-8')
+                h_node = sbnw.nw_getNodepFromId(self.__h_network, h_node_id)
+                h_alias_node = sbnw.nw_getAliasInstancep(
+                        self.__h_network,
+                        h_node,
+                        alias_index)
+                sbnw.node_setCentroid(h_alias_node, centroid)
+            # node is not an alias
+            else:
+                h_node_id = node_id.encode('utf-8')
+                h_node = sbnw.nw_getNodepFromId(self.__h_network, h_node_id)
+                sbnw.node_setCentroid(h_node, centroid)
+
             for nr in range(sbnw.nw_getNumRxns(self.__h_network)):
                 # sbnw.nw_recenterJunctions(self.__h_network)
                 h_reaction = sbnw.nw_getReactionp(self.__h_network, nr)
@@ -1332,8 +1365,8 @@ class SBMLlayout:
         if node_id in self.__network.nodes:
             node = self.__network.nodes[node_id]
             h_node_id = node_id.encode('utf-8')
-            h_node = sbnw.nw_getNodepFromId(self.__h_network, h_node_id)            
-            sbnw.node_setWidth(h_node, width)            
+            h_node = sbnw.nw_getNodepFromId(self.__h_network, h_node_id)
+            sbnw.node_setWidth(h_node, width)
             node.width = width
             node.lower_left_point = [node.center.x - node.width/2,
                                      node.center.y - node.height/2]
@@ -1352,14 +1385,13 @@ class SBMLlayout:
         if node_id in self.__network.nodes:
             node = self.__network.nodes[node_id]
             h_node_id = node_id.encode('utf-8')
-            h_node = sbnw.nw_getNodepFromId(self.__h_network, h_node_id)            
-            sbnw.node_setHeight(h_node, height)            
+            h_node = sbnw.nw_getNodepFromId(self.__h_network, h_node_id)
+            sbnw.node_setHeight(h_node, height)
             node.height = height
             node.lower_left_point = [node.center.x - node.width/2,
                                      node.center.y - node.height/2]
         else:
             raise ValueError(f"Species {node_id} not found in network.")
-
 
     def getNodeName(self, node_id):
         """Returns the name of the node.
@@ -1761,7 +1793,7 @@ class SBMLlayout:
 
     def drawNetwork(self, save_file_name=None, bbox_inches="tight",
                     figsize=None, show=True, dpi=None, node_multiplier=1.0,
-                    node_padding=0.6, node_mutation_scale=10, 
+                    node_padding=0.6, node_mutation_scale=10,
                     recompute_node_dims=True):
         """Draws the network to screen.  The figure can be saved.
 
@@ -1783,8 +1815,8 @@ class SBMLlayout:
 #            pass
 
         fig = createNetworkFigure(self, self.__arrowhead_scale,
-                                  figsize, show, dpi, node_multiplier, 
-                                  node_padding, node_mutation_scale, 
+                                  figsize, show, dpi, node_multiplier,
+                                  node_padding, node_mutation_scale,
                                   recompute_node_dims)
         if(save_file_name):
             fig.savefig(save_file_name, bbox_inches=bbox_inches)

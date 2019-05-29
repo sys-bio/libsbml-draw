@@ -693,6 +693,8 @@ namespace LibsbmlDraw {
              * @details WARNING: This invalidates any curve iterators
              */
             void rebuildCurves();
+
+			Real calcArrowGap(RxnBezier* c, Node* n);
             
             /**
              * @brief Only recalculates control points, does not rebuild curves

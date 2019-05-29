@@ -482,7 +482,7 @@ namespace LibsbmlDraw {
             Node* x = i->first;
             if(x == n) {
                 rebuild = true;
-                std::cout << "Rxn: element erased\n";
+                // std::cout << "Rxn: element erased\n";
                 --_deg;
                 --_ldeg;
                 --n->_deg;
@@ -672,6 +672,17 @@ namespace LibsbmlDraw {
     }
 # endif
 
+	Real Reaction::calcArrowGap(RxnBezier* c, Node* n) {
+		return 10.;
+		if (n) {
+			Point delta = getCentroid() - n->getCentroid();
+			Real ratio = std::max(std::abs(delta.x) / (std::abs(delta.y) + 1.), 4.);
+			return ratio*std::max(n->getWidth(), n->getHeight()) / 20.;
+		}
+		else
+			return 10.;
+	}
+
     void Reaction::recalcCurveCPs() {
 //         std::cerr << "recalcCurveCPs\n";
         uint64 csub=0;
@@ -812,7 +823,7 @@ namespace LibsbmlDraw {
                     if (!filterRxn(this))
                       std::cerr << "SUBSTRATE\n";
 #endif
-                    c->s = calcCurveBackup(ctrlCent, *c->as, c->ns ? c->ns->getBoundingBox() : bs, 10.);
+                    c->s = calcCurveBackup(ctrlCent, *c->as, c->ns ? c->ns->getBoundingBox() : bs, calcArrowGap(c, c->ns));
                     c->c1 = new2ndPos(_p, c->s, 0., -20., false);
                     c->e = *c->ae;
 //                     std::cerr << "* Substrate endpoint: " << c->e << "\n";
@@ -828,7 +839,7 @@ namespace LibsbmlDraw {
                     c->s = *c->as;
 //                     std::cerr << "* Product startpoint: " << c->s << "\n";
                     c->c1 = new2ndPos(ctrlCent, _p, 0., 1., true);
-                    c->e = calcCurveBackup(c->c1, *c->ae, c->ne ? c->ne->getBoundingBox() : be, 10.);
+                    c->e = calcCurveBackup(c->c1, *c->ae, c->ne ? c->ne->getBoundingBox() : be, calcArrowGap(c, c->ne));
                     c->c2 = new2ndPos(_p, c->e, 0., -20., false);
                     break;
                 case RXN_CURVE_ACTIVATOR:
@@ -838,14 +849,14 @@ namespace LibsbmlDraw {
                     if (!filterRxn(this))
                       std::cerr << "MODIFIER\n";
 #endif
-                    c->s  = calcCurveBackup(_p, *c->as, c->ns ? c->ns->getBoundingBox() : bs, 10.);
+                    c->s  = calcCurveBackup(_p, *c->as, c->ns ? c->ns->getBoundingBox() : bs, calcArrowGap(c, c->ns));
                     c->c1 = new2ndPos(*c->as, _p, 0., -15., false);
                     c->e = c->c1;
                     c->c2 = new2ndPos(*c->as, _p, 0., -20., false);
                     break;
                 default:
                     AN(0, "Unrecognized curve type");
-                    c->s = calcCurveBackup(_p, *c->as, c->ns ? c->ns->getBoundingBox() : bs, 10.);
+                    c->s = calcCurveBackup(_p, *c->as, c->ns ? c->ns->getBoundingBox() : bs, calcArrowGap(c, c->ns));
                     c->c1 = c->s;
                     c->e = _p;
                     c->c2 = _p;
@@ -1005,7 +1016,7 @@ namespace LibsbmlDraw {
     void Compartment::removeElt(NetworkElement* e) {
         for(EltIt i=EltsBegin(); i!=EltsEnd(); ++i) {
             if(*i == e) {
-                printf("Element erased\n");
+                // printf("Element erased\n");
                 _elt.erase(i);
                 return;
             }
@@ -1198,7 +1209,7 @@ namespace LibsbmlDraw {
             Node* x = *i;
             if(x == n) {
                 _nodes.erase(i);
-                std::cout << "Removed node " << n << "\n";
+                // std::cout << "Removed node " << n << "\n";
                 return;
             }
         }
@@ -1490,7 +1501,7 @@ namespace LibsbmlDraw {
             Reaction* x = *i;
             if(x == r) {
                 _rxn.erase(i);
-                std::cout << "Removed reaction " << r << "\n";
+                // std::cout << "Removed reaction " << r << "\n";
                 return;
             }
         }

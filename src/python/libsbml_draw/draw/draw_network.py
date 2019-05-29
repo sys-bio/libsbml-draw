@@ -265,7 +265,8 @@ def update_node_dimensions(sbml_layout, fig_dpi, fig_width_pixels,
     print("number of nodes: ", len(nodes), sbml_layout.getNodeIds())
     if len(nodes) == 8:
         for node_key in sbml_layout._SBMLlayout__network.nodes.keys():
-            print(node_key, sbml_layout._SBMLlayout__network.nodes[node_key].id)
+            print("update node dims: ", 
+                  node_key, sbml_layout._SBMLlayout__network.nodes[node_key].id)
     
     fig_width_data_coords = (
             max([node.center.x for node in nodes])-

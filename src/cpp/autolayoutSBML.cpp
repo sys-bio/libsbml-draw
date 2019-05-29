@@ -37,7 +37,7 @@ extern "C" gf_SBMLModel* gf_loadSBMLbuf(const char* buf) {
             << "have the ability to convert this model or (automatic)" << std::endl
             << "conversion is not possible in this case." << std::endl;
 
-            delete doc;
+            // delete doc;
             return NULL;    
         }
 	}

@@ -107,6 +107,7 @@ class Network():
         self._add_nodes()
         self._add_reactions()
         self._add_compartments()
+        self.aliasedNodes = {}
 
     def _remove_node(self, node_id):
         """Remove a node from the network.
@@ -132,10 +133,12 @@ class Network():
         if node_id in self.nodes:
 
             aliased_node = self.nodes[node_id]
-            
+
             h_node_id = node_id.encode('utf-8')
             h_node = sbnw.nw_getNodepFromId(self.h_network, h_node_id)
             num_aliases = sbnw.nw_getNumAliasInstances(self.h_network, h_node)
+
+            alias_ids = list()
 
             for alias_index in range(num_aliases):
                 h_alias_node = sbnw.nw_getAliasInstancep(self.h_network,
@@ -153,6 +156,10 @@ class Network():
                 self.nodes[alias_node_id].font_family = aliased_node.font_family  # noqa
                 self.nodes[alias_node_id].font_color = aliased_node.font_color
                 self.nodes[alias_node_id].font_style = aliased_node.font_style
+
+                alias_ids.append(alias_node_id)
+
+            self.aliasedNodes[node_id] = alias_ids
         else:
             raise ValueError(f"species {node_id} is not in the network.")
 
@@ -184,16 +191,16 @@ class Network():
 
     def _add_reactions_after_node_alias(self,):
         """Updates the reactions in the network after a node has been aliased.
-        
+
         Args: None
-            
+
         Returns: None
         """
         existing_reactions = [reaction for reaction in self.reactions.values()]
-        
+
         # Acquire new curve layout data for the reactions
         self._add_reactions()
-        
+
         # Restore the current render data for the reactions
         for reaction in existing_reactions:
             self.reactions[reaction.id].edge_color = reaction.edge_color
@@ -214,9 +221,9 @@ class Network():
 
     def _update_compartments_layout(self,):
         """Updates the layout information for the compartments.
-        
+
         Args: None
-        
+
         Returns: None
         """
         for compartment_index in range(
@@ -233,30 +240,48 @@ class Network():
                     h_compartment)
             compartment.max_corner = sbnw.compartment_getMaxCorner(
                     h_compartment)
-            compartment.lower_left_point = [compartment.min_corner.x, 
-                                            compartment.min_corner.y]        
-            
+            compartment.lower_left_point = [compartment.min_corner.x,
+                                            compartment.min_corner.y]
+
     def _update_nodes_layout(self,):
         """Updates the layout information for the nodes.
-        
+
         Args: None
-        
+
         Returns: None
         """
         for node_index in range(sbnw.nw_getNumNodes(self.h_network)):
             h_node = sbnw.nw_getNodep(self.h_network, node_index)
             node_id = sbnw.node_getID(h_node)
-            node = self.nodes[node_id]
 
-            node.center = sbnw.node_getCentroid(h_node)
-            node.lower_left_point = [node.center.x - node.width/2,
-                                     node.center.y - node.height/2]
+            if node_id in self.aliasedNodes:
+
+                num_aliases = sbnw.nw_getNumAliasInstances(self.h_network,
+                                                           h_node)
+
+                for alias_index in range(num_aliases):
+
+                    h_alias_node = sbnw.nw_getAliasInstancep(
+                            self.h_network,
+                            h_node,
+                            alias_index)
+
+                    alias_node_id = self.aliasedNodes[node_id][alias_index]
+                    node = self.nodes[alias_node_id]
+                    node.center = sbnw.node_getCentroid(h_alias_node)
+                    node.lower_left_point = [node.center.x - node.width/2,
+                                             node.center.y - node.height/2]
+            else:
+                node = self.nodes[node_id]
+                node.center = sbnw.node_getCentroid(h_node)
+                node.lower_left_point = [node.center.x - node.width/2,
+                                         node.center.y - node.height/2]
 
     def _update_reactions_layout(self,):
         """Updates the layout information for the reactions.
-        
+
         Args: None
-        
+
         Returns: None
         """
         for reaction_index in range(sbnw.nw_getNumRxns(self.h_network)):
@@ -272,14 +297,13 @@ class Network():
                 reaction.curves.append(Curve(h_curve))
 
     def updateNetwork(self,):
-        """Updates the layout position values for the compartments, nodes, 
+        """Updates the layout position values for the compartments, nodes,
         reactions (and the curves making up each reaction).
-        
+
         Args: None
-        
+
         Returns: None
         """
         self._update_compartments_layout()
         self._update_nodes_layout()
-        self._update_reactions_layout()        
-        
+        self._update_reactions_layout()
