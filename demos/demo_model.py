@@ -16,7 +16,6 @@ print("node ids: ", sl.getNodeIds())
 print("reaction ids: ", sl.getReactionIds())
 
 
-
 sl.drawNetwork()
 
 sl._describeReaction(0)

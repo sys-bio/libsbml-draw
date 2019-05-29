@@ -13,10 +13,12 @@ r = te.loada("""
 
 s = SBMLlayout.SBMLlayout(r.getSBML())
 
+s._describeModel()
+
 s.drawNetwork()
 
 
-s.setLayoutAlgorithmOptions(padding=20)
+s.setLayoutAlgorithmOptions(padding=40)
 
 s.regenerateLayout()
 

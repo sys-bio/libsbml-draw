@@ -9,6 +9,9 @@ from matplotlib import pyplot as plt
 import pathlib
 import tempfile
 
+import libsbml
+
+import libsbml_draw.c_api.sbnw_c_api as sbnw
 
 def get_figure_width_height_in_pixels(fig=None):
     """Returns the width and height of the figure in pixels.
@@ -59,11 +62,8 @@ def get_node_dimensions(text_length_points, text_height_points, fig_dpi,
 
     network_width_to_height_ratio = network_width_data_coords/network_height_data_coords
 
-    print()
-    print("nw w_to_h: ", network_width_to_height_ratio)
-    print()
+#    print("nw w_to_h: ", network_width_to_height_ratio)
 
-    
     if network_width_to_height_ratio > 1:  # horizontal figure, uses all the width available, not all of the height
 
         width = text_length_pixels*network_width_data_coords/fig_width_pixels
@@ -80,11 +80,12 @@ def get_node_dimensions(text_length_points, text_height_points, fig_dpi,
         
         height = text_height_pixels*network_height_data_coords/fig_height_pixels
 
+        print()
         print("text_length_pixels: ", text_length_pixels)
         print("used fig width pixels: ", used_fig_width_pixels)
         print("network_width_data_coords: ", network_width_data_coords)
         print("width: ", width)
-
+        print()
         
     return (width, height)
          
@@ -151,67 +152,30 @@ def draw_compartments(compartments):
     return compartment_patches
 
 
-def draw_nodes(nodes, fig, node_multiplier, node_padding, node_mutation_scale, 
-               use_node_dims):
+def draw_nodes(nodes, node_padding, node_mutation_scale):
     """Create a list of FancyBbox Patches, one for each node.
 
     Args:
         nodes (iterable collection of Node): collection of nodes
 
     Returns: list of matplotlib.patches.FancyBboxPatch
-    """ 
-    
-    fig_width_data_coords = (max([node.center.x for node in nodes])-
-                            min([node.center.x for node in nodes]))
+    """
 
-    fig_height_data_coords = (max([node.center.y for node in nodes])-
-                             min([node.center.y for node in nodes])) 
-
-    print("fig width data coords: ", fig_width_data_coords)
-    print("fig height data coords: ", fig_height_data_coords)
-
-    fig_width_pixels, fig_height_pixels = get_figure_width_height_in_pixels(fig)
-      
     node_patches = []
 
     for node in nodes:
 
-#        if fig_width_data_coords/fig_height_data_coords < 1: 
-#            width = get_box_length(1.1*(len(node.name))*node.font_size, figwidth, figheight, fig_width_data_coords, fig_height_data_coords)[1]
-#        else:
-#            width = get_box_length(1.1*(len(node.name))*node.font_size, figwidth, figheight, fig_width_data_coords, fig_height_data_coords)[1]
-#        height = get_box_length(node.font_size+4, figwidth, figheight, fig_width_data_coords, fig_height_data_coords)[1]
+        print("node w, h: ", node.width, node.height)
 
-        percent_text_length = node_multiplier if node_multiplier else 1.1
-        
-        if use_node_dims:
-            width = node.width
-            height = node.height
-        else:        
-            width, height = get_node_dimensions(
-                percent_text_length*len(node.name)*node.font_size,
-                percent_text_length*node.font_size, 
-                fig.get_dpi(),
-                fig_width_pixels, fig_height_pixels,
-                fig_width_data_coords, 
-                fig_height_data_coords)
-        
-        print("node w, h: ", width, height)
-        
         fbbp = FancyBboxPatch(
-#            node.lower_left_point,
-#            node.width,
-#            node.height,
-            [node.center.x-width/2, node.center.y-height/2],
-#            [node.center.x-width/2, node.center.y-width/4],
-            width,
-            height,                        
-#            width/2,
+            node.lower_left_point,
+            node.width,
+            node.height,
             edgecolor=node.edge_color,
             facecolor=node.fill_color,
             linewidth=node.edge_width,
-            boxstyle=BoxStyle("round", 
-                              pad=node_padding if node_padding else 0.6, 
+            boxstyle=BoxStyle("round",
+                              pad=node_padding if node_padding else 0.6,
                               rounding_size=.8),
             mutation_scale=node_mutation_scale if node_mutation_scale else 10
             )
@@ -287,10 +251,86 @@ def add_labels(nodes):
                  horizontalalignment="center",
                  verticalalignment="center")
 
+def update_node_dimensions(sbml_layout, fig_dpi, fig_width_pixels, 
+                           fig_height_pixels, node_multiplier=1.0,
+                           recompute_node_dims=True):
+    """Increase the size of the node boxes, if necessary, to fit the text.
+    
+    Args:
+        
+    Returns: None    
+    """
+    nodes = sbml_layout._SBMLlayout__network.nodes.values()
 
-def createNetworkFigure(network, mutation_scale, figsize=None, show=True, 
-                        dpi=None, node_multiplier=None, node_padding=None, 
-                        node_mutation_scale=None, use_node_dims=None):
+    print("number of nodes: ", len(nodes), sbml_layout.getNodeIds())
+    if len(nodes) == 8:
+        for node_key in sbml_layout._SBMLlayout__network.nodes.keys():
+            print(node_key, sbml_layout._SBMLlayout__network.nodes[node_key].id)
+    
+    fig_width_data_coords = (
+            max([node.center.x for node in nodes])-
+            min([node.center.x for node in nodes]))
+
+    fig_height_data_coords = (
+            max([node.center.y for node in nodes])-
+            min([node.center.y for node in nodes]))
+
+    print("fig dpi: ", fig_dpi)
+    print("fwdc fhdc: ", fig_width_data_coords, fig_height_data_coords)
+    print("fig wh: ", fig_width_pixels, fig_height_pixels)
+    print("node_multiplier", node_multiplier)
+
+    needToRecomputeLayout = False
+    
+    for node in nodes:
+                    
+        width, height = get_node_dimensions(
+            node_multiplier*(len(node.name)+0)*node.font_size,
+            node_multiplier*(node.font_size+0),
+            fig_dpi, fig_width_pixels, fig_height_pixels,
+            fig_width_data_coords, fig_height_data_coords)
+
+        print("computed w,h: ", width, height)        
+
+        h_node_id = node.id.encode('utf-8')
+        h_node = sbnw.nw_getNodepFromId(sbml_layout._SBMLlayout__h_network, 
+                                        h_node_id)
+
+        # is node big enough for font-size and figsize?
+        if not sbml_layout._SBMLlayout__layoutSpecified or recompute_node_dims:
+            needToRecomputeLayout = True
+            sbnw.node_setWidth(h_node, width)
+            node.width = width
+            node.lower_left_point = [node.center.x - node.width/2,
+                                     node.center.y - node.height/2]
+        if not sbml_layout._SBMLlayout__layoutSpecified or recompute_node_dims:
+            needToRecomputeLayout = True
+            sbnw.node_setHeight(h_node, height)
+            node.height = height
+            node.lower_left_point = [node.center.x - node.width/2,
+                                     node.center.y - node.height/2]                    
+#    if False:
+    if needToRecomputeLayout:
+#        print("Recomputing Layout")
+#        for node in nodes:
+#            sbml_layout.lockNode(node.id)
+#        sbml_layout.regenerateLayout()    
+#        for node in nodes:
+#            sbml_layout.unlockNode(node.id)              
+#        for nr in range(sbnw.nw_getNumRxns(sbml_layout._SBMLlayout__h_network)):
+        sbnw.nw_recenterJunctions(sbml_layout._SBMLlayout__h_network)
+#                h_reaction = sbnw.nw_getReactionp(self.__h_network, nr)
+#                sbnw.reaction_recenter(h_reaction)
+        sbnw.nw_rebuildCurves(sbml_layout._SBMLlayout__h_network)
+
+        sbml_layout._SBMLlayout__updateNetworkLayout()
+        sbml_layout._SBMLlayout__doc = libsbml.readSBMLFromString(
+                sbml_layout._SBMLlayout__getSBMLWithLayoutString())
+                
+def createNetworkFigure(sbml_layout, mutation_scale, figsize=None,
+                        show=True, dpi=None, node_multiplier=None, 
+                        node_padding=None, node_mutation_scale=None, 
+                        recompute_node_dims=None):
     """Creates the figure, draws the nodes, draws the reactions, adds text to
     the nodes.
 
@@ -315,30 +355,36 @@ def createNetworkFigure(network, mutation_scale, figsize=None, show=True,
 
     # initialize figure
     if figsize and len(figsize) == 2:
-        fig = plt.figure(figsize=figsize);
+        fig = plt.figure(figsize=figsize, dpi=dpi);
     else:
         fig = plt.figure()
 
-    if dpi:   
-        fig.set_dpi(dpi)
-    else:
-        pass
+#    if dpi:   
+#        fig.set_dpi(dpi)
+#    else:
+#        pass
 
-#    ax = plt.gca()
-    
-    ax = plt.Axes(fig, [0., 0., 1., 1.])
-    ax.set_axis_off()
-    fig.add_axes(ax)
+    ax = plt.gca()
 
-    print("dn: fig_size: ", figsize)
+    # uses all of the figure space
     
+#    ax = plt.Axes(fig, [0., 0., 1., 1.])
+#    ax.set_axis_off()
+#    fig.add_axes(ax)
+
     bbox = ax.get_window_extent().transformed(fig.dpi_scale_trans.inverted())
-    width, height = bbox.width, bbox.height
-    width *= fig.dpi
-    height *= fig.dpi
+    fig_width_pixels = bbox.width*fig.get_dpi()
+    fig_height_pixels = bbox.height*fig.get_dpi()
     
-    print("extent w, h: ", width, height) 
+    print("extent w, h: ", fig_width_pixels, fig_height_pixels) 
     
+    
+    network = sbml_layout._SBMLlayout__network
+    
+    update_node_dimensions(sbml_layout, fig.get_dpi(), fig_width_pixels, 
+                           fig_height_pixels, node_multiplier, 
+                           recompute_node_dims)
+        
     # draw the compartments
     compartment_patches = draw_compartments(network.compartments.values())
 
@@ -349,9 +395,8 @@ def createNetworkFigure(network, mutation_scale, figsize=None, show=True,
 #    figheight = fig.get_dpi()*fig.get_figheight()
 
     # draw the nodes
-    node_patches = draw_nodes(network.nodes.values(), fig, 
-                              node_multiplier, node_padding, 
-                              node_mutation_scale, use_node_dims)
+    node_patches = draw_nodes(network.nodes.values(), node_padding, 
+                              node_mutation_scale)
     for node_patch in node_patches:
         ax.add_patch(node_patch)
 

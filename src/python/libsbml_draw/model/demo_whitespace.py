@@ -25,4 +25,5 @@ J7_k = 0.1;
 
 s = SBMLlayout.SBMLlayout (r.getSBML())
 s.setReactionCurveWidth ('all', 1)
-p = s.drawNetwork(figsize=(12,10))
+p = s.drawNetwork(figsize=(12,10), node_mutation_scale=10)
+p = s.drawNetwork(figsize=(12,10), node_mutation_scale=5)

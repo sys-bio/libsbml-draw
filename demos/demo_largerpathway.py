@@ -19,6 +19,7 @@ sl = SBMLlayout(str(MODEL_FILE))
 
 sl.setNodeFontSize("all", 24)
 
+sl.drawNetwork(recompute_node_dims=False)
 
 sl.drawNetwork(figsize=(12,12))
 

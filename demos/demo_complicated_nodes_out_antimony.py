@@ -44,6 +44,8 @@ sl.drawNetwork(figsize=(6,4))
 
 sl.drawNetwork(figsize=(8,8))
 
+sl.drawNetwork(figsize=(8,8), node_mutation_scale=5)
+
 #sl.drawNetwork("complicated_nodes_antimony.png", show=False)    
 
 # plt.show?

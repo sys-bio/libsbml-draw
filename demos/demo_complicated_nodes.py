@@ -13,7 +13,7 @@ model_file = Path(pkg_resources.resource_filename(
 
 # https://stackoverflow.com/questions/33635439/matplotlib-patch-size-in-points
 
-print("validate: ", SBMLlayout._validate_sbml_filename(str(model_file)))
+#print("validate: ", SBMLlayout._validate_sbml_filename(str(model_file)))
 
 
 sl = SBMLlayout(str(model_file))
@@ -55,12 +55,15 @@ sl.writeSBMLFile("complicated_nodes_out.xml")
 #sl2 = SBMLlayout(out_file, fitToWindow=(0.,0.,500.,500.))
 sl2 = SBMLlayout(out_file)
 
-#sl2._describeModel()
+sl2._describeModel()
 
 #sl2.drawNetwork(figure_size=(15,15))
 sl2.drawNetwork("complicated_nodes_with_close.png", show=True)
 
 sl2.drawNetwork(figsize=(8,8), show=True)
+
+#sl2.drawNetwork(dpi=300, figsize=(8,8))
+#sl2.drawNetwork(dpi=1200, figsize=(8,8))
 
 #x = list()
 #y = list()

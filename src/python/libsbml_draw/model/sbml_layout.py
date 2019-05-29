@@ -5,12 +5,11 @@ from collections import namedtuple
 import os
 
 from matplotlib.colors import is_color_like
-from matplotlib import pyplot as plt
 
 import libsbml
 
 import libsbml_draw.c_api.sbnw_c_api as sbnw
-from libsbml_draw.draw.draw_network import (createNetworkFigure, get_node_dimensions, get_figure_width_height_in_pixels)
+from libsbml_draw.draw.draw_network import createNetworkFigure
 from libsbml_draw.model.network import Network
 from libsbml_draw.model.render import Render
 
@@ -85,62 +84,6 @@ class SBMLlayout:
                 # apply render information, if any
                 self.__applyRenderInformation()
                 
-                # check if nodes are big enough for the text
-
-                nodes = self.__network.nodes.values()
-
-                fig_width_data_coords = (
-                        max([node.center.x for node in nodes])-
-                        min([node.center.x for node in nodes]))
-
-                fig_height_data_coords = (
-                        max([node.center.y for node in nodes])-
-                        min([node.center.y for node in nodes]))
-
-                print("fwdc fhdc: ", fig_width_data_coords, fig_height_data_coords)
-
-                percent_text_length = 1.2
-                needToRecomputeLayout = False
-
-#                fig_width_pixels, fig_height_pixels = get_figure_width_height_in_pixels()
-                fig_width_pixels, fig_height_pixels = 432, 288
-
-                print("fig wh: ", fig_width_pixels, fig_height_pixels)
-
-                fig_dpi = 72
-
-                for node in nodes:
-                    
-                    width, height = get_node_dimensions(
-                        percent_text_length*(len(node.name)+0)*node.font_size,
-                        percent_text_length*(node.font_size+0),
-                        fig_dpi, fig_width_pixels, fig_height_pixels,
-                        fig_width_data_coords,
-                        fig_height_data_coords)
-
-                    h_node_id = node.id.encode('utf-8')
-                    h_node = sbnw.nw_getNodepFromId(self.__h_network, h_node_id)
-                    
-                    # is node big enough for font-size and default figsize?
-                    if node.width < width:
-                        needToRecomputeLayout = True
-                        sbnw.node_setWidth(h_node, width)
-                        node.width = width
-                    if node.height < height:
-                        needToRecomputeLayout = True
-                        sbnw.node_setHeight(h_node, height)
-                        node.height = height
-                    
-                if needToRecomputeLayout:
-                    print()
-                    print("needToRecomputeLayout!")
-                    print()
-                    for node in nodes:
-                        self.lockNode(node.id)
-                    self.regenerateLayout()    
-                    for node in nodes:
-                        self.unlockNode(node.id)                
- 
             else:
                 if SBMLlayout._validate_sbml_filename(sbml_source):
                     self.__doc = libsbml.readSBMLFromFile(sbml_source)
@@ -589,8 +532,10 @@ class SBMLlayout:
         Returns: None
         """
         if node_id in self.getNodeIds():
-
-            h_node_id = node_id.encode('utf-8')
+            # Aliases of a node all have the same node id 
+            # If a node has 3 aliases, all three will be locked
+            node = self.__network.nodes[node_id]            
+            h_node_id = node.id.encode('utf-8')
             h_node = sbnw.nw_getNodepFromId(self.__h_network, h_node_id)
             sbnw.node_lock(h_node)
 
@@ -1355,7 +1300,7 @@ class SBMLlayout:
         Args:
             node_id (str): id for the node
 
-        Returns: int
+        Returns: float
         """
         if node_id in self.__network.nodes:
             return self.__network.nodes[node_id].width
@@ -1368,12 +1313,53 @@ class SBMLlayout:
         Args:
             node_id (str): id for the node
 
-        Returns: int
+        Returns: float
         """
         if node_id in self.__network.nodes:
             return self.__network.nodes[node_id].height
         else:
             raise ValueError(f"Species {node_id} not found in network.")
+
+    def setNodeWidth(self, node_id, width):
+        """Sets the width of the node.
+
+        Args:
+            node_id (str): id for the node
+            width (float): width in data coordinates for the node
+
+        Returns: None
+        """
+        if node_id in self.__network.nodes:
+            node = self.__network.nodes[node_id]
+            h_node_id = node_id.encode('utf-8')
+            h_node = sbnw.nw_getNodepFromId(self.__h_network, h_node_id)            
+            sbnw.node_setWidth(h_node, width)            
+            node.width = width
+            node.lower_left_point = [node.center.x - node.width/2,
+                                     node.center.y - node.height/2]
+        else:
+            raise ValueError(f"Species {node_id} not found in network.")
+
+    def setNodeHeight(self, node_id, height):
+        """Sets the height of the node.
+
+        Args:
+            node_id (str): id for the node
+            height (float): height in data coordinates for the node
+
+        Returns: None
+        """
+        if node_id in self.__network.nodes:
+            node = self.__network.nodes[node_id]
+            h_node_id = node_id.encode('utf-8')
+            h_node = sbnw.nw_getNodepFromId(self.__h_network, h_node_id)            
+            sbnw.node_setHeight(h_node, height)            
+            node.height = height
+            node.lower_left_point = [node.center.x - node.width/2,
+                                     node.center.y - node.height/2]
+        else:
+            raise ValueError(f"Species {node_id} not found in network.")
+
 
     def getNodeName(self, node_id):
         """Returns the name of the node.
@@ -1774,8 +1760,9 @@ class SBMLlayout:
         return (fig_width_inches, fig_height_inches)
 
     def drawNetwork(self, save_file_name=None, bbox_inches="tight",
-                    figsize=None, show=True, dpi=None, node_multiplier=1.1,
-                    node_padding=0.6, node_mutation_scale=15):
+                    figsize=None, show=True, dpi=None, node_multiplier=1.0,
+                    node_padding=0.6, node_mutation_scale=10, 
+                    recompute_node_dims=True):
         """Draws the network to screen.  The figure can be saved.
 
         Args:
@@ -1795,14 +1782,14 @@ class SBMLlayout:
 #        else:
 #            pass
 
-        fig = createNetworkFigure(self.__network, self.__arrowhead_scale,
+        fig = createNetworkFigure(self, self.__arrowhead_scale,
                                   figsize, show, dpi, node_multiplier, 
                                   node_padding, node_mutation_scale, 
-                                  use_node_dims=True)
+                                  recompute_node_dims)
         if(save_file_name):
             fig.savefig(save_file_name, bbox_inches=bbox_inches)
 
-        print("fig size: ", fig.get_figwidth(), fig.get_figheight())
+#        print("fig size: ", fig.get_figwidth(), fig.get_figheight())
 
         return fig
 

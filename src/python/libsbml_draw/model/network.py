@@ -226,13 +226,16 @@ class Network():
             compartment_id = sbnw.compartment_getID(h_compartment)
             compartment = self.compartments[compartment_id]
 
+            compartment.width = sbnw.compartment_getWidth(h_compartment)
+            compartment.height = sbnw.compartment_getHeight(h_compartment)
+
             compartment.min_corner = sbnw.compartment_getMinCorner(
                     h_compartment)
             compartment.max_corner = sbnw.compartment_getMaxCorner(
                     h_compartment)
             compartment.lower_left_point = [compartment.min_corner.x, 
-                                            compartment.min_corner.y]
-                
+                                            compartment.min_corner.y]        
+            
     def _update_nodes_layout(self,):
         """Updates the layout information for the nodes.
         
