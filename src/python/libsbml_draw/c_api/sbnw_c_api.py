@@ -79,12 +79,6 @@ slib.gf_loadSBMLfile.restype = ctypes.c_uint64
 slib.gf_loadSBMLbuf.argtypes = [ctypes.c_char_p]
 slib.gf_loadSBMLbuf.restype = ctypes.c_uint64
 
-# slib.gf_writeSBML.argtypes = [ctypes.c_char_p, ctypes.c_uint64]
-# slib.gf_writeSBML.restype = ctypes.c_int
-# slib.gf_writeSBMLwithLayout.argtypes = [ctypes.c_char_p, ctypes.c_uint64,
-#                                        ctypes.c_uint64]
-# slib.gf_writeSBMLwithLayout.restype = ctypes.c_int
-
 
 # IO Functions
 def getSBMLwithLayoutStr(h_sbml_model, h_layout_info):
@@ -100,15 +94,6 @@ def loadSBMLFile(h_fileName):
 def loadSBMLString(h_stringName):
     h_stringname_string = h_stringName.encode('utf-8')
     return slib.gf_loadSBMLbuf(h_stringname_string)
-
-
-# def writeSBMLwithLayout(filename, h_layout, h_layout_info):
-#    return slib.gf_writeSBMLwithLayout(filename, h_layout, h_layout_info)
-
-
-# def writeSBML(filename, sbml_model):
-#    filename_string = filename.encode('utf-8')
-#    return slib.gf_writeSBML(filename_string, sbml_model)
 
 
 slib.gf_getLastError.restype = ctypes.c_char_p
@@ -456,64 +441,6 @@ def compartment_getWidth(h_compartment):
 def compartment_getID(h_compartment):
     return slib.gf_compartment_getID(h_compartment).decode("utf-8")
 
-
-# libsbml Functions
-
-
-# slib.readSBMLFromFile.argtypes = [ctypes.c_char_p]
-# slib.readSBMLFromFile.restype = ctypes.c_uint64
-# from ctypes import POINTER
-# slib.readSBMLFromFile.restype = POINTER(SBMLDocument_t)
-# slib.readSBMLFromFile.restype = ctypes.c_void_p
-
-
-# slib.readSBMLFromString.argtypes = [ctypes.c_char_p]
-# slib.readSBMLFromString.restype = ctypes.c_uint64
-
-
-# def readSBMLFromFile(sbml_file):
-#    return slib.readSBMLFromFile(sbml_file.encode('utf-8'))
-
-
-# def readSBMLFromString(sbml_file):
-#    return slib.readSBMLFromString(sbml_file.encode('utf-8'))
-
-
-# slib.writeSBMLToFile.argtypes = [ctypes.c_uint64, ctypes.c_char_p]
-# slib.writeSBMLToString.argtypes = [ctypes.c_uint64]
-# slib.writeSBMLToString.restype = ctypes.c_char_p
-
-
-# def writeSBMLToFile(doc, out_file_name):
-#    return slib.writeSBMLToFile(doc, out_file_name.encode('utf-8'))
-
-
-# def writeSBMLToString(doc):
-#    return slib.writeSBMLToString(doc).decode('utf-8')
-
-
-# slib.RelAbsVector.argtypes = [ctypes.c_float]
-# slib.RelAbsVector.restype = ctypes.c_uint64
-
-
-# def RelAbsVector(font_size):
-#    return slib.RelAbsVector(font_size)
-
-
-# slib.RenderExtension.getXmlnsL2.restype = ctypes.c_char_p
-# slib.RenderExtension.getXmlnsL3V1V1.restype = ctypes.c_char_p
-
-
-# def RenderExtension_getXmlnsL2():
-#    return slib.RenderExtension.getXmlnsL2()
-
-# def RenderExtension_getXmlnsL3V1V1():
-#    return slib.RenderExtension.getXmlnsL3V1V()
-
-#            if self.__h_layout_info.contents.level != 3:
-#                raise ValueError(f"SBML source is level "
-#                                 f"{self.__h_layout_info.contents.level}, "
-#                                 f"libsbml_draw supports level 3 only.")
 
 slib.gf_reaction_hasSpec.argtypes = [ctypes.c_uint64, ctypes.c_uint64]
 slib.gf_reaction_hasSpec.restype = ctypes.c_int

@@ -1741,87 +1741,45 @@ class SBMLlayout:
         """
         return sbnw.arrowheadNumStyles()
 
-    def __computeFigureSize(self, box_padding_multiplier=1.15):
-        """Computes the estimated figure size in inches required so that the
-        node boxes are large enough to contain the node name.
-
-        Args:
-            box_padding_multiplier (float): makes the box 5% wider than the
-            text length
-
-        Returns: tuple(float, float)
-        """
-
-        length_longest_node_name = 0
-        node_with_longest_name = None
-        for node in self.__network.nodes.values():
-            if len(node.name) > length_longest_node_name:
-                length_longest_node_name = len(node.name)
-                node_with_longest_name = node
-
-        length_of_one_font_point_inches = 1/72
-        length_of_node_name_inches = (length_longest_node_name *
-                                      node_with_longest_name.font_size *
-                                      length_of_one_font_point_inches)
-
-        max_x_in_network = max([n.center.x
-                               for n in self.__network.nodes.values()])
-
-        min_x_in_network = min([n.center.x
-                               for n in self.__network.nodes.values()])
-
-        figure_width_data_units = max_x_in_network - min_x_in_network
-
-        fig_width_inches = (length_of_node_name_inches*box_padding_multiplier *
-                            figure_width_data_units /
-                            node_with_longest_name.width)
-
-#        default_matplotlib_h_w_ratio = 4.8/6.4  # inches
-
-        fig_height_inches = fig_width_inches
-
-#        fig_height_inches = max(fig_width_inches/
-#                                node_with_longest_name.font_size,
-#                                default_matplotlib_h_w_ratio*fig_width_inches)
-
-        # print("max x", max_x_in_network, "min x", min_x_in_network)
-        # print("fig width", figure_width_data_units)
-        # print("fig width inches", fig_width_inches)
-        # print("fig height inches", fig_height_inches)
-
-        return (fig_width_inches, fig_height_inches)
-
     def drawNetwork(self, save_file_name=None, bbox_inches="tight",
                     figsize=None, show=True, dpi=None, node_multiplier=1.0,
                     node_padding=0.6, node_mutation_scale=10,
-                    recompute_node_dims=True):
+                    compute_node_dims=True, use_all_fig_space=False):
         """Draws the network to screen.  The figure can be saved.
 
         Args:
-            save_file_name (str): save figure to this file
-            bbox_inches (str or matplotlib.transforms.Bbox): "tight", or a
-                value for inches or a Bbox.
-            figsize (tuple): (width, height) of the figure in inches,
-                default value is (6.4, 4.8)
+            save_file_name (optional, str): save figure to this file
+            bbox_inches (optional, str or matplotlib.transforms.Bbox): "tight",
+                or a value for inches or a Bbox, used as a parameter in
+                matplotlib's savefig()
+            figsize (optional, tuple): (width, height) of the figure in inches,
+                default value is (6, 4)
+            show (optional, bool): if True, display the network on screen
+            dpi (optional, int): desired dots-per-inch for the figure
+            node_multiplier (optional, float): multiplier to achieve a width of
+                the node box beyond what's needed for the text itself, eg. 1.1
+                represents an extra 10%
+            node_padding (optional, float): passed to matplotlib for the
+                FancyBboxPatch boxstyle pad parameter
+            node_mutation_scale (optional, float): passed to matplotlib for the
+                FancyBboxPatch mutation_scale parameter
+            compute_node_dims (optional, bool): if True, the width and height
+                of the node boxes will be computed so that the node text fits
+                in the box given the font-size, figsize, and figure dpi.
+                If False, the node width and height found in the SBML file or
+                computed by the layout algorithm will be used.
+            use_all_fig_space (optional, bool): if True, use all of the space
+                available for the figure, with no borders
 
         Returns: matplotlib.figure.Figure
         """
-#        matplotlib_default_size = (6.4, 4.8)
-
-#        if not figsize:
-#            figsize = max(matplotlib_default_size,
-#                              self.__computeFigureSize())
-#        else:
-#            pass
 
         fig = createNetworkFigure(self, self.__arrowhead_scale,
                                   figsize, show, dpi, node_multiplier,
                                   node_padding, node_mutation_scale,
-                                  recompute_node_dims)
+                                  compute_node_dims, use_all_fig_space)
         if(save_file_name):
             fig.savefig(save_file_name, bbox_inches=bbox_inches)
-
-#        print("fig size: ", fig.get_figwidth(), fig.get_figheight())
 
         return fig
 
