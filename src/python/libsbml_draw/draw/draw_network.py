@@ -117,7 +117,7 @@ def draw_compartments(compartments):
     return compartment_patches
 
 
-def draw_nodes(nodes, node_padding, node_mutation_scale):
+def draw_nodes(nodes, node_padding, node_mutation_scale, fig):
     """Create a list of FancyBbox Patches, one for each node.
 
     Args:
@@ -130,17 +130,28 @@ def draw_nodes(nodes, node_padding, node_mutation_scale):
 
     for node in nodes:
 
+        width = len(node.name)*node.font_size/72
+        height = node.font_size/72
+        node_center_x = node.center.x/72
+        node_center_y = node.center.y/72        
+        lower_left_point_x = node_center_x - width/2
+        lower_left_point_y = node_center_y - height/2
+                
         fbbp = FancyBboxPatch(
-            node.lower_left_point,
-            node.width,
-            node.height,
+#            node.lower_left_point,
+#            node.width,
+#            node.height,
+            [lower_left_point_x+1, lower_left_point_y+1],
+            width,
+            height,
             edgecolor=node.edge_color,
             facecolor=node.fill_color,
             linewidth=node.edge_width,
-            boxstyle=BoxStyle("round",
-                              pad=node_padding if node_padding else 0.6,
-                              rounding_size=.8),
-            mutation_scale=node_mutation_scale if node_mutation_scale else 10
+            boxstyle=BoxStyle("round"),
+#                              pad=node_padding if node_padding else 0.6,
+#                              rounding_size=.8),
+#            mutation_scale=node_mutation_scale if node_mutation_scale else 10,
+            transform=fig.dpi_scale_trans
             )
 
         node_patches.append(fbbp)
@@ -148,7 +159,7 @@ def draw_nodes(nodes, node_padding, node_mutation_scale):
     return node_patches
 
 
-def draw_reactions(reactions, mutation_scale):
+def draw_reactions(reactions, mutation_scale, fig):
     """Create a list of FancyArrow Patches, one for each curve in a reaction.
 
     Args:
@@ -174,10 +185,10 @@ def draw_reactions(reactions, mutation_scale):
                                         curve.control_point_2.y])
 
             cubic_bezier_curve_path = Path(
-                    [start_point,
-                     control_point_1,
-                     control_point_2,
-                     end_point],
+                    [start_point/72+1,
+                     control_point_1/72+1,
+                     control_point_2/72+1,
+                     end_point/72+1],
                     [Path.MOVETO, Path.CURVE4, Path.CURVE4, Path.CURVE4])
 
             fap = FancyArrowPatch(
@@ -187,7 +198,8 @@ def draw_reactions(reactions, mutation_scale):
                     clip_on=False,
                     linewidth=reaction.curve_width,
                     mutation_scale=mutation_scale.get(curve.role, 10),
-                    path=cubic_bezier_curve_path
+                    path=cubic_bezier_curve_path,
+                    transform=fig.dpi_scale_trans
                     )
 
             reaction_patches.append(fap)
@@ -195,7 +207,7 @@ def draw_reactions(reactions, mutation_scale):
     return reaction_patches
 
 
-def add_labels(nodes):
+def add_labels(nodes, fig):
     """Add text to the nodes.
 
     Args:
@@ -204,15 +216,16 @@ def add_labels(nodes):
     Returns: None
     """
     for node in nodes:
-        plt.text(node.center.x,
-                 node.center.y,
+        plt.text(node.center.x/72+1,
+                 node.center.y/72+1,
                  node.name,
                  fontsize=node.font_size,
                  color=node.font_color,
                  fontname=node.font_family,
                  fontstyle=node.font_style,
                  horizontalalignment="center",
-                 verticalalignment="center")
+                 verticalalignment="center",
+                 transform=fig.dpi_scale_trans)
 
 
 def update_node_dimensions(sbml_layout, fig_dpi, fig_width_pixels,
@@ -232,11 +245,11 @@ def update_node_dimensions(sbml_layout, fig_dpi, fig_width_pixels,
     """
     nodes = sbml_layout._SBMLlayout__network.nodes.values()
 
-    fig_width_data_coords = (
+    nw_width_data_coords = (
             max([node.center.x for node in nodes]) -
             min([node.center.x for node in nodes])) + SBNW_NODE_WIDTH
 
-    fig_height_data_coords = (
+    nw_height_data_coords = (
             max([node.center.y for node in nodes]) -
             min([node.center.y for node in nodes])) + SBNW_NODE_HEIGHT
 
@@ -246,7 +259,7 @@ def update_node_dimensions(sbml_layout, fig_dpi, fig_width_pixels,
             node_multiplier*(len(node.name)+0)*node.font_size,
             node_multiplier*(node.font_size+0),
             fig_dpi, fig_width_pixels, fig_height_pixels,
-            fig_width_data_coords, fig_height_data_coords)
+            nw_width_data_coords, nw_height_data_coords)
 
         h_node_id = node.id.encode('utf-8')
         h_node = sbnw.nw_getNodepFromId(sbml_layout._SBMLlayout__h_network,
@@ -303,12 +316,32 @@ def createNetworkFigure(sbml_layout, arrowhead_mutation_scale, figsize=None,
 
     Returns: matplotlib.figure.Figure
     """
+    
+    nodes = sbml_layout._SBMLlayout__network.nodes.values()
+    
+    nw_width_points = (
+            max([node.center.x for node in nodes]) -
+            min([node.center.x for node in nodes])) + SBNW_NODE_WIDTH
+
+    nw_height_points = (
+            max([node.center.y for node in nodes]) -
+            min([node.center.y for node in nodes])) + SBNW_NODE_HEIGHT
+
+    nw_width_inches = nw_width_points/72    
+    nw_height_inches = nw_height_points/72
+
+    print("nw width, height points: ", nw_width_points, nw_height_points)
+    print("nw width, height inches: ", nw_width_inches, nw_height_inches)
 
     # initialize figure
     if figsize and len(figsize) == 2:
         fig = plt.figure(figsize=figsize, dpi=dpi)
     else:
-        fig = plt.figure()
+        figsize = (nw_width_inches+2, nw_height_inches+2)
+        fig = plt.figure(figsize=figsize)
+
+    print("fig dpi: ", fig.dpi, fig.get_dpi())
+    print("fig width, heigth: ", fig.get_figwidth(), fig.get_figheight())
 
     # uses all of the figure space
     if use_all_fig_space:
@@ -319,17 +352,17 @@ def createNetworkFigure(sbml_layout, arrowhead_mutation_scale, figsize=None,
         ax = plt.gca()
         fig.add_axes(ax)
 
-    fig_width_pixels, fig_height_pixels = \
-        compute_figure_width_height_in_pixels(fig, ax)
+#    fig_width_pixels, fig_height_pixels = \
+#        compute_figure_width_height_in_pixels(fig, ax)
 
     network = sbml_layout._SBMLlayout__network
 
     # ensure that the node text will fit in the node box
-    if compute_node_dims:
-        update_node_dimensions(sbml_layout, fig.get_dpi(), fig_width_pixels,
-                               fig_height_pixels, node_multiplier)
-    else:  # use node dimensions given in SBML or returned by the layout alg
-        pass
+#    if compute_node_dims:
+#        update_node_dimensions(sbml_layout, fig.get_dpi(), fig_width_pixels,
+#                               fig_height_pixels, node_multiplier)
+#    else:  # use node dimensions given in SBML or returned by the layout alg
+#        pass
 
     # draw the compartments
     compartment_patches = draw_compartments(network.compartments.values())
@@ -339,19 +372,19 @@ def createNetworkFigure(sbml_layout, arrowhead_mutation_scale, figsize=None,
 
     # draw the nodes
     node_patches = draw_nodes(network.nodes.values(), node_padding,
-                              node_mutation_scale)
+                              node_mutation_scale, fig)
     for node_patch in node_patches:
         ax.add_patch(node_patch)
 
     # draw the reactions
     reaction_patches = draw_reactions(
             network.reactions.values(),
-            arrowhead_mutation_scale)
+            arrowhead_mutation_scale, fig)
     for reaction_patch in reaction_patches:
         ax.add_patch(reaction_patch)
 
     # add labels to the nodes
-    add_labels(network.nodes.values())
+    add_labels(network.nodes.values(), fig)
 
 #    ax.autoscale()
 #    plt.subplots_adjust(left=0.1, right=0.9, top=0.9, bottom=0.1)

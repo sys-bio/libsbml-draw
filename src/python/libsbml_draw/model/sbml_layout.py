@@ -82,7 +82,20 @@ class SBMLlayout:
                 self.__fitToWindow(self.__fitWindow[0], self.__fitWindow[1],
                                    self.__fitWindow[2], self.__fitWindow[3])
             else:
-                # don't call fit to window
+                temp_network = self.__createNetwork()                
+                nodes = temp_network.nodes.values()
+    
+                nw_width_points = (
+                    max([node.center.x for node in nodes]) -
+                    min([node.center.x for node in nodes])) + 40
+
+                nw_height_points = (
+                    max([node.center.y for node in nodes]) -
+                    min([node.center.y for node in nodes])) + 20
+                        
+                print("ftw: width, height: ", nw_width_points, nw_height_points)        
+                
+                self.__fitToWindow(0, 0, nw_width_points, nw_height_points)
                 pass
 
             self.__network = self.__createNetwork()
