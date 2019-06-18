@@ -95,7 +95,7 @@ class SBMLlayout:
                         
                 print("ftw: width, height: ", nw_width_points, nw_height_points)        
                 
-                self.__fitToWindow(0, 0, nw_width_points, nw_height_points)
+#                self.__fitToWindow(0, 0, nw_width_points, nw_height_points)
                 pass
 
             self.__network = self.__createNetwork()

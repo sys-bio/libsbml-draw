@@ -16,6 +16,7 @@ import libsbml_draw.c_api.sbnw_c_api as sbnw
 SBNW_NODE_WIDTH = 40
 SBNW_NODE_HEIGHT = 20
 
+SHIFT = 1
 
 def compute_figure_width_height_in_pixels(fig, ax):
     """Returns the width and height of the figure in pixels.
@@ -130,27 +131,28 @@ def draw_nodes(nodes, node_padding, node_mutation_scale, fig):
 
     for node in nodes:
 
-        width = len(node.name)*node.font_size/72
-        height = node.font_size/72
-        node_center_x = node.center.x/72
-        node_center_y = node.center.y/72        
-        lower_left_point_x = node_center_x - width/2
-        lower_left_point_y = node_center_y - height/2
+#        width = len(node.name)*node.font_size/72
+#        height = node.font_size/72
+#        node_center_x = node.center.x/72 + .5
+#        node_center_y = node.center.y/72 + .5       
+#        lower_left_point_x = node_center_x - node.width/2
+#        lower_left_point_y = node_center_y - node.height/2
                 
         fbbp = FancyBboxPatch(
 #            node.lower_left_point,
 #            node.width,
 #            node.height,
-            [lower_left_point_x+1, lower_left_point_y+1],
-            width,
-            height,
+            [node.lower_left_point[0]/72 + SHIFT, node.lower_left_point[1]/72 + SHIFT],
+            node.width/72,
+            node.height/72,
             edgecolor=node.edge_color,
             facecolor=node.fill_color,
             linewidth=node.edge_width,
-            boxstyle=BoxStyle("round"),
-#                              pad=node_padding if node_padding else 0.6,
-#                              rounding_size=.8),
-#            mutation_scale=node_mutation_scale if node_mutation_scale else 10,
+            boxstyle=BoxStyle("round", 
+                              pad=0.1,
+#                              pad=node_padding if node_padding else 0.1,
+                              rounding_size=.1),
+#            mutation_scale=node_mutation_scale if node_mutation_scale else 1,
             transform=fig.dpi_scale_trans
             )
 
@@ -185,10 +187,10 @@ def draw_reactions(reactions, mutation_scale, fig):
                                         curve.control_point_2.y])
 
             cubic_bezier_curve_path = Path(
-                    [start_point/72+1,
-                     control_point_1/72+1,
-                     control_point_2/72+1,
-                     end_point/72+1],
+                    [start_point/72 + SHIFT,
+                     control_point_1/72 + SHIFT,
+                     control_point_2/72 + SHIFT,
+                     end_point/72 + SHIFT],
                     [Path.MOVETO, Path.CURVE4, Path.CURVE4, Path.CURVE4])
 
             fap = FancyArrowPatch(
@@ -216,8 +218,8 @@ def add_labels(nodes, fig):
     Returns: None
     """
     for node in nodes:
-        plt.text(node.center.x/72+1,
-                 node.center.y/72+1,
+        plt.text(node.center.x/72 + SHIFT,
+                 node.center.y/72 + SHIFT,
                  node.name,
                  fontsize=node.font_size,
                  color=node.font_color,
@@ -318,17 +320,23 @@ def createNetworkFigure(sbml_layout, arrowhead_mutation_scale, figsize=None,
     """
     
     nodes = sbml_layout._SBMLlayout__network.nodes.values()
-    
-    nw_width_points = (
-            max([node.center.x for node in nodes]) -
-            min([node.center.x for node in nodes])) + SBNW_NODE_WIDTH
+
+    for node in nodes:
+        print("node: ", node.id, node.center.x, node.width, node.center.x+node.width/2, node.center.x-node.width/2)
+
+    max_x_points = max([node.center.x + node.width/2 for node in nodes]) 
+    min_x_points = min([node.center.x - node.width/2 for node in nodes])
+    nw_width_points = (max_x_points - min_x_points)
+
+    print("max_x: ", max_x_points)
+    print("min_x: ", min_x_points)
 
     nw_height_points = (
-            max([node.center.y for node in nodes]) -
-            min([node.center.y for node in nodes])) + SBNW_NODE_HEIGHT
+            max([node.center.y + node.height/2 for node in nodes]) -
+            min([node.center.y - node.height/2 for node in nodes]))
 
-    nw_width_inches = nw_width_points/72    
-    nw_height_inches = nw_height_points/72
+    nw_width_inches = nw_width_points/72 + 3*SHIFT    
+    nw_height_inches = nw_height_points/72 + 3*SHIFT
 
     print("nw width, height points: ", nw_width_points, nw_height_points)
     print("nw width, height inches: ", nw_width_inches, nw_height_inches)
@@ -337,7 +345,7 @@ def createNetworkFigure(sbml_layout, arrowhead_mutation_scale, figsize=None,
     if figsize and len(figsize) == 2:
         fig = plt.figure(figsize=figsize, dpi=dpi)
     else:
-        figsize = (nw_width_inches+2, nw_height_inches+2)
+        figsize = (nw_width_inches, nw_height_inches)
         fig = plt.figure(figsize=figsize)
 
     print("fig dpi: ", fig.dpi, fig.get_dpi())

@@ -29,5 +29,5 @@ r = te.loada('''
     
 s = SBMLlayout.SBMLlayout (r.getSBML())
 s.setReactionCurveWidth ('all', 1)
-p = s.drawNetwork(figsize=(12,12))
-#p = s.drawNetwork()
+#p = s.drawNetwork(figsize=(12,12))
+p = s.drawNetwork()
