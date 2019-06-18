@@ -24,5 +24,8 @@ J7_k = 0.1;
 ''')
 
 s = SBMLlayout.SBMLlayout (r.getSBML())
-s.drawNetwork(figsize=(14,14))
-s.drawNetwork(figsize=(10,10))
+
+s.drawNetwork()
+
+#s.drawNetwork(figsize=(14,14))
+#s.drawNetwork(figsize=(10,10))

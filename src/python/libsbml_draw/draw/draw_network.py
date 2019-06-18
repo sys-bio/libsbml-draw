@@ -16,7 +16,7 @@ import libsbml_draw.c_api.sbnw_c_api as sbnw
 SBNW_NODE_WIDTH = 40
 SBNW_NODE_HEIGHT = 20
 
-SHIFT = 1
+SHIFT = 1.5
 
 def compute_figure_width_height_in_pixels(fig, ax):
     """Returns the width and height of the figure in pixels.
@@ -322,7 +322,7 @@ def createNetworkFigure(sbml_layout, arrowhead_mutation_scale, figsize=None,
     nodes = sbml_layout._SBMLlayout__network.nodes.values()
 
     for node in nodes:
-        print("node: ", node.id, node.center.x, node.width, node.center.x+node.width/2, node.center.x-node.width/2)
+        print("node: ", node.center.x/72, node.center.y/72, node.width, node.id)
 
     max_x_points = max([node.center.x + node.width/2 for node in nodes]) 
     min_x_points = min([node.center.x - node.width/2 for node in nodes])
@@ -335,8 +335,8 @@ def createNetworkFigure(sbml_layout, arrowhead_mutation_scale, figsize=None,
             max([node.center.y + node.height/2 for node in nodes]) -
             min([node.center.y - node.height/2 for node in nodes]))
 
-    nw_width_inches = nw_width_points/72 + 3*SHIFT    
-    nw_height_inches = nw_height_points/72 + 3*SHIFT
+    nw_width_inches = nw_width_points/72 + 4*SHIFT    
+    nw_height_inches = nw_height_points/72 + 4*SHIFT
 
     print("nw width, height points: ", nw_width_points, nw_height_points)
     print("nw width, height inches: ", nw_width_inches, nw_height_inches)

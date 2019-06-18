@@ -72,35 +72,50 @@ class SBMLlayout:
                 self.__doc = libsbml.readSBMLFromString(
                         self.__getSBMLWithLayoutString())
 
+                self.__network = self.__createNetwork()
+                self.__applyRenderInformation()
+                
+                # compute and set width and height for node boxes
+                for node in self.__network.nodes.values():
+                    width = len(node.name)*node.font_size
+                    height = node.font_size
+                    self.__setNodeWidth(node.id, width)
+                    self.__setNodeHeight(node.id, height)
+
+                self.regenerateLayout()
+                    
             else:
                 if SBMLlayout._validate_sbml_filename(sbml_source):
                     self.__doc = libsbml.readSBMLFromFile(sbml_source)
                 else:
                     self.__doc = libsbml.readSBMLFromString(sbml_source)
 
+
             if len(self.__fitWindow) == 4:
                 self.__fitToWindow(self.__fitWindow[0], self.__fitWindow[1],
                                    self.__fitWindow[2], self.__fitWindow[3])
             else:
-                temp_network = self.__createNetwork()                
-                nodes = temp_network.nodes.values()
-    
-                nw_width_points = (
-                    max([node.center.x for node in nodes]) -
-                    min([node.center.x for node in nodes])) + 40
+                if not self.__layoutSpecified:
 
-                nw_height_points = (
-                    max([node.center.y for node in nodes]) -
-                    min([node.center.y for node in nodes])) + 20
+                    temp_network = self.__createNetwork()                
+                    nodes = temp_network.nodes.values()
+    
+                    max_x_points = max([node.center.x + node.width/2 for node in nodes]) 
+                    min_x_points = min([node.center.x - node.width/2 for node in nodes])
+                    nw_width_points = (max_x_points - min_x_points)
+
+                    nw_height_points = (
+                        max([node.center.y + node.height/2 for node in nodes]) -
+                        min([node.center.y - node.height/2 for node in nodes]))
                         
-                print("ftw: width, height: ", nw_width_points, nw_height_points)        
+                    print("ftw: width, height: ", nw_width_points, nw_height_points)        
                 
-#                self.__fitToWindow(0, 0, nw_width_points, nw_height_points)
-                pass
+                    self.__fitToWindow(0, 0, nw_width_points, nw_height_points)
+                else:    
+                    pass
 
             self.__network = self.__createNetwork()
 
-            # apply render information, if any
             self.__applyRenderInformation()
 
             self.__arrowhead_scale = {key: 10 for key in
@@ -1366,7 +1381,7 @@ class SBMLlayout:
         else:
             raise ValueError(f"Species {node_id} not found in network.")
 
-    def setNodeWidth(self, node_id, width):
+    def __setNodeWidth(self, node_id, width):
         """Sets the width of the node.
 
         Args:
@@ -1386,7 +1401,7 @@ class SBMLlayout:
         else:
             raise ValueError(f"Species {node_id} not found in network.")
 
-    def setNodeHeight(self, node_id, height):
+    def __setNodeHeight(self, node_id, height):
         """Sets the height of the node.
 
         Args:
@@ -1793,6 +1808,8 @@ class SBMLlayout:
                                   compute_node_dims, use_all_fig_space)
         if(save_file_name):
             fig.savefig(save_file_name, bbox_inches=bbox_inches)
+
+        print("dn: fig w,h: ", fig.get_figwidth(), fig.get_figheight())
 
         return fig
 
