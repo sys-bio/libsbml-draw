@@ -1,0 +1,1206 @@
+<?xml version='1.0' encoding='utf-8' standalone='no'?>
+<sbml xmlns="http://www.sbml.org/sbml/level3/version1/core" level="3" metaid="metaid_0000001" version="1">
+  <model areaUnits="area" extentUnits="substance" substanceUnits="substance" metaid="_061956" name="Singh2006_TCA_Ecoli_glucose" volumeUnits="volume" id="Singh2006_TCA_Ecoli_glucose"
+  lengthUnits="metre" timeUnits="time">
+    <notes>
+      <body xmlns="http://www.w3.org/1999/xhtml">
+        <p>This a model from the article: 
+        <br />
+        <strong>Kinetic modeling of tricarboxylic acid cycle and glyoxylate bypass in Mycobacterium tuberculosis, and its application to assessment of drugtargets.</strong>
+        <br />
+        Singh VK , Ghosh I 
+        <em>Theor Biol Med Model</em>2006 Aug 3;3:27 
+        <a href="http://www.ncbi.nlm.nih.gov/pubmed/16887020">16887020</a>, 
+        <br />
+        <strong>Abstract:</strong>
+        <br />
+        BACKGROUND: Targeting persistent tubercule bacilli has become an important challenge in the development of anti-tuberculous drugs. As the glyoxylate bypass is essential for persistent
+        bacilli, interference with it holds the potential for designing new antibacterial drugs. We have developed kinetic models of the tricarboxylic acid cycle and glyoxylate bypass in Escherichia
+        coli and Mycobacterium tuberculosis, and studied the effects of inhibition of various enzymes in the M. tuberculosis model. RESULTS: We used E. coli to validate the pathway-modeling protocol
+        and showed that changes in metabolic flux can be estimated from gene expression data. The M. tuberculosis model reproduced the observation that deletion of one of the two isocitrate lyase
+        genes has little effect on bacterial growth in macrophages, but deletion of both genes leads to the elimination of the bacilli from the lungs. It also substantiated the inhibition of
+        isocitrate lyases by 3-nitropropionate. On the basis of our simulation studies, we propose that: (i) fractional inactivation of both isocitrate dehydrogenase 1 and isocitrate dehydrogenase 2
+        is required for a flux through the glyoxylate bypass in persistent mycobacteria; and (ii) increasing the amountof active isocitrate dehydrogenases can stop the flux through the glyoxylate
+        bypass, so the kinase that inactivates isocitrate dehydrogenase 1 and/or the proposed inactivator of isocitrate dehydrogenase 2 is a potential target for drugs against persistent
+        mycobacteria. In addition, competitive inhibition of isocitrate lyases along with a reduction in the inactivation of isocitrate dehydrogenases appears to be a feasible strategy for targeting
+        persistent mycobacteria. CONCLUSION: We used kinetic modeling of biochemical pathways to assess various potential anti-tuberculous drug targets that interfere with the glyoxylate bypass flux,
+        and indicated the type of inhibition needed to eliminate the pathogen. The advantage of such an approach to the assessment of drug targets is that it facilitates the study of systemic
+        effect(s) of the modulation of the target enzyme(s) in the cellular environment.</p>
+        <p>This model originates from BioModels Database: A Database of Annotated Published Models (http://www.ebi.ac.uk/biomodels/). It is copyright (c) 2005-2010 The BioModels.net Team. 
+        <br />
+        For more information see the 
+        <a href="http://www.ebi.ac.uk/biomodels/legal.html" target="_blank">terms of use</a>. 
+        <br />
+        To cite BioModels Database, please use: 
+        <a href="http://www.ncbi.nlm.nih.gov/pubmed/20587024" target="_blank">Li C, Donizelli M, Rodriguez N, Dharuri H, Endler L, Chelliah V, Li L, He E, Henry A, Stefan MI, Snoep JL, Hucka M, Le
+        NovÃ¨re N, Laibe C (2010) BioModels Database: An enhanced, curated and annotated resource for published quantitative kinetic models. BMC Syst Biol., 4:92.</a></p>
+      </body>
+    </notes>
+    <annotation>
+      <rdf:RDF xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#" xmlns:bqmodel="http://biomodels.net/model-qualifiers/" xmlns:vCard="http://www.w3.org/2001/vcard-rdf/3.0#"
+      xmlns:dc="http://purl.org/dc/elements/1.1/" xmlns:dcterms="http://purl.org/dc/terms/" xmlns:bqbiol="http://biomodels.net/biology-qualifiers/">
+        <rdf:Description rdf:about="#_061956">
+          <dc:creator>
+            <rdf:Bag>
+              <rdf:li rdf:parseType="Resource">
+                <vCard:N rdf:parseType="Resource">
+                  <vCard:Family>Chelliah</vCard:Family>
+                  <vCard:Given>Vijayalakshmi</vCard:Given>
+                </vCard:N>
+                <vCard:EMAIL>viji@ebi.ac.uk</vCard:EMAIL>
+                <vCard:ORG rdf:parseType="Resource">
+                  <vCard:Orgname>EMBL-EBI</vCard:Orgname>
+                </vCard:ORG>
+              </rdf:li>
+              <rdf:li rdf:parseType="Resource">
+                <vCard:N rdf:parseType="Resource">
+                  <vCard:Family>Singh</vCard:Family>
+                  <vCard:Given>Vivek Kumar</vCard:Given>
+                </vCard:N>
+                <vCard:EMAIL>vivek@bioinfo.ernet.in</vCard:EMAIL>
+                <vCard:ORG rdf:parseType="Resource">
+                  <vCard:Orgname>University of Pune</vCard:Orgname>
+                </vCard:ORG>
+              </rdf:li>
+            </rdf:Bag>
+          </dc:creator>
+          <dcterms:created rdf:parseType="Resource">
+            <dcterms:W3CDTF>2006-09-29T22:47:42Z</dcterms:W3CDTF>
+          </dcterms:created>
+          <dcterms:modified rdf:parseType="Resource">
+            <dcterms:W3CDTF>2010-12-20T09:47:18Z</dcterms:W3CDTF>
+          </dcterms:modified>
+          <bqmodel:is>
+            <rdf:Bag>
+              <rdf:li rdf:resource="http://identifiers.org/biomodels.db/MODEL8583955822" />
+            </rdf:Bag>
+          </bqmodel:is>
+          <bqmodel:is>
+            <rdf:Bag>
+              <rdf:li rdf:resource="http://identifiers.org/biomodels.db/BIOMD0000000222" />
+            </rdf:Bag>
+          </bqmodel:is>
+          <bqmodel:isDescribedBy>
+            <rdf:Bag>
+              <rdf:li rdf:resource="http://identifiers.org/pubmed/16887020" />
+            </rdf:Bag>
+          </bqmodel:isDescribedBy>
+          <bqbiol:hasTaxon>
+            <rdf:Bag>
+              <rdf:li rdf:resource="http://identifiers.org/taxonomy/562" />
+            </rdf:Bag>
+          </bqbiol:hasTaxon>
+          <bqbiol:isHomologTo>
+            <rdf:Bag>
+              <rdf:li rdf:resource="http://identifiers.org/reactome/REACT_1785" />
+            </rdf:Bag>
+          </bqbiol:isHomologTo>
+          <bqbiol:hasVersion>
+            <rdf:Bag>
+              <rdf:li rdf:resource="http://identifiers.org/obo.go/GO:0006097" />
+              <rdf:li rdf:resource="http://identifiers.org/obo.go/GO:0006099" />
+            </rdf:Bag>
+          </bqbiol:hasVersion>
+          <bqbiol:isVersionOf>
+            <rdf:Bag>
+              <rdf:li rdf:resource="http://identifiers.org/kegg.pathway/ko00020" />
+            </rdf:Bag>
+          </bqbiol:isVersionOf>
+        </rdf:Description>
+      </rdf:RDF>
+    </annotation>
+    <listOfUnitDefinitions>
+      <unitDefinition name="min" id="time" metaid="_871153">
+        <listOfUnits>
+          <unit scale="0" metaid="_871165" kind="second" multiplier="60" exponent="1" />
+        </listOfUnits>
+      </unitDefinition>
+      <unitDefinition name="mmole" id="substance" metaid="_871177">
+        <listOfUnits>
+          <unit scale="-3" metaid="_871189" kind="mole" multiplier="1" exponent="1" />
+        </listOfUnits>
+      </unitDefinition>
+      <unitDefinition name="mM_per_min" id="mmlmin" metaid="metaid_0000031">
+        <listOfUnits>
+          <unit scale="-3" metaid="_871201" kind="mole" multiplier="1" exponent="1" />
+          <unit scale="0" metaid="_871214" kind="litre" multiplier="1" exponent="-1" />
+          <unit scale="0" metaid="_871226" kind="second" multiplier="60" exponent="-1" />
+        </listOfUnits>
+      </unitDefinition>
+      <unitDefinition name="mM" id="mml" metaid="metaid_0000032">
+        <listOfUnits>
+          <unit scale="-3" metaid="_871239" kind="mole" multiplier="1" exponent="1" />
+          <unit scale="0" metaid="_871251" kind="litre" multiplier="1" exponent="-1" />
+        </listOfUnits>
+      </unitDefinition>
+      <unitDefinition id="volume">
+        <listOfUnits>
+          <unit scale="0" kind="litre" multiplier="1" exponent="1" />
+        </listOfUnits>
+      </unitDefinition>
+      <unitDefinition id="area">
+        <listOfUnits>
+          <unit scale="0" kind="metre" multiplier="1" exponent="2" />
+        </listOfUnits>
+      </unitDefinition>
+    </listOfUnitDefinitions>
+    <listOfCompartments>
+      <compartment constant="true" size="1" metaid="_061967" id="cell" units="volume" spatialDimensions="3" />
+    </listOfCompartments>
+    <listOfSpecies>
+      <species boundaryCondition="true" constant="false" substanceUnits="substance" metaid="_061987" hasOnlySubstanceUnits="false" sboTerm="SBO:0000247" compartment="cell" id="aca"
+      initialConcentration="0.5">
+        <annotation>
+          <rdf:RDF xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#" xmlns:bqmodel="http://biomodels.net/model-qualifiers/" xmlns:bqbiol="http://biomodels.net/biology-qualifiers/">
+            <rdf:Description rdf:about="#_061987">
+              <bqbiol:isVersionOf>
+                <rdf:Bag>
+                  <rdf:li rdf:resource="http://identifiers.org/obo.chebi/CHEBI:15351" />
+                  <rdf:li rdf:resource="http://identifiers.org/kegg.compound/C00024" />
+                </rdf:Bag>
+              </bqbiol:isVersionOf>
+            </rdf:Description>
+          </rdf:RDF>
+        </annotation>
+      </species>
+      <species boundaryCondition="true" constant="false" substanceUnits="substance" metaid="_062007" hasOnlySubstanceUnits="false" sboTerm="SBO:0000247" compartment="cell" id="oaa"
+      initialConcentration="0.004">
+        <annotation>
+          <rdf:RDF xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#" xmlns:bqmodel="http://biomodels.net/model-qualifiers/" xmlns:bqbiol="http://biomodels.net/biology-qualifiers/">
+            <rdf:Description rdf:about="#_062007">
+              <bqbiol:isVersionOf>
+                <rdf:Bag>
+                  <rdf:li rdf:resource="http://identifiers.org/obo.chebi/CHEBI:30744" />
+                  <rdf:li rdf:resource="http://identifiers.org/kegg.compound/C00036" />
+                </rdf:Bag>
+              </bqbiol:isVersionOf>
+            </rdf:Description>
+          </rdf:RDF>
+        </annotation>
+      </species>
+      <species boundaryCondition="true" constant="false" substanceUnits="substance" metaid="_062027" hasOnlySubstanceUnits="false" sboTerm="SBO:0000247" compartment="cell" id="coa"
+      initialConcentration="0.0001">
+        <annotation>
+          <rdf:RDF xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#" xmlns:bqmodel="http://biomodels.net/model-qualifiers/" xmlns:bqbiol="http://biomodels.net/biology-qualifiers/">
+            <rdf:Description rdf:about="#_062027">
+              <bqbiol:isVersionOf>
+                <rdf:Bag>
+                  <rdf:li rdf:resource="http://identifiers.org/obo.chebi/CHEBI:15346" />
+                  <rdf:li rdf:resource="http://identifiers.org/kegg.compound/C000010" />
+                </rdf:Bag>
+              </bqbiol:isVersionOf>
+            </rdf:Description>
+          </rdf:RDF>
+        </annotation>
+      </species>
+      <species boundaryCondition="false" constant="false" substanceUnits="substance" metaid="_062047" hasOnlySubstanceUnits="false" sboTerm="SBO:0000247" compartment="cell" id="cit"
+      initialConcentration="3">
+        <annotation>
+          <rdf:RDF xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#" xmlns:bqmodel="http://biomodels.net/model-qualifiers/" xmlns:bqbiol="http://biomodels.net/biology-qualifiers/">
+            <rdf:Description rdf:about="#_062047">
+              <bqbiol:isVersionOf>
+                <rdf:Bag>
+                  <rdf:li rdf:resource="http://identifiers.org/obo.chebi/CHEBI:30769" />
+                  <rdf:li rdf:resource="http://identifiers.org/kegg.compound/C00158" />
+                </rdf:Bag>
+              </bqbiol:isVersionOf>
+            </rdf:Description>
+          </rdf:RDF>
+        </annotation>
+      </species>
+      <species boundaryCondition="false" constant="false" substanceUnits="substance" metaid="_062067" hasOnlySubstanceUnits="false" sboTerm="SBO:0000247" compartment="cell" id="icit"
+      initialConcentration="0.018">
+        <annotation>
+          <rdf:RDF xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#" xmlns:bqmodel="http://biomodels.net/model-qualifiers/" xmlns:bqbiol="http://biomodels.net/biology-qualifiers/">
+            <rdf:Description rdf:about="#_062067">
+              <bqbiol:isVersionOf>
+                <rdf:Bag>
+                  <rdf:li rdf:resource="http://identifiers.org/obo.chebi/CHEBI:30887" />
+                  <rdf:li rdf:resource="http://identifiers.org/kegg.compound/C00311" />
+                </rdf:Bag>
+              </bqbiol:isVersionOf>
+            </rdf:Description>
+          </rdf:RDF>
+        </annotation>
+      </species>
+      <species boundaryCondition="false" constant="false" substanceUnits="substance" metaid="_062087" hasOnlySubstanceUnits="false" sboTerm="SBO:0000247" compartment="cell" id="akg"
+      initialConcentration="0.2">
+        <annotation>
+          <rdf:RDF xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#" xmlns:bqmodel="http://biomodels.net/model-qualifiers/" xmlns:bqbiol="http://biomodels.net/biology-qualifiers/">
+            <rdf:Description rdf:about="#_062087">
+              <bqbiol:isVersionOf>
+                <rdf:Bag>
+                  <rdf:li rdf:resource="http://identifiers.org/obo.chebi/CHEBI:30915" />
+                  <rdf:li rdf:resource="http://identifiers.org/kegg.compound/C00026" />
+                </rdf:Bag>
+              </bqbiol:isVersionOf>
+            </rdf:Description>
+          </rdf:RDF>
+        </annotation>
+      </species>
+      <species boundaryCondition="false" constant="false" substanceUnits="substance" metaid="_062107" hasOnlySubstanceUnits="false" sboTerm="SBO:0000247" compartment="cell" id="sca"
+      initialConcentration="0.04">
+        <annotation>
+          <rdf:RDF xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#" xmlns:bqmodel="http://biomodels.net/model-qualifiers/" xmlns:bqbiol="http://biomodels.net/biology-qualifiers/">
+            <rdf:Description rdf:about="#_062107">
+              <bqbiol:isVersionOf>
+                <rdf:Bag>
+                  <rdf:li rdf:resource="http://identifiers.org/obo.chebi/CHEBI:15380" />
+                  <rdf:li rdf:resource="http://identifiers.org/kegg.compound/C00091" />
+                </rdf:Bag>
+              </bqbiol:isVersionOf>
+            </rdf:Description>
+          </rdf:RDF>
+        </annotation>
+      </species>
+      <species boundaryCondition="false" constant="false" substanceUnits="substance" metaid="_062127" hasOnlySubstanceUnits="false" sboTerm="SBO:0000247" compartment="cell" id="suc"
+      initialConcentration="0.6">
+        <annotation>
+          <rdf:RDF xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#" xmlns:bqmodel="http://biomodels.net/model-qualifiers/" xmlns:bqbiol="http://biomodels.net/biology-qualifiers/">
+            <rdf:Description rdf:about="#_062127">
+              <bqbiol:isVersionOf>
+                <rdf:Bag>
+                  <rdf:li rdf:resource="http://identifiers.org/obo.chebi/CHEBI:15741" />
+                  <rdf:li rdf:resource="http://identifiers.org/kegg.compound/C00042" />
+                </rdf:Bag>
+              </bqbiol:isVersionOf>
+            </rdf:Description>
+          </rdf:RDF>
+        </annotation>
+      </species>
+      <species boundaryCondition="false" constant="false" substanceUnits="substance" metaid="_062147" hasOnlySubstanceUnits="false" sboTerm="SBO:0000247" compartment="cell" id="fa"
+      initialConcentration="0.3">
+        <annotation>
+          <rdf:RDF xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#" xmlns:bqmodel="http://biomodels.net/model-qualifiers/" xmlns:bqbiol="http://biomodels.net/biology-qualifiers/">
+            <rdf:Description rdf:about="#_062147">
+              <bqbiol:isVersionOf>
+                <rdf:Bag>
+                  <rdf:li rdf:resource="http://identifiers.org/obo.chebi/CHEBI:18012" />
+                  <rdf:li rdf:resource="http://identifiers.org/kegg.compound/C00122" />
+                </rdf:Bag>
+              </bqbiol:isVersionOf>
+            </rdf:Description>
+          </rdf:RDF>
+        </annotation>
+      </species>
+      <species boundaryCondition="false" constant="false" substanceUnits="substance" metaid="_062167" hasOnlySubstanceUnits="false" sboTerm="SBO:0000247" compartment="cell" id="mal"
+      initialConcentration="1.8">
+        <annotation>
+          <rdf:RDF xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#" xmlns:bqmodel="http://biomodels.net/model-qualifiers/" xmlns:bqbiol="http://biomodels.net/biology-qualifiers/">
+            <rdf:Description rdf:about="#_062167">
+              <bqbiol:isVersionOf>
+                <rdf:Bag>
+                  <rdf:li rdf:resource="http://identifiers.org/obo.chebi/CHEBI:6650" />
+                  <rdf:li rdf:resource="http://identifiers.org/kegg.compound/C00711" />
+                </rdf:Bag>
+              </bqbiol:isVersionOf>
+            </rdf:Description>
+          </rdf:RDF>
+        </annotation>
+      </species>
+      <species boundaryCondition="false" constant="false" substanceUnits="substance" metaid="_062187" hasOnlySubstanceUnits="false" sboTerm="SBO:0000247" compartment="cell" id="gly"
+      initialConcentration="4">
+        <annotation>
+          <rdf:RDF xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#" xmlns:bqmodel="http://biomodels.net/model-qualifiers/" xmlns:bqbiol="http://biomodels.net/biology-qualifiers/">
+            <rdf:Description rdf:about="#_062187">
+              <bqbiol:isVersionOf>
+                <rdf:Bag>
+                  <rdf:li rdf:resource="http://identifiers.org/obo.chebi/CHEBI:16891" />
+                  <rdf:li rdf:resource="http://identifiers.org/kegg.compound/C00048" />
+                </rdf:Bag>
+              </bqbiol:isVersionOf>
+            </rdf:Description>
+          </rdf:RDF>
+        </annotation>
+      </species>
+      <species boundaryCondition="true" constant="false" substanceUnits="substance" metaid="_062207" hasOnlySubstanceUnits="false" compartment="cell" id="biosyn" initialConcentration="0.1" />
+    </listOfSpecies>
+    <listOfReactions>
+      <reaction fast="false" id="CS" metaid="_062227" reversible="true">
+        <annotation>
+          <rdf:RDF xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#" xmlns:bqmodel="http://biomodels.net/model-qualifiers/" xmlns:bqbiol="http://biomodels.net/biology-qualifiers/">
+            <rdf:Description rdf:about="#_062227">
+              <bqbiol:isVersionOf>
+                <rdf:Bag>
+                  <rdf:li rdf:resource="http://identifiers.org/kegg.reaction/R00351" />
+                </rdf:Bag>
+              </bqbiol:isVersionOf>
+            </rdf:Description>
+          </rdf:RDF>
+        </annotation>
+        <listOfReactants>
+          <speciesReference stoichiometry="1" constant="true" metaid="_871263" species="aca" />
+          <speciesReference stoichiometry="1" constant="true" metaid="_871275" species="oaa" />
+        </listOfReactants>
+        <listOfProducts>
+          <speciesReference stoichiometry="1" constant="true" metaid="_871287" species="coa" />
+          <speciesReference stoichiometry="1" constant="true" metaid="_871299" species="cit" />
+        </listOfProducts>
+        <kineticLaw metaid="_871311">
+          <math xmlns="http://www.w3.org/1998/Math/MathML">
+            <apply>
+              <times />
+              <ci>cell</ci>
+              <apply>
+                <divide />
+                <apply>
+                  <minus />
+                  <apply>
+                    <times />
+                    <ci>Vf_cs</ci>
+                    <apply>
+                      <divide />
+                      <ci>aca</ci>
+                      <ci>Kaca_cs</ci>
+                    </apply>
+                    <apply>
+                      <divide />
+                      <ci>oaa</ci>
+                      <ci>Koaa_cs</ci>
+                    </apply>
+                  </apply>
+                  <apply>
+                    <times />
+                    <ci>Vr_cs</ci>
+                    <apply>
+                      <divide />
+                      <ci>coa</ci>
+                      <ci>Kcoa_cs</ci>
+                    </apply>
+                    <apply>
+                      <divide />
+                      <ci>cit</ci>
+                      <ci>Kcit_cs</ci>
+                    </apply>
+                  </apply>
+                </apply>
+                <apply>
+                  <times />
+                  <apply>
+                    <plus />
+                    <cn>1</cn>
+                    <apply>
+                      <divide />
+                      <ci>aca</ci>
+                      <ci>Kaca_cs</ci>
+                    </apply>
+                    <apply>
+                      <divide />
+                      <ci>coa</ci>
+                      <ci>Kcoa_cs</ci>
+                    </apply>
+                  </apply>
+                  <apply>
+                    <plus />
+                    <cn>1</cn>
+                    <apply>
+                      <divide />
+                      <ci>oaa</ci>
+                      <ci>Koaa_cs</ci>
+                    </apply>
+                    <apply>
+                      <divide />
+                      <ci>cit</ci>
+                      <ci>Kcit_cs</ci>
+                    </apply>
+                  </apply>
+                </apply>
+              </apply>
+            </apply>
+          </math>
+          <listOfLocalParameters>
+            <localParameter id="Vf_cs" units="mmlmin" metaid="_287404" value="91.2" sboTerm="SBO:0000350" />
+            <localParameter id="Kaca_cs" units="mml" metaid="_287405" value="0.03" sboTerm="SBO:0000322" />
+            <localParameter id="Koaa_cs" units="mml" metaid="_287406" value="0.07" sboTerm="SBO:0000322" />
+            <localParameter id="Vr_cs" units="mmlmin" metaid="_287408" value="0.912" sboTerm="SBO:0000353" />
+            <localParameter id="Kcoa_cs" units="mml" metaid="_287409" value="0.3" sboTerm="SBO:0000323" />
+            <localParameter id="Kcit_cs" units="mml" metaid="_287410" value="0.7" sboTerm="SBO:0000323" />
+          </listOfLocalParameters>
+        </kineticLaw>
+      </reaction>
+      <reaction fast="false" id="ACN" metaid="_062247" reversible="true">
+        <annotation>
+          <rdf:RDF xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#" xmlns:bqmodel="http://biomodels.net/model-qualifiers/" xmlns:bqbiol="http://biomodels.net/biology-qualifiers/">
+            <rdf:Description rdf:about="#_062247">
+              <bqbiol:isVersionOf>
+                <rdf:Bag>
+                  <rdf:li rdf:resource="http://identifiers.org/kegg.reaction/R01324" />
+                </rdf:Bag>
+              </bqbiol:isVersionOf>
+            </rdf:Description>
+          </rdf:RDF>
+        </annotation>
+        <listOfReactants>
+          <speciesReference stoichiometry="1" constant="true" metaid="_871323" species="cit" />
+        </listOfReactants>
+        <listOfProducts>
+          <speciesReference stoichiometry="1" constant="true" metaid="_871335" species="icit" />
+        </listOfProducts>
+        <kineticLaw metaid="_871348">
+          <math xmlns="http://www.w3.org/1998/Math/MathML">
+            <apply>
+              <times />
+              <ci>cell</ci>
+              <apply>
+                <divide />
+                <apply>
+                  <minus />
+                  <apply>
+                    <times />
+                    <ci>Vf_acn</ci>
+                    <apply>
+                      <divide />
+                      <ci>cit</ci>
+                      <ci>Kcit_acn</ci>
+                    </apply>
+                  </apply>
+                  <apply>
+                    <times />
+                    <ci>Vr_acn</ci>
+                    <apply>
+                      <divide />
+                      <ci>icit</ci>
+                      <ci>Kicit_acn</ci>
+                    </apply>
+                  </apply>
+                </apply>
+                <apply>
+                  <plus />
+                  <cn>1</cn>
+                  <apply>
+                    <divide />
+                    <ci>cit</ci>
+                    <ci>Kcit_acn</ci>
+                  </apply>
+                  <apply>
+                    <divide />
+                    <ci>icit</ci>
+                    <ci>Kicit_acn</ci>
+                  </apply>
+                </apply>
+              </apply>
+            </apply>
+          </math>
+          <listOfLocalParameters>
+            <localParameter id="Vf_acn" units="mmlmin" metaid="_287411" value="91.2" sboTerm="SBO:0000350" />
+            <localParameter id="Kcit_acn" units="mml" metaid="_287412" value="1.7" sboTerm="SBO:0000322" />
+            <localParameter id="Vr_acn" units="mmlmin" metaid="_287413" value="0.912" sboTerm="SBO:0000353" />
+            <localParameter id="Kicit_acn" units="mml" metaid="_287414" value="3.33" sboTerm="SBO:0000323" />
+          </listOfLocalParameters>
+        </kineticLaw>
+      </reaction>
+      <reaction fast="false" id="ICD" metaid="_062267" reversible="true">
+        <annotation>
+          <rdf:RDF xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#" xmlns:bqmodel="http://biomodels.net/model-qualifiers/" xmlns:bqbiol="http://biomodels.net/biology-qualifiers/">
+            <rdf:Description rdf:about="#_062267">
+              <bqbiol:isVersionOf>
+                <rdf:Bag>
+                  <rdf:li rdf:resource="http://identifiers.org/kegg.reaction/R00709" />
+                </rdf:Bag>
+              </bqbiol:isVersionOf>
+            </rdf:Description>
+          </rdf:RDF>
+        </annotation>
+        <listOfReactants>
+          <speciesReference stoichiometry="1" constant="true" metaid="_871360" species="icit" />
+        </listOfReactants>
+        <listOfProducts>
+          <speciesReference stoichiometry="1" constant="true" metaid="_871372" species="akg" />
+        </listOfProducts>
+        <kineticLaw metaid="_871385">
+          <math xmlns="http://www.w3.org/1998/Math/MathML">
+            <apply>
+              <times />
+              <ci>cell</ci>
+              <apply>
+                <divide />
+                <apply>
+                  <minus />
+                  <apply>
+                    <times />
+                    <ci>Vf_icd</ci>
+                    <apply>
+                      <divide />
+                      <ci>icit</ci>
+                      <ci>Kicit_icd</ci>
+                    </apply>
+                  </apply>
+                  <apply>
+                    <times />
+                    <ci>Vr_icd</ci>
+                    <apply>
+                      <divide />
+                      <ci>akg</ci>
+                      <ci>Kakg_icd</ci>
+                    </apply>
+                  </apply>
+                </apply>
+                <apply>
+                  <plus />
+                  <cn>1</cn>
+                  <apply>
+                    <divide />
+                    <ci>icit</ci>
+                    <ci>Kicit_icd</ci>
+                  </apply>
+                  <apply>
+                    <divide />
+                    <ci>akg</ci>
+                    <ci>Kakg_icd</ci>
+                  </apply>
+                </apply>
+              </apply>
+            </apply>
+          </math>
+          <listOfLocalParameters>
+            <localParameter id="Vf_icd" units="mmlmin" metaid="_287415" value="14.72" sboTerm="SBO:0000350" />
+            <localParameter id="Kicit_icd" units="mml" metaid="_287416" value="0.008" sboTerm="SBO:0000322" />
+            <localParameter id="Vr_icd" units="mmlmin" metaid="_287417" value="0.1472" sboTerm="SBO:0000353" />
+            <localParameter id="Kakg_icd" units="mml" metaid="_287419" value="0.13" sboTerm="SBO:0000323" />
+          </listOfLocalParameters>
+        </kineticLaw>
+      </reaction>
+      <reaction fast="false" id="KDH" metaid="_062287" reversible="true">
+        <annotation>
+          <rdf:RDF xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#" xmlns:bqmodel="http://biomodels.net/model-qualifiers/" xmlns:bqbiol="http://biomodels.net/biology-qualifiers/">
+            <rdf:Description rdf:about="#_062287">
+              <bqbiol:isVersionOf>
+                <rdf:Bag>
+                  <rdf:li rdf:resource="http://identifiers.org/kegg.reaction/R08549" />
+                </rdf:Bag>
+              </bqbiol:isVersionOf>
+            </rdf:Description>
+          </rdf:RDF>
+        </annotation>
+        <listOfReactants>
+          <speciesReference stoichiometry="1" constant="true" metaid="_871397" species="akg" />
+        </listOfReactants>
+        <listOfProducts>
+          <speciesReference stoichiometry="1" constant="true" metaid="_871409" species="sca" />
+        </listOfProducts>
+        <kineticLaw metaid="_871421">
+          <math xmlns="http://www.w3.org/1998/Math/MathML">
+            <apply>
+              <times />
+              <ci>cell</ci>
+              <apply>
+                <divide />
+                <apply>
+                  <minus />
+                  <apply>
+                    <times />
+                    <ci>Vf_kdh</ci>
+                    <apply>
+                      <divide />
+                      <ci>akg</ci>
+                      <ci>Kakg_kdh</ci>
+                    </apply>
+                  </apply>
+                  <apply>
+                    <times />
+                    <ci>Vr_kdh</ci>
+                    <apply>
+                      <divide />
+                      <ci>sca</ci>
+                      <ci>Ksca_kdh</ci>
+                    </apply>
+                  </apply>
+                </apply>
+                <apply>
+                  <plus />
+                  <cn>1</cn>
+                  <apply>
+                    <divide />
+                    <ci>akg</ci>
+                    <ci>Kakg_kdh</ci>
+                  </apply>
+                  <apply>
+                    <divide />
+                    <ci>sca</ci>
+                    <ci>Ksca_kdh</ci>
+                  </apply>
+                </apply>
+              </apply>
+            </apply>
+          </math>
+          <listOfLocalParameters>
+            <localParameter id="Vf_kdh" units="mmlmin" metaid="_287421" value="35.84" sboTerm="SBO:0000350" />
+            <localParameter id="Kakg_kdh" units="mml" metaid="_287422" value="0.1" sboTerm="SBO:0000322" />
+            <localParameter id="Vr_kdh" units="mmlmin" metaid="_287424" value="0.3584" sboTerm="SBO:0000353" />
+            <localParameter id="Ksca_kdh" units="mml" metaid="_287425" value="1" sboTerm="SBO:0000323" />
+          </listOfLocalParameters>
+        </kineticLaw>
+      </reaction>
+      <reaction fast="false" id="ScAS" metaid="_062307" reversible="true">
+        <annotation>
+          <rdf:RDF xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#" xmlns:bqmodel="http://biomodels.net/model-qualifiers/" xmlns:bqbiol="http://biomodels.net/biology-qualifiers/">
+            <rdf:Description rdf:about="#_062307">
+              <bqbiol:isVersionOf>
+                <rdf:Bag>
+                  <rdf:li rdf:resource="http://identifiers.org/kegg.reaction/R00407" />
+                </rdf:Bag>
+              </bqbiol:isVersionOf>
+            </rdf:Description>
+          </rdf:RDF>
+        </annotation>
+        <listOfReactants>
+          <speciesReference stoichiometry="1" constant="true" metaid="_871433" species="sca" />
+        </listOfReactants>
+        <listOfProducts>
+          <speciesReference stoichiometry="1" constant="true" metaid="_871445" species="suc" />
+        </listOfProducts>
+        <kineticLaw metaid="_871457">
+          <math xmlns="http://www.w3.org/1998/Math/MathML">
+            <apply>
+              <times />
+              <ci>cell</ci>
+              <apply>
+                <divide />
+                <apply>
+                  <minus />
+                  <apply>
+                    <times />
+                    <ci>Vf_scas</ci>
+                    <apply>
+                      <divide />
+                      <ci>sca</ci>
+                      <ci>Ksca_scas</ci>
+                    </apply>
+                  </apply>
+                  <apply>
+                    <times />
+                    <ci>Vr_scas</ci>
+                    <apply>
+                      <divide />
+                      <ci>suc</ci>
+                      <ci>Ksuc_scas</ci>
+                    </apply>
+                  </apply>
+                </apply>
+                <apply>
+                  <plus />
+                  <cn>1</cn>
+                  <apply>
+                    <divide />
+                    <ci>sca</ci>
+                    <ci>Ksca_scas</ci>
+                  </apply>
+                  <apply>
+                    <divide />
+                    <ci>suc</ci>
+                    <ci>Ksuc_scas</ci>
+                  </apply>
+                </apply>
+              </apply>
+            </apply>
+          </math>
+          <listOfLocalParameters>
+            <localParameter id="Vf_scas" units="mmlmin" metaid="_287427" value="3.5" sboTerm="SBO:0000350" />
+            <localParameter id="Ksca_scas" units="mml" metaid="_287428" value="0.02" sboTerm="SBO:0000322" />
+            <localParameter id="Vr_scas" units="mmlmin" metaid="_287430" value="0.035" sboTerm="SBO:0000353" />
+            <localParameter id="Ksuc_scas" units="mml" metaid="_287431" value="5" sboTerm="SBO:0000323" />
+          </listOfLocalParameters>
+        </kineticLaw>
+      </reaction>
+      <reaction fast="false" id="SDH" metaid="_062327" reversible="true">
+        <annotation>
+          <rdf:RDF xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#" xmlns:bqmodel="http://biomodels.net/model-qualifiers/" xmlns:bqbiol="http://biomodels.net/biology-qualifiers/">
+            <rdf:Description rdf:about="#_062327">
+              <bqbiol:isVersionOf>
+                <rdf:Bag>
+                  <rdf:li rdf:resource="http://identifiers.org/kegg.reaction/R00402" />
+                </rdf:Bag>
+              </bqbiol:isVersionOf>
+            </rdf:Description>
+          </rdf:RDF>
+        </annotation>
+        <listOfReactants>
+          <speciesReference stoichiometry="1" constant="true" metaid="_871469" species="suc" />
+        </listOfReactants>
+        <listOfProducts>
+          <speciesReference stoichiometry="1" constant="true" metaid="_871481" species="fa" />
+        </listOfProducts>
+        <kineticLaw metaid="_871493">
+          <math xmlns="http://www.w3.org/1998/Math/MathML">
+            <apply>
+              <times />
+              <ci>cell</ci>
+              <apply>
+                <divide />
+                <apply>
+                  <minus />
+                  <apply>
+                    <times />
+                    <ci>Vf_sdh</ci>
+                    <apply>
+                      <divide />
+                      <ci>suc</ci>
+                      <ci>Ksuc_sdh</ci>
+                    </apply>
+                  </apply>
+                  <apply>
+                    <times />
+                    <ci>Vr_sdh</ci>
+                    <apply>
+                      <divide />
+                      <ci>fa</ci>
+                      <ci>Kfa_sdh</ci>
+                    </apply>
+                  </apply>
+                </apply>
+                <apply>
+                  <plus />
+                  <cn>1</cn>
+                  <apply>
+                    <divide />
+                    <ci>suc</ci>
+                    <ci>Ksuc_sdh</ci>
+                  </apply>
+                  <apply>
+                    <divide />
+                    <ci>fa</ci>
+                    <ci>Kfa_sdh</ci>
+                  </apply>
+                </apply>
+              </apply>
+            </apply>
+          </math>
+          <listOfLocalParameters>
+            <localParameter id="Vf_sdh" units="mmlmin" metaid="_287433" value="7.38" sboTerm="SBO:0000350" />
+            <localParameter id="Ksuc_sdh" units="mml" metaid="_287435" value="0.02" sboTerm="SBO:0000322" />
+            <localParameter id="Vr_sdh" units="mmlmin" metaid="_287436" value="7.31" sboTerm="SBO:0000353" />
+            <localParameter id="Kfa_sdh" units="mml" metaid="_287437" value="0.4" sboTerm="SBO:0000323" />
+          </listOfLocalParameters>
+        </kineticLaw>
+      </reaction>
+      <reaction fast="false" id="FUM" metaid="_062347" reversible="true">
+        <annotation>
+          <rdf:RDF xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#" xmlns:bqmodel="http://biomodels.net/model-qualifiers/" xmlns:bqbiol="http://biomodels.net/biology-qualifiers/">
+            <rdf:Description rdf:about="#_062347">
+              <bqbiol:isVersionOf>
+                <rdf:Bag>
+                  <rdf:li rdf:resource="http://identifiers.org/kegg.reaction/R01082" />
+                </rdf:Bag>
+              </bqbiol:isVersionOf>
+            </rdf:Description>
+          </rdf:RDF>
+        </annotation>
+        <listOfReactants>
+          <speciesReference stoichiometry="1" constant="true" metaid="_871505" species="fa" />
+        </listOfReactants>
+        <listOfProducts>
+          <speciesReference stoichiometry="1" constant="true" metaid="_871517" species="mal" />
+        </listOfProducts>
+        <kineticLaw metaid="_871529">
+          <math xmlns="http://www.w3.org/1998/Math/MathML">
+            <apply>
+              <times />
+              <ci>cell</ci>
+              <apply>
+                <divide />
+                <apply>
+                  <minus />
+                  <apply>
+                    <times />
+                    <ci>Vf_fum</ci>
+                    <apply>
+                      <divide />
+                      <ci>fa</ci>
+                      <ci>Kfa_fum</ci>
+                    </apply>
+                  </apply>
+                  <apply>
+                    <times />
+                    <ci>Vr_fum</ci>
+                    <apply>
+                      <divide />
+                      <ci>mal</ci>
+                      <ci>Kmal_fum</ci>
+                    </apply>
+                  </apply>
+                </apply>
+                <apply>
+                  <plus />
+                  <cn>1</cn>
+                  <apply>
+                    <divide />
+                    <ci>fa</ci>
+                    <ci>Kfa_fum</ci>
+                  </apply>
+                  <apply>
+                    <divide />
+                    <ci>mal</ci>
+                    <ci>Kmal_fum</ci>
+                  </apply>
+                </apply>
+              </apply>
+            </apply>
+          </math>
+          <listOfLocalParameters>
+            <localParameter id="Vf_fum" units="mmlmin" metaid="_287438" value="44.64" sboTerm="SBO:0000350" />
+            <localParameter id="Kfa_fum" units="mml" metaid="_287439" value="0.15" sboTerm="SBO:0000322" />
+            <localParameter id="Vr_fum" units="mmlmin" metaid="_287440" value="37.2" sboTerm="SBO:0000353" />
+            <localParameter id="Kmal_fum" units="mml" metaid="_287441" value="0.04" sboTerm="SBO:0000323" />
+          </listOfLocalParameters>
+        </kineticLaw>
+      </reaction>
+      <reaction fast="false" id="MDH" metaid="_062367" reversible="true">
+        <annotation>
+          <rdf:RDF xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#" xmlns:bqmodel="http://biomodels.net/model-qualifiers/" xmlns:bqbiol="http://biomodels.net/biology-qualifiers/">
+            <rdf:Description rdf:about="#_062367">
+              <bqbiol:isVersionOf>
+                <rdf:Bag>
+                  <rdf:li rdf:resource="http://identifiers.org/kegg.reaction/R00342" />
+                </rdf:Bag>
+              </bqbiol:isVersionOf>
+            </rdf:Description>
+          </rdf:RDF>
+        </annotation>
+        <listOfReactants>
+          <speciesReference stoichiometry="1" constant="true" metaid="_871541" species="mal" />
+        </listOfReactants>
+        <listOfProducts>
+          <speciesReference stoichiometry="1" constant="true" metaid="_871554" species="oaa" />
+        </listOfProducts>
+        <kineticLaw metaid="_871566">
+          <math xmlns="http://www.w3.org/1998/Math/MathML">
+            <apply>
+              <times />
+              <ci>cell</ci>
+              <apply>
+                <divide />
+                <apply>
+                  <minus />
+                  <apply>
+                    <times />
+                    <ci>Vf_mdh</ci>
+                    <apply>
+                      <divide />
+                      <ci>mal</ci>
+                      <ci>Kmal_mdh</ci>
+                    </apply>
+                  </apply>
+                  <apply>
+                    <times />
+                    <ci>Vr_mdh</ci>
+                    <apply>
+                      <divide />
+                      <ci>oaa</ci>
+                      <ci>Koaa_mdh</ci>
+                    </apply>
+                  </apply>
+                </apply>
+                <apply>
+                  <plus />
+                  <cn>1</cn>
+                  <apply>
+                    <divide />
+                    <ci>mal</ci>
+                    <ci>Kmal_mdh</ci>
+                  </apply>
+                  <apply>
+                    <divide />
+                    <ci>oaa</ci>
+                    <ci>Koaa_mdh</ci>
+                  </apply>
+                </apply>
+              </apply>
+            </apply>
+          </math>
+          <listOfLocalParameters>
+            <localParameter id="Vf_mdh" units="mmlmin" metaid="_287442" value="356.64" sboTerm="SBO:0000350" />
+            <localParameter id="Kmal_mdh" units="mml" metaid="_287443" value="2.6" sboTerm="SBO:0000322" />
+            <localParameter id="Vr_mdh" units="mmlmin" metaid="_287444" value="353.11" sboTerm="SBO:0000353" />
+            <localParameter id="Koaa_mdh" units="mml" metaid="_287446" value="0.04" sboTerm="SBO:0000323" />
+          </listOfLocalParameters>
+        </kineticLaw>
+      </reaction>
+      <reaction fast="false" id="ICL" metaid="_062387" reversible="true">
+        <annotation>
+          <rdf:RDF xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#" xmlns:bqmodel="http://biomodels.net/model-qualifiers/" xmlns:bqbiol="http://biomodels.net/biology-qualifiers/">
+            <rdf:Description rdf:about="#_062387">
+              <bqbiol:isVersionOf>
+                <rdf:Bag>
+                  <rdf:li rdf:resource="http://identifiers.org/kegg.reaction/R00479" />
+                </rdf:Bag>
+              </bqbiol:isVersionOf>
+            </rdf:Description>
+          </rdf:RDF>
+        </annotation>
+        <listOfReactants>
+          <speciesReference stoichiometry="1" constant="true" metaid="_871578" species="icit" />
+        </listOfReactants>
+        <listOfProducts>
+          <speciesReference stoichiometry="1" constant="true" metaid="_871590" species="suc" />
+          <speciesReference stoichiometry="1" constant="true" metaid="_871602" species="gly" />
+        </listOfProducts>
+        <kineticLaw metaid="_871614">
+          <math xmlns="http://www.w3.org/1998/Math/MathML">
+            <apply>
+              <times />
+              <ci>cell</ci>
+              <apply>
+                <divide />
+                <apply>
+                  <minus />
+                  <apply>
+                    <times />
+                    <ci>Vf_icl</ci>
+                    <apply>
+                      <divide />
+                      <ci>icit</ci>
+                      <ci>Kicit_icl</ci>
+                    </apply>
+                  </apply>
+                  <apply>
+                    <times />
+                    <ci>Vr_icl</ci>
+                    <apply>
+                      <divide />
+                      <ci>suc</ci>
+                      <ci>Ksuc_icl</ci>
+                    </apply>
+                    <apply>
+                      <divide />
+                      <ci>gly</ci>
+                      <ci>Kgly_icl</ci>
+                    </apply>
+                  </apply>
+                </apply>
+                <apply>
+                  <plus />
+                  <cn>1</cn>
+                  <apply>
+                    <divide />
+                    <ci>icit</ci>
+                    <ci>Kicit_icl</ci>
+                  </apply>
+                  <apply>
+                    <divide />
+                    <ci>suc</ci>
+                    <ci>Ksuc_icl</ci>
+                  </apply>
+                  <apply>
+                    <divide />
+                    <ci>gly</ci>
+                    <ci>Kgly_icl</ci>
+                  </apply>
+                  <apply>
+                    <times />
+                    <apply>
+                      <divide />
+                      <ci>icit</ci>
+                      <ci>Kicit_icl</ci>
+                    </apply>
+                    <apply>
+                      <divide />
+                      <ci>suc</ci>
+                      <ci>Ksuc_icl</ci>
+                    </apply>
+                  </apply>
+                  <apply>
+                    <times />
+                    <apply>
+                      <divide />
+                      <ci>suc</ci>
+                      <ci>Ksuc_icl</ci>
+                    </apply>
+                    <apply>
+                      <divide />
+                      <ci>gly</ci>
+                      <ci>Kgly_icl</ci>
+                    </apply>
+                  </apply>
+                </apply>
+              </apply>
+            </apply>
+          </math>
+          <listOfLocalParameters>
+            <localParameter id="Vf_icl" units="mmlmin" metaid="_287448" value="1.9" sboTerm="SBO:0000350" />
+            <localParameter id="Kicit_icl" units="mml" metaid="_287449" value="0.604" sboTerm="SBO:0000322" />
+            <localParameter id="Vr_icl" units="mmlmin" metaid="_287451" value="0.019" sboTerm="SBO:0000353" />
+            <localParameter id="Ksuc_icl" units="mml" metaid="_287452" value="0.59" sboTerm="SBO:0000323" />
+            <localParameter id="Kgly_icl" units="mml" metaid="_287453" value="0.13" sboTerm="SBO:0000323" />
+          </listOfLocalParameters>
+        </kineticLaw>
+      </reaction>
+      <reaction fast="false" id="MS" metaid="_062407" reversible="true">
+        <annotation>
+          <rdf:RDF xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#" xmlns:bqmodel="http://biomodels.net/model-qualifiers/" xmlns:bqbiol="http://biomodels.net/biology-qualifiers/">
+            <rdf:Description rdf:about="#_062407">
+              <bqbiol:isVersionOf>
+                <rdf:Bag>
+                  <rdf:li rdf:resource="http://identifiers.org/kegg.reaction/R00472" />
+                </rdf:Bag>
+              </bqbiol:isVersionOf>
+            </rdf:Description>
+          </rdf:RDF>
+        </annotation>
+        <listOfReactants>
+          <speciesReference stoichiometry="1" constant="true" metaid="_871626" species="gly" />
+          <speciesReference stoichiometry="1" constant="true" metaid="_871638" species="aca" />
+        </listOfReactants>
+        <listOfProducts>
+          <speciesReference stoichiometry="1" constant="true" metaid="_871650" species="mal" />
+          <speciesReference stoichiometry="1" constant="true" metaid="_871662" species="coa" />
+        </listOfProducts>
+        <kineticLaw metaid="_871675">
+          <math xmlns="http://www.w3.org/1998/Math/MathML">
+            <apply>
+              <times />
+              <ci>cell</ci>
+              <apply>
+                <divide />
+                <apply>
+                  <minus />
+                  <apply>
+                    <times />
+                    <ci>Vf_ms</ci>
+                    <apply>
+                      <divide />
+                      <ci>gly</ci>
+                      <ci>Kgly_ms</ci>
+                    </apply>
+                    <apply>
+                      <divide />
+                      <ci>aca</ci>
+                      <ci>Kaca_ms</ci>
+                    </apply>
+                  </apply>
+                  <apply>
+                    <times />
+                    <ci>Vr_ms</ci>
+                    <apply>
+                      <divide />
+                      <ci>mal</ci>
+                      <ci>Kmal_ms</ci>
+                    </apply>
+                    <apply>
+                      <divide />
+                      <ci>coa</ci>
+                      <ci>Kcoa_ms</ci>
+                    </apply>
+                  </apply>
+                </apply>
+                <apply>
+                  <times />
+                  <apply>
+                    <plus />
+                    <cn>1</cn>
+                    <apply>
+                      <divide />
+                      <ci>gly</ci>
+                      <ci>Kgly_ms</ci>
+                    </apply>
+                    <apply>
+                      <divide />
+                      <ci>mal</ci>
+                      <ci>Kmal_ms</ci>
+                    </apply>
+                  </apply>
+                  <apply>
+                    <plus />
+                    <cn>1</cn>
+                    <apply>
+                      <divide />
+                      <ci>aca</ci>
+                      <ci>Kaca_ms</ci>
+                    </apply>
+                    <apply>
+                      <divide />
+                      <ci>coa</ci>
+                      <ci>Kcoa_ms</ci>
+                    </apply>
+                  </apply>
+                </apply>
+              </apply>
+            </apply>
+          </math>
+          <listOfLocalParameters>
+            <localParameter id="Vf_ms" units="mmlmin" metaid="_287454" value="1.9" sboTerm="SBO:0000350" />
+            <localParameter id="Kgly_ms" units="mml" metaid="_287455" value="2" sboTerm="SBO:0000322" />
+            <localParameter id="Kaca_ms" units="mml" metaid="_287456" value="0.01" sboTerm="SBO:0000322" />
+            <localParameter id="Vr_ms" units="mmlmin" metaid="_287457" value="0.019" sboTerm="SBO:0000353" />
+            <localParameter id="Kmal_ms" units="mml" metaid="_287459" value="1" sboTerm="SBO:0000323" />
+            <localParameter id="Kcoa_ms" units="mml" metaid="_287460" value="0.1" sboTerm="SBO:0000323" />
+          </listOfLocalParameters>
+        </kineticLaw>
+      </reaction>
+      <reaction fast="false" id="SYN" metaid="_062427" reversible="true">
+        <annotation>
+          <rdf:RDF xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#" xmlns:bqmodel="http://biomodels.net/model-qualifiers/" xmlns:bqbiol="http://biomodels.net/biology-qualifiers/">
+            <rdf:Description rdf:about="#_062427">
+              <bqbiol:isVersionOf>
+                <rdf:Bag>
+                  <rdf:li rdf:resource="http://identifiers.org/obo.go/GO:0006103" />
+                </rdf:Bag>
+              </bqbiol:isVersionOf>
+            </rdf:Description>
+          </rdf:RDF>
+        </annotation>
+        <listOfReactants>
+          <speciesReference stoichiometry="1" constant="true" metaid="_871687" species="akg" />
+        </listOfReactants>
+        <listOfProducts>
+          <speciesReference stoichiometry="1" constant="true" metaid="_871699" species="biosyn" />
+        </listOfProducts>
+        <listOfModifiers>
+          <modifierSpeciesReference metaid="_871711" species="icit" />
+        </listOfModifiers>
+        <kineticLaw metaid="_871723">
+          <math xmlns="http://www.w3.org/1998/Math/MathML">
+            <apply>
+              <times />
+              <ci>cell</ci>
+              <cn>0.188</cn>
+              <apply>
+                <divide />
+                <apply>
+                  <minus />
+                  <apply>
+                    <times />
+                    <ci>Vf_icd</ci>
+                    <apply>
+                      <divide />
+                      <ci>icit</ci>
+                      <ci>Kicit_icd</ci>
+                    </apply>
+                  </apply>
+                  <apply>
+                    <times />
+                    <ci>Vr_icd</ci>
+                    <apply>
+                      <divide />
+                      <ci>akg</ci>
+                      <ci>Kakg_icd</ci>
+                    </apply>
+                  </apply>
+                </apply>
+                <apply>
+                  <plus />
+                  <cn>1</cn>
+                  <apply>
+                    <divide />
+                    <ci>icit</ci>
+                    <ci>Kicit_icd</ci>
+                  </apply>
+                  <apply>
+                    <divide />
+                    <ci>akg</ci>
+                    <ci>Kakg_icd</ci>
+                  </apply>
+                </apply>
+              </apply>
+            </apply>
+          </math>
+          <listOfLocalParameters>
+            <localParameter id="Vf_icd" units="mmlmin" metaid="_287462" value="14.72" sboTerm="SBO:0000350" />
+            <localParameter id="Kicit_icd" units="mml" metaid="_287464" value="0.008" sboTerm="SBO:0000322" />
+            <localParameter id="Vr_icd" units="mmlmin" metaid="_287465" value="0.1472" sboTerm="SBO:0000353" />
+            <localParameter id="Kakg_icd" units="mml" metaid="_287466" value="0.13" sboTerm="SBO:0000323" />
+          </listOfLocalParameters>
+        </kineticLaw>
+      </reaction>
+    </listOfReactions>
+  </model>
+</sbml>

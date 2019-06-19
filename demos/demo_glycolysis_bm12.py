@@ -5,7 +5,7 @@ from libsbml_draw.model.sbml_layout import SBMLlayout
 
 #chance glycolysis 1960
 #model_file_name = "chance_glycolysis_1960.xml"
-#model_file_name = "glycolysis_BIOMD12.xml"
+#model_file_name = "repressilator_BIOMD12.xml"
 
 model_file_name = "glycolysis_BIOMD176.xml"
 
