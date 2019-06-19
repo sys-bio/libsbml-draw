@@ -25,7 +25,8 @@ class SBMLlayout:
     NODE_KEYWORDS = {"all", "boundary", "floating"}
 
     def __init__(self, sbml_source=None, layout_alg_options=None,
-                 layout_number=0, fitToWindow=tuple()):
+                 layout_number=0, fitToWindow=tuple(), 
+                 autoComputeLayout=False):
 
         self.__sbml_source = sbml_source
         self.__layout_number = layout_number
@@ -62,9 +63,10 @@ class SBMLlayout:
             self.__h_network = sbnw.getNetworkp(self.__h_layout_info)
             self.__layoutSpecified = True if sbnw.isLayoutSpecified(
                     self.__h_network) else False
+            self.__autoComputeLayout = autoComputeLayout
 
             # create layout, if it doesn't already exist
-            if not self.__layoutSpecified:
+            if not self.__layoutSpecified or self.__autoComputeLayout:
                 self.__randomizeLayout()
                 self.__doLayoutAlgorithm()
 
@@ -95,20 +97,20 @@ class SBMLlayout:
                 self.__fitToWindow(self.__fitWindow[0], self.__fitWindow[1],
                                    self.__fitWindow[2], self.__fitWindow[3])
             else:
-                if not self.__layoutSpecified:
+                if not self.__layoutSpecified or self.__autoComputeLayout:
 
                     temp_network = self.__createNetwork()                
                     nodes = temp_network.nodes.values()
-    
-                    max_x_points = max([node.center.x + node.width/2 for node in nodes]) 
-                    min_x_points = min([node.center.x - node.width/2 for node in nodes])
-                    nw_width_points = (max_x_points - min_x_points)
+                    
+                    nw_width_points = (
+                        max([node.center.x + node.width/2 for node in nodes]) -
+                        min([node.center.x - node.width/2 for node in nodes]))
 
                     nw_height_points = (
                         max([node.center.y + node.height/2 for node in nodes]) -
                         min([node.center.y - node.height/2 for node in nodes]))
                         
-                    print("ftw: width, height: ", nw_width_points, nw_height_points)        
+#                    print("ftw: width, height: ", nw_width_points, nw_height_points)        
                 
                     self.__fitToWindow(0, 0, nw_width_points, nw_height_points)
                 else:    
@@ -336,7 +338,24 @@ class SBMLlayout:
 
         if len(self.__fitWindow) == 4:
                 self.__fitToWindow(self.__fitWindow[0], self.__fitWindow[1],
-                                   self.__fitWindow[2], self.__fitWindow[3])
+                                   self.__fitWindow[2], self.__fitWindow[3])        
+        else:
+            if not self.__layoutSpecified or self.__autoComputeLayout:
+
+                temp_network = self.__createNetwork()                
+                nodes = temp_network.nodes.values()
+
+                nw_width_points = (
+                    max([node.center.x + node.width/2 for node in nodes]) -
+                    min([node.center.x - node.width/2 for node in nodes]))
+
+                nw_height_points = (
+                    max([node.center.y + node.height/2 for node in nodes]) -
+                    min([node.center.y - node.height/2 for node in nodes]))
+                
+                self.__fitToWindow(0, 0, nw_width_points, nw_height_points)
+            else:    
+                pass
 
         self.__doc = libsbml.readSBMLFromString(
             self.__getSBMLWithLayoutString())
@@ -348,7 +367,7 @@ class SBMLlayout:
 
     def regenerateLayout(self,):
         """Use this to generate a new layout, and update the network's node
-        and reaction layout values.
+        reaction, and compartment layout values.
 
         Args: None
 
@@ -360,9 +379,32 @@ class SBMLlayout:
         if len(self.__fitWindow) == 4:
                 self.__fitToWindow(self.__fitWindow[0], self.__fitWindow[1],
                                    self.__fitWindow[2], self.__fitWindow[3])
+        else:
+            if not self.__layoutSpecified or self.__autoComputeLayout:
+
+                temp_network = self.__createNetwork()                
+                nodes = temp_network.nodes.values()
+
+                nw_width_points = (
+                    max([node.center.x + node.width/2 for node in nodes]) -
+                    min([node.center.x - node.width/2 for node in nodes]))
+
+                nw_height_points = (
+                    max([node.center.y + node.height/2 for node in nodes]) -
+                    min([node.center.y - node.height/2 for node in nodes]))
+                
+                self.__fitToWindow(0, 0, nw_width_points, nw_height_points)
+            else:    
+                pass
 
         self.__doc = libsbml.readSBMLFromString(
                 self.__getSBMLWithLayoutString())
+
+#        print()
+#        print("regen lo: ")
+#        print()
+#        print(self.__getSBMLWithLayoutString())
+#        print()
 
         self.__updateNetworkLayout()
 
@@ -411,6 +453,7 @@ class SBMLlayout:
         # print("sbml filename: ", self.__sbml_source)
         print("layout number: ", self.__layout_number)
         print("layout is specified: ", self.__layoutSpecified)
+        print("autoComputeLayout: ", self.__autoComputeLayout)
         print("number of Compartments: ", self.getNumberOfCompartments())
         print("number of Nodes: ", self.getNumberOfNodes())
         print("number of Reactions: ", self.getNumberOfReactions())

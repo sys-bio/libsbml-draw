@@ -11,10 +11,8 @@ sl = SBMLlayout(str(model_file))
 
 sl._describeModel()
 
-
 print("node ids: ", sl.getNodeIds())
 print("reaction ids: ", sl.getReactionIds())
-
 
 sl.drawNetwork()
 
@@ -24,7 +22,11 @@ sl.setNodeEdgeWidth("all", 2)
 
 out_file = "model_out.xml"        
 sl.writeSBMLFile("model_out.xml")
+
 sl2 = SBMLlayout(out_file)
+
+print("sl2 layoutSpecified: ", sl2._SBMLlayout__layoutSpecified)
+
 sl2.drawNetwork()
 
 sl.getArrowheadVert(1,1)
@@ -60,7 +62,7 @@ sl.setReactionColor("_J0", "green")
 print("reaction edge: ", sl.getReactionEdgeColor("_J0"))
 print("reaction fill: ", sl.getReactionFillColor("_J0"))
 
-sl.drawNetwork(figsize=(8,8))
+sl.drawNetwork()
 
 sl.showLayoutAlgorithmOptions()
 

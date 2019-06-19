@@ -90,7 +90,7 @@ def compute_node_dimensions(text_length_points, text_height_points, fig_dpi,
     return (width, height)
 
 
-def draw_compartments(compartments):
+def draw_compartments(compartments, fig):
     """Create a list of FancyBbox Patches, one for each compartment.
 
     Args:
@@ -104,14 +104,16 @@ def draw_compartments(compartments):
     for compartment in compartments:
 
         fbbp = FancyBboxPatch(
-            compartment.lower_left_point,
-            compartment.width,
-            compartment.height,
+#            compartment.lower_left_point,
+            [compartment.lower_left_point[0]/72 + SHIFT, compartment.lower_left_point[1]/72 + SHIFT],
+            compartment.width/72,
+            compartment.height/72,
             edgecolor=compartment.edge_color,
             facecolor=compartment.fill_color,
             linewidth=compartment.line_width,
-            boxstyle=BoxStyle("round", pad=0.2, rounding_size=.6),
-            mutation_scale=10)
+            boxstyle=BoxStyle("round", pad=0.1, rounding_size=.6),
+#            mutation_scale=10,
+            transform=fig.dpi_scale_trans)
 
         compartment_patches.append(fbbp)
 
@@ -228,7 +230,7 @@ def add_labels(nodes, fig):
                  horizontalalignment="center",
                  verticalalignment="center",
                  transform=fig.dpi_scale_trans)
-
+#                 )
 
 def update_node_dimensions(sbml_layout, fig_dpi, fig_width_pixels,
                            fig_height_pixels, node_multiplier=1.0):
@@ -323,6 +325,9 @@ def createNetworkFigure(sbml_layout, arrowhead_mutation_scale, figsize=None,
 
     for node in nodes:
         print("node: ", node.center.x/72, node.center.y/72, node.width, node.id)
+    print()
+    for node in nodes:
+        print("node: ", node.center.x, node.center.y, node.width, node.id)
 
     max_x_points = max([node.center.x + node.width/2 for node in nodes]) 
     min_x_points = min([node.center.x - node.width/2 for node in nodes])
@@ -335,8 +340,8 @@ def createNetworkFigure(sbml_layout, arrowhead_mutation_scale, figsize=None,
             max([node.center.y + node.height/2 for node in nodes]) -
             min([node.center.y - node.height/2 for node in nodes]))
 
-    nw_width_inches = nw_width_points/72 + 4*SHIFT    
-    nw_height_inches = nw_height_points/72 + 4*SHIFT
+    nw_width_inches = nw_width_points/72 + 5*SHIFT    
+    nw_height_inches = nw_height_points/72 + 5*SHIFT
 
     print("nw width, height points: ", nw_width_points, nw_height_points)
     print("nw width, height inches: ", nw_width_inches, nw_height_inches)
@@ -373,7 +378,7 @@ def createNetworkFigure(sbml_layout, arrowhead_mutation_scale, figsize=None,
 #        pass
 
     # draw the compartments
-    compartment_patches = draw_compartments(network.compartments.values())
+    compartment_patches = draw_compartments(network.compartments.values(), fig)
 
     for compartment_patch in compartment_patches:
         ax.add_patch(compartment_patch)

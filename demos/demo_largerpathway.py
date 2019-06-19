@@ -23,7 +23,7 @@ sl.drawNetwork(compute_node_dims=False)
 
 sl.drawNetwork()
 
-sl.drawNetwork(figsize=(12,12))
+#sl.drawNetwork(figsize=(12,12))
 
 
 print("node ids: ", sl.getNodeIds())

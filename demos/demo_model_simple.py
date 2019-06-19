@@ -19,3 +19,14 @@ print("reaction ids: ", sl.getReactionIds())
 sl.drawNetwork()
 
 
+out_file = "model_out.xml"        
+sl.writeSBMLFile("model_out.xml")
+
+sl2 = SBMLlayout(out_file)
+
+print("sl2 layoutSpecified: ", sl2._SBMLlayout__layoutSpecified)
+
+sl2.drawNetwork()
+
+
+
