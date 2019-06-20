@@ -388,7 +388,7 @@ void gf_aliasNodebyDegree(gf_layoutInfo* l, int minDegree) {
 
 
 
-SBMLDocument* populateSBMLdoc(gf_SBMLModel* m, gf_layoutInfo* l) {
+SBMLDocument* populateSBMLdoc(gf_SBMLModel* m, gf_layoutInfo* l, COORD_SYSTEM coord = COORD_SYSTEM_LOCAL) {
 //     SBMLDocument* doc = (SBMLDocument*)m->pdoc;
     SBMLNamespaces sbmlns(l ? (l->level ? l->level : 3) : 3, l ? (l->version ? l->version : 1) : 1, "layout", 1);
     SBMLDocument* doc = new SBMLDocument(&sbmlns);
@@ -487,10 +487,10 @@ SBMLDocument* populateSBMLdoc(gf_SBMLModel* m, gf_layoutInfo* l) {
 
             // do bounding box
             BoundingBox bb;
-            bb.setX(sround(c->getMinX()));
-            bb.setY(sround(c->getMinY()));
-            bb.setWidth(sround(c->getWidth()));
-            bb.setHeight(sround(c->getHeight()));
+            bb.setX(sround(c->getMinX(coord)));
+            bb.setY(sround(c->getMinY(coord)));
+            bb.setWidth(sround(c->getWidth(coord)));
+            bb.setHeight(sround(c->getHeight(coord)));
             // apply bb to glyph
             cg->setBoundingBox(&bb);
 
@@ -531,10 +531,10 @@ SBMLDocument* populateSBMLdoc(gf_SBMLModel* m, gf_layoutInfo* l) {
 
             // do bounding box
             BoundingBox bb;
-            bb.setX(sround(n->getMinX()));
-            bb.setY(sround(n->getMinY()));
-            bb.setWidth(sround(n->getWidth()));
-            bb.setHeight(sround(n->getHeight()));
+            bb.setX(sround(n->getMinX(coord)));
+            bb.setY(sround(n->getMinY(coord)));
+            bb.setWidth(sround(n->getWidth(coord)));
+            bb.setHeight(sround(n->getHeight(coord)));
             // apply bb to glyph
             sg->setBoundingBox(&bb);
 
@@ -616,10 +616,10 @@ SBMLDocument* populateSBMLdoc(gf_SBMLModel* m, gf_layoutInfo* l) {
 
             // do bounding box
             BoundingBox bb;
-            bb.setX(sround(n->getMinX()));
-            bb.setY(sround(n->getMinY()));
-            bb.setWidth(sround(n->getWidth()));
-            bb.setHeight(sround(n->getHeight()));
+            bb.setX(sround(n->getMinX(coord)));
+            bb.setY(sround(n->getMinY(coord)));
+            bb.setWidth(sround(n->getWidth(coord)));
+            bb.setHeight(sround(n->getHeight(coord)));
             // apply bb to glyph
             tg->setBoundingBox(&bb);
 
@@ -698,6 +698,7 @@ SBMLDocument* populateSBMLdoc(gf_SBMLModel* m, gf_layoutInfo* l) {
 
                 ::Point p;
 
+                if (coord == COORD_SYSTEM_LOCAL) {
                 // end-points
                 p.setX(c->s.x);
                 p.setY(c->s.y);
@@ -713,6 +714,23 @@ SBMLDocument* populateSBMLdoc(gf_SBMLModel* m, gf_layoutInfo* l) {
                 p.setX(c->c2.x);
                 p.setY(c->c2.y);
                 cb->setBasePoint2(&p);
+                } else {
+                  // end-points
+                  p.setX(c->getTransformedS().x);
+                  p.setY(c->getTransformedS().y);
+                  cb->setStart(&p);
+                  p.setX(c->getTransformedE().x);
+                  p.setY(c->getTransformedE().y);
+                  cb->setEnd(&p);
+
+                  // control points
+                  p.setX(c->getTransformedC1().x);
+                  p.setY(c->getTransformedC1().y);
+                  cb->setBasePoint1(&p);
+                  p.setX(c->getTransformedC2().x);
+                  p.setY(c->getTransformedC2().y);
+                  cb->setBasePoint2(&p);
+                }
 
                 // set curve
                 srg->setCurve(&curv);
@@ -882,6 +900,18 @@ void gf_layout_fit_to_window(gf_layoutInfo* l, double left, double top, double r
     Network* net = (Network*)l->net;
     AN(net, "No network");
     net->fitToWindow(Box(left, top, right, bottom));
+}
+
+void gf_layout_alignToOrigin(gf_layoutInfo* l, double pad_x, double pad_y) {
+    Network* net = (Network*)l->net;
+    AN(net, "No network");
+
+    LibsbmlDraw::Box bbox = net->getBoundingBox();
+    LibsbmlDraw::Box window(pad_x, pad_y, bbox.width()+pad_x, bbox.height()+pad_y);
+    LibsbmlDraw::Affine2d tf = LibsbmlDraw::Affine2d::FitToWindow(bbox,
+                                                   window);
+    net->setTransform(tf);
+    net->setInverseTransform(tf.inv());
 }
 
 gf_network gf_getNetwork(gf_layoutInfo* l) {
@@ -2144,11 +2174,11 @@ void gf_canvSetHeight(gf_canvas* c, unsigned long height) {
     canv->setHeight(height);
 }
 
-int gf_writeSBMLwithLayout(const char* filename, gf_SBMLModel* m, gf_layoutInfo* l) {
+int gf_writeSBMLwithLayout(const char* filename, gf_SBMLModel* m, gf_layoutInfo* l, bool use_transformed_coords) {
     #if SAGITTARIUS_DEBUG_LEVEL >= 2
 //     std::cout << "gf_writeSBMLwithLayout started\n" << std::endl;
     #endif
-    SBMLDocument* doc = populateSBMLdoc(m,l);
+    SBMLDocument* doc = populateSBMLdoc(m,l,use_transformed_coords?COORD_SYSTEM_GLOBAL:COORD_SYSTEM_LOCAL);
     #if SAGITTARIUS_DEBUG_LEVEL >= 2
 //     std::cout << "populateSBMLdoc finished\n" << std::endl;
     #endif
@@ -2173,8 +2203,8 @@ int gf_writeSBML(const char* filename, gf_SBMLModel* m) {
         return -1;
 }
 
-const char* gf_getSBMLwithLayoutStr(gf_SBMLModel* m, gf_layoutInfo* l) {
-    SBMLDocument* doc = populateSBMLdoc(m,l);
+const char* gf_getSBMLwithLayoutStr(gf_SBMLModel* m, gf_layoutInfo* l, bool use_transformed_coords) {
+    SBMLDocument* doc = populateSBMLdoc(m,l,use_transformed_coords?COORD_SYSTEM_GLOBAL:COORD_SYSTEM_LOCAL);
     SBMLWriter writer;
     writer.setProgramName("Graphfab");
 

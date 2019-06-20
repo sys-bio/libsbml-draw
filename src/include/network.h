@@ -278,14 +278,14 @@ namespace LibsbmlDraw {
             Point getMin(COORD_SYSTEM coord = COORD_SYSTEM_LOCAL) const { return getExtents(coord).getMin(); }
             Point getMax(COORD_SYSTEM coord = COORD_SYSTEM_LOCAL) const { return getExtents(coord).getMax(); }
             
-            Real getMinX() const { return getExtents().getMin().x; }
-            Real getMaxX() const { return getExtents().getMax().x; }
-            Real getMinY() const { return getExtents().getMin().y; }
-            Real getMaxY() const { return getExtents().getMax().y; }
+            Real getMinX(COORD_SYSTEM coord = COORD_SYSTEM_LOCAL) const { return getExtents(coord).getMin().x; }
+            Real getMaxX(COORD_SYSTEM coord = COORD_SYSTEM_LOCAL) const { return getExtents(coord).getMax().x; }
+            Real getMinY(COORD_SYSTEM coord = COORD_SYSTEM_LOCAL) const { return getExtents(coord).getMin().y; }
+            Real getMaxY(COORD_SYSTEM coord = COORD_SYSTEM_LOCAL) const { return getExtents(coord).getMax().y; }
             
             /// With/height derived from extents
-            Real getWidth() const { AT(getMaxX() >= getMinX()); return getMaxX() - getMinX(); }
-            Real getHeight() const { AT(getMaxY() >= getMinY()); return getMaxY() - getMinY(); }
+            Real getWidth(COORD_SYSTEM coord = COORD_SYSTEM_LOCAL) const { AT(getMaxX(coord) >= getMinX(coord)); return getMaxX(coord) - getMinX(coord); }
+            Real getHeight(COORD_SYSTEM coord = COORD_SYSTEM_LOCAL) const { AT(getMaxY(coord) >= getMinY(coord)); return getMaxY(coord) - getMinY(coord); }
             
             /// With/height derived from extents
             Real getGlobalWidth() const { AT(getMaxX() >= getMinX()); return (getMaxX() - getMinX())*tf_.scaleFactor(); }
