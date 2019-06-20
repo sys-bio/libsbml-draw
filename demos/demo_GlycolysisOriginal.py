@@ -13,3 +13,7 @@ sl = SBMLlayout(str(model_file))
 sl._describeModel()
 
 sl.drawNetwork()
+
+#sl.drawNetwork(figsize=(20,20))
+
+

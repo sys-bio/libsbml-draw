@@ -1848,7 +1848,7 @@ class SBMLlayout:
         fig = createNetworkFigure(self, self.__arrowhead_scale,
                                   figsize, show, dpi, node_multiplier,
                                   node_padding, node_mutation_scale,
-                                  compute_node_dims, use_all_fig_space)
+                                  compute_node_dims, use_all_fig_space=False)
         if(save_file_name):
             fig.savefig(save_file_name, bbox_inches=bbox_inches)
 

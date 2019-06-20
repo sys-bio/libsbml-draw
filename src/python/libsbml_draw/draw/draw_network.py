@@ -16,7 +16,9 @@ import libsbml_draw.c_api.sbnw_c_api as sbnw
 SBNW_NODE_WIDTH = 40
 SBNW_NODE_HEIGHT = 20
 
-SHIFT = 1.5
+MARGIN_EFFECT = .7
+
+SHIFT = 0
 
 def compute_figure_width_height_in_pixels(fig, ax):
     """Returns the width and height of the figure in pixels.
@@ -111,7 +113,7 @@ def draw_compartments(compartments, fig):
             edgecolor=compartment.edge_color,
             facecolor=compartment.fill_color,
             linewidth=compartment.line_width,
-            boxstyle=BoxStyle("round", pad=0.1, rounding_size=.6),
+            boxstyle=BoxStyle("round", pad=0, rounding_size=.6),
 #            mutation_scale=10,
             transform=fig.dpi_scale_trans)
 
@@ -151,7 +153,7 @@ def draw_nodes(nodes, node_padding, node_mutation_scale, fig):
             facecolor=node.fill_color,
             linewidth=node.edge_width,
             boxstyle=BoxStyle("round", 
-                              pad=0.1,
+                              pad=0,
 #                              pad=node_padding if node_padding else 0.1,
                               rounding_size=.1),
 #            mutation_scale=node_mutation_scale if node_mutation_scale else 1,
@@ -322,9 +324,12 @@ def createNetworkFigure(sbml_layout, arrowhead_mutation_scale, figsize=None,
     """
     
     nodes = sbml_layout._SBMLlayout__network.nodes.values()
+    compartments = sbml_layout._SBMLlayout__network.compartments.values()
 
     for node in nodes:
-        print("node: ", node.center.x/72, node.center.y/72, node.width, node.id)
+        print("node: ", node.center.x/72, node.center.y/72, 
+              node.center.x/72 - (node.width/2)/72, 
+              node.center.y/72 - (node.height/2)/72, node.width, node.id)
     print()
     for node in nodes:
         print("node: ", node.center.x, node.center.y, node.width, node.id)
@@ -340,21 +345,36 @@ def createNetworkFigure(sbml_layout, arrowhead_mutation_scale, figsize=None,
             max([node.center.y + node.height/2 for node in nodes]) -
             min([node.center.y - node.height/2 for node in nodes]))
 
-    nw_width_inches = nw_width_points/72 + 5*SHIFT    
-    nw_height_inches = nw_height_points/72 + 5*SHIFT
+#    nw_width_inches = nw_width_points/72 + 5*SHIFT    
+#    nw_height_inches = nw_height_points/72 + 5*SHIFT
+
+    nw_width_inches = nw_width_points/72    
+    nw_height_inches = nw_height_points/72
+
+    if compartments:
+        max_compartment_width = max([compartment.width for compartment in compartments])/72
+        max_compartment_height = max([compartment.height for compartment in compartments])/72
+    else:
+        max_compartment_width = 0
+        max_compartment_height = 0
+
+    fig_width_inches = (max(nw_width_inches, max_compartment_width) + SHIFT)/MARGIN_EFFECT
+    fig_height_inches = (max(nw_height_inches, max_compartment_height) + SHIFT)/MARGIN_EFFECT
 
     print("nw width, height points: ", nw_width_points, nw_height_points)
     print("nw width, height inches: ", nw_width_inches, nw_height_inches)
+    print("max compartment width: ", max_compartment_width)
+    print("max compartment height: ", max_compartment_height)
 
     # initialize figure
     if figsize and len(figsize) == 2:
         fig = plt.figure(figsize=figsize, dpi=dpi)
     else:
-        figsize = (nw_width_inches, nw_height_inches)
+        figsize = (fig_width_inches, fig_height_inches)
         fig = plt.figure(figsize=figsize)
 
     print("fig dpi: ", fig.dpi, fig.get_dpi())
-    print("fig width, heigth: ", fig.get_figwidth(), fig.get_figheight())
+    print("fig width, height: ", fig.get_figwidth(), fig.get_figheight())
 
     # uses all of the figure space
     if use_all_fig_space:
@@ -398,6 +418,9 @@ def createNetworkFigure(sbml_layout, arrowhead_mutation_scale, figsize=None,
 
     # add labels to the nodes
     add_labels(network.nodes.values(), fig)
+
+    plt.text(0,0, "A", transform=fig.dpi_scale_trans)
+    plt.text(1,0, "B", transform=fig.dpi_scale_trans)
 
 #    ax.autoscale()
 #    plt.subplots_adjust(left=0.1, right=0.9, top=0.9, bottom=0.1)
