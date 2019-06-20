@@ -1248,9 +1248,10 @@ _GraphfabExport void gf_randomizeLayout_fromExtents(gf_network* n, double left, 
  * @param[in] filename The output file
  * @param[in] m The SBML model; required since this tool only handles layout
  * @param[in] l The layout info; replaces any currently existing SBML layout in the model in the generated file
+ *  @param[in] use_transformed_coords If true, use transformed coordinates previously set by gf_layout_fit_to_window.
  *  \ingroup C_API
  */
-_GraphfabExport int gf_writeSBMLwithLayout(const char* filename, gf_SBMLModel* m, gf_layoutInfo* l);
+_GraphfabExport int gf_writeSBMLwithLayout(const char* filename, gf_SBMLModel* m, gf_layoutInfo* l, int use_transformed_coords);
 
 /** @brief Write an SBML file (does not include layout
  * @returns 0 for success
@@ -1263,10 +1264,11 @@ _GraphfabExport int gf_writeSBML(const char* filename, gf_SBMLModel* m);
 /** @brief String version of writeSBMLwithLayout
  *  @param[in] m The SBML model; required since this tool only handles layout
  *  @param[in] l The layout info; the SBML in string form is written to the layout
+ *  @param[in] use_transformed_coords If true, use transformed coordinates previously set by gf_layout_fit_to_window.
  *  @return Raw SBML as UTF-8 string (owned by callee)
  *  \ingroup C_API
  */
-_GraphfabExport const char* gf_getSBMLwithLayoutStr(gf_SBMLModel* m, gf_layoutInfo* l);
+_GraphfabExport const char* gf_getSBMLwithLayoutStr(gf_SBMLModel* m, gf_layoutInfo* l, int use_transformed_coords);
 
 /** @brief Returns the current version of the library
  *  @return Static string

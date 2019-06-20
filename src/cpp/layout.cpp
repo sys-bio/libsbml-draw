@@ -2174,7 +2174,7 @@ void gf_canvSetHeight(gf_canvas* c, unsigned long height) {
     canv->setHeight(height);
 }
 
-int gf_writeSBMLwithLayout(const char* filename, gf_SBMLModel* m, gf_layoutInfo* l, bool use_transformed_coords) {
+int gf_writeSBMLwithLayout(const char* filename, gf_SBMLModel* m, gf_layoutInfo* l, int use_transformed_coords) {
     #if SAGITTARIUS_DEBUG_LEVEL >= 2
 //     std::cout << "gf_writeSBMLwithLayout started\n" << std::endl;
     #endif
@@ -2203,7 +2203,7 @@ int gf_writeSBML(const char* filename, gf_SBMLModel* m) {
         return -1;
 }
 
-const char* gf_getSBMLwithLayoutStr(gf_SBMLModel* m, gf_layoutInfo* l, bool use_transformed_coords) {
+const char* gf_getSBMLwithLayoutStr(gf_SBMLModel* m, gf_layoutInfo* l, int use_transformed_coords) {
     SBMLDocument* doc = populateSBMLdoc(m,l,use_transformed_coords?COORD_SYSTEM_GLOBAL:COORD_SYSTEM_LOCAL);
     SBMLWriter writer;
     writer.setProgramName("Graphfab");
