@@ -1,0 +1,214 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<sbml xmlns="http://www.sbml.org/sbml/level3/version1/core" xmlns:layout="http://www.sbml.org/sbml/level3/version1/layout/version1" xmlns:render="http://www.sbml.org/sbml/level3/version1/render/version1" level="3" version="1">
+  <model substanceUnits="substance" timeUnits="second" volumeUnits="volume" areaUnits="area" lengthUnits="metre" extentUnits="substance">
+    <notes>
+      <p xmlns="http://www.w3.org/1999/xhtml">
+				Simple Model one compartment, with two species, and a reaction.		
+				It also contains one Layout for the model along with a local
+				Render information object that describes how the layout glyphs
+				should be rendered. 
+			</p>
+    </notes>
+    <listOfUnitDefinitions>
+      <unitDefinition id="volume">
+        <listOfUnits>
+          <unit kind="litre" exponent="1" scale="0" multiplier="1"/>
+        </listOfUnits>
+      </unitDefinition>
+      <unitDefinition id="substance">
+        <listOfUnits>
+          <unit kind="mole" exponent="1" scale="0" multiplier="1"/>
+        </listOfUnits>
+      </unitDefinition>
+      <unitDefinition id="area">
+        <listOfUnits>
+          <unit kind="metre" exponent="2" scale="0" multiplier="1"/>
+        </listOfUnits>
+      </unitDefinition>
+    </listOfUnitDefinitions>
+    <listOfCompartments>
+      <compartment id="compartment" spatialDimensions="3" size="1" units="volume" constant="true"/>
+      <compartment id="vol1" spatialDimensions="3" size="1" units="volume" constant="true"/>
+    </listOfCompartments>
+    <listOfSpecies>
+      <species id="Node0" compartment="vol1" initialConcentration="0" substanceUnits="substance" hasOnlySubstanceUnits="false" boundaryCondition="false" constant="false"/>
+      <species id="Node1" compartment="vol1" initialConcentration="0" substanceUnits="substance" hasOnlySubstanceUnits="false" boundaryCondition="false" constant="false"/>
+    </listOfSpecies>
+    <listOfParameters>
+      <parameter id="J0_k" value="0.1" constant="true"/>
+    </listOfParameters>
+    <listOfReactions>
+      <reaction id="J0" reversible="false" fast="false">
+        <listOfReactants>
+          <speciesReference species="Node0" stoichiometry="1" constant="true"/>
+        </listOfReactants>
+        <listOfProducts>
+          <speciesReference species="Node1" stoichiometry="1" constant="true"/>
+        </listOfProducts>
+        <kineticLaw>
+          <math xmlns="http://www.w3.org/1998/Math/MathML">
+            <apply>
+              <times/>
+              <ci> J0_k </ci>
+              <ci> Node0 </ci>
+            </apply>
+          </math>
+        </kineticLaw>
+      </reaction>
+    </listOfReactions>
+    <layout:listOfLayouts xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:layout="http://www.sbml.org/sbml/level3/version1/layout/version1">
+      <layout:layout layout:id="JDesigner2_0">
+        <layout:dimensions layout:width="436" layout:height="232"/>
+        <layout:listOfCompartmentGlyphs>
+          <layout:compartmentGlyph layout:id="cGlyph_0" layout:compartment="vol1">
+            <layout:boundingBox>
+              <layout:position layout:x="48" layout:y="21"/>
+              <layout:dimensions layout:width="340" layout:height="190"/>
+            </layout:boundingBox>
+          </layout:compartmentGlyph>
+        </layout:listOfCompartmentGlyphs>
+        <layout:listOfSpeciesGlyphs>
+          <layout:speciesGlyph layout:id="sGlyph_0" layout:species="Node0">
+            <layout:boundingBox>
+              <layout:position layout:x="79" layout:y="91"/>
+              <layout:dimensions layout:width="62" layout:height="40"/>
+            </layout:boundingBox>
+          </layout:speciesGlyph>
+          <layout:speciesGlyph layout:id="sGlyph_1" layout:species="Node1">
+            <layout:boundingBox>
+              <layout:position layout:x="297" layout:y="91"/>
+              <layout:dimensions layout:width="62" layout:height="40"/>
+            </layout:boundingBox>
+          </layout:speciesGlyph>
+        </layout:listOfSpeciesGlyphs>
+        <layout:listOfReactionGlyphs>
+          <layout:reactionGlyph layout:id="rGlyph_0" layout:reaction="J0">
+            <layout:boundingBox>
+              <layout:position layout:x="0" layout:y="0"/>
+              <layout:dimensions layout:width="0" layout:height="0"/>
+            </layout:boundingBox>
+            <layout:listOfSpeciesReferenceGlyphs>
+              <layout:speciesReferenceGlyph layout:id="SpeciesReference_J0_0" render:objectRole="product" layout:speciesReference="Node1" layout:speciesGlyph="sGlyph_1" layout:role="product">
+                <layout:curve>
+                  <layout:listOfCurveSegments>
+                    <layout:curveSegment xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:type="CubicBezier">
+                      <layout:start layout:x="149" layout:y="111"/>
+                      <layout:end layout:x="289" layout:y="111"/>
+                      <layout:basePoint1 layout:x="219" layout:y="111"/>
+                      <layout:basePoint2 layout:x="219" layout:y="111"/>
+                    </layout:curveSegment>
+                  </layout:listOfCurveSegments>
+                </layout:curve>
+              </layout:speciesReferenceGlyph>
+              <layout:speciesReferenceGlyph layout:id="SpeciesReference_J0_2" render:objectRole="substrate" layout:speciesReference="Node0" layout:speciesGlyph="sGlyph_0" layout:role="substrate">
+                <layout:boundingBox>
+                  <layout:position layout:x="0" layout:y="0"/>
+                  <layout:dimensions layout:width="0" layout:height="0"/>
+                </layout:boundingBox>
+              </layout:speciesReferenceGlyph>
+            </layout:listOfSpeciesReferenceGlyphs>
+          </layout:reactionGlyph>
+        </layout:listOfReactionGlyphs>
+        <layout:listOfTextGlyphs>
+          <layout:textGlyph layout:id="tGlyph_0" layout:text="Node0" layout:graphicalObject="sGlyph_0">
+            <layout:boundingBox>
+              <layout:position layout:x="79" layout:y="91"/>
+              <layout:dimensions layout:width="62" layout:height="40"/>
+            </layout:boundingBox>
+          </layout:textGlyph>
+          <layout:textGlyph layout:id="tGlyph_1" layout:text="Node1" layout:graphicalObject="sGlyph_1">
+            <layout:boundingBox>
+              <layout:position layout:x="297" layout:y="91"/>
+              <layout:dimensions layout:width="62" layout:height="40"/>
+            </layout:boundingBox>
+          </layout:textGlyph>
+        </layout:listOfTextGlyphs>
+        <render:listOfRenderInformation xmlns:render="http://www.sbml.org/sbml/level3/version1/render/version1">
+          <render:renderInformation render:id="ConvertedRenderStyle" render:programName="SBML Layout Viewer - SBW version" render:programVersion="2.7.4344.16022 Compiled on: 11/23/2011 8:54:04 AM" render:backgroundColor="#FFFFFFFF">
+            <render:listOfColorDefinitions>
+              <render:colorDefinition render:id="Color_0" render:value="#ff9900"/>
+              <render:colorDefinition render:id="Color_1" render:value="#ffeeee"/>
+              <render:colorDefinition render:id="Color_2" render:value="#ffa500"/>
+              <render:colorDefinition render:id="Color_3" render:value="#008000"/>
+              <render:colorDefinition render:id="Color_4" render:value="#000000"/>
+            </render:listOfColorDefinitions>
+            <render:listOfGradientDefinitions>
+              <render:linearGradient render:id="LinearGradient_0" render:spreadMethod="reflect" render:x2="0">
+                <render:stop render:offset="0" render:stop-color="#ffffff"/>
+                <render:stop render:offset="100%" render:stop-color="#ffcc99"/>
+              </render:linearGradient>
+            </render:listOfGradientDefinitions>
+            <render:listOfLineEndings>
+              <render:lineEnding render:id="product">
+                <layout:boundingBox>
+                  <layout:position layout:x="-10" layout:y="-5"/>
+                  <layout:dimensions layout:width="10" layout:height="10"/>
+                </layout:boundingBox>
+                <render:g render:stroke="Color_3" render:stroke-width="0.001" render:fill="Color_3" render:font-weight="normal" render:font-style="normal" render:text-anchor="start" render:vtext-anchor="top" render:font-size="0">
+                  <render:polygon render:fill="Color_3">
+                    <render:listOfElements>
+                      <render:element xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:type="RenderPoint" render:x="0" render:y="0"/>
+                      <render:element xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:type="RenderPoint" render:x="100%" render:y="50%"/>
+                      <render:element xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:type="RenderPoint" render:x="0" render:y="100%"/>
+                      <render:element xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:type="RenderPoint" render:x="33%" render:y="50%"/>
+                      <render:element xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:type="RenderPoint" render:x="0" render:y="0"/>
+                    </render:listOfElements>
+                  </render:polygon>
+                </render:g>
+              </render:lineEnding>
+            </render:listOfLineEndings>
+            <render:listOfStyles>
+              <render:style render:idList="sGlyph_0">
+                <render:g render:stroke-width="0" render:fill-rule="nonzero" render:font-family="sans-serif" render:font-weight="normal" render:font-style="normal" render:text-anchor="start" render:vtext-anchor="top" render:font-size="0">
+                  <render:curve render:stroke="Color_0" render:stroke-width="2">
+                    <render:listOfElements>
+                      <render:element xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:type="RenderPoint" render:x="20" render:y="0"/>
+                      <render:element xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:type="RenderCubicBezier" render:x="0" render:y="20" render:basePoint1_x="8.95431" render:basePoint1_y="0" render:basePoint2_x="0" render:basePoint2_y="8.95431"/>
+                      <render:element xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:type="RenderCubicBezier" render:x="20" render:y="40" render:basePoint1_x="0" render:basePoint1_y="31.0457" render:basePoint2_x="8.95431" render:basePoint2_y="40"/>
+                      <render:element xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:type="RenderPoint" render:x="42" render:y="40"/>
+                      <render:element xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:type="RenderCubicBezier" render:x="62" render:y="20" render:basePoint1_x="53.0457" render:basePoint1_y="40" render:basePoint2_x="62" render:basePoint2_y="31.0457"/>
+                      <render:element xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:type="RenderCubicBezier" render:x="42" render:y="0" render:basePoint1_x="62" render:basePoint1_y="8.95431" render:basePoint2_x="53.0457" render:basePoint2_y="0"/>
+                      <render:element xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:type="RenderPoint" render:x="20" render:y="0"/>
+                    </render:listOfElements>
+                  </render:curve>
+                </render:g>
+              </render:style>
+              <render:style render:idList="sGlyph_1">
+                <render:g render:stroke-width="0" render:fill-rule="nonzero" render:font-family="sans-serif" render:font-weight="normal" render:font-style="normal" render:text-anchor="start" render:vtext-anchor="top" render:font-size="0">
+                  <render:curve render:stroke="Color_0" render:stroke-width="2">
+                    <render:listOfElements>
+                      <render:element xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:type="RenderPoint" render:x="20" render:y="0"/>
+                      <render:element xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:type="RenderCubicBezier" render:x="0" render:y="20" render:basePoint1_x="8.95431" render:basePoint1_y="0" render:basePoint2_x="0" render:basePoint2_y="8.95431"/>
+                      <render:element xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:type="RenderCubicBezier" render:x="20" render:y="40" render:basePoint1_x="0" render:basePoint1_y="31.0457" render:basePoint2_x="8.95431" render:basePoint2_y="40"/>
+                      <render:element xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:type="RenderPoint" render:x="42" render:y="40"/>
+                      <render:element xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:type="RenderCubicBezier" render:x="62" render:y="20" render:basePoint1_x="53.0457" render:basePoint1_y="40" render:basePoint2_x="62" render:basePoint2_y="31.0457"/>
+                      <render:element xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:type="RenderCubicBezier" render:x="42" render:y="0" render:basePoint1_x="62" render:basePoint1_y="8.95431" render:basePoint2_x="53.0457" render:basePoint2_y="0"/>
+                      <render:element xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:type="RenderPoint" render:x="20" render:y="0"/>
+                    </render:listOfElements>
+                  </render:curve>
+                </render:g>
+              </render:style>
+              <render:style render:idList="cGlyph_0">
+                <render:g render:stroke-width="0" render:fill-rule="nonzero" render:font-family="sans-serif" render:font-weight="normal" render:font-style="normal" render:text-anchor="start" render:vtext-anchor="top" render:font-size="0">
+                  <render:rectangle render:stroke="Color_2" render:stroke-width="12" render:fill="Color_1" render:x="0" render:y="0" render:width="100%" render:height="100%" render:rx="5" render:ry="5"/>
+                </render:g>
+              </render:style>
+              <render:style render:roleList="sidesubstrate substrate" render:idList="rGlyph_0">
+                <render:g render:stroke="Color_3" render:stroke-width="2" render:fill-rule="nonzero" render:font-family="sans-serif" render:font-weight="normal" render:font-style="normal" render:text-anchor="start" render:vtext-anchor="top" render:font-size="0"/>
+              </render:style>
+              <render:style render:roleList="product">
+                <render:g render:stroke="Color_3" render:stroke-width="2" render:fill-rule="nonzero" render:endHead="product" render:font-family="sans-serif" render:font-weight="normal" render:font-style="normal" render:text-anchor="start" render:vtext-anchor="top" render:font-size="0"/>
+              </render:style>
+              <render:style render:idList="tGlyph_0">
+                <render:g render:stroke="Color_4" render:stroke-width="0" render:fill-rule="nonzero" render:font-family="Arial" render:font-weight="normal" render:font-style="normal" render:text-anchor="middle" render:vtext-anchor="top" render:font-size="11"/>
+              </render:style>
+              <render:style render:idList="tGlyph_1">
+                <render:g render:stroke="Color_4" render:stroke-width="0" render:fill-rule="nonzero" render:font-family="Arial" render:font-weight="normal" render:font-style="normal" render:text-anchor="middle" render:vtext-anchor="top" render:font-size="11"/>
+              </render:style>
+            </render:listOfStyles>
+          </render:renderInformation>
+        </render:listOfRenderInformation>
+      </layout:layout>
+    </layout:listOfLayouts>
+  </model>
+</sbml>

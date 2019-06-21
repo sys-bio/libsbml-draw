@@ -1813,7 +1813,7 @@ class SBMLlayout:
         return sbnw.arrowheadNumStyles()
 
     def drawNetwork(self, save_file_name=None, bbox_inches="tight",
-                    figsize=None, show=True, dpi=None, node_multiplier=1.0,
+                    figsize=None, show=True, dpi=72, node_multiplier=1.0,
                     node_padding=0.6, node_mutation_scale=10,
                     compute_node_dims=True, use_all_fig_space=False):
         """Draws the network to screen.  The figure can be saved.

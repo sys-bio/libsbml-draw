@@ -16,9 +16,10 @@ import libsbml_draw.c_api.sbnw_c_api as sbnw
 SBNW_NODE_WIDTH = 40
 SBNW_NODE_HEIGHT = 20
 
-MARGIN_EFFECT = .7
+MARGIN_EFFECT = 1
 
-SHIFT = 0
+WIDTH_SHIFT = 0
+HEIGHT_SHIFT = 0
 
 def compute_figure_width_height_in_pixels(fig, ax):
     """Returns the width and height of the figure in pixels.
@@ -107,7 +108,7 @@ def draw_compartments(compartments, fig):
 
         fbbp = FancyBboxPatch(
 #            compartment.lower_left_point,
-            [compartment.lower_left_point[0]/72 + SHIFT, compartment.lower_left_point[1]/72 + SHIFT],
+            [compartment.lower_left_point[0]/72 + WIDTH_SHIFT, compartment.lower_left_point[1]/72 + HEIGHT_SHIFT],
             compartment.width/72,
             compartment.height/72,
             edgecolor=compartment.edge_color,
@@ -133,6 +134,8 @@ def draw_nodes(nodes, node_padding, node_mutation_scale, fig):
 
     node_patches = []
 
+    print("WIDTH_SHIFT, HEIGHT_SHIFT: ", WIDTH_SHIFT, HEIGHT_SHIFT)
+
     for node in nodes:
 
 #        width = len(node.name)*node.font_size/72
@@ -146,7 +149,7 @@ def draw_nodes(nodes, node_padding, node_mutation_scale, fig):
 #            node.lower_left_point,
 #            node.width,
 #            node.height,
-            [node.lower_left_point[0]/72 + SHIFT, node.lower_left_point[1]/72 + SHIFT],
+            [node.lower_left_point[0]/72 + WIDTH_SHIFT, node.lower_left_point[1]/72 + HEIGHT_SHIFT],
             node.width/72,
             node.height/72,
             edgecolor=node.edge_color,
@@ -181,20 +184,20 @@ def draw_reactions(reactions, mutation_scale, fig):
 
         for curve in curves:
 
-            start_point = np.array([curve.start_point.x,
-                                    curve.start_point.y])
-            end_point = np.array([curve.end_point.x,
-                                  curve.end_point.y])
-            control_point_1 = np.array([curve.control_point_1.x,
-                                        curve.control_point_1.y])
-            control_point_2 = np.array([curve.control_point_2.x,
-                                        curve.control_point_2.y])
+            start_point = np.array([curve.start_point.x + WIDTH_SHIFT,
+                                    curve.start_point.y + HEIGHT_SHIFT])
+            end_point = np.array([curve.end_point.x + WIDTH_SHIFT,
+                                  curve.end_point.y + HEIGHT_SHIFT])
+            control_point_1 = np.array([curve.control_point_1.x + WIDTH_SHIFT,
+                                        curve.control_point_1.y + HEIGHT_SHIFT])
+            control_point_2 = np.array([curve.control_point_2.x + WIDTH_SHIFT,
+                                        curve.control_point_2.y + HEIGHT_SHIFT])
 
             cubic_bezier_curve_path = Path(
-                    [start_point/72 + SHIFT,
-                     control_point_1/72 + SHIFT,
-                     control_point_2/72 + SHIFT,
-                     end_point/72 + SHIFT],
+                    [start_point/72,
+                     control_point_1/72,
+                     control_point_2/72,
+                     end_point/72],
                     [Path.MOVETO, Path.CURVE4, Path.CURVE4, Path.CURVE4])
 
             fap = FancyArrowPatch(
@@ -222,8 +225,8 @@ def add_labels(nodes, fig):
     Returns: None
     """
     for node in nodes:
-        plt.text(node.center.x/72 + SHIFT,
-                 node.center.y/72 + SHIFT,
+        plt.text(node.center.x/72 + WIDTH_SHIFT,
+                 node.center.y/72 + HEIGHT_SHIFT,
                  node.name,
                  fontsize=node.font_size,
                  color=node.font_color,
@@ -292,7 +295,7 @@ def update_node_dimensions(sbml_layout, fig_dpi, fig_width_pixels,
 
 
 def createNetworkFigure(sbml_layout, arrowhead_mutation_scale, figsize=None,
-                        show=True, dpi=None, node_multiplier=None,
+                        show=True, dpi=72, node_multiplier=None,
                         node_padding=None, node_mutation_scale=None,
                         compute_node_dims=None, use_all_fig_space=False):
     """Creates the figure, draws any compartments, draws the nodes,
@@ -329,7 +332,8 @@ def createNetworkFigure(sbml_layout, arrowhead_mutation_scale, figsize=None,
     for node in nodes:
         print("node: ", node.center.x/72, node.center.y/72, 
               node.center.x/72 - (node.width/2)/72, 
-              node.center.y/72 - (node.height/2)/72, node.width, node.id)
+              node.center.y/72 - (node.height/2)/72, node.width, node.height, 
+              node.id)
     print()
     for node in nodes:
         print("node: ", node.center.x, node.center.y, node.width, node.id)
@@ -358,32 +362,59 @@ def createNetworkFigure(sbml_layout, arrowhead_mutation_scale, figsize=None,
         max_compartment_width = 0
         max_compartment_height = 0
 
-    fig_width_inches = (max(nw_width_inches, max_compartment_width) + SHIFT)/MARGIN_EFFECT
-    fig_height_inches = (max(nw_height_inches, max_compartment_height) + SHIFT)/MARGIN_EFFECT
+
+    ax = plt.gca()
+
+    ax_win = ax.transData.transform([(0,0), (1,1)])
+ 
+    print("transData: ", ax_win[0,0], ax_win[0,1])   
+
+    global WIDTH_SHIFT    
+    global HEIGHT_SHIFT
+
+    WIDTH_SHIFT = ax_win[0,0]/dpi    
+    HEIGHT_SHIFT = ax_win[0,1]/dpi   
+
+    fig_width_inches = (max(nw_width_inches, max_compartment_width) + WIDTH_SHIFT)
+    fig_height_inches = (max(nw_height_inches, max_compartment_height) + 2*HEIGHT_SHIFT)
 
     print("nw width, height points: ", nw_width_points, nw_height_points)
     print("nw width, height inches: ", nw_width_inches, nw_height_inches)
     print("max compartment width: ", max_compartment_width)
     print("max compartment height: ", max_compartment_height)
+    print("WIDTH SHIFT, HEIGHT SHIFT: ", WIDTH_SHIFT, HEIGHT_SHIFT)
 
     # initialize figure
-    if figsize and len(figsize) == 2:
-        fig = plt.figure(figsize=figsize, dpi=dpi)
-    else:
-        figsize = (fig_width_inches, fig_height_inches)
-        fig = plt.figure(figsize=figsize)
+#    if figsize and len(figsize) == 2:
+#        fig = plt.figure(figsize=figsize, dpi=dpi)
+#    else:
+#        figsize = (fig_width_inches, fig_height_inches)
+#        fig = plt.figure(figsize=figsize)
+
+    figsize = (fig_width_inches, fig_height_inches)
+
+    
+#    print("window extent: ", ax.get_window_extent())
+#    fig_bbox = ax.get_window_extent(
+#            ).transformed(fig.dpi_scale_trans.inverted())
+       
+    fig = plt.figure(figsize=(10,10), dpi=dpi)
+#    fig.add_axes(ax)
+
+#    ax = plt.subplot(111, aspect = 'equal')
+#    plt.subplots_adjust(left=0, bottom=0, right=1, top=1, wspace=0, hspace=0)
 
     print("fig dpi: ", fig.dpi, fig.get_dpi())
     print("fig width, height: ", fig.get_figwidth(), fig.get_figheight())
 
     # uses all of the figure space
-    if use_all_fig_space:
-        ax = plt.Axes(fig, [0., 0., 1., 1.])
-        ax.set_axis_off()
-        fig.add_axes(ax)
-    else:  # figure will have border space
-        ax = plt.gca()
-        fig.add_axes(ax)
+#    if use_all_fig_space:
+#        ax = plt.Axes(fig, [0., 0., 1., 1.])
+#        ax.set_axis_off()
+#        fig.add_axes(ax)
+#    else:  # figure will have border space
+#        ax = plt.gca()
+#        fig.add_axes(ax)
 
 #    fig_width_pixels, fig_height_pixels = \
 #        compute_figure_width_height_in_pixels(fig, ax)
@@ -419,14 +450,14 @@ def createNetworkFigure(sbml_layout, arrowhead_mutation_scale, figsize=None,
     # add labels to the nodes
     add_labels(network.nodes.values(), fig)
 
-    plt.text(0,0, "A", transform=fig.dpi_scale_trans)
-    plt.text(1,0, "B", transform=fig.dpi_scale_trans)
+#    plt.text(0,0, "A", transform=fig.dpi_scale_trans)
+#    plt.text(1,0, "B", transform=fig.dpi_scale_trans)
 
 #    ax.autoscale()
 #    plt.subplots_adjust(left=0.1, right=0.9, top=0.9, bottom=0.1)
 #    plt.axis("tight")
 
-    plt.axis("off")
+#    plt.axis("off")
     plt.axis("equal")
 
     if show:
