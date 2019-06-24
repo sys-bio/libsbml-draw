@@ -25,4 +25,8 @@ plt.show()
 
 
 
+# fig.subplots_adjust(0,0,1,1)
     
+# remove bbox_inches argument from savefig
+    
+# %config InlineBackend.print_figure_kwargs = {'bbox_inches':None}
