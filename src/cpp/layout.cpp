@@ -388,7 +388,7 @@ void gf_aliasNodebyDegree(gf_layoutInfo* l, int minDegree) {
 
 
 
-SBMLDocument* populateSBMLdoc(gf_SBMLModel* m, gf_layoutInfo* l, COORD_SYSTEM coord = COORD_SYSTEM_LOCAL) {
+SBMLDocument* populateSBMLdoc(gf_SBMLModel* m, gf_layoutInfo* l, NetworkElement::COORD_SYSTEM coord = NetworkElement::COORD_SYSTEM_LOCAL) {
 //     SBMLDocument* doc = (SBMLDocument*)m->pdoc;
     SBMLNamespaces sbmlns(l ? (l->level ? l->level : 3) : 3, l ? (l->version ? l->version : 1) : 1, "layout", 1);
     SBMLDocument* doc = new SBMLDocument(&sbmlns);
@@ -698,7 +698,7 @@ SBMLDocument* populateSBMLdoc(gf_SBMLModel* m, gf_layoutInfo* l, COORD_SYSTEM co
 
                 ::Point p;
 
-                if (coord == COORD_SYSTEM_LOCAL) {
+                if (coord == NetworkElement::COORD_SYSTEM_LOCAL) {
                 // end-points
                 p.setX(c->s.x);
                 p.setY(c->s.y);
@@ -2178,7 +2178,10 @@ int gf_writeSBMLwithLayout(const char* filename, gf_SBMLModel* m, gf_layoutInfo*
     #if SAGITTARIUS_DEBUG_LEVEL >= 2
 //     std::cout << "gf_writeSBMLwithLayout started\n" << std::endl;
     #endif
-    SBMLDocument* doc = populateSBMLdoc(m,l,use_transformed_coords?COORD_SYSTEM_GLOBAL:COORD_SYSTEM_LOCAL);
+    SBMLDocument* doc = populateSBMLdoc(m,l,
+      use_transformed_coords ?
+      NetworkElement::COORD_SYSTEM_GLOBAL :
+      COORD_SYSTEM_LOCAL);
     #if SAGITTARIUS_DEBUG_LEVEL >= 2
 //     std::cout << "populateSBMLdoc finished\n" << std::endl;
     #endif
