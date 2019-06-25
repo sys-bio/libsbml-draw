@@ -1844,6 +1844,7 @@ class SBMLlayout:
 
         Returns: matplotlib.figure.Figure
         """
+        # %config InlineBackend.print_figure_kwargs = {'bbox_inches':None}
 
         fig = createNetworkFigure(self, self.__arrowhead_scale,
                                   figsize, show, dpi, node_multiplier,

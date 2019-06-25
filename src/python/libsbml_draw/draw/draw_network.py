@@ -18,8 +18,8 @@ SBNW_NODE_HEIGHT = 20
 
 MARGIN_EFFECT = 1
 
-WIDTH_SHIFT = 0
-HEIGHT_SHIFT = 0
+WIDTH_SHIFT = .25
+HEIGHT_SHIFT = .25
 
 def compute_figure_width_height_in_pixels(fig, ax):
     """Returns the width and height of the figure in pixels.
@@ -184,20 +184,20 @@ def draw_reactions(reactions, mutation_scale, fig):
 
         for curve in curves:
 
-            start_point = np.array([curve.start_point.x + WIDTH_SHIFT,
-                                    curve.start_point.y + HEIGHT_SHIFT])
-            end_point = np.array([curve.end_point.x + WIDTH_SHIFT,
-                                  curve.end_point.y + HEIGHT_SHIFT])
-            control_point_1 = np.array([curve.control_point_1.x + WIDTH_SHIFT,
-                                        curve.control_point_1.y + HEIGHT_SHIFT])
-            control_point_2 = np.array([curve.control_point_2.x + WIDTH_SHIFT,
-                                        curve.control_point_2.y + HEIGHT_SHIFT])
+            start_point = np.array([curve.start_point.x/72 + WIDTH_SHIFT,
+                                    curve.start_point.y/72 + HEIGHT_SHIFT])
+            end_point = np.array([curve.end_point.x/72 + WIDTH_SHIFT,
+                                  curve.end_point.y/72 + HEIGHT_SHIFT])
+            control_point_1 = np.array([curve.control_point_1.x/72 + WIDTH_SHIFT,
+                                        curve.control_point_1.y/72 + HEIGHT_SHIFT])
+            control_point_2 = np.array([curve.control_point_2.x/72 + WIDTH_SHIFT,
+                                        curve.control_point_2.y/72 + HEIGHT_SHIFT])
 
             cubic_bezier_curve_path = Path(
-                    [start_point/72,
-                     control_point_1/72,
-                     control_point_2/72,
-                     end_point/72],
+                    [start_point,
+                     control_point_1,
+                     control_point_2,
+                     end_point],
                     [Path.MOVETO, Path.CURVE4, Path.CURVE4, Path.CURVE4])
 
             fap = FancyArrowPatch(
@@ -327,6 +327,7 @@ def createNetworkFigure(sbml_layout, arrowhead_mutation_scale, figsize=None,
     """
     
     nodes = sbml_layout._SBMLlayout__network.nodes.values()
+    reactions = sbml_layout._SBMLlayout__network.reactions.values()
     compartments = sbml_layout._SBMLlayout__network.compartments.values()
 
     for node in nodes:
@@ -338,16 +339,69 @@ def createNetworkFigure(sbml_layout, arrowhead_mutation_scale, figsize=None,
     for node in nodes:
         print("node: ", node.center.x, node.center.y, node.width, node.id)
 
-    max_x_points = max([node.center.x + node.width/2 for node in nodes]) 
-    min_x_points = min([node.center.x - node.width/2 for node in nodes])
-    nw_width_points = (max_x_points - min_x_points)
+    max_x_nodes = max([node.center.x + node.width/2 for node in nodes]) 
+    min_x_nodes = min([node.center.x - node.width/2 for node in nodes])
 
-    print("max_x: ", max_x_points)
-    print("min_x: ", min_x_points)
+    max_x_curves = max([max(curve.start_point.x, 
+                         curve.end_point.x, 
+                         curve.control_point_1.x,
+                         curve.control_point_2.x) for reaction in reactions for curve in reaction.curves])
 
-    nw_height_points = (
-            max([node.center.y + node.height/2 for node in nodes]) -
-            min([node.center.y - node.height/2 for node in nodes]))
+    min_x_curves = min([min(curve.start_point.x, 
+                         curve.end_point.x, 
+                         curve.control_point_1.x,
+                         curve.control_point_2.x) for reaction in reactions for curve in reaction.curves])
+        
+
+    max_y_nodes = max([node.center.y + node.height/2 for node in nodes]) 
+    min_y_nodes = min([node.center.y - node.height/2 for node in nodes])
+
+    max_y_curves = max([max(curve.start_point.y, 
+                         curve.end_point.y, 
+                         curve.control_point_1.y,
+                         curve.control_point_2.y) for reaction in reactions for curve in reaction.curves])
+
+    min_y_curves = min([min(curve.start_point.y, 
+                         curve.end_point.y, 
+                         curve.control_point_1.y,
+                         curve.control_point_2.y) for reaction in reactions for curve in reaction.curves])
+
+    if compartments:
+
+        max_x_compartments = max([compartment.max_corner.x 
+                                  for compartment in compartments])
+        min_x_compartments = min([compartment.min_corner.x 
+                                  for compartment in compartments])
+
+        max_y_compartments = max([compartment.max_corner.y 
+                                  for compartment in compartments])
+        min_y_compartments = min([compartment.min_corner.y 
+                                  for compartment in compartments])
+            
+#        nw_width_points = (max(max_x_nodes, max_x_curves, max_x_compartments) - 
+#                           min(min_x_nodes, min_x_curves, min_x_compartments))
+
+#        nw_height_points = (max(max_y_nodes, max_y_curves, max_y_compartments) - 
+#                            min(min_y_nodes, min_y_curves, min_y_compartments))
+
+        nw_width_points = max(max_x_nodes, max_x_curves, max_x_compartments)
+
+        nw_height_points = max(max_y_nodes, max_y_curves, max_y_compartments)
+
+    else:
+    
+#        nw_width_points = (max(max_x_nodes, max_x_curves) - 
+#                           min(min_x_nodes, min_x_curves))
+
+#        nw_height_points = (max(max_y_nodes, max_y_curves) - 
+#                            min(min_y_nodes, min_y_curves))
+
+        nw_width_points = max(max_x_nodes, max_x_curves)
+
+        nw_height_points = max(max_y_nodes, max_y_curves)
+        
+    print("max_x, max_y: ", max_x_nodes, max_x_curves, max_y_nodes, max_y_curves)
+    print("min_x, min_y: ", min_x_nodes, min_x_curves, min_y_nodes, min_y_curves)
 
 #    nw_width_inches = nw_width_points/72 + 5*SHIFT    
 #    nw_height_inches = nw_height_points/72 + 5*SHIFT
@@ -355,33 +409,31 @@ def createNetworkFigure(sbml_layout, arrowhead_mutation_scale, figsize=None,
     nw_width_inches = nw_width_points/72    
     nw_height_inches = nw_height_points/72
 
-    if compartments:
-        max_compartment_width = max([compartment.width for compartment in compartments])/72
-        max_compartment_height = max([compartment.height for compartment in compartments])/72
-    else:
-        max_compartment_width = 0
-        max_compartment_height = 0
+#    if compartments:
+#        max_compartment_width = max([compartment.width for compartment in compartments])/72
+#        max_compartment_height = max([compartment.height for compartment in compartments])/72
+#    else:
+#        max_compartment_width = 0
+#        max_compartment_height = 0
 
+#    ax = plt.gca()
+#    ax_win = ax.transData.transform([(0,0), (1,1)]) 
+#    print("transData: ", ax_win[0,0], ax_win[0,1])   
+#    global WIDTH_SHIFT    
+#    global HEIGHT_SHIFT
+#    WIDTH_SHIFT = ax_win[0,0]/dpi    
+#    HEIGHT_SHIFT = ax_win[0,1]/dpi   
 
-    ax = plt.gca()
+    fig_width_inches = nw_width_inches + 2*WIDTH_SHIFT
+    fig_height_inches = nw_height_inches + 2*HEIGHT_SHIFT
 
-    ax_win = ax.transData.transform([(0,0), (1,1)])
- 
-    print("transData: ", ax_win[0,0], ax_win[0,1])   
-
-    global WIDTH_SHIFT    
-    global HEIGHT_SHIFT
-
-    WIDTH_SHIFT = ax_win[0,0]/dpi    
-    HEIGHT_SHIFT = ax_win[0,1]/dpi   
-
-    fig_width_inches = (max(nw_width_inches, max_compartment_width) + WIDTH_SHIFT)
-    fig_height_inches = (max(nw_height_inches, max_compartment_height) + 2*HEIGHT_SHIFT)
+#    fig_width_inches = (max(nw_width_inches, max_compartment_width) + WIDTH_SHIFT)
+#    fig_height_inches = (max(nw_height_inches, max_compartment_height) + 2*HEIGHT_SHIFT)
 
     print("nw width, height points: ", nw_width_points, nw_height_points)
     print("nw width, height inches: ", nw_width_inches, nw_height_inches)
-    print("max compartment width: ", max_compartment_width)
-    print("max compartment height: ", max_compartment_height)
+#    print("max compartment width: ", max_compartment_width)
+#    print("max compartment height: ", max_compartment_height)
     print("WIDTH SHIFT, HEIGHT SHIFT: ", WIDTH_SHIFT, HEIGHT_SHIFT)
 
     # initialize figure
@@ -398,8 +450,10 @@ def createNetworkFigure(sbml_layout, arrowhead_mutation_scale, figsize=None,
 #    fig_bbox = ax.get_window_extent(
 #            ).transformed(fig.dpi_scale_trans.inverted())
        
-    fig = plt.figure(figsize=(10,10), dpi=dpi)
-#    fig.add_axes(ax)
+    fig = plt.figure(figsize=figsize, dpi=dpi)
+    ax = plt.gca()
+    fig.add_axes(ax)
+    fig.subplots_adjust(0,0,1,1)
 
 #    ax = plt.subplot(111, aspect = 'equal')
 #    plt.subplots_adjust(left=0, bottom=0, right=1, top=1, wspace=0, hspace=0)
@@ -457,7 +511,7 @@ def createNetworkFigure(sbml_layout, arrowhead_mutation_scale, figsize=None,
 #    plt.subplots_adjust(left=0.1, right=0.9, top=0.9, bottom=0.1)
 #    plt.axis("tight")
 
-#    plt.axis("off")
+    plt.axis("off")
     plt.axis("equal")
 
     if show:
