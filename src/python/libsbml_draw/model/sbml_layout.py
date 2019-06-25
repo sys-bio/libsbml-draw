@@ -79,8 +79,9 @@ class SBMLlayout:
                 
                 # compute and set width and height for node boxes
                 for node in self.__network.nodes.values():
-                    width = len(node.name)*node.font_size
-                    height = node.font_size
+                    # pad the width (2 additional chars) and height (1 additional char)
+                    width = (len(node.name)+2)*node.font_size
+                    height = 2*node.font_size
                     self.__setNodeWidth(node.id, width)
                     self.__setNodeHeight(node.id, height)
 
@@ -97,24 +98,28 @@ class SBMLlayout:
                 self.__fitToWindow(self.__fitWindow[0], self.__fitWindow[1],
                                    self.__fitWindow[2], self.__fitWindow[3])
             else:
-                if not self.__layoutSpecified or self.__autoComputeLayout:
-
-                    temp_network = self.__createNetwork()                
-                    nodes = temp_network.nodes.values()
-                    
-                    nw_width_points = (
-                        max([node.center.x + node.width/2 for node in nodes]) -
-                        min([node.center.x - node.width/2 for node in nodes]))
-
-                    nw_height_points = (
-                        max([node.center.y + node.height/2 for node in nodes]) -
-                        min([node.center.y - node.height/2 for node in nodes]))
+                pass
+            
+            sbnw.layout_alignToOrigin(self.__h_layout_info, 0, 0)
                         
+#                if not self.__layoutSpecified or self.__autoComputeLayout:
+#
+#                    temp_network = self.__createNetwork()                
+#                    nodes = temp_network.nodes.values()
+#                    
+#                    nw_width_points = (
+#                        max([node.center.x + node.width/2 for node in nodes]) -
+#                        min([node.center.x - node.width/2 for node in nodes]))
+#
+#                    nw_height_points = (
+#                        max([node.center.y + node.height/2 for node in nodes]) -
+#                        min([node.center.y - node.height/2 for node in nodes]))
+#                        
 #                    print("ftw: width, height: ", nw_width_points, nw_height_points)        
-                
-                    self.__fitToWindow(0, 0, nw_width_points, nw_height_points)
-                else:    
-                    pass
+#                
+#                    self.__fitToWindow(0, 0, nw_width_points, nw_height_points)
+#                else:    
+#                    pass
 
             self.__network = self.__createNetwork()
 
@@ -756,7 +761,7 @@ class SBMLlayout:
         Returns: str
         """
         sbml_string = sbnw.getSBMLwithLayoutStr(self.__h_model,
-                                                self.__h_layout_info)
+                                                self.__h_layout_info, 1)
         return sbml_string
 
     def writeSBMLFile(self, out_file_name):
@@ -1873,7 +1878,7 @@ class SBMLlayout:
 
         Returns: str
         """
-        return libsbml.writeSBMLToString(self.__doc)
+        return libsbml.SBMLToString(self.__doc)
 
     def setArrowheadScale(self, role, arrowhead_scale):
         """Set a value for matplotlib's mutation_scale to change the

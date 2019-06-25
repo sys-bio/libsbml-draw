@@ -187,7 +187,16 @@ class Network():
         for node_index in range(sbnw.nw_getNumNodes(self.h_network)):
             h_node = sbnw.nw_getNodep(self.h_network, node_index)
             node_id = sbnw.node_getID(h_node)
-            self.nodes[node_id] = Node(h_node)
+            num_aliases = sbnw.nw_getNumAliasInstances(self.h_network, h_node)
+
+            if node_id in self.nodes:                
+                for i in range(num_aliases):
+                    alias_node_id = node_id + "_" + str(i)
+                    if alias_node_id not in self.nodes:
+                        self.nodes[alias_node_id] = Node(h_node)
+                        break
+            else:    
+                self.nodes[node_id] = Node(h_node)
 
     def _add_reactions_after_node_alias(self,):
         """Updates the reactions in the network after a node has been aliased.

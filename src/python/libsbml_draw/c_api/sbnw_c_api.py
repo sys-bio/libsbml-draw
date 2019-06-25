@@ -10,6 +10,7 @@ import platform
 if platform.system() == "Windows":
     DLL_FILE = Path(pkg_resources.resource_filename(
             "libsbml_draw", "c_api/data/sbml_draw.dll"))
+    print('dll',DLL_FILE)
     slib = ctypes.CDLL(str(DLL_FILE))
 elif platform.system() == "Linux":
     SO_FILE = Path(pkg_resources.resource_filename(
@@ -70,15 +71,16 @@ def getCurrentLibraryVersion():
     return slib.gf_getCurrentLibraryVersion().decode('utf-8')
 
 # alternative to FitToWindow, returns void
-# slib.gf_layout_alignToOrigin.argtypes = [POINTER(layout_info), ctypes.c_double,
-#                                         ctypes.c_double]
+slib.gf_layout_alignToOrigin.argtypes = [POINTER(layout_info), ctypes.c_double,
+                                         ctypes.c_double]
+slib.gf_layout_alignToOrigin.restype = None
 
-# def layout_alignToOrigin(h_layoutInfo, pad_x, pad_y):
-#    return slib.gf_layout_alignToOrigin(h_layoutInfo, pad_x, pad_y)
+def layout_alignToOrigin(h_layoutInfo, pad_x, pad_y):
+    return slib.gf_layout_alignToOrigin(h_layoutInfo, pad_x, pad_y)
 
 # IO Functions
-#slib.gf_getSBMLwithLayoutStr.argtypes = [ctypes.c_uint64, POINTER(layout_info), ctypes.c_bool]
-slib.gf_getSBMLwithLayoutStr.argtypes = [ctypes.c_uint64, POINTER(layout_info)]
+slib.gf_getSBMLwithLayoutStr.argtypes = [ctypes.c_uint64, POINTER(layout_info), ctypes.c_int]
+#slib.gf_getSBMLwithLayoutStr.argtypes = [ctypes.c_uint64, POINTER(layout_info)]
 slib.gf_getSBMLwithLayoutStr.restype = ctypes.c_char_p
 slib.gf_loadSBMLfile.argtypes = [ctypes.c_char_p]
 slib.gf_loadSBMLfile.restype = ctypes.c_uint64
@@ -86,17 +88,16 @@ slib.gf_loadSBMLfile.restype = ctypes.c_uint64
 slib.gf_loadSBMLbuf.argtypes = [ctypes.c_char_p]
 slib.gf_loadSBMLbuf.restype = ctypes.c_uint64
 
-
 # IO Functions
-def getSBMLwithLayoutStr(h_sbml_model, h_layout_info):
-    return slib.gf_getSBMLwithLayoutStr(
-            h_sbml_model, h_layout_info).decode('utf-8')
-
-# def getSBMLwithLayoutStr(h_sbml_model, h_layout_info, 
-#                         useLastTransformedCoordinates):
+#def getSBMLwithLayoutStr(h_sbml_model, h_layout_info):
 #    return slib.gf_getSBMLwithLayoutStr(
-#            h_sbml_model, h_layout_info, 
-#            useLastTransformedCoordinates).decode('utf-8')
+#            h_sbml_model, h_layout_info).decode('utf-8')
+
+def getSBMLwithLayoutStr(h_sbml_model, h_layout_info, 
+                         useLastTransformedCoordinates):
+    return slib.gf_getSBMLwithLayoutStr(
+            h_sbml_model, h_layout_info, 
+            useLastTransformedCoordinates).decode('utf-8')
 
 def loadSBMLFile(h_fileName):
     h_filename_string = h_fileName.encode('utf-8')

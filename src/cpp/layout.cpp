@@ -2181,7 +2181,7 @@ int gf_writeSBMLwithLayout(const char* filename, gf_SBMLModel* m, gf_layoutInfo*
     SBMLDocument* doc = populateSBMLdoc(m,l,
       use_transformed_coords ?
       NetworkElement::COORD_SYSTEM_GLOBAL :
-      COORD_SYSTEM_LOCAL);
+		NetworkElement::COORD_SYSTEM_LOCAL);
     #if SAGITTARIUS_DEBUG_LEVEL >= 2
 //     std::cout << "populateSBMLdoc finished\n" << std::endl;
     #endif
@@ -2207,7 +2207,7 @@ int gf_writeSBML(const char* filename, gf_SBMLModel* m) {
 }
 
 const char* gf_getSBMLwithLayoutStr(gf_SBMLModel* m, gf_layoutInfo* l, int use_transformed_coords) {
-    SBMLDocument* doc = populateSBMLdoc(m,l,use_transformed_coords?COORD_SYSTEM_GLOBAL:COORD_SYSTEM_LOCAL);
+    SBMLDocument* doc = populateSBMLdoc(m,l,use_transformed_coords? NetworkElement::COORD_SYSTEM_GLOBAL: NetworkElement::COORD_SYSTEM_LOCAL);
     SBMLWriter writer;
     writer.setProgramName("Graphfab");
 

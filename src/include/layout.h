@@ -1339,6 +1339,14 @@ _GraphfabExport void gf_arrowheadSetStyle(gf_specRole role, int style);
  */
 _GraphfabExport int gf_arrowheadGetStyle(gf_specRole role);
 
+/** @brief Align the network to the origin.
+ *  @param[in] l layout info
+ *  @param[in] pad_x The x padding between the network bounding box and the origin.
+ *  @param[in] pad_y The y padding between the network bounding box and the origin.
+ *  \ingroup C_API
+ */
+_GraphfabExport void gf_layout_alignToOrigin(gf_layoutInfo* l, double pad_x, double pad_y);
+
 #ifdef __cplusplus
 }//extern "C"
 #endif

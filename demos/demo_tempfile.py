@@ -29,7 +29,11 @@ plt.show()
     
 # remove bbox_inches argument from savefig
     
-# %config InlineBackend.print_figure_kwargs = {'bbox_inches':None}
+__IPYTHON__
+from IPython import get_ipython
+ipython = get_ipython()
+ipython.magic("config InlineBackend.print_figure_kwargs = {'bbox_inches':None}")
+#%config InlineBackend.print_figure_kwargs = {'bbox_inches':None}
 
 # where add ipython config
 # C:\Tellurium-Winpython-3.6\settings\.ipython\profile_default
