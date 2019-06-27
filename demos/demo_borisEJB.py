@@ -12,7 +12,9 @@ sl = SBMLlayout(str(model_file), autoComputeLayout=True)
 
 sl._describeModel()
 
-sl.drawNetwork()
+sl.drawNetwork("Boris_EJB.png")
+sl.drawNetwork("Boris_EJB.pdf")
+
 
 sl2 = SBMLlayout(str(model_file))
 

@@ -454,7 +454,7 @@ def createNetworkFigure(sbml_layout, arrowhead_mutation_scale, figsize=None,
 #        figsize = (fig_width_inches, fig_height_inches)
 #        fig = plt.figure(figsize=figsize)
 
-    SF = .5
+    SF = 1
 
     figsize = (SF*fig_width_inches, SF*fig_height_inches)
 

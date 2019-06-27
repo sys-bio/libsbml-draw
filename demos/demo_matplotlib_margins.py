@@ -1,6 +1,8 @@
 import matplotlib.pyplot as plt
-from matplotlib.patches import BoxStyle, FancyBboxPatch
+from matplotlib.patches import BoxStyle, FancyBboxPatch, FancyArrowPatch
+from matplotlib.path import Path
 
+import numpy as np
 
 # Set-up the node data
 
@@ -76,6 +78,35 @@ ax = plt.gca()
 
 # Plotting in inches
 
+# Create the reactions
+
+start_point = np.array([node_center_x_ABCDEFG, node_center_y_ABCDEFG])
+
+end_point = np.array([node_center_x_ABCDEFG + 1.3, node_center_y_ABCDEFG + .8])
+            
+control_point_1 = np.array([node_center_x_ABCDEFG + .1, node_center_y_ABCDEFG + .1])
+
+control_point_2 = np.array([node_center_x_ABCDEFG + .2, node_center_y_ABCDEFG + .2])
+
+cubic_bezier_curve_path = Path(
+        [start_point,
+         control_point_1,
+         control_point_2,
+         end_point],
+         [Path.MOVETO, Path.CURVE4, Path.CURVE4, Path.CURVE4])
+
+fap = FancyArrowPatch(
+                    facecolor="black",
+                    edgecolor="black",
+                    arrowstyle="-|>",
+                    clip_on=False,
+                    linewidth=2,
+                    mutation_scale=15,
+                    path=cubic_bezier_curve_path,
+                    transform=fig.dpi_scale_trans
+                    )
+
+
 # Create the node boxes
 
 node_patch_ABCDEFG = FancyBboxPatch(
@@ -134,10 +165,12 @@ node_patch_F = FancyBboxPatch(
             transform=fig.dpi_scale_trans
             )
             
+ax.add_patch(fap)            
 ax.add_patch(node_patch_ABCDEFG)
 ax.add_patch(node_patch_C)
 ax.add_patch(node_patch_E)
 ax.add_patch(node_patch_F)
+
 
 # Add text labels for the nodes
 

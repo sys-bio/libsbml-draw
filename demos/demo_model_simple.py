@@ -28,5 +28,13 @@ print("sl2 layoutSpecified: ", sl2._SBMLlayout__layoutSpecified)
 
 sl2.drawNetwork()
 
+sl2.setLayoutAlgorithm_k(10)
+
+sl2.regenerateLayout()
+
+sl2.drawNetwork()
+
+
+
 
 

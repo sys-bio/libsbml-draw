@@ -341,26 +341,13 @@ class SBMLlayout:
         self.__randomizeLayout()
         self.__doLayoutAlgorithm()
 
+        sbnw.layout_alignToOrigin(self.__h_layout_info, 0, 0)
+
         if len(self.__fitWindow) == 4:
                 self.__fitToWindow(self.__fitWindow[0], self.__fitWindow[1],
                                    self.__fitWindow[2], self.__fitWindow[3])        
         else:
-            if not self.__layoutSpecified or self.__autoComputeLayout:
-
-                temp_network = self.__createNetwork()                
-                nodes = temp_network.nodes.values()
-
-                nw_width_points = (
-                    max([node.center.x + node.width/2 for node in nodes]) -
-                    min([node.center.x - node.width/2 for node in nodes]))
-
-                nw_height_points = (
-                    max([node.center.y + node.height/2 for node in nodes]) -
-                    min([node.center.y - node.height/2 for node in nodes]))
-                
-                self.__fitToWindow(0, 0, nw_width_points, nw_height_points)
-            else:    
-                pass
+            pass
 
         self.__doc = libsbml.readSBMLFromString(
             self.__getSBMLWithLayoutString())
@@ -381,35 +368,16 @@ class SBMLlayout:
         self.__randomizeLayout()
         self.__doLayoutAlgorithm()
 
+        sbnw.layout_alignToOrigin(self.__h_layout_info, 0, 0)
+
         if len(self.__fitWindow) == 4:
                 self.__fitToWindow(self.__fitWindow[0], self.__fitWindow[1],
                                    self.__fitWindow[2], self.__fitWindow[3])
         else:
-            if not self.__layoutSpecified or self.__autoComputeLayout:
-
-                temp_network = self.__createNetwork()                
-                nodes = temp_network.nodes.values()
-
-                nw_width_points = (
-                    max([node.center.x + node.width/2 for node in nodes]) -
-                    min([node.center.x - node.width/2 for node in nodes]))
-
-                nw_height_points = (
-                    max([node.center.y + node.height/2 for node in nodes]) -
-                    min([node.center.y - node.height/2 for node in nodes]))
-                
-                self.__fitToWindow(0, 0, nw_width_points, nw_height_points)
-            else:    
-                pass
+            pass
 
         self.__doc = libsbml.readSBMLFromString(
                 self.__getSBMLWithLayoutString())
-
-#        print()
-#        print("regen lo: ")
-#        print()
-#        print(self.__getSBMLWithLayoutString())
-#        print()
 
         self.__updateNetworkLayout()
 
@@ -1856,7 +1824,7 @@ class SBMLlayout:
                                   node_padding, node_mutation_scale,
                                   compute_node_dims, use_all_fig_space=False)
         if(save_file_name):
-            fig.savefig(save_file_name, bbox_inches=bbox_inches)
+            fig.savefig(save_file_name)
 
         print("dn: fig w,h: ", fig.get_figwidth(), fig.get_figheight())
 
