@@ -57,8 +57,7 @@ class SBMLlayout:
                                 self.__sbml_source)
                 else:
                     raise ValueError(f"File {self.__sbml_source} "
-                                     f"does not exist, or the source string "
-                                     f"is not a valid SBML file.")
+                                     f"does not exist.")
 
             if self.__h_model == 0:
                 raise ValueError("SBML source cannot be parsed by libsbml.")
@@ -70,7 +69,7 @@ class SBMLlayout:
                     self.__h_network) else False
             self.__autoComputeLayout = autoComputeLayout
 
-            # create layout, if it doesn't already exist or user requests it
+            # create layout, if it doesn't already exist
             if not self.__layoutSpecified or self.__autoComputeLayout:
                 self.__randomizeLayout()
                 self.__doLayoutAlgorithm()
@@ -109,6 +108,9 @@ class SBMLlayout:
                 pass
 
             sbnw.layout_alignToOrigin(self.__h_layout_info, 0, 0)
+
+            print("canvas width: ", sbnw.canvas_getWidth(self.__h_canvas))
+            print("canvas height: ", sbnw.canvas_getHeight(self.__h_canvas))
 
             self.__network = self.__createNetwork()
 
@@ -412,6 +414,7 @@ class SBMLlayout:
         Returns: None
         """
         print()
+        # print("sbml filename: ", self.__sbml_source)
         print("layout number: ", self.__layout_number)
         print("layout is specified: ", self.__layoutSpecified)
         print("autoComputeLayout: ", self.__autoComputeLayout)
@@ -1773,29 +1776,48 @@ class SBMLlayout:
         """
         return sbnw.arrowheadNumStyles()
 
-    def drawNetwork(self, save_file_name=None, show=True, dpi=72, 
-                    width_shift=.25, height_shift=.25, scaling_factor=1):
+    def drawNetwork(self, save_file_name=None, bbox_inches="tight",
+                    figsize=None, show=True, dpi=72, node_multiplier=1.0,
+                    node_padding=0.6, node_mutation_scale=10,
+                    compute_node_dims=True, use_all_fig_space=False):
         """Draws the network to screen.  The figure can be saved.
 
         Args:
             save_file_name (optional, str): save figure to this file
+            bbox_inches (optional, str or matplotlib.transforms.Bbox): "tight",
+                or a value for inches or a Bbox, used as a parameter in
+                matplotlib's savefig()
+            figsize (optional, tuple): (width, height) of the figure in inches,
+                default value is (6, 4)
             show (optional, bool): if True, display the network on screen
             dpi (optional, int): desired dots-per-inch for the figure
-            width_shift (optional, float): size in inches of the left and right
-                borders
-            height_shift (optional, float): size in inches of the bottom and
-                top borders
-            scaling_factor (option, float): decrease or increase the size of
-                the figure using this factor; example, 0.5 results in reducing
-                the figure size by one-half    
+            node_multiplier (optional, float): multiplier to achieve a width of
+                the node box beyond what's needed for the text itself, eg. 1.1
+                represents an extra 10%
+            node_padding (optional, float): passed to matplotlib for the
+                FancyBboxPatch boxstyle pad parameter
+            node_mutation_scale (optional, float): passed to matplotlib for the
+                FancyBboxPatch mutation_scale parameter
+            compute_node_dims (optional, bool): if True, the width and height
+                of the node boxes will be computed so that the node text fits
+                in the box given the font-size, figsize, and figure dpi.
+                If False, the node width and height found in the SBML file or
+                computed by the layout algorithm will be used.
+            use_all_fig_space (optional, bool): if True, use all of the space
+                available for the figure, with no borders
 
         Returns: matplotlib.figure.Figure
         """
+        # %config InlineBackend.print_figure_kwargs = {'bbox_inches':None}
 
-        fig = createNetworkFigure(self, self.__arrowhead_scale, show, dpi,
-                                  width_shift, height_shift, scaling_factor)
+        fig = createNetworkFigure(self, self.__arrowhead_scale,
+                                  figsize, show, dpi, node_multiplier,
+                                  node_padding, node_mutation_scale,
+                                  compute_node_dims, use_all_fig_space=False)
         if(save_file_name):
             fig.savefig(save_file_name)
+
+        print("dn: fig w,h: ", fig.get_figwidth(), fig.get_figheight())
 
         return fig
 

@@ -47,7 +47,7 @@ class Node():
         self.id = sbnw.node_getID(h_node)
         self.edge_width = 1
         self.edge_color = "#0000ff"
-        self.fill_color = "#0000ff30"
+        self.fill_color = "#c9e0fb"
         self.font_size = 12
         self.font_family = "Arial"
         self.font_color = "black"
@@ -189,13 +189,13 @@ class Network():
             node_id = sbnw.node_getID(h_node)
             num_aliases = sbnw.nw_getNumAliasInstances(self.h_network, h_node)
 
-            if node_id in self.nodes:                
+            if node_id in self.nodes:
                 for i in range(num_aliases):
                     alias_node_id = node_id + "_" + str(i)
                     if alias_node_id not in self.nodes:
                         self.nodes[alias_node_id] = Node(h_node)
                         break
-            else:    
+            else:
                 self.nodes[node_id] = Node(h_node)
 
     def _add_reactions_after_node_alias(self,):

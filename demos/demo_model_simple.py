@@ -11,7 +11,7 @@ sl = SBMLlayout(str(model_file))
 
 sl._describeModel()
 
-
+print()
 print("node ids: ", sl.getNodeIds())
 print("reaction ids: ", sl.getReactionIds())
 
