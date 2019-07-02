@@ -119,7 +119,7 @@ class Render:
                 render_style.getGroup().getStroke())
 
         node_edge_width = render_style.getGroup().getStrokeWidth()
-
+        
         nodes_to_update = {k: network.nodes[k]
                            for k in network.nodes.keys() & idList}
 
@@ -281,16 +281,15 @@ class Render:
         compartments_to_update = {k: network.compartments[k] for k in
                                   network.compartments.keys() & idList}
 
-        # print("metaid ", global_style.getGroup().getElement(0).getStroke())
+## the compartment render data is inside the "rectangle" element, which can't
+## be reached due to a bug in libsbml, as confirmed by Frank.        
 
-        # print("stroke:", global_style.getGroup().getStroke())
-        # print("fill:", global_style.getGroup().getFillColor())
-        # print("stroke_width: ", global_style.getGroup().getStrokeWidth())
+#        print("rectangle data ", render_style.getGroup().getElement(0).getStroke())
 
-        # print("compartment_fill_color: ", compartment_fill_color.color,
-        #      compartment_fill_color.is_valid_color)
-        # print("compartment_edge_color: ", compartment_edge_color.color,
-        #      compartment_edge_color.is_valid_color)
+#        print("compartment_fill_color: ", compartment_fill_color.color,
+#              compartment_fill_color.is_valid_color)
+#        print("compartment_edge_color: ", compartment_edge_color.color,
+#              compartment_edge_color.is_valid_color)
 
         for compartment in compartments_to_update.values():
 
@@ -311,7 +310,7 @@ class Render:
 
     def _applyGlobalRenderInformation(self, network):
         """Applies global style render information as specified in the
-        SPECIESGLYPH, TEXTGLYPH, and REACTIONGLYPH.
+        SPECIESGLYPH, TEXTGLYPH, REACTIONGLYPH, and COMPARTMENTGLYPH.
 
         Args:
             network (libsbml_draw.model.Network): the model's network
@@ -330,7 +329,7 @@ class Render:
                             global_render_info)
 
                     for global_style in global_render_info.getListOfStyles():
-
+                        
                         if global_style.isInTypeList("SPECIESGLYPH"):
                             self._updateNodesBasedOnSpeciesGlyph(
                                     global_style,
@@ -370,19 +369,6 @@ class Render:
                 idList.add(this_id)
 
         return idList
-
-    def applyRenderInformation(self, network):
-        """Applies global style render information as specified in the
-        SPECIESGLYPH, TEXTGLYPH, and REACTIONGLYPH, and local render
-        information based on id's of nodes, reactions, and compartments.
-
-        Args:
-            network (libsbml_draw.model.Network): the model's network
-
-        Returns: None
-        """
-        self._applyGlobalRenderInformation(network)
-        self._applyLocalRenderInformation(network)
 
     def _applyLocalRenderInformation(self, network):
         """Sets values in the model's nodes and reactions as specified by
@@ -512,9 +498,9 @@ class Render:
             style.addType("COMPARTMENTGLYPH")
 
     def addRenderInformation(self, network):
-        """Add Local Style render information to the model.  If local render
-        information already exists, remove it, and add new entries for the
-        nodes and reactions.
+        """Add render information to the model as Local Style render
+        information.  If local render information already exists, remove it,
+        and add new entries for the nodes and reactions.
 
         Args:
             network (libsbml_draw.model.Network): the model's network
@@ -543,3 +529,18 @@ class Render:
             local_render_info = rPlugin.createLocalRenderInformation()
 
             self._addLocalStylesRenderInformation(local_render_info, network)
+
+    def applyRenderInformation(self, network):
+        """Applies global style render information as specified in the
+        SPECIESGLYPH, TEXTGLYPH, and REACTIONGLYPH, and local render
+        information based on id's of nodes, reactions, and compartments.
+
+        Args:
+            network (libsbml_draw.model.Network): the model's network
+
+        Returns: None
+        """
+        self._applyGlobalRenderInformation(network)
+        self._applyLocalRenderInformation(network)
+
+        

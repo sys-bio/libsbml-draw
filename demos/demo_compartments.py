@@ -18,44 +18,13 @@ sl._describeModel()
 
 sl.drawNetwork()
 
-model_file_name = "simple-L2-render-local.xml"
-#model_file_name = "simple-L2-render-local-L3V1.xml"
+print("Node0 font size: ", sl.getNodeFontSize("Node0"))
+print("reaction ids: ", sl.getReactionIds())
+print("Reaction curve width, edge color, fill color: ", sl.getReactionCurveWidth("J0"), sl.getReactionEdgeColor("J0"), sl.getReactionFillColor("J0"))
 
-model_file = Path(pkg_resources.resource_filename("libsbml_draw", "model/data/" + model_file_name))
+print("compartment ids: ", sl.getCompartmentIds())
 
-sll = SBMLlayout(str(model_file))
+sl.setCompartmentLineWidth("vol1", 12)
 
-sll._describeModel()
-
-sll.drawNetwork()
-
-sll.setCompartmentEdgeColor("vol1", "blue")
-sll.setCompartmentFillColor("vol1", "lightpink")
-sll.setCompartmentLineWidth("vol1", 5)
-
-sll.drawNetwork()
-
-print(sll.getCompartmentEdgeColor("vol1"))
-print(sll.getCompartmentFillColor("vol1"))
-print(sll.getCompartmentLineWidth("vol1"))
-
-# check libsbml API
-
-doc = libsbml.readSBMLFromFile(str(model_file))
-
-model = doc.getModel()
-
-numCompartments = model.getNumCompartments()
-
-print("numCompartments: ", numCompartments)
-
-for index in range(numCompartments):
-    compartment = model.getCompartment(index)
-    print("id, name: ", compartment.getId(), ", ", compartment.getElementName())
-
-
-
-
-
-
+sl.drawNetwork()
 
