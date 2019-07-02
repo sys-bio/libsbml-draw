@@ -1,3 +1,10 @@
+from pathlib import Path
+import pkg_resources
+
+
+from libsbml_draw.model.sbml_layout import SBMLlayout
+
+
 model_file_name = "simple-L2-render-local.xml"
 #model_file_name = "simple-L2-render-local-L3V1.xml"
 
