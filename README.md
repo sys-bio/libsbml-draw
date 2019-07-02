@@ -2,7 +2,6 @@
 
 ## Documentation
 
-Python: https://libsbml-draw.readthedocs.io/en/latest/index.html
-
+Python and C: https://libsbml-draw.readthedocs.io/en/latest/index.html
 
 
