@@ -2,7 +2,7 @@ import platform
 
 from libsbml_draw.model.sbml_layout import SBMLlayout
 
-file_name = "example-network.xml"
+file_name = "veronica-network.xml"
 
 if platform.system() == "Windows":
     model_dir = "C:\\Users\\nrhaw\\Documents\\repos\\libsbml-draw\\model_files\\"

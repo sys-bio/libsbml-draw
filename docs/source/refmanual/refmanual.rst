@@ -8,3 +8,4 @@ Reference Manual
    model
    c_api
    draw
+   python_api

@@ -1,10 +1,8 @@
 .. _c_api:
 
-Python Bindings for C API
+C API
 =========================
 
-python bindings for c api
-----------------------------
+You can find documentation for the C API `here <https://sys-bio.github.io/libsbml-draw/>`_.
 
-.. automodule:: libsbml_draw.c_api.sbnw_c_api
-    :members:
+

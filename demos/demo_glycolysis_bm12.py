@@ -19,8 +19,13 @@ sl._describeModel()
 
 sl.drawNetwork()
 
-# sl.aliasNode("ATP")
-# sl.drawNetwork()
+sl.aliasNode("ATP")
+sl.aliasNode("ADP")
+sl.drawNetwork()
+
+sl.regenerateLayout()
+
+sl.drawNetwork()
 
 loo = sl.getLayoutAlgorithmOptions()
 
@@ -28,6 +33,6 @@ print(loo.k)
 
 #sl.setLayoutAlgorithm_grav()
 
-sl.drawNetwork("glycolysis_bm12.png")
+#sl.drawNetwork("glycolysis_bm12.png")
 
-sl.drawNetwork("glycolysis_bm12.pdf")
+#sl.drawNetwork("glycolysis_bm12.pdf")

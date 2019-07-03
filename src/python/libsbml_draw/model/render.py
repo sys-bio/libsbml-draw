@@ -379,7 +379,13 @@ class Render:
 
         Returns: None
         """
-        # if self.layout:
+        if self.layout:
+            reaction_glyphs = self.layout.getListOfReactionGlyphs()
+            for reaction_glyph in reaction_glyphs:
+                print("rg: ", reaction_glyph.getElementName(), 
+                      reaction_glyph.getId(), reaction_glyph.getReactionId())
+
+            
         #    for index in range(self.layout.getNumCompartmentGlyphs()):
         #        compartment_glyph = self.layout.getCompartmentGlyph(index)
         #        print("cg id: ", compartment_glyph.getId())
@@ -392,6 +398,9 @@ class Render:
                     self.rPlugin.getListOfLocalRenderInformation():
 
                 if local_render_info:
+                    
+                    self.color_definitions = self._collectColorDefinitions(
+                            local_render_info)
 
                     for local_style in local_render_info.getListOfStyles():
 
