@@ -471,17 +471,27 @@ class Render:
         local_render_info.setName("Fill_Color Render Information")
 
         for node in network.nodes.values():
-            style = local_render_info.createStyle("nodeStyle")
+            style = local_render_info.createStyle("")
             # LocalStyle, RenderGroup
             style.getGroup().setFillColor(node.fill_color)
             style.getGroup().setStroke(node.edge_color)
             style.getGroup().setStrokeWidth(node.edge_width)
             style.addId(node.id)
             style.addType("SPECIESGLYPH")
+            rectangle = style.getGroup().createRectangle()
+            rectangle.setX(libsbml.RelAbsVector("000%"))
+            rectangle.setY(libsbml.RelAbsVector("000%"))
+            rectangle.setWidth(libsbml.RelAbsVector("100%"))
+            rectangle.setHeight(libsbml.RelAbsVector("100%"))
+            rectangle.setFill(node.fill_color)
+            rectangle.setStroke(node.edge_color)
+            rectangle.setStrokeWidth(node.edge_width)
 
-            style = local_render_info.createStyle("nodeStyle")
+            style = local_render_info.createStyle("")
             style.getGroup().setFontFamily(node.font_family)
             style.getGroup().setFontSize(libsbml.RelAbsVector(node.font_size))
+            style.getGroup().setTextAnchor("middle")
+            style.getGroup().setVTextAnchor("middle")
             if node.font_style == "italic":
                 style.getGroup().setFontStyle(2)
             else:  # "normal"
@@ -491,7 +501,7 @@ class Render:
             style.addType("TEXTGLYPH")
 
         for reaction in network.reactions.values():
-            style = local_render_info.createStyle("reactionStyle")
+            style = local_render_info.createStyle("")
             style.getGroup().setStroke(reaction.edge_color)
             style.getGroup().setFillColor(reaction.fill_color)
             style.getGroup().setStrokeWidth(reaction.curve_width)
@@ -499,7 +509,7 @@ class Render:
             style.addType("REACTIONGLYPH")
 
         for compartment in network.compartments.values():
-            style = local_render_info.createStyle("compartmentStyle")
+            style = local_render_info.createStyle("")
             style.getGroup().setStroke(compartment.edge_color)
             style.getGroup().setFillColor(compartment.fill_color)
             style.getGroup().setStrokeWidth(compartment.line_width)

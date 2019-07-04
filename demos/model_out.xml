@@ -98,31 +98,31 @@
         <layout:listOfSpeciesGlyphs>
           <layout:speciesGlyph layout:id="X0_Glyph" layout:species="X0">
             <layout:boundingBox>
-              <layout:position layout:x="205" layout:y="561"/>
+              <layout:position layout:x="472" layout:y="375"/>
               <layout:dimensions layout:width="48" layout:height="24"/>
             </layout:boundingBox>
           </layout:speciesGlyph>
           <layout:speciesGlyph layout:id="A_Glyph" layout:species="A">
             <layout:boundingBox>
-              <layout:position layout:x="158" layout:y="416"/>
+              <layout:position layout:x="356" layout:y="279"/>
               <layout:dimensions layout:width="36" layout:height="24"/>
             </layout:boundingBox>
           </layout:speciesGlyph>
           <layout:speciesGlyph layout:id="B_Glyph" layout:species="B">
             <layout:boundingBox>
-              <layout:position layout:x="174" layout:y="257"/>
+              <layout:position layout:x="284" layout:y="135"/>
               <layout:dimensions layout:width="36" layout:height="24"/>
             </layout:boundingBox>
           </layout:speciesGlyph>
           <layout:speciesGlyph layout:id="D_Glyph" layout:species="D">
             <layout:boundingBox>
-              <layout:position layout:x="59" layout:y="146"/>
+              <layout:position layout:x="128" layout:y="97"/>
               <layout:dimensions layout:width="36" layout:height="24"/>
             </layout:boundingBox>
           </layout:speciesGlyph>
           <layout:speciesGlyph layout:id="C_Glyph" layout:species="C">
             <layout:boundingBox>
-              <layout:position layout:x="43" layout:y="305"/>
+              <layout:position layout:x="200" layout:y="241"/>
               <layout:dimensions layout:width="36" layout:height="24"/>
             </layout:boundingBox>
           </layout:speciesGlyph>
@@ -144,10 +144,10 @@
                 <layout:curve>
                   <layout:listOfCurveSegments>
                     <layout:curveSegment xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:type="CubicBezier">
-                      <layout:start layout:x="220.018449568443" layout:y="551.467991974783"/>
-                      <layout:end layout:x="203.459123778517" layout:y="504.31644618054"/>
-                      <layout:basePoint1 layout:x="213.391377758027" layout:y="532.597858980561"/>
-                      <layout:basePoint2 layout:x="211.175222261068" layout:y="528.095887389441"/>
+                      <layout:start layout:x="471.548503373122" layout:y="367.801735816368"/>
+                      <layout:end layout:x="438.551392856048" layout:y="341.309373388698"/>
+                      <layout:basePoint1 layout:x="455.952978367841" layout:y="355.280569744086"/>
+                      <layout:basePoint2 layout:x="457.776511169646" layout:y="357.290450505969"/>
                     </layout:curveSegment>
                   </layout:listOfCurveSegments>
                 </layout:curve>
@@ -156,10 +156,10 @@
                 <layout:curve>
                   <layout:listOfCurveSegments>
                     <layout:curveSegment xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:type="CubicBezier">
-                      <layout:start layout:x="203.459123778517" layout:y="504.31644618054"/>
-                      <layout:end layout:x="183.251361745883" layout:y="449.113561105512"/>
-                      <layout:basePoint1 layout:x="195.743025295966" layout:y="480.537004971639"/>
-                      <layout:basePoint2 layout:x="190.126468301804" layout:y="467.894746101266"/>
+                      <layout:start layout:x="438.551392856048" layout:y="341.309373388698"/>
+                      <layout:end layout:x="397.35799053198" layout:y="308.050777821667"/>
+                      <layout:basePoint1 layout:x="419.326274542451" layout:y="325.328296271426"/>
+                      <layout:basePoint2 layout:x="412.919214081498" layout:y="320.614548021808"/>
                     </layout:curveSegment>
                   </layout:listOfCurveSegments>
                 </layout:curve>
@@ -176,10 +176,10 @@
                 <layout:curve>
                   <layout:listOfCurveSegments>
                     <layout:curveSegment xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:type="CubicBezier">
-                      <layout:start layout:x="180.160234257999" layout:y="406.165601558851"/>
-                      <layout:end layout:x="191.331642506014" layout:y="349.455602106584"/>
-                      <layout:basePoint1 layout:x="184.025782469163" layout:y="386.542718564062"/>
-                      <layout:basePoint2 layout:x="188.745068476352" layout:y="374.321434784961"/>
+                      <layout:start layout:x="366.395911531957" layout:y="268.362085873026"/>
+                      <layout:end layout:x="345.305742947463" layout:y="215.673806045087"/>
+                      <layout:basePoint1 layout:x="358.963584783557" layout:y="249.79435798012"/>
+                      <layout:basePoint2 layout:x="356.498767823229" layout:y="238.028138827134"/>
                     </layout:curveSegment>
                   </layout:listOfCurveSegments>
                 </layout:curve>
@@ -188,10 +188,10 @@
                 <layout:curve>
                   <layout:listOfCurveSegments>
                     <layout:curveSegment xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:type="CubicBezier">
-                      <layout:start layout:x="191.331642506014" layout:y="349.455602106584"/>
-                      <layout:end layout:x="192.095903303241" layout:y="290.806374003676"/>
-                      <layout:basePoint1 layout:x="193.918216535677" layout:y="324.589769428206"/>
-                      <layout:basePoint2 layout:x="191.835304505491" layout:y="310.804676138273"/>
+                      <layout:start layout:x="345.305742947463" layout:y="215.673806045087"/>
+                      <layout:end layout:x="315.201129678938" layout:y="166.082940200155"/>
+                      <layout:basePoint1 layout:x="334.112718071698" layout:y="193.31947326304"/>
+                      <layout:basePoint2 layout:x="325.579652848958" layout:y="183.179321595332"/>
                     </layout:curveSegment>
                   </layout:listOfCurveSegments>
                 </layout:curve>
@@ -208,10 +208,10 @@
                 <layout:curve>
                   <layout:listOfCurveSegments>
                     <layout:curveSegment xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:type="CubicBezier">
-                      <layout:start layout:x="176.393548050441" layout:y="248.946345164311"/>
-                      <layout:end layout:x="139.896820338675" layout:y="207.831264950501"/>
-                      <layout:basePoint1 layout:x="163.116437434132" layout:y="233.989128388376"/>
-                      <layout:basePoint2 layout:x="157.838415459458" layout:y="225.241008329479"/>
+                      <layout:start layout:x="274.133911778072" layout:y="135.358992900734"/>
+                      <layout:end layout:x="225.498480905258" layout:y="120.357763646122"/>
+                      <layout:basePoint1 layout:x="255.022365531385" layout:y="129.464181617857"/>
+                      <layout:basePoint2 layout:x="249.797379932859" layout:y="126.236837216546"/>
                     </layout:curveSegment>
                   </layout:listOfCurveSegments>
                 </layout:curve>
@@ -220,10 +220,10 @@
                 <layout:curve>
                   <layout:listOfCurveSegments>
                     <layout:curveSegment xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:type="CubicBezier">
-                      <layout:start layout:x="139.896820338675" layout:y="207.831264950501"/>
-                      <layout:end layout:x="101.516440809673" layout:y="174.874954163138"/>
-                      <layout:basePoint1 layout:x="121.955225217892" layout:y="190.421521571522"/>
-                      <layout:basePoint2 layout:x="116.690072103296" layout:y="187.904187193719"/>
+                      <layout:start layout:x="225.498480905258" layout:y="120.357763646122"/>
+                      <layout:end layout:x="173.423792415803" layout:y="111.082529859816"/>
+                      <layout:basePoint1 layout:x="201.199581877657" layout:y="114.478690075699"/>
+                      <layout:basePoint2 layout:x="193.113900471843" layout:y="114.58961479484"/>
                     </layout:curveSegment>
                   </layout:listOfCurveSegments>
                 </layout:curve>
@@ -240,10 +240,10 @@
                 <layout:curve>
                   <layout:listOfCurveSegments>
                     <layout:curveSegment xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:type="CubicBezier">
-                      <layout:start layout:x="150.549438033709" layout:y="409.831354636344"/>
-                      <layout:end layout:x="112.937020399553" layout:y="377.720544377668"/>
-                      <layout:basePoint1 layout:x="135.338676977833" layout:y="396.845487391487"/>
-                      <layout:basePoint2 layout:x="130.885308637643" layout:y="395.12338751672"/>
+                      <layout:start layout:x="345.528691588204" layout:y="287.082369333941"/>
+                      <layout:end layout:x="294.649576512541" layout:y="279.12288523278"/>
+                      <layout:basePoint1 layout:x="325.769021239225" layout:y="283.991183849425"/>
+                      <layout:basePoint2 layout:x="318.952411696424" layout:y="284.985666315597"/>
                     </layout:curveSegment>
                   </layout:listOfCurveSegments>
                 </layout:curve>
@@ -252,10 +252,10 @@
                 <layout:curve>
                   <layout:listOfCurveSegments>
                     <layout:curveSegment xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:type="CubicBezier">
-                      <layout:start layout:x="112.937020399553" layout:y="377.720544377668"/>
-                      <layout:end layout:x="75.7202333158164" layout:y="335.696038158575"/>
-                      <layout:basePoint1 layout:x="94.9887321614623" layout:y="360.317701238617"/>
-                      <layout:basePoint2 layout:x="88.9799562021904" layout:y="350.668671493315"/>
+                      <layout:start layout:x="294.649576512541" layout:y="279.12288523278"/>
+                      <layout:end layout:x="244.740602685006" layout:y="262.685802675279"/>
+                      <layout:basePoint1 layout:x="270.346741328659" layout:y="273.260104149962"/>
+                      <layout:basePoint2 layout:x="263.736896469877" layout:y="268.942065332721"/>
                     </layout:curveSegment>
                   </layout:listOfCurveSegments>
                 </layout:curve>
@@ -272,10 +272,10 @@
                 <layout:curve>
                   <layout:listOfCurveSegments>
                     <layout:curveSegment xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:type="CubicBezier">
-                      <layout:start layout:x="59.3924623240362" layout:y="293.822248799941"/>
-                      <layout:end layout:x="61.4251074002845" layout:y="236.263778172952"/>
-                      <layout:basePoint1 layout:x="60.0983110975788" layout:y="273.834708243162"/>
-                      <layout:basePoint2 layout:x="58.8535973830309" layout:y="261.131173216084"/>
+                      <layout:start layout:x="203.779940322678" layout:y="231.664775634901"/>
+                      <layout:end layout:x="174.882597336522" layout:y="183.889021697776"/>
+                      <layout:basePoint1 layout:x="193.42901517629" layout:y="214.55167104766"/>
+                      <layout:basePoint2 layout:x="186.06602649692" layout:y="206.248156569553"/>
                     </layout:curveSegment>
                   </layout:listOfCurveSegments>
                 </layout:curve>
@@ -284,10 +284,10 @@
                 <layout:curve>
                   <layout:listOfCurveSegments>
                     <layout:curveSegment xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:type="CubicBezier">
-                      <layout:start layout:x="61.4251074002845" layout:y="236.263778172952"/>
-                      <layout:end layout:x="71.3662605278174" layout:y="178.577911280126"/>
-                      <layout:basePoint1 layout:x="63.9966174175381" layout:y="211.396383129821"/>
-                      <layout:basePoint2 layout:x="67.9696770463199" layout:y="198.287381609215"/>
+                      <layout:start layout:x="174.882597336522" layout:y="183.889021697776"/>
+                      <layout:end layout:x="152.724216422116" layout:y="129.334046170656"/>
+                      <layout:basePoint1 layout:x="163.699168176123" layout:y="161.529886825998"/>
+                      <layout:basePoint2 layout:x="160.250422704309" layout:y="147.86391986148"/>
                     </layout:curveSegment>
                   </layout:listOfCurveSegments>
                 </layout:curve>
@@ -304,10 +304,10 @@
                 <layout:curve>
                   <layout:listOfCurveSegments>
                     <layout:curveSegment xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:type="CubicBezier">
-                      <layout:start layout:x="69.3883642452704" layout:y="136.336271309467"/>
-                      <layout:end layout:x="49.2023828579728" layout:y="80.9475790343379"/>
-                      <layout:basePoint1 layout:x="62.5401293526228" layout:y="117.545271366539"/>
-                      <layout:basePoint2 layout:x="58.6198789281995" layout:y="104.105963428921"/>
+                      <layout:start layout:x="122.664929987037" layout:y="89.6521535308485"/>
+                      <layout:end layout:x="81.3965945334061" layout:y="57.6136893638393"/>
+                      <layout:basePoint1 layout:x="106.866922334428" layout:y="77.387449938503"/>
+                      <layout:basePoint2 layout:x="101.321952148386" layout:y="72.7127000570982"/>
                     </layout:curveSegment>
                   </layout:listOfCurveSegments>
                 </layout:curve>
@@ -316,10 +316,10 @@
                 <layout:curve>
                   <layout:listOfCurveSegments>
                     <layout:curveSegment xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:type="CubicBezier">
-                      <layout:start layout:x="49.2023828579728" layout:y="80.9475790343379"/>
-                      <layout:end layout:x="31.0347021833053" layout:y="34.1967906635357"/>
-                      <layout:basePoint1 layout:x="39.7848867877461" layout:y="57.7891946397549"/>
-                      <layout:basePoint2 layout:x="38.2790615611242" layout:y="52.8386590571546"/>
+                      <layout:start layout:x="81.3965945334061" layout:y="57.6136893638393"/>
+                      <layout:end layout:x="47.1225298594612" layout:y="30.338963524077"/>
+                      <layout:basePoint1 layout:x="61.4712369184258" layout:y="42.5146786705803"/>
+                      <layout:basePoint2 layout:x="62.772044664437" layout:y="42.792584939908"/>
                     </layout:curveSegment>
                   </layout:listOfCurveSegments>
                 </layout:curve>
@@ -330,31 +330,31 @@
         <layout:listOfTextGlyphs>
           <layout:textGlyph layout:id="tX0_Glyph" layout:text="X0" layout:graphicalObject="X0_Glyph">
             <layout:boundingBox>
-              <layout:position layout:x="205" layout:y="561"/>
+              <layout:position layout:x="472" layout:y="375"/>
               <layout:dimensions layout:width="48" layout:height="24"/>
             </layout:boundingBox>
           </layout:textGlyph>
           <layout:textGlyph layout:id="tA_Glyph" layout:text="A" layout:graphicalObject="A_Glyph">
             <layout:boundingBox>
-              <layout:position layout:x="158" layout:y="416"/>
+              <layout:position layout:x="356" layout:y="279"/>
               <layout:dimensions layout:width="36" layout:height="24"/>
             </layout:boundingBox>
           </layout:textGlyph>
           <layout:textGlyph layout:id="tB_Glyph" layout:text="B" layout:graphicalObject="B_Glyph">
             <layout:boundingBox>
-              <layout:position layout:x="174" layout:y="257"/>
+              <layout:position layout:x="284" layout:y="135"/>
               <layout:dimensions layout:width="36" layout:height="24"/>
             </layout:boundingBox>
           </layout:textGlyph>
           <layout:textGlyph layout:id="tD_Glyph" layout:text="D" layout:graphicalObject="D_Glyph">
             <layout:boundingBox>
-              <layout:position layout:x="59" layout:y="146"/>
+              <layout:position layout:x="128" layout:y="97"/>
               <layout:dimensions layout:width="36" layout:height="24"/>
             </layout:boundingBox>
           </layout:textGlyph>
           <layout:textGlyph layout:id="tC_Glyph" layout:text="C" layout:graphicalObject="C_Glyph">
             <layout:boundingBox>
-              <layout:position layout:x="43" layout:y="305"/>
+              <layout:position layout:x="200" layout:y="241"/>
               <layout:dimensions layout:width="36" layout:height="24"/>
             </layout:boundingBox>
           </layout:textGlyph>
@@ -365,61 +365,73 @@
             </layout:boundingBox>
           </layout:textGlyph>
         </layout:listOfTextGlyphs>
-        <render:listOfRenderInformation xmlns:render="http://www.sbml.org/sbml/level3/version1/render/version1" render:versionMajor="1" render:versionMinor="0">
+        <render:listOfRenderInformation xmlns:render="http://www.sbml.org/sbml/level3/version1/render/version1">
           <render:renderInformation render:id="localRenderInfo" render:name="Fill_Color Render Information">
             <render:listOfStyles>
-              <render:style render:id="nodeStyle" render:typeList="SPECIESGLYPH" render:idList="X0">
-                <render:g render:stroke="#0000ff" render:stroke-width="1" render:fill="#c9e0fb"/>
+              <render:style render:typeList="SPECIESGLYPH" render:idList="X0">
+                <render:g render:stroke="#0000ff" render:stroke-width="1" render:fill="#c9e0fb">
+                  <render:rectangle render:stroke="#0000ff" render:stroke-width="1" render:fill="#c9e0fb" render:x="0" render:y="0" render:width="100%" render:height="100%"/>
+                </render:g>
               </render:style>
-              <render:style render:id="nodeStyle" render:typeList="TEXTGLYPH" render:idList="X0">
-                <render:g render:stroke="black" render:font-size="12" render:font-family="Arial" render:font-style="normal" render:font-weight="normal"/>
+              <render:style render:typeList="TEXTGLYPH" render:idList="X0">
+                <render:g render:stroke="#000000" render:font-family="Arial" render:font-style="normal" render:text-anchor="middle" render:vtext-anchor="middle" render:font-size="12"/>
               </render:style>
-              <render:style render:id="nodeStyle" render:typeList="SPECIESGLYPH" render:idList="A">
-                <render:g render:stroke="#0000ff" render:stroke-width="1" render:fill="#c9e0fb"/>
+              <render:style render:typeList="SPECIESGLYPH" render:idList="A">
+                <render:g render:stroke="#0000ff" render:stroke-width="1" render:fill="#c9e0fb">
+                  <render:rectangle render:stroke="#0000ff" render:stroke-width="1" render:fill="#c9e0fb" render:x="0" render:y="0" render:width="100%" render:height="100%"/>
+                </render:g>
               </render:style>
-              <render:style render:id="nodeStyle" render:typeList="TEXTGLYPH" render:idList="A">
-                <render:g render:stroke="black" render:font-size="12" render:font-family="Arial" render:font-style="normal" render:font-weight="normal"/>
+              <render:style render:typeList="TEXTGLYPH" render:idList="A">
+                <render:g render:stroke="#000000" render:font-family="Arial" render:font-style="normal" render:text-anchor="middle" render:vtext-anchor="middle" render:font-size="12"/>
               </render:style>
-              <render:style render:id="nodeStyle" render:typeList="SPECIESGLYPH" render:idList="B">
-                <render:g render:stroke="#0000ff" render:stroke-width="1" render:fill="#c9e0fb"/>
+              <render:style render:typeList="SPECIESGLYPH" render:idList="B">
+                <render:g render:stroke="#0000ff" render:stroke-width="1" render:fill="#c9e0fb">
+                  <render:rectangle render:stroke="#0000ff" render:stroke-width="1" render:fill="#c9e0fb" render:x="0" render:y="0" render:width="100%" render:height="100%"/>
+                </render:g>
               </render:style>
-              <render:style render:id="nodeStyle" render:typeList="TEXTGLYPH" render:idList="B">
-                <render:g render:stroke="black" render:font-size="12" render:font-family="Arial" render:font-style="normal" render:font-weight="normal"/>
+              <render:style render:typeList="TEXTGLYPH" render:idList="B">
+                <render:g render:stroke="#000000" render:font-family="Arial" render:font-style="normal" render:text-anchor="middle" render:vtext-anchor="middle" render:font-size="12"/>
               </render:style>
-              <render:style render:id="nodeStyle" render:typeList="SPECIESGLYPH" render:idList="D">
-                <render:g render:stroke="#0000ff" render:stroke-width="1" render:fill="#c9e0fb"/>
+              <render:style render:typeList="SPECIESGLYPH" render:idList="D">
+                <render:g render:stroke="#0000ff" render:stroke-width="1" render:fill="#c9e0fb">
+                  <render:rectangle render:stroke="#0000ff" render:stroke-width="1" render:fill="#c9e0fb" render:x="0" render:y="0" render:width="100%" render:height="100%"/>
+                </render:g>
               </render:style>
-              <render:style render:id="nodeStyle" render:typeList="TEXTGLYPH" render:idList="D">
-                <render:g render:stroke="black" render:font-size="12" render:font-family="Arial" render:font-style="normal" render:font-weight="normal"/>
+              <render:style render:typeList="TEXTGLYPH" render:idList="D">
+                <render:g render:stroke="#000000" render:font-family="Arial" render:font-style="normal" render:text-anchor="middle" render:vtext-anchor="middle" render:font-size="12"/>
               </render:style>
-              <render:style render:id="nodeStyle" render:typeList="SPECIESGLYPH" render:idList="C">
-                <render:g render:stroke="#0000ff" render:stroke-width="1" render:fill="#c9e0fb"/>
+              <render:style render:typeList="SPECIESGLYPH" render:idList="C">
+                <render:g render:stroke="#0000ff" render:stroke-width="1" render:fill="#c9e0fb">
+                  <render:rectangle render:stroke="#0000ff" render:stroke-width="1" render:fill="#c9e0fb" render:x="0" render:y="0" render:width="100%" render:height="100%"/>
+                </render:g>
               </render:style>
-              <render:style render:id="nodeStyle" render:typeList="TEXTGLYPH" render:idList="C">
-                <render:g render:stroke="black" render:font-size="12" render:font-family="Arial" render:font-style="normal" render:font-weight="normal"/>
+              <render:style render:typeList="TEXTGLYPH" render:idList="C">
+                <render:g render:stroke="#000000" render:font-family="Arial" render:font-style="normal" render:text-anchor="middle" render:vtext-anchor="middle" render:font-size="12"/>
               </render:style>
-              <render:style render:id="nodeStyle" render:typeList="SPECIESGLYPH" render:idList="X1">
-                <render:g render:stroke="#0000ff" render:stroke-width="1" render:fill="#c9e0fb"/>
+              <render:style render:typeList="SPECIESGLYPH" render:idList="X1">
+                <render:g render:stroke="#0000ff" render:stroke-width="1" render:fill="#c9e0fb">
+                  <render:rectangle render:stroke="#0000ff" render:stroke-width="1" render:fill="#c9e0fb" render:x="0" render:y="0" render:width="100%" render:height="100%"/>
+                </render:g>
               </render:style>
-              <render:style render:id="nodeStyle" render:typeList="TEXTGLYPH" render:idList="X1">
-                <render:g render:stroke="black" render:font-size="12" render:font-family="Arial" render:font-style="normal" render:font-weight="normal"/>
+              <render:style render:typeList="TEXTGLYPH" render:idList="X1">
+                <render:g render:stroke="#000000" render:font-family="Arial" render:font-style="normal" render:text-anchor="middle" render:vtext-anchor="middle" render:font-size="12"/>
               </render:style>
-              <render:style render:id="reactionStyle" render:typeList="REACTIONGLYPH" render:idList="_J0">
+              <render:style render:typeList="REACTIONGLYPH" render:idList="_J0">
                 <render:g render:stroke="blue" render:stroke-width="1" render:fill="blue"/>
               </render:style>
-              <render:style render:id="reactionStyle" render:typeList="REACTIONGLYPH" render:idList="_J1">
+              <render:style render:typeList="REACTIONGLYPH" render:idList="_J1">
                 <render:g render:stroke="blue" render:stroke-width="1" render:fill="blue"/>
               </render:style>
-              <render:style render:id="reactionStyle" render:typeList="REACTIONGLYPH" render:idList="_J2">
+              <render:style render:typeList="REACTIONGLYPH" render:idList="_J2">
                 <render:g render:stroke="blue" render:stroke-width="1" render:fill="blue"/>
               </render:style>
-              <render:style render:id="reactionStyle" render:typeList="REACTIONGLYPH" render:idList="_J3">
+              <render:style render:typeList="REACTIONGLYPH" render:idList="_J3">
                 <render:g render:stroke="blue" render:stroke-width="1" render:fill="blue"/>
               </render:style>
-              <render:style render:id="reactionStyle" render:typeList="REACTIONGLYPH" render:idList="_J4">
+              <render:style render:typeList="REACTIONGLYPH" render:idList="_J4">
                 <render:g render:stroke="blue" render:stroke-width="1" render:fill="blue"/>
               </render:style>
-              <render:style render:id="reactionStyle" render:typeList="REACTIONGLYPH" render:idList="_J5">
+              <render:style render:typeList="REACTIONGLYPH" render:idList="_J5">
                 <render:g render:stroke="blue" render:stroke-width="1" render:fill="blue"/>
               </render:style>
             </render:listOfStyles>

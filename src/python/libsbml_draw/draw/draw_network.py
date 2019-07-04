@@ -23,7 +23,7 @@ except (NameError, ImportError):
     pass
 
 
-def draw_compartments(compartments, fig, scaling_factor):
+def draw_compartments(compartments, fig, scaling_factor, nw_height_inches):
     """Create a list of FancyBbox Patches, one for each compartment.
 
     Args:
@@ -42,8 +42,8 @@ def draw_compartments(compartments, fig, scaling_factor):
         fbbp = FancyBboxPatch(
             [scaling_factor*compartment.lower_left_point[0]*INCHES_PER_POINT +
              WIDTH_SHIFT,
-             scaling_factor*compartment.lower_left_point[1]*INCHES_PER_POINT +
-             HEIGHT_SHIFT],
+             scaling_factor*(compartment.lower_left_point[1]*INCHES_PER_POINT -
+             compartment.height*INCHES_PER_POINT) + HEIGHT_SHIFT],
             scaling_factor*compartment.width*INCHES_PER_POINT,
             scaling_factor*compartment.height*INCHES_PER_POINT,
             edgecolor=compartment.edge_color,
@@ -57,7 +57,7 @@ def draw_compartments(compartments, fig, scaling_factor):
     return compartment_patches
 
 
-def draw_nodes(nodes, fig, scaling_factor):
+def draw_nodes(nodes, fig, scaling_factor, nw_height_inches):
     """Create a list of FancyBbox Patches, one for each node.
 
     Args:
@@ -76,8 +76,8 @@ def draw_nodes(nodes, fig, scaling_factor):
         fbbp = FancyBboxPatch(
             [scaling_factor*node.lower_left_point[0]*INCHES_PER_POINT +
              WIDTH_SHIFT,
-             scaling_factor*node.lower_left_point[1]*INCHES_PER_POINT +
-             HEIGHT_SHIFT],
+             scaling_factor*(nw_height_inches - node.lower_left_point[1]*INCHES_PER_POINT -
+             node.height*INCHES_PER_POINT) + HEIGHT_SHIFT],
             scaling_factor*node.width*INCHES_PER_POINT,
             scaling_factor*node.height*INCHES_PER_POINT,
             edgecolor=node.edge_color,
@@ -94,7 +94,7 @@ def draw_nodes(nodes, fig, scaling_factor):
     return node_patches
 
 
-def draw_reactions(reactions, mutation_scale, fig, scaling_factor):
+def draw_reactions(reactions, mutation_scale, fig, scaling_factor, nw_height_inches):
     """Create a list of FancyArrow Patches, one for each curve in a reaction.
 
     Args:
@@ -116,22 +116,22 @@ def draw_reactions(reactions, mutation_scale, fig, scaling_factor):
             start_point = np.array([
                     scaling_factor*curve.start_point.x*INCHES_PER_POINT +
                     WIDTH_SHIFT,
-                    scaling_factor*curve.start_point.y*INCHES_PER_POINT +
+                    scaling_factor*(nw_height_inches - curve.start_point.y*INCHES_PER_POINT) +
                     HEIGHT_SHIFT])
             end_point = np.array([
                     scaling_factor*curve.end_point.x*INCHES_PER_POINT +
                     WIDTH_SHIFT,
-                    scaling_factor*curve.end_point.y*INCHES_PER_POINT +
+                    scaling_factor*(nw_height_inches - curve.end_point.y*INCHES_PER_POINT) +
                     HEIGHT_SHIFT])
             control_point_1 = np.array([
                     scaling_factor*curve.control_point_1.x*INCHES_PER_POINT +
                     WIDTH_SHIFT,
-                    scaling_factor*curve.control_point_1.y*INCHES_PER_POINT +
+                    scaling_factor*(nw_height_inches - curve.control_point_1.y*INCHES_PER_POINT) +
                     HEIGHT_SHIFT])
             control_point_2 = np.array([
                     scaling_factor*curve.control_point_2.x*INCHES_PER_POINT +
                     WIDTH_SHIFT,
-                    scaling_factor*curve.control_point_2.y*INCHES_PER_POINT +
+                    scaling_factor*(nw_height_inches - curve.control_point_2.y*INCHES_PER_POINT) +
                     HEIGHT_SHIFT])
 
             cubic_bezier_curve_path = Path(
@@ -157,7 +157,7 @@ def draw_reactions(reactions, mutation_scale, fig, scaling_factor):
     return reaction_patches
 
 
-def add_labels(nodes, fig, scaling_factor):
+def add_labels(nodes, fig, scaling_factor, nw_height_inches):
     """Add text to the nodes.
 
     Args:
@@ -170,7 +170,7 @@ def add_labels(nodes, fig, scaling_factor):
     """
     for node in nodes:
         plt.text(scaling_factor*node.center.x*INCHES_PER_POINT + WIDTH_SHIFT,
-                 scaling_factor*node.center.y*INCHES_PER_POINT + HEIGHT_SHIFT,
+                 scaling_factor*(nw_height_inches - node.center.y*INCHES_PER_POINT) + HEIGHT_SHIFT,
                  node.name,
                  fontsize=scaling_factor*node.font_size,
                  color=node.font_color,
@@ -181,8 +181,8 @@ def add_labels(nodes, fig, scaling_factor):
                  transform=fig.dpi_scale_trans)
 
 
-def get_figure_dimensions(sbml_layout):
-    """Compute the figure width and height in inches needed for the given
+def get_network_dimensions(sbml_layout):
+    """Compute the plotting width and height in inches needed for the given
        network.
 
     Args:
@@ -230,10 +230,7 @@ def get_figure_dimensions(sbml_layout):
     nw_width_inches = nw_width_points*INCHES_PER_POINT
     nw_height_inches = nw_height_points*INCHES_PER_POINT
 
-    fig_width_inches = nw_width_inches + 2*WIDTH_SHIFT
-    fig_height_inches = nw_height_inches + 2*HEIGHT_SHIFT
-
-    return (fig_width_inches, fig_height_inches)
+    return (nw_width_inches, nw_height_inches)
 
 
 def createNetworkFigure(sbml_layout, arrowhead_mutation_scale,
@@ -259,7 +256,10 @@ def createNetworkFigure(sbml_layout, arrowhead_mutation_scale,
     Returns: matplotlib.figure.Figure
     """
 
-    (fig_width_inches, fig_height_inches) = get_figure_dimensions(sbml_layout)
+    (nw_width_inches, nw_height_inches) = get_network_dimensions(sbml_layout)
+
+    fig_width_inches = nw_width_inches + 2*WIDTH_SHIFT
+    fig_height_inches = nw_height_inches + 2*HEIGHT_SHIFT
 
     figsize = (scaling_factor*fig_width_inches,
                scaling_factor*fig_height_inches)
@@ -274,7 +274,7 @@ def createNetworkFigure(sbml_layout, arrowhead_mutation_scale,
 
     # draw the compartments
     compartment_patches = draw_compartments(
-            network.compartments.values(), fig, scaling_factor)
+            network.compartments.values(), fig, scaling_factor, nw_height_inches)
 
     for compartment_patch in compartment_patches:
         ax.add_patch(compartment_patch)
@@ -282,17 +282,17 @@ def createNetworkFigure(sbml_layout, arrowhead_mutation_scale,
     # draw the reactions
     reaction_patches = draw_reactions(
             network.reactions.values(),
-            arrowhead_mutation_scale, fig, scaling_factor)
+            arrowhead_mutation_scale, fig, scaling_factor, nw_height_inches)
     for reaction_patch in reaction_patches:
         ax.add_patch(reaction_patch)
 
     # draw the nodes
-    node_patches = draw_nodes(network.nodes.values(), fig, scaling_factor)
+    node_patches = draw_nodes(network.nodes.values(), fig, scaling_factor, nw_height_inches)
     for node_patch in node_patches:
         ax.add_patch(node_patch)
 
     # add labels to the nodes
-    add_labels(network.nodes.values(), fig, scaling_factor)
+    add_labels(network.nodes.values(), fig, scaling_factor, nw_height_inches)
 
     plt.axis("off")
     plt.axis("equal")

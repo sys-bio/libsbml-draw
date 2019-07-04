@@ -35,6 +35,6 @@ sl2.regenerateLayout()
 sl2.drawNetwork()
 
 
-
+sl2.writeSBMLFile("model_out_render.xml")
 
 

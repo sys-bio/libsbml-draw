@@ -50,7 +50,7 @@ class Node():
         self.fill_color = "#c9e0fb"
         self.font_size = 12
         self.font_family = "Arial"
-        self.font_color = "black"
+        self.font_color = "#000000"
         self.font_style = "normal"
 
 
