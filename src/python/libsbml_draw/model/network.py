@@ -79,6 +79,7 @@ class Curve():
         self.control_point_1 = curveCPs.control_point_1
         self.control_point_2 = curveCPs.control_point_2
         self.role = sbnw.curve_getRole(h_curve)
+        self.role_name = Role(self.role).name
         self.curveArrowStyle = Curve.role_arrowstyles[self.role]
 
 

@@ -12,6 +12,7 @@ import libsbml
 
 PlotColor = namedtuple("PlotColor", ["is_valid_color", "color"])
 FontProperty = namedtuple("FontProperty", ["is_valid_value", "value"])
+GlyphProperty = namedtuple("GlyphProperty", ["type", "entity_id"])
 
 FONT_STYLES = ["none", "normal", "italic"]
 
@@ -40,6 +41,111 @@ class Render:
                 ).getPlugin("render") if self.layout_plugin else None
         self.font_properties = self._getFontProperties()
         self.color_definitions = {}
+#        self.compartmentGlyphs = self.layout.getListOfCompartmentGlyphs()
+#        self.reactionGlyphs = self.layout.getListOfReactionGlyphs()
+#        self.speciesGlyphs = self.layout.getListOfSpeciesGlyphs()
+#        self.textGlyphs = self.layout.getListOfTextGlyphs()
+        self.speciesGlyphs = self._createSpeciesGlyphsDirectory()
+        self.textGlyphs = self._createTextGlyphsDirectory()
+        self.compartmentGlyphs = self._createCompartmentGlyphsDirectory()
+        self.reactionGlyphs = self._createReactionGlyphsDirectory()
+        self.glyphsDirectory = self._createGlyphsDirectory()
+
+#        print("num compartment glyphs: ", len(self.compartmentGlyphs))
+#        print("num species glyphs: ", len(self.speciesGlyphs))
+#        print("num text glyphs: ", len(self.textGlyphs))
+
+
+    def _createSpeciesGlyphsDirectory(self,):
+        """
+        Returns: dictionary, key=glyph_id, value=species_id
+        """
+        speciesDirectory = dict()
+
+        for species in self.layout.getListOfSpeciesGlyphs():
+            glyph_id = species.getId()
+            species_id = species.getSpeciesId()
+            speciesDirectory[glyph_id] = species_id
+        
+        return speciesDirectory
+    
+    def _createTextGlyphsDirectory(self,):
+        """
+        Returns: dictionary, key=glyph_id, value=species_id
+        """
+        textDirectory = dict()
+
+        for text in self.layout.getListOfTextGlyphs():
+            glyph_id = text.getId()
+            species_id = self.speciesGlyphs[text.getGraphicalObjectId()]
+            textDirectory[glyph_id] = species_id
+        
+        return textDirectory
+
+    def _createCompartmentGlyphsDirectory(self,):
+        """
+        Returns: dictionary, key=glyph_id, value=species_id
+        """
+        compartmentDirectory = dict()
+
+        for compartment in self.layout.getListOfCompartmentGlyphs():
+            glyph_id = compartment.getId()
+            compartment_id = compartment.getCompartmentId()
+            compartmentDirectory[glyph_id] = compartment_id
+        
+        return compartmentDirectory
+
+    def _createReactionGlyphsDirectory(self,):
+        """
+        Returns: dictionary, key=glyph_id, value=species_id
+        """
+        reactionDirectory = dict()
+
+        for reaction in self.layout.getListOfReactionGlyphs():
+            glyph_id = reaction.getId()
+            reaction_id = reaction.getReactionId()
+            reactionDirectory[glyph_id] = reaction_id
+        
+        return reactionDirectory
+
+
+    def _createGlyphsDirectory(self,):
+        """        
+        """
+        glyphsDirectory = dict()        
+
+        for compartment in self.layout.getListOfCompartmentGlyphs():
+            glyph_id = compartment.getId()
+            compartment_id = compartment.getCompartmentId()
+            glyphsDirectory[glyph_id] = GlyphProperty("compartment", compartment_id)
+            print("compartment glyph: ", glyph_id)     
+            print("compartment: ", compartment_id)
+            
+        for reaction in self.layout.getListOfReactionGlyphs(): 
+            glyph_id = reaction.getId()
+            reaction_id = reaction.getReactionId()
+            glyphsDirectory[glyph_id] = GlyphProperty("reaction", reaction_id)
+            print("reaction glyph: ", glyph_id)     
+            print("reaction: ", reaction_id)
+            
+        for species in self.layout.getListOfSpeciesGlyphs():
+            glyph_id = species.getId()
+            species_id = species.getSpeciesId()
+            glyphsDirectory[glyph_id] = GlyphProperty("species", species_id)
+            print("species glyph: ", glyph_id)     
+            print("species: ", species_id)
+            
+        for text in self.layout.getListOfTextGlyphs():
+            glyph_id = text.getId()
+            species_id = self.speciesGlyphs[text.getGraphicalObjectId()]
+            glyphsDirectory[glyph_id] = GlyphProperty("text", species_id)
+            print("text glyph: ", glyph_id)     
+            print("text: ", species_id)    
+
+        print("size glyphs dir:", len(glyphsDirectory))
+
+        return glyphsDirectory
+        
 
     def _getFontProperties(self,):
         """Finds the font families on the system, and provides valid values for
@@ -113,6 +219,11 @@ class Render:
 
         Returns: None
         """
+        
+        element = render_style.getGroup().getElement(0)
+
+#        print("element data ", type(element), element.isRectangle(), element.isRenderCurve(), element.getStroke())
+        
         node_fill_color = self._set_plot_color_and_validity(
                 render_style.getGroup().getFillColor())
         node_edge_color = self._set_plot_color_and_validity(
@@ -270,6 +381,10 @@ class Render:
 
         Returns: None
         """
+        print("UPDATING COMPARTMENTS")
+        
+        
+        
         compartment_edge_color = self._set_plot_color_and_validity(
                 render_style.getGroup().getStroke())
 
@@ -284,7 +399,12 @@ class Render:
 ## the compartment render data is inside the "rectangle" element, which can't
 ## be reached due to a bug in libsbml, as confirmed by Frank.        
 
-#        print("rectangle data ", render_style.getGroup().getElement(0).getStroke())
+        rectangle = render_style.getGroup().getElement(0)
+
+        print("rectangle data ", type(rectangle), rectangle.isRectangle())
+#        print("stroke: ", rectangle.getStroke())
+#        print("stroke width:", rectangle.getStrokeWidth())
+#        print("fill color: ", rectangle.getFillColor())
 
 #        print("compartment_fill_color: ", compartment_fill_color.color,
 #              compartment_fill_color.is_valid_color)
@@ -370,7 +490,7 @@ class Render:
 
         return idList
 
-    def _applyLocalRenderInformation(self, network):
+    def _applyLocalRenderInformationOrig(self, network):
         """Sets values in the model's nodes and reactions as specified by
         the idList for each local style.
 
@@ -438,6 +558,110 @@ class Render:
                             if local_style.isInTypeList("COMPARTMENTGLYPH"):
                                 self._updateCompartmentsBasedOnCompartmentGlyph(  # noqa  
                                     local_style, network, compartments_id_list)
+
+    def _getCompartmentIdsInIdList(self, idList):
+        """ """
+        compartmentIds = list()
+
+        for glyph in self.compartmentGlyphs:
+
+            if idList.has_key(glyph):
+                compartmentIds.append(self.compartmentGlyphs[glyph])
+
+        return compartmentIds
+
+    def _getSpeciesIdsInIdList(self, idList):
+        """ """
+        speciesIds = list()
+
+        for glyph in self.speciesGlyphs:
+
+            if idList.has_key(glyph):
+                speciesIds.append(self.speciesGlyphs[glyph])
+
+        return speciesIds
+
+    def _getSpeciesIdsForTextInIdList(self, idList):
+        """ """
+        speciesIdsForText = list()
+
+        for glyph in self.textGlyphs:
+
+            if idList.has_key(glyph):
+                speciesIdsForText.append(self.textGlyphs[glyph])
+
+        return speciesIdsForText
+
+    def _getReactionIdsInIdList(self, idList):
+        """ """
+        reactionIds = list()
+
+        for glyph in self.reactionGlyphs:
+
+            if idList.has_key(glyph):
+                reactionIds.append(self.reactionGlyphs[glyph])
+
+        return reactionIds
+
+        
+
+    def _applyLocalRenderInformation(self, network):
+        """Sets values in the model's nodes and reactions as specified by
+        the idList for each local style.
+
+        Args:
+            network (libsbml_draw.model.Network): the model's network
+
+        Returns: None
+        """
+
+        if self.rPlugin:
+
+            for local_render_info in \
+                    self.rPlugin.getListOfLocalRenderInformation():
+
+                if local_render_info:
+                    
+                    self.color_definitions = self._collectColorDefinitions(
+                            local_render_info)
+
+                    for local_style in local_render_info.getListOfStyles():
+
+                        idList = local_style.getIdList()
+                        roleList = local_style.getRoleList()
+                        typeList = local_style.getTypeList()
+                        
+                        if idList.size():
+                            # get the id's of the elements to update
+                            compartmentIds = self._getCompartmentIdsInIdList(idList)                            
+                            speciesIds = self._getSpeciesIdsInIdList(idList)
+                            reactionIds = self._getReactionIdsInIdList(idList)
+                            textIds = self._getSpeciesIdsForTextInIdList(idList)
+                            print()
+                            print("num compartment ids: ", len(compartmentIds))
+                            print("num species ids: ", len(speciesIds))
+                            print("num reaction ids: ", len(reactionIds))
+                            print("num text ids: ", len(textIds))
+                            print()
+                            
+                            if len(compartmentIds) > 0:
+                                self._updateCompartmentsBasedOnCompartmentGlyph(  # noqa  
+                                    local_style, network, compartmentIds)
+
+                            if len(speciesIds) > 0:
+                                self._updateNodesBasedOnSpeciesGlyph(
+                                    local_style, network, speciesIds)
+
+                            if len(textIds) > 0:
+                                self._updateNodesBasedOnTextGlyph(
+                                    local_style, network, textIds)
+                                
+                        elif roleList.size():
+                            pass                            
+                        elif typeList.size():
+                            pass
+                        else:
+                            pass
 
     def _getCompartmentIdsFromCGlyphs(self, local_style, network):
         """

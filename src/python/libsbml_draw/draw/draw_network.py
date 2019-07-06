@@ -42,8 +42,8 @@ def draw_compartments(compartments, fig, scaling_factor, nw_height_inches):
         fbbp = FancyBboxPatch(
             [scaling_factor*compartment.lower_left_point[0]*INCHES_PER_POINT +
              WIDTH_SHIFT,
-             scaling_factor*(compartment.lower_left_point[1]*INCHES_PER_POINT -
-             compartment.height*INCHES_PER_POINT) + HEIGHT_SHIFT],
+             scaling_factor*(compartment.lower_left_point[1]*INCHES_PER_POINT) +
+             HEIGHT_SHIFT],
             scaling_factor*compartment.width*INCHES_PER_POINT,
             scaling_factor*compartment.height*INCHES_PER_POINT,
             edgecolor=compartment.edge_color,

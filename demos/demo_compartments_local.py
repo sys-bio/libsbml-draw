@@ -1,6 +1,7 @@
 from pathlib import Path
 import pkg_resources
 
+import libsbml
 
 from libsbml_draw.model.sbml_layout import SBMLlayout
 
@@ -39,3 +40,12 @@ print("numCompartments: ", numCompartments)
 for index in range(numCompartments):
     compartment = model.getCompartment(index)
     print("id, name: ", compartment.getId(), ", ", compartment.getElementName())
+
+
+for reaction in sll._SBMLlayout__network.reactions.values():
+    for curve in reaction.curves:
+        print("curve role: ", curve.role, curve.role_name, curve.role_name.lower()=="substrate")
+        
+for node in sll._SBMLlayout__network.nodes.values():
+    print("node, font_size: ", node.font_size)        
+        
