@@ -22,19 +22,20 @@ sl.drawNetwork()
 out_file = "model_out.xml"        
 sl.writeSBMLFile("model_out.xml")
 
-sl2 = SBMLlayout(out_file)
 
-print("sl2 layoutSpecified: ", sl2._SBMLlayout__layoutSpecified)
+#sl2 = SBMLlayout(out_file)
 
-sl2.drawNetwork()
+#print("sl2 layoutSpecified: ", sl2._SBMLlayout__layoutSpecified)
 
-sl2.setLayoutAlgorithm_k(10)
+#sl2.drawNetwork()
 
-sl2.regenerateLayout()
+#sl2.setLayoutAlgorithm_k(10)
 
-sl2.drawNetwork()
+#sl2.regenerateLayout()
+
+#sl2.drawNetwork()
 
 
-sl2.writeSBMLFile("model_out_render.xml")
+#sl2.writeSBMLFile("model_out_render.xml")
 
 

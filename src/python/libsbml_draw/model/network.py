@@ -52,7 +52,8 @@ class Node():
         self.font_family = "Arial"
         self.font_color = "#000000"
         self.font_style = "normal"
-
+        self.text_anchor = "center"
+        self.vtext_anchor = "center"
 
 class Curve():
     """Part of a complete reaction curve. As an example, a reaction between a

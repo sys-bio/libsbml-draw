@@ -42,14 +42,16 @@ def draw_compartments(compartments, fig, scaling_factor, nw_height_inches):
         fbbp = FancyBboxPatch(
             [scaling_factor*compartment.lower_left_point[0]*INCHES_PER_POINT +
              WIDTH_SHIFT,
-             scaling_factor*(compartment.lower_left_point[1]*INCHES_PER_POINT) +
+             scaling_factor*(nw_height_inches - 
+             compartment.lower_left_point[1]*INCHES_PER_POINT -
+             compartment.height*INCHES_PER_POINT) +
              HEIGHT_SHIFT],
             scaling_factor*compartment.width*INCHES_PER_POINT,
             scaling_factor*compartment.height*INCHES_PER_POINT,
             edgecolor=compartment.edge_color,
             facecolor=compartment.fill_color,
             linewidth=compartment.line_width,
-            boxstyle=BoxStyle("round", pad=0, rounding_size=.6),
+            boxstyle=BoxStyle("round", pad=0, rounding_size=0.6),
             transform=fig.dpi_scale_trans)
 
         compartment_patches.append(fbbp)
@@ -76,7 +78,8 @@ def draw_nodes(nodes, fig, scaling_factor, nw_height_inches):
         fbbp = FancyBboxPatch(
             [scaling_factor*node.lower_left_point[0]*INCHES_PER_POINT +
              WIDTH_SHIFT,
-             scaling_factor*(nw_height_inches - node.lower_left_point[1]*INCHES_PER_POINT -
+             scaling_factor*(nw_height_inches - 
+             node.lower_left_point[1]*INCHES_PER_POINT -
              node.height*INCHES_PER_POINT) + HEIGHT_SHIFT],
             scaling_factor*node.width*INCHES_PER_POINT,
             scaling_factor*node.height*INCHES_PER_POINT,
@@ -176,8 +179,8 @@ def add_labels(nodes, fig, scaling_factor, nw_height_inches):
                  color=node.font_color,
                  fontname=node.font_family,
                  fontstyle=node.font_style,
-                 horizontalalignment="center",
-                 verticalalignment="center",
+                 horizontalalignment=node.text_anchor,
+                 verticalalignment=node.vtext_anchor,
                  transform=fig.dpi_scale_trans)
 
 
