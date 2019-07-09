@@ -3,6 +3,6 @@
 C API
 =========================
 
-You can find documentation for the C API `here <https://sys-bio.github.io/libsbml-draw/ target="_blank">`_.
+You can find documentation for the C API `here <https://sys-bio.github.io/libsbml-draw/>`_.
 
 
