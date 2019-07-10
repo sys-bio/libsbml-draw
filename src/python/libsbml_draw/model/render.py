@@ -787,7 +787,9 @@ class Render:
 
         line_ending = libsbml.LineEnding(xml_node, 1)         
 
-        print("le: ", line_ending.getId())
+        print("le: ", line_ending.getId(), 
+              line_ending.getBoundingBox().getWidth(), 
+              line_ending.getBoundingBox().getHeight() )
                
         local_render_info.addLineEnding(line_ending)
      
