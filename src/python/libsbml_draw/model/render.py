@@ -8,6 +8,9 @@ from matplotlib.colors import is_color_like
 from matplotlib.font_manager import findSystemFonts
 from pathlib import Path
 
+import pkg_resources
+import xml.etree.ElementTree as ET 
+
 import libsbml
 
 PlotColor = namedtuple("PlotColor", ["is_valid_color", "color"])
@@ -708,6 +711,56 @@ class Render:
 
         return network_compartment_ids
 
+    def _getSBMLRenderTextAnchor(self, text_anchor, alignment_direction):
+        """ """
+        if alignment_direction == "horizontal":
+            if text_anchor == "center":
+                return "middle"
+            elif text_anchor == "left":
+                return "start"
+            elif text_anchor == "right":
+                return "end"
+            else:
+                return "middle"            
+        elif alignment_direction == "vertical":
+            # the plotting in draw_network has (0,0) in lower-left corner
+            # so flip here
+            if text_anchor == "center":
+                return "middle"
+            elif text_anchor == "top":
+                return "bottom"
+            elif text_anchor == "bottom":
+                return "top"
+            elif text_anchor == "baseline":
+                return "top"
+            else:
+                return "middle"
+        else:
+            raise ValueError("Invalid value for alignment_direction: ", 
+                             alignment_direction)
+        
+    def _getLineEndingsFromStyleSheet(self,):
+        """ """
+        line_endings = {}
+
+        stylesheet_file_name = "LineEnding_styles.xml"
+        stylesheet_file = Path(pkg_resources.resource_filename("libsbml_draw", 
+            "model/data/" + stylesheet_file_name))
+
+        tree = ET.parse(stylesheet_file) 
+    
+#        ns_lole = "{http://projects.eml.org/bcb/sbml/render/level2}listOfLineEndings"
+#        ns_le = "{http://projects.eml.org/bcb/sbml/render/level2}lineEnding"
+        
+        nns_le = "lineEnding"    
+    
+        root = tree.getroot()
+    
+        for le in root.findall(nns_le):
+            line_endings[le.attrib["id"]] = ET.tostring(le, encoding="unicode")
+   
+        return line_endings
+    
     def _addLocalStylesRenderInformation(self, local_render_info, network):
         """Add a LocalStyle of type SPECIESGLYPH and TEXTGLYPH for each node,
         and of type REACTIONGLYPH for each reaction.
@@ -720,19 +773,34 @@ class Render:
         """
         local_render_info.setId("localRenderInfo")
         local_render_info.setName("Fill_Color Render Information")
-      
-        line_ending_product = local_render_info.createLineEnding()
-        line_ending_product.setId("product")
-        bbox_product = line_ending_product.createBoundingBox()
-        bbox_product.setX(-10)
-        bbox_product.setY(-5)
-        bbox_product.setWidth(10)
-        bbox_product.setHeight(10)
-        
-        line_ending_product.setBoundingBox(bbox_product)
-        
-        line_ending_inhibitor = local_render_info.createLineEnding()
-        line_ending_inhibitor.setId("inhibitor")
+
+        line_endings = self._getLineEndingsFromStyleSheet()
+
+        print("num le's: ", len(line_endings))
+
+        lep = line_endings["product"]
+ 
+#        for line_ending in line_endings:
+        xml_node = libsbml.XMLNode.convertStringToXMLNode(lep)            
+
+        print("xml_node: ", xml_node.getAttributesLength())
+
+        line_ending = libsbml.LineEnding(xml_node, 1)         
+
+        print("le: ", line_ending.getId())
+               
+        local_render_info.addLineEnding(line_ending)
+     
+#        line_ending_product = local_render_info.createLineEnding()
+#        line_ending_product.setId("product")
+#        bbox_product = line_ending_product.createBoundingBox()
+#        bbox_product.setX(-10)
+#        bbox_product.setY(-5)
+#        bbox_product.setWidth(10)
+#        bbox_product.setHeight(10)       
+#        line_ending_product.setBoundingBox(bbox_product)        
+#        line_ending_inhibitor = local_render_info.createLineEnding()
+#        line_ending_inhibitor.setId("inhibitor")
 
         for node in network.nodes.values():
             style = local_render_info.createStyle("")
@@ -753,8 +821,12 @@ class Render:
             style = local_render_info.createStyle("")
             style.getGroup().setFontFamily(node.font_family)
             style.getGroup().setFontSize(libsbml.RelAbsVector(node.font_size))
-#            style.getGroup().setTextAnchor("middle")
-#            style.getGroup().setVTextAnchor("middle")
+            style.getGroup().setTextAnchor(
+                    self._getSBMLRenderTextAnchor(
+                            node.text_anchor, "horizontal"))
+            style.getGroup().setVTextAnchor(
+                    self._getSBMLRenderTextAnchor(
+                            node.vtext_anchor, "vertical"))
             if node.font_style == "italic":
                 style.getGroup().setFontStyle(2)
             else:  # "normal"
