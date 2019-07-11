@@ -4,17 +4,15 @@
 		<notes>
 			<p xmlns="http://www.w3.org/1999/xhtml">
 				Simple Model one compartment, with two species, and a reaction.		
-				It also contains one Layout for the model along with a local
+				It also contains one Layout for the model along with a global
 				Render information object that describes how the layout glyphs
 				should be rendered. 
 			</p>
 		</notes>
 		<annotation>
 			<listOfLayouts xmlns="http://projects.eml.org/bcb/sbml/level2">
-				<layout id="JDesigner2_0" xmlns="http://projects.eml.org/bcb/sbml/level2">
-					<!--Created by SBW SBML LayoutViewer/Manipulator-->
 					<annotation xmlns="http://www.sbml.org/sbml/level2">
-						<listOfRenderInformation xmlns="http://projects.eml.org/bcb/sbml/render/level2">
+						<listOfGlobalRenderInformation xmlns="http://projects.eml.org/bcb/sbml/render/level2">
 							<renderInformation id="ConvertedRenderStyle" programName="SBML Layout Viewer - SBW version" programVersion="2.7.4344.16022 Compiled on: 11/23/2011 8:54:04 AM">
 								<listOfColorDefinitions>
 									<colorDefinition id="Color_0" value="#ff9900" />
@@ -60,9 +58,9 @@
 									</lineEnding>
 								</listOfLineEndings>
 								<listOfStyles>
-									<style idList="sGlyph_0">
+									<style typeList="SPECIESGLYPH">
 										<g font-size="0" font-style="normal" font-weight="normal" text-anchor="start" vtext-anchor="top">
-											<polygon stroke="Color_0" stroke-width="2" fill="LinearGradient_0">
+											<curve stroke="Color_0" stroke-width="2" fill="LinearGradient_0">
 												<listOfCurveSegments>
 													<curveSegment xsi:type="CubicBezier" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
 														<start x="20" y="0" />
@@ -97,70 +95,32 @@
 														<end x="20" y="0" />
 													</curveSegment>
 												</listOfCurveSegments>
-											</polygon>
+											</curve>
 										</g>
 									</style>
-									<style idList="sGlyph_1">
-										<g font-size="0" font-style="normal" font-weight="normal" text-anchor="start" vtext-anchor="top">
-											<polygon stroke="Color_0" stroke-width="2" fill="LinearGradient_0">
-												<listOfCurveSegments>
-													<curveSegment xsi:type="CubicBezier" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
-														<start x="20" y="0" />
-														<end x="0" y="20" />
-														<basePoint1 x="8.95430500338413" y="0" />
-														<basePoint2 x="0" y="8.95430500338413" />
-													</curveSegment>
-													<curveSegment xsi:type="CubicBezier" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
-														<start x="0" y="20" />
-														<end x="20" y="40" />
-														<basePoint1 x="0" y="31.0456949966159" />
-														<basePoint2 x="8.95430500338413" y="40" />
-													</curveSegment>
-													<curveSegment xsi:type="LineSegment" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
-														<start x="20" y="40" />
-														<end x="42" y="40" />
-													</curveSegment>
-													<curveSegment xsi:type="CubicBezier" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
-														<start x="42" y="40" />
-														<end x="62" y="20" />
-														<basePoint1 x="53.0456949966159" y="40" />
-														<basePoint2 x="62" y="31.0456949966159" />
-													</curveSegment>
-													<curveSegment xsi:type="CubicBezier" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
-														<start x="62" y="20" />
-														<end x="42" y="0" />
-														<basePoint1 x="62" y="8.95430500338413" />
-														<basePoint2 x="53.0456949966159" y="0" />
-													</curveSegment>
-													<curveSegment xsi:type="LineSegment" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
-														<start x="42" y="0" />
-														<end x="20" y="0" />
-													</curveSegment>
-												</listOfCurveSegments>
-											</polygon>
-										</g>
-									</style>
-									<style idList="cGlyph_0">
+									<style typeList="COMPARTMENTGLYPH">
 										<g font-size="0" font-style="normal" font-weight="normal" text-anchor="start" vtext-anchor="top">
 											<rectangle stroke="Color_2" stroke-width="12" fill="Color_1" x="0.0" y="0.0" width="100%" height="100%" rx="5" ry="5" />
 										</g>
 									</style>
-									<style roleList="substrate sidesubstrate" idList="rGlyph_0">
+									<style roleList="substrate sidesubstrate" typeList="REACTIONGLYPH">
 										<g stroke="Color_3" stroke-width="2" font-size="0" font-style="normal" font-weight="normal" text-anchor="start" vtext-anchor="top" />
 									</style>
 									<style roleList=" product">
 										<g stroke="Color_3" stroke-width="2" font-size="0" font-style="normal" font-weight="normal" text-anchor="start" vtext-anchor="top" endHead="product" />
 									</style>
-									<style idList="tGlyph_0">
+									<style typeList="TEXTGLYPH">
 										<g stroke="Color_4" font-family="Arial" font-size="11" font-style="normal" font-weight="normal" text-anchor="middle" vtext-anchor="top" />
 									</style>
-									<style idList="tGlyph_1">
+									<style typeList="TEXTGLYPH">
 										<g stroke="Color_4" font-family="Arial" font-size="11" font-style="normal" font-weight="normal" text-anchor="middle" vtext-anchor="top" />
 									</style>
 								</listOfStyles>
 							</renderInformation>
-						</listOfRenderInformation>
+						</listOfGlobalRenderInformation>
 					</annotation>
+				<layout id="JDesigner2_0" xmlns="http://projects.eml.org/bcb/sbml/level2">
+					<!--Created by SBW SBML LayoutViewer/Manipulator-->
 					<dimensions width="436" height="232" />
 					<listOfCompartmentGlyphs>
 						<compartmentGlyph id="cGlyph_0" compartment="vol1">
@@ -190,6 +150,9 @@
 								<position x="0" y="0" />
 								<dimensions width="0" height="0" />
 							</boundingBox>
+							<curve>
+								<listOfCurveSegments />
+							</curve>
 							<listOfSpeciesReferenceGlyphs>
 								<speciesReferenceGlyph id="SpeciesReference_J0_0" speciesReference="Node1" speciesGlyph="sGlyph_1" role="product" objectRole="product">
 									<curve>
@@ -204,6 +167,9 @@
 									</curve>
 								</speciesReferenceGlyph>
 								<speciesReferenceGlyph id="SpeciesReference_J0_2" speciesReference="Node0" speciesGlyph="sGlyph_0" role="substrate" objectRole="substrate">
+									<curve>
+										<listOfCurveSegments />
+									</curve>
 								</speciesReferenceGlyph>
 							</listOfSpeciesReferenceGlyphs>
 						</reactionGlyph>

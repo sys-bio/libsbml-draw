@@ -791,7 +791,12 @@ class Render:
               line_ending.getBoundingBox().getWidth(), 
               line_ending.getBoundingBox().getHeight() )
                
-        local_render_info.addLineEnding(line_ending)
+        result = local_render_info.addLineEnding(line_ending)
+        print("result: ", result)
+        print("success would be: ", libsbml.LIBSBML_OPERATION_SUCCESS)
+        print("not success would be level mm: ", libsbml.LIBSBML_LEVEL_MISMATCH)
+        print("version mm: ", libsbml.LIBSBML_VERSION_MISMATCH)  
+        
      
 #        line_ending_product = local_render_info.createLineEnding()
 #        line_ending_product.setId("product")
