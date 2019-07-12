@@ -629,7 +629,7 @@ class Render:
 
         return reactionIds        
 
-    def _applyLocalRenderInformation(self, network):
+    def _applyLocalRenderInformationTwo(self, network):
         """Sets values in the model's nodes and reactions as specified by
         the idList for each local style.
 
@@ -692,6 +692,46 @@ class Render:
                                     network, local_style)                            
                         else:
                             pass
+                        
+    def _applyLocalRenderInformation(self, network):
+        """Sets values in the model's species (nodes), reactions, and 
+        compartments by finding the most specific local style that applies. 
+        Styles can be applied based on an id (of a glyph), role (of a curve), 
+        or type of glyph (SPECIES, TEXT, REACTION, and COMPARTMENT). 
+
+        Args:
+            network (libsbml_draw.model.Network): the model's network
+
+        Returns: None
+        """
+        if self.rPlugin:
+
+            for local_render_info in \
+                    self.rPlugin.getListOfLocalRenderInformation():
+
+                if local_render_info:
+                    
+                    self.color_definitions = self._collectColorDefinitions(
+                            local_render_info)
+
+                local_styles = local_render_info.getListOfStyles()
+                   
+                # Nodes and Nodes Text - assign a style
+                for node in network.nodes.values():
+
+                    for local_style in local_styles():
+                        pass
+                        #id_local_style
+                        #type_local_style                          
+
+                # Reactions - assign a style
+                for reaction in network.reactions.values():
+                    pass
+
+                # Compartments - assign a style
+                for compartment in network.compartments.values():
+                    pass                    
+                     
 
     def _getCompartmentIdsFromCGlyphs(self, local_style, network):
         """

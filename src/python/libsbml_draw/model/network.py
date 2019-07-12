@@ -54,6 +54,7 @@ class Node():
         self.font_style = "normal"
         self.text_anchor = "center"
         self.vtext_anchor = "bottom"
+        self.font_weight = "normal" 
 
 class Curve():
     """Part of a complete reaction curve. As an example, a reaction between a
