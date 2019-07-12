@@ -19,6 +19,24 @@ GlyphProperty = namedtuple("GlyphProperty", ["type", "entity_id"])
 
 FONT_STYLES = ["none", "normal", "italic"]
 
+ROLES = ["substrate", "product", "sidesubstrate", "sideproduct",
+         "modifier", "activator", "inhibitor"]
+
+# The values in these "types" vars are sorted by specificity:
+# most specific to least specific
+
+COMPARTMENT_TYPES = ["COMPARTMENTGLYPH", "GENERALGLYPH", 
+                     "GRAPHICALOBJECT", "ANY"]
+        
+SPECIES_TYPES = ["SPECIESGLYPH", "GENERALGLYPH", 
+                 "GRAPHICALOBJECT", "ANY"]
+
+TEXT_TYPES = ["TEXTGLYPH", "GENERALGLYPH", 
+              "GRAPHICALOBJECT", "ANY"]
+
+REACTION_TYPES = ["REACTIONGLYPH", "GENERALGLYPH", 
+                  "GRAPHICALOBJECT", "ANY"]
+
 
 class Render:
     """Holds the render data and provides methods to apply that data to a
@@ -53,7 +71,9 @@ class Render:
         self.textToGlyphs = self._createSpeciesTextDirectory()        
         self.textGlyphs = self._createTextGlyphsDirectory()
         self.compartmentGlyphs = self._createCompartmentGlyphsDirectory()
+        self.compartmentsToGlyphs = self.createCompartmentsDirectory()
         self.reactionGlyphs = self._createReactionGlyphsDirectory()
+        self.reactionToGlyphs = self.createReactionsDirectory()
         self.glyphsDirectory = self._createGlyphsDirectory()
 
 #        print("num compartment glyphs: ", len(self.compartmentGlyphs))
@@ -81,6 +101,28 @@ class Render:
             speciesTextDirectory[species_id] = glyph_id
         
         return speciesTextDirectory
+
+    def _createReactionsDirectory(self,):
+        """ """
+        reactionsDirectory = dict()
+        
+        for reaction in self.layout.getListOfReactionGlyphs():
+            glyph_id = reaction.getId()
+            reaction_id = self.reactionGlyphs[reaction.getId()]
+            reactionsDirectory[reaction_id] = glyph_id
+        
+        return reactionsDirectory
+
+    def _createCompartmentsDirectory(self,):
+        """ """
+        compartmentsDirectory = dict()
+        
+        for compartment in self.layout.getListOfCompartmentGlyphs():
+            glyph_id = compartment.getId()
+            compartment_id = self.compartmentGlyphs[compartment.getId()]
+            compartmentsDirectory[compartment_id] = glyph_id
+        
+        return compartmentsDirectory
 
     def _createSpeciesGlyphsDirectory(self,):
         """
@@ -189,7 +231,8 @@ class Render:
             "family": system_font_names + ["serif", "sans-serif", "cursive",
                                            "fantasy", "monospace"],
             "size": ["xx-small", "x-small", "small", "medium", "large",
-                     "x-large", "xx-large"]
+                     "x-large", "xx-large"],
+            "weight": ["normal", "bold"]         
         }
 
         return font_properties
@@ -333,7 +376,13 @@ class Render:
                 font_property = FontProperty(True, property_value)
             else:
                 font_property = FontProperty(False, property_value)  
-            
+
+        elif font_property == "weight":
+            if property_value in self.font_properties[font_property]:
+                font_property = FontProperty(True, FONT_STYLES[property_value])
+            else:
+                font_property = FontProperty(False, property_value)
+                    
         else:
             font_property = FontProperty(False, property_value)
 
@@ -532,20 +581,6 @@ class Render:
 
         Returns: None
         """
-        COMPARTMENT_TYPES = ["COMPARTMENTGLYPH", "GENERALGLYPH", 
-                             "GRAPHICALOBJECT", "ANY"]
-        
-        SPECIES_TYPES = ["SPECIESGLYPH", "GENERALGLYPH", 
-                       "GRAPHICALOBJECT", "ANY"]
-
-        TEXT_TYPES = ["TEXTGLYPH", "GENERALGLYPH", 
-                      "GRAPHICALOBJECT", "ANY"]
-
-        REACTION_TYPES = ["REACTIONGLYPH", "GENERALGLYPH", 
-                             "GRAPHICALOBJECT", "ANY"]
-
-        ROLES = ["substrate", "product", "sidesubstrate", "sideproduct",
-                 "modifier", "activator", "inhibitor"]
         
         if (self.render_plugin and
                 self.render_plugin.getNumGlobalRenderInformationObjects() > 0):
@@ -635,7 +670,7 @@ class Render:
                         # update reaction curves                        
                         for reaction in network.reactions.values():
                             for curve in reaction.curves:
-                                if curve.role in role_type:
+                                if curve.role_name.lower() in role_type:
                                     self._updateCurve(curve, global_style)
                                 else:
                                     for glyph_type in REACTION_TYPES:
@@ -854,23 +889,215 @@ class Render:
 
                 local_styles = local_render_info.getListOfStyles()
                    
-                # Nodes and Nodes Text - assign a style
+                # Nodes - assign a style
                 for node in network.nodes.values():
 
+                    nodes_type = dict()                    
+                    node_assigned = False                  
+                    glyph_id = self.speciesToGlyphs(node.id)
+                    
                     for local_style in local_styles():
-                        pass
-                        #id_local_style
-                        #type_local_style                          
+                        idList = local_style.getIdList() 
+                        if idList.size():
+                            if local_style.isInIdList(glyph_id):                       
+                                self._updateNode(node, local_style)
+                                node_assigned = True
+                                break
+                        # has type list and no id list    
+                        elif local_style.getTypeList().size():
+                            for node_type in SPECIES_TYPES:
+                                if local_style.isInTypeList(node_type):
+                                    nodes_type[node_type] = local_style                            
+                        else:
+                            pass
 
-                # Reactions - assign a style
-                for reaction in network.reactions.values():
-                    pass
+                    if not node_assigned:
+                        for node_type in SPECIES_TYPES:
+                            if node_type in nodes_type:
+                                self._updateNode(node, nodes_type[node_type])
+                                break
+                             
+                # Nodes text - assign a style
+                for node in network.nodes.values():
+
+                    node_text_type = dict()
+                    node_assigned = False
+                    glyph_id = self.textToGlyphs(node.id)
+                    
+                    for local_style in local_styles():
+                        idList = local_style.getIdList() 
+                        if idList.size():
+                            if local_style.isInIdList(glyph_id):                       
+                                self._updateNodeText(node, local_style)
+                                node_assigned = True
+                                break
+                        # has type list and no id list    
+                        elif local_style.getTypeList().size():
+                            for node_type in TEXT_TYPES:
+                                if local_style.isInTypeList(node_type):
+                                    node_text_type[node_type] = local_style                            
+                        else:
+                            pass
+
+                    if not node_assigned:
+                        for node_type in TEXT_TYPES:
+                            if node_type in node_text_type:
+                                self._updateNodeText(node, nodes_type[node_type])
+                                break
 
                 # Compartments - assign a style
                 for compartment in network.compartments.values():
-                    pass                    
-                     
+                                        
+                    compartments_type = dict()
+                    compartment_assigned = False
+                    glyph_id = self.compartmentsToGlyphs(compartment.id)
+                    
+                    for local_style in local_styles():
+                        idList = local_style.getIdList() 
+                        if idList.size():
+                            if local_style.isInIdList(glyph_id):                       
+                                self._updateCompartment(compartment, local_style)
+                                compartment_assigned = True
+                                break
+                        # has type list and no id list    
+                        elif local_style.getTypeList().size():
+                            for compartment_type in COMPARTMENT_TYPES:
+                                if local_style.isInTypeList(compartment_type):
+                                    compartments_type[compartment_type] = local_style                            
+                        else:
+                            pass
 
+                    if not compartment_assigned:
+                        for compartment_type in COMPARTMENT_TYPES:
+                            if compartment_type in compartments_type:
+                                self._updateCompartment(compartment, compartments_type[compartment_type])
+                                break
+                                        
+                # Reactions - assign a style
+                for reaction in network.reactions.values():
+
+                    reactions_type = dict()
+                    glyph_id = self.reactionToGlyphs[reaction.id]
+                    
+                    for curve in reaction.curves:
+                        
+                        curve_assigned = False
+                        
+                        for local_style in local_styles():
+                        
+                            if (local_style.getIdList().size() and 
+                                local_style.getRoleList().size()):
+                                
+                                if (local_style.isInIdList(glyph_id) and 
+                                    local_style.isInRoleList(curve.role_name.lower())):
+                
+                                    self._updateCurve(curve, local_style)                    
+                                    curve_assigned = True                
+                                    break                
+                
+                
+                
+                
+            
+
+    def _updateNode(self, node, render_style):
+        """ 
+        """
+        
+        node_fill_color = self._set_plot_color_and_validity(
+                render_style.getGroup().getElement(0).getFillColor())
+        node_edge_color = self._set_plot_color_and_validity(
+                render_style.getGroup().getElement(0).getStroke())
+        node_edge_width = render_style.getGroup().getElement(0).getStrokeWidth()
+        
+
+        if node_fill_color.is_valid_color:
+            node.fill_color = node_fill_color.color
+        else:
+            pass
+
+        if node_edge_color.is_valid_color:
+                node.edge_color = node_edge_color.color
+        else:
+            pass
+
+        node.edge_width = node_edge_width        
+    
+    
+    def _updateNodeText(self, node, render_style):
+        """ 
+        """
+        node_font_color = self._set_plot_color_and_validity(
+                render_style.getGroup().getStroke())
+
+        node_font_size = self._set_font_property(
+                "size",
+                render_style.getGroup().getFontSize().getAbsoluteValue())
+
+        node_font_family = self._set_font_property(
+                "family",
+                render_style.getGroup().getFontFamily())
+
+        node_font_style = self._set_font_property(
+                "style",
+                render_style.getGroup().getFontStyle())
+
+        node_horizontal_alignment = self._set_font_property(
+                "textanchor", 
+                render_style.getGroup().getTextAnchorAsString())
+        
+        node_vertical_alignment = self._set_font_property(
+                "vtextanchor",
+                render_style.getGroup().getVTextAnchorAsString())
+
+        node_weight = self._set_font_property(
+                "weight",
+                render_style.getGroup().getFontWeight())
+
+        if node_font_color.is_valid_color:
+            node.font_color = node_font_color.color
+
+        if node_font_style.is_valid_value:
+            node.font_style = node_font_style.value
+
+        if node_font_size.is_valid_value:
+            node.font_size = node_font_size.value
+
+        if node_font_family.is_valid_value:
+            node.font_family = node_font_family.value
+
+        if node_horizontal_alignment.is_valid_value:
+            node.text_anchor = node_horizontal_alignment.value
+                
+        if node_vertical_alignment.is_valid_value:
+            node.vtext_anchor = node_vertical_alignment.value
+
+        if node_weight.is_valid_value:
+            node.weight = node_weight.value
+        
+    def _updateCompartment(self, compartment, render_style):    
+        """ """
+        compartment_edge_color = self._set_plot_color_and_validity(
+                render_style.getGroup().getElement(0).getStroke())
+
+        compartment_fill_color = self._set_plot_color_and_validity(
+                render_style.getGroup().getElement(0).getFillColor())
+
+        compartment_line_width = render_style.getGroup().getElement(0).getStrokeWidth()
+
+        if compartment_edge_color.is_valid_color:
+            compartment.edge_color = compartment_edge_color.color
+        else:
+            pass
+
+        if compartment_fill_color.is_valid_color:
+            compartment.fill_color = compartment_fill_color.color
+        else:
+            pass
+
+        if compartment_line_width > 0:
+            compartment.line_width = compartment_line_width
+        
     def _getCompartmentIdsFromCGlyphs(self, local_style, network):
         """
         """
