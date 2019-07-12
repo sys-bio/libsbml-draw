@@ -244,10 +244,8 @@ class Render:
             idList(list): list of ids to update
 
         Returns: None
-        """
-        
+        """        
 #        element = render_style.getGroup().getElement(0)
-
 #        print("element data ", type(element), element.isRectangle(), element.isRenderCurve(), element.getStroke())
         
         node_fill_color = self._set_plot_color_and_validity(
@@ -480,7 +478,7 @@ class Render:
             if compartment_line_width > 0:
                 compartment.line_width = compartment_line_width
 
-    def _applyGlobalRenderInformation(self, network):
+    def _applyGlobalRenderInformationOrig(self, network):
         """Applies global style render information as specified in the
         SPECIESGLYPH, TEXTGLYPH, REACTIONGLYPH, and COMPARTMENTGLYPH.
 
@@ -525,6 +523,146 @@ class Render:
                         else:
                             pass
 
+    def _applyGlobalRenderInformation(self, network):
+        """Applies global style render information as specified in the
+        SPECIESGLYPH, TEXTGLYPH, REACTIONGLYPH, and COMPARTMENTGLYPH.
+
+        Args:
+            network (libsbml_draw.model.Network): the model's network
+
+        Returns: None
+        """
+        COMPARTMENT_TYPES = ["COMPARTMENTGLYPH", "GENERALGLYPH", 
+                             "GRAPHICALOBJECT", "ANY"]
+        
+        SPECIES_TYPES = ["SPECIESGLYPH", "GENERALGLYPH", 
+                       "GRAPHICALOBJECT", "ANY"]
+
+        TEXT_TYPES = ["TEXTGLYPH", "GENERALGLYPH", 
+                      "GRAPHICALOBJECT", "ANY"]
+
+        REACTION_TYPES = ["REACTIONGLYPH", "GENERALGLYPH", 
+                             "GRAPHICALOBJECT", "ANY"]
+
+        ROLES = ["substrate", "product", "sidesubstrate", "sideproduct",
+                 "modifier", "activator", "inhibitor"]
+        
+        if (self.render_plugin and
+                self.render_plugin.getNumGlobalRenderInformationObjects() > 0):
+
+            for global_render_info in \
+                    self.render_plugin.getListOfGlobalRenderInformation():
+
+                if global_render_info:
+
+                    self.color_definitions = self._collectColorDefinitions(
+                            global_render_info)
+
+                    global_styles = global_render_info.getListOfStyles()
+                
+                    compartments_type = dict()
+                    nodes_type = dict()
+                    node_text_type = dict()
+                    reaction_type = dict()
+                    role_type = dict()
+                    
+                    for global_style in global_styles:
+
+                        # collect types which apply to compartments
+                        for glyph_type in COMPARTMENT_TYPES:                            
+                            if global_style.isInTypeList(glyph_type):
+                                compartments_type[glyph_type] = global_style
+                            else:
+                                pass
+                        # collect types which apply to nodes
+                        for glyph_type in SPECIES_TYPES:                            
+                            if global_style.isInTypeList(glyph_type):
+                                nodes_type[glyph_type] = global_style
+                            else:
+                                pass
+                        # collect types which apply to node text
+                        for glyph_type in TEXT_TYPES:                            
+                            if global_style.isInTypeList(glyph_type):
+                                node_text_type[glyph_type] = global_style
+                            else:
+                                pass
+                        # collect types which apply to reactions
+                        for glyph_type in REACTION_TYPES:
+                            if global_style.isInTypeList(glyph_type):
+                                reaction_type[glyph_type] = global_style
+                            else:
+                                pass
+                        # collect roles
+                        for role in ROLES:
+                            if global_style.isInRoleList(role):
+                                role_type[role] = global_style
+                            else:
+                                pass
+
+                        # update compartments                            
+                        for glyph_type in COMPARTMENT_TYPES:
+                            if glyph_type in compartments_type:
+                                self._updateCompartmentsBasedOnCompartmentGlyph(
+                                    global_style,
+                                    network,
+                                    network.compartments.keys())
+                                break
+                            else:
+                                pass
+
+                        # update nodes
+                        for glyph_type in SPECIES_TYPES:
+                            if glyph_type in nodes_type:
+                                self._updateNodesBasedOnSpeciesGlyph(
+                                    global_style,
+                                    network,
+                                    network.compartments.keys())
+                                break
+                            else:
+                                pass
+
+                        # update node text
+                        for glyph_type in TEXT_TYPES:
+                            if glyph_type in node_text_type:
+                                self._updateNodesBasedOnTextGlyph(
+                                    global_style,
+                                    network,
+                                    network.compartments.keys())
+                                break
+                            else: 
+                                pass
+
+                        # update reaction curves                        
+                        for reaction in network.reactions.values():
+                            for curve in reaction.curves:
+                                if curve.role in role_type:
+                                    self._updateCurve(curve, global_style)
+                                else:
+                                    for glyph_type in REACTION_TYPES:
+                                        if glyph_type in reaction_type:
+                                            self._updateCurve(curve, 
+                                                              global_style)
+                                            break   
+                                        else:
+                                            pass
+
+
+    def _updateCurve(self, curve, render_style):
+        """ """
+        curve_edge_color = self._set_plot_color_and_validity(
+                render_style.getGroup().getStroke())
+
+        curve_edge_width = render_style.getGroup().getStrokeWidth()
+
+        if curve_edge_color.is_valid_color:
+            curve.edge_color = curve_edge_color.color
+            curve.fill_color = curve_edge_color.color
+        else:
+            pass
+
+        curve.curve_width = curve_edge_width                
+        
+        
     def _getLocalIdList(self, local_style, network_id_set):
         """Gets a list of ids from the network (nodes, reactions, or
         compartments), which are found in the LocalStyle's id list.

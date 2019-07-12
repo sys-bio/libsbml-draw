@@ -83,7 +83,9 @@ class Curve():
         self.role = sbnw.curve_getRole(h_curve)
         self.role_name = Role(self.role).name
         self.curveArrowStyle = Curve.role_arrowstyles[self.role]
-
+        self.edge_color = "blue"
+        self.fill_color = "blue"
+        self.curve_width = 1
 
 class Reaction():
     """Represents a reaction in the SBML model."""

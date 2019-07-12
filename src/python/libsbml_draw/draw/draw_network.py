@@ -145,11 +145,11 @@ def draw_reactions(reactions, mutation_scale, fig, scaling_factor, nw_height_inc
                     [Path.MOVETO, Path.CURVE4, Path.CURVE4, Path.CURVE4])
 
             fap = FancyArrowPatch(
-                    facecolor=reaction.fill_color,
-                    edgecolor=reaction.edge_color,
+                    facecolor=curve.fill_color,
+                    edgecolor=curve.edge_color,
                     arrowstyle=curve.curveArrowStyle,
                     clip_on=False,
-                    linewidth=reaction.curve_width,
+                    linewidth=curve.curve_width,
                     mutation_scale=mutation_scale.get(curve.role, 10),
                     path=cubic_bezier_curve_path,
                     transform=fig.dpi_scale_trans
