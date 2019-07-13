@@ -71,9 +71,9 @@ class Render:
         self.textToGlyphs = self._createSpeciesTextDirectory()        
         self.textGlyphs = self._createTextGlyphsDirectory()
         self.compartmentGlyphs = self._createCompartmentGlyphsDirectory()
-        self.compartmentsToGlyphs = self.createCompartmentsDirectory()
+        self.compartmentsToGlyphs = self._createCompartmentsDirectory()
         self.reactionGlyphs = self._createReactionGlyphsDirectory()
-        self.reactionToGlyphs = self.createReactionsDirectory()
+        self.reactionToGlyphs = self._createReactionsDirectory()
         self.glyphsDirectory = self._createGlyphsDirectory()
 
 #        print("num compartment glyphs: ", len(self.compartmentGlyphs))
@@ -634,52 +634,61 @@ class Render:
                             else:
                                 pass
 
-                        # update compartments                            
-                        for glyph_type in COMPARTMENT_TYPES:
-                            if glyph_type in compartments_type:
-                                self._updateCompartmentsBasedOnCompartmentGlyph(
-                                    global_style,
-                                    network,
-                                    network.compartments.keys())
-                                break
+                    # update compartments                            
+                    print("len compartments type:", len(compartments_type))
+                    for glyph_type in COMPARTMENT_TYPES:                            
+                        if glyph_type in compartments_type:
+                            self._updateCompartmentsBasedOnCompartmentGlyph(
+                                compartments_type[glyph_type],
+                                network,
+                                network.compartments.keys())
+                            break
+                        else:
+                            pass
+
+                    node_color = nodes_type["SPECIESGLYPH"].getGroup().getElement(0).getStroke()
+                    print("color defn: ", self.color_definitions[node_color])
+                    print("len nodes_type: ", len(nodes_type), 
+                          node_color)
+                    print("len text type: ", len(node_text_type), 
+                          node_text_type["TEXTGLYPH"].getGroup().getFontSize().getAbsoluteValue())
+
+                    # update nodes
+                    for glyph_type in SPECIES_TYPES:
+                        if glyph_type in nodes_type:
+                            self._updateNodesBasedOnSpeciesGlyph(
+                                nodes_type[glyph_type],
+                                network,
+                                network.nodes.keys())
+                            break
+                        else:
+                            pass
+
+                    # update node text
+                    for glyph_type in TEXT_TYPES:
+                        if glyph_type in node_text_type:
+                            self._updateNodesBasedOnTextGlyph(
+                                node_text_type[glyph_type],
+                                network,
+                                network.nodes.keys())
+                            break
+                        else: 
+                            pass
+
+                    # update reaction curves                        
+                    for reaction in network.reactions.values():
+                        for curve in reaction.curves:
+                            if curve.role_name.lower() in role_type:
+                                self._updateCurve(curve, 
+                                        role_type[curve.role_name.lower()])
                             else:
-                                pass
-
-                        # update nodes
-                        for glyph_type in SPECIES_TYPES:
-                            if glyph_type in nodes_type:
-                                self._updateNodesBasedOnSpeciesGlyph(
-                                    global_style,
-                                    network,
-                                    network.compartments.keys())
-                                break
-                            else:
-                                pass
-
-                        # update node text
-                        for glyph_type in TEXT_TYPES:
-                            if glyph_type in node_text_type:
-                                self._updateNodesBasedOnTextGlyph(
-                                    global_style,
-                                    network,
-                                    network.compartments.keys())
-                                break
-                            else: 
-                                pass
-
-                        # update reaction curves                        
-                        for reaction in network.reactions.values():
-                            for curve in reaction.curves:
-                                if curve.role_name.lower() in role_type:
-                                    self._updateCurve(curve, global_style)
-                                else:
-                                    for glyph_type in REACTION_TYPES:
-                                        if glyph_type in reaction_type:
-                                            self._updateCurve(curve, 
-                                                              global_style)
-                                            break   
-                                        else:
-                                            pass
+                                for glyph_type in REACTION_TYPES:
+                                    if glyph_type in reaction_type:
+                                        self._updateCurve(curve, 
+                                            reaction_type[curve.role_name.lower()])
+                                        break   
+                                    else:
+                                        pass
 
 
     def _updateCurve(self, curve, render_style):
@@ -689,13 +698,16 @@ class Render:
 
         curve_edge_width = render_style.getGroup().getStrokeWidth()
 
+        print("curve: ", curve_edge_color, curve_edge_width)
+
         if curve_edge_color.is_valid_color:
             curve.edge_color = curve_edge_color.color
             curve.fill_color = curve_edge_color.color
         else:
             pass
 
-        curve.curve_width = curve_edge_width                
+        if curve_edge_width > 0:
+            curve.curve_width = curve_edge_width                
         
         
     def _getLocalIdList(self, local_style, network_id_set):
@@ -894,9 +906,9 @@ class Render:
 
                     nodes_type = dict()                    
                     node_assigned = False                  
-                    glyph_id = self.speciesToGlyphs(node.id)
+                    glyph_id = self.speciesToGlyphs[node.id]
                     
-                    for local_style in local_styles():
+                    for local_style in local_styles:
                         idList = local_style.getIdList() 
                         if idList.size():
                             if local_style.isInIdList(glyph_id):                       
@@ -922,9 +934,9 @@ class Render:
 
                     node_text_type = dict()
                     node_assigned = False
-                    glyph_id = self.textToGlyphs(node.id)
+                    glyph_id = self.textToGlyphs[node.id]
                     
-                    for local_style in local_styles():
+                    for local_style in local_styles:
                         idList = local_style.getIdList() 
                         if idList.size():
                             if local_style.isInIdList(glyph_id):                       
@@ -950,9 +962,9 @@ class Render:
                                         
                     compartments_type = dict()
                     compartment_assigned = False
-                    glyph_id = self.compartmentsToGlyphs(compartment.id)
+                    glyph_id = self.compartmentsToGlyphs[compartment.id]
                     
-                    for local_style in local_styles():
+                    for local_style in local_styles:
                         idList = local_style.getIdList() 
                         if idList.size():
                             if local_style.isInIdList(glyph_id):                       
@@ -977,14 +989,16 @@ class Render:
                 for reaction in network.reactions.values():
 
                     reactions_type = dict()
+                    roles_type = dict()
                     glyph_id = self.reactionToGlyphs[reaction.id]
                     
                     for curve in reaction.curves:
                         
                         curve_assigned = False
                         
-                        for local_style in local_styles():
+                        for local_style in local_styles:
                         
+                            # has idList and roleList
                             if (local_style.getIdList().size() and 
                                 local_style.getRoleList().size()):
                                 
@@ -993,13 +1007,32 @@ class Render:
                 
                                     self._updateCurve(curve, local_style)                    
                                     curve_assigned = True                
-                                    break                
-                
-                
-                
-                
-            
+                                    break            
+                                
+                            # has roleList, no IdList 
+                            elif local_style.getRoleList().size():
+                                for role in ROLES:
+                                    if local_style.isInRoleList(role.lower()):
+                                        roles_type[role] = local_style       
+                            # has typeList, no roleList            
+                            elif local_style.getTypeList().size():
+                                for reaction_type in REACTION_TYPES:
+                                    if local_style.isInTypeList(reaction_type):
+                                        reactions_type[reaction_type] = local_style
 
+                        if not curve_assigned:                
+                            # assign based on role                            
+                            if curve.role_name.lower() in roles_type:
+                                self._updateCurve(curve, roles_type[curve.role_name.lower()])   
+                            # assign based on type
+                            else:
+                                for reaction_type in REACTION_TYPES:
+                                    if reaction_type in reactions_type:
+                                        self._updateCurve(curve, local_style)
+                                        break
+                        else:
+                            pass
+                            
     def _updateNode(self, node, render_style):
         """ 
         """

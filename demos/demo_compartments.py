@@ -16,3 +16,6 @@ sl._describeModel()
 
 sl.drawNetwork()
 
+for node in sl._SBMLlayout__network.nodes.values():
+    print("node: ", node.font_size)
+
