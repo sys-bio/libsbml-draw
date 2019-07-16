@@ -31,7 +31,8 @@ class Compartment():
         self.edge_color = "#0000ff30"  # 30% blue
         self.fill_color = "#0000ff05"  # 5% blue
         self.line_width = 3
-
+        self.shape = "round_box"
+        self.rectangle_rounding = 0.6
 
 class Node():
     """Represents a node in the SBMl model."""
@@ -48,13 +49,15 @@ class Node():
         self.edge_width = 1
         self.edge_color = "#0000ff"
         self.fill_color = "#c9e0fb"
-        self.font_size = 12
+        self.font_size = 10
         self.font_family = "Arial"
         self.font_color = "#000000"
         self.font_style = "normal"
         self.text_anchor = "center"
         self.vtext_anchor = "bottom"
         self.font_weight = "normal" 
+        self.shape = "round_box"
+        self.rectangle_rounding = 0.6
 
 class Curve():
     """Part of a complete reaction curve. As an example, a reaction between a
@@ -83,8 +86,8 @@ class Curve():
         self.role = sbnw.curve_getRole(h_curve)
         self.role_name = Role(self.role).name
         self.curveArrowStyle = Curve.role_arrowstyles[self.role]
-        self.edge_color = "blue"
-        self.fill_color = "blue"
+        self.edge_color = "#0000ff"
+        self.fill_color = "#0000ff"
         self.curve_width = 1
 
 class Reaction():
@@ -95,8 +98,8 @@ class Reaction():
             h_curve = sbnw.reaction_getCurvep(h_reaction, curve_index)
             self.curves.append(Curve(h_curve))
         self.id = sbnw.reaction_getID(h_reaction)
-        self.edge_color = "blue"
-        self.fill_color = "blue"
+        self.edge_color = "#0000ff"
+        self.fill_color = "#0000ff"
         self.curve_width = 1
         self.centroid = sbnw.reaction_getCentroid(h_reaction)
 
@@ -113,6 +116,7 @@ class Network():
         self._add_reactions()
         self._add_compartments()
         self.aliasedNodes = {}
+        self.bg_color = "ffffff"
 
     def _remove_node(self, node_id):
         """Remove a node from the network.

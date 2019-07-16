@@ -29,17 +29,18 @@ class SBMLlayout:
 
     def __init__(self, sbml_source=None, layout_alg_options=None,
                  layout_number=0, fitToWindow=tuple(),
-                 autoComputeLayout=False):
+                 autoComputeLayout=False, applyRender=False):
 
         self.__sbml_source = sbml_source
         self.__layout_number = layout_number
         self.__fitWindow = fitToWindow
+        self.__applyRender = applyRender
 
         if self._validate_layout_alg_options(layout_alg_options):
             self.__layout_alg_options = layout_alg_options
         else:
             self.__layout_alg_options = sbnw.fr_alg_options(
-                20.0,        # k
+                10.0,        # k
                 0,           # grav, has to be > 5 for effect
                 500.0,       # baryx
                 500.0,       # baryy
@@ -80,7 +81,8 @@ class SBMLlayout:
                         self.__getSBMLWithLayoutString())
 
                 self.__network = self.__createNetwork()
-                self.__applyRenderInformation()
+#                if self.applyRender:
+#                    self.__applyRenderInformation()
 
                 # compute and set width and height for node boxes
                 for node in self.__network.nodes.values():
@@ -112,7 +114,8 @@ class SBMLlayout:
 
             self.__network = self.__createNetwork()
 
-            self.__applyRenderInformation()
+            if self.__applyRender:
+                self.__applyRenderInformation()
 
             self.__arrowhead_scale = {key: 10 for key in
                                       range(self.getNumberOfRoles())}
@@ -344,7 +347,8 @@ class SBMLlayout:
         self.__network = self.__createNetwork()
 
         # apply render information, if any
-        self.__applyRenderInformation()
+        if self.__applyRender:
+            self.__applyRenderInformation()
 
     def regenerateLayout(self,):
         """Use this to generate a new layout, and update the network's node

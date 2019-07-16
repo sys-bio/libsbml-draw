@@ -62,6 +62,8 @@ class Render:
                 ).getPlugin("render") if self.layout_plugin else None
         self.font_properties = self._getFontProperties()
         self.color_definitions = {}
+        self.linear_gradients = {}
+        self.line_endings = {}
 #        self.compartmentGlyphs = self.layout.getListOfCompartmentGlyphs()
 #        self.reactionGlyphs = self.layout.getListOfReactionGlyphs()
 #        self.speciesGlyphs = self.layout.getListOfSpeciesGlyphs()
@@ -246,16 +248,16 @@ class Render:
         print("render_plugin: ", type(self.render_plugin))
         print("num layouts: ", self.layout_plugin.getNumLayouts())
 
-    def _collectColorDefinitions(self, global_render_info):
-        """Gets the global render color definitions.
+    def _collectColorDefinitions(self, render_info):
+        """Gets the render color definitions.
 
         Args:
-            global_render_info(libsbml.Render):
+            render_info(libsbml.Render):
 
         Returns: dict, keys = color id, values = color value
         """
         color_definitions = {}
-        for color_defn in global_render_info.getListOfColorDefinitions():
+        for color_defn in render_info.getListOfColorDefinitions():
             color_definitions[color_defn.getId()
                               ] = color_defn.createValueString()
         return color_definitions
@@ -498,34 +500,36 @@ class Render:
         Returns: None
         """
         print("UPDATING COMPARTMENTS")
-        
-        compartment_edge_color = self._set_plot_color_and_validity(
+
+        try:         
+            compartment_edge_color = self._set_plot_color_and_validity(
                 render_style.getGroup().getElement(0).getStroke())
 
-        compartment_fill_color = self._set_plot_color_and_validity(
+            compartment_fill_color = self._set_plot_color_and_validity(
                 render_style.getGroup().getElement(0).getFillColor())
 
-        compartment_line_width = render_style.getGroup().getElement(0).getStrokeWidth()
+            compartment_line_width = render_style.getGroup().getElement(0).getStrokeWidth()
 
-        compartments_to_update = {k: network.compartments[k] for k in
+            compartments_to_update = {k: network.compartments[k] for k in
                                   network.compartments.keys() & idList}
 
-        for compartment in compartments_to_update.values():
+            for compartment in compartments_to_update.values():
 
-            if compartment_edge_color.is_valid_color:
-                compartment.edge_color = compartment_edge_color.color
-            else:
-                pass
-                # stick with default value
+                if compartment_edge_color.is_valid_color:
+                    compartment.edge_color = compartment_edge_color.color
+                else:
+                    pass
 
-            if compartment_fill_color.is_valid_color:
-                compartment.fill_color = compartment_fill_color.color
-            else:
-                pass
-                # stick with default value
+                if compartment_fill_color.is_valid_color:
+                    compartment.fill_color = compartment_fill_color.color
+                else:
+                    pass
 
-            if compartment_line_width > 0:
-                compartment.line_width = compartment_line_width
+                if compartment_line_width > 0:
+                    compartment.line_width = compartment_line_width
+                    
+        except: 
+            pass            
 
     def _applyGlobalRenderInformationOrig(self, network):
         """Applies global style render information as specified in the
@@ -571,6 +575,53 @@ class Render:
                                     network.compartments.keys())
                         else:
                             pass
+                        
+    def _collectLinearGradients(self, render_info):
+        """Gets the render linear gradient definitions.
+
+        Args:
+            render_info(libsbml.Render):
+
+        Returns: dict, keys = linear gradient id, 
+            values = tuple of (spread_method, list of stop colors)
+        """
+        linear_gradients = {}
+
+        for linear_gradient in render_info.getListOfLinearGradients():
+      
+            spread_method = linear_gradient.getSpreadMethodString()
+            
+            stop_colors = list()
+            
+            for gradient_stop in linear_gradient.getListOfGradientStops():
+                
+                gradient_stop_color = self._set_plot_color_and_validity(
+                    gradient_stop.getStopColor())
+                
+                if gradient_stop_color.is_valid_color:
+                    stop_colors.append(gradient_stop_color)                
+                
+            linear_gradients[linear_gradient.getId()] = (spread_method, 
+                             stop_colors) 
+
+        return linear_gradients
+
+    def _collectLineEndings(self, render_info):
+        """Gets the render line ending definitions.
+
+        Args:
+            render_info(libsbml.Render):
+
+        Returns: dict, keys = line ending id, 
+            values = 
+        """
+        line_endings = {}
+
+        
+
+
+
+        return line_endings
 
     def _applyGlobalRenderInformation(self, network):
         """Applies global style render information as specified in the
@@ -591,6 +642,18 @@ class Render:
                 if global_render_info:
 
                     self.color_definitions = self._collectColorDefinitions(
+                            global_render_info)
+
+                    bg_color = self._set_plot_color_and_validity(
+                       global_render_info.getBackgroundColor() )
+
+                    if bg_color.is_valid_color:
+                        network.bg_color = bg_color.color 
+
+                    self.linear_gradients = self._collectLinearGradients(
+                            global_render_info)
+                    
+                    self.line_endings = self._collectLineEndings(
                             global_render_info)
 
                     global_styles = global_render_info.getListOfStyles()
@@ -898,6 +961,13 @@ class Render:
                     
                     self.color_definitions = self._collectColorDefinitions(
                             local_render_info)
+
+                    bg_color = self._set_plot_color_and_validity(
+                       local_render_info.getBackgroundColor() )
+
+                    if bg_color.is_valid_color:
+                        network.bg_color = bg_color.color 
+                
 
                 local_styles = local_render_info.getListOfStyles()
                    

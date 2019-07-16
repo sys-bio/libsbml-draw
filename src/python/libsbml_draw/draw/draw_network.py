@@ -78,9 +78,11 @@ def draw_nodes(nodes, fig, scaling_factor, nw_height_inches):
         fbbp = FancyBboxPatch(
             [scaling_factor*node.lower_left_point[0]*INCHES_PER_POINT +
              WIDTH_SHIFT,
+
              scaling_factor*(nw_height_inches - 
              node.lower_left_point[1]*INCHES_PER_POINT -
              node.height*INCHES_PER_POINT) + HEIGHT_SHIFT],
+
             scaling_factor*node.width*INCHES_PER_POINT,
             scaling_factor*node.height*INCHES_PER_POINT,
             edgecolor=node.edge_color,
@@ -269,11 +271,14 @@ def createNetworkFigure(sbml_layout, arrowhead_mutation_scale,
 
     fig = plt.figure(figsize=figsize, dpi=dpi)
     ax = plt.gca()
+    
     fig.add_axes(ax)
     # create a figure without any margins
     fig.subplots_adjust(0, 0, 1, 1)
 
     network = sbml_layout._SBMLlayout__network
+
+    fig.set_facecolor(network.bgcolor)
 
     # draw the compartments
     compartment_patches = draw_compartments(
@@ -299,6 +304,7 @@ def createNetworkFigure(sbml_layout, arrowhead_mutation_scale,
 
     plt.axis("off")
     plt.axis("equal")
+#    plt.gca().invert_yaxis()
 
     if show:
         plt.show()
