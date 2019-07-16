@@ -6,6 +6,7 @@ import math
 
 from matplotlib.colors import is_color_like
 from matplotlib.font_manager import findSystemFonts
+import numpy as np
 from pathlib import Path
 
 import pkg_resources
@@ -613,13 +614,36 @@ class Render:
             render_info(libsbml.Render):
 
         Returns: dict, keys = line ending id, 
-            values = 
+            values = np.array of [x,y] points
         """
         line_endings = {}
 
-        
+        for line_ending in render_info.getListOfLineEndings():
 
+            line_ending_id = line_ending.getId()
+            print("line ending id: ", line_ending_id)
 
+            line_ending_points = []
+            
+            element_name = line_ending.getGroup().getElement(0).getElementName()
+            
+            if element_name == "polygon":
+                
+                for curve in element_name.getListOfElements():                     
+
+                    for curve_segment in curve.getListOfCurveSegments():
+                        
+                        print("curve element name: ", curve_segment.getElementName())    
+                        print("curve type code: ", curve_segment.getTypeCode())                                            
+                        print("curve start: ", curve_segment.getStart().getXOffset(), curve_segment.getStart().getYOffset())
+                        print("curve end: ", curve_segment.getEnd().getXOffset(), curve_segment.getEnd().getYOffset())
+
+                        # arrow1_points = np.array([[0,0], [10,5], [10,5], [0,10], [0,10], [3.3,5], [3.3,5], [0,0]])
+
+                        line_ending_points.append([curve_segment.getStart().getXOffset(), curve_segment.getStart().getYOffset()]) 
+                        line_ending_points.append([curve_segment.getEnd().getXOffset(), curve_segment.getEnd().getYOffset()])
+
+            line_endings[line_ending_id] = np.array(line_ending_points)  
 
         return line_endings
 
@@ -967,8 +991,13 @@ class Render:
 
                     if bg_color.is_valid_color:
                         network.bg_color = bg_color.color 
-                
 
+                    self.linear_gradients = self._collectLinearGradients(
+                            local_render_info)
+                    
+                    self.line_endings = self._collectLineEndings(
+                            local_render_info)
+                    
                 local_styles = local_render_info.getListOfStyles()
                    
                 # Nodes - assign a style
