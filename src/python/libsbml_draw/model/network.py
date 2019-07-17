@@ -57,7 +57,9 @@ class Node():
         self.vtext_anchor = "bottom"
         self.font_weight = "normal" 
         self.shape = "round_box"
-        self.rectangle_rounding = 0.6
+        self.rectangle_rounding = 0.1
+        self.polygon_points = []
+        self.polygon_codes = []
 
 class Curve():
     """Part of a complete reaction curve. As an example, a reaction between a
@@ -116,7 +118,8 @@ class Network():
         self._add_reactions()
         self._add_compartments()
         self.aliasedNodes = {}
-        self.bg_color = "ffffff"
+        self.bg_color = "#ffffff"
+        self.line_endings = {}
 
     def _remove_node(self, node_id):
         """Remove a node from the network.

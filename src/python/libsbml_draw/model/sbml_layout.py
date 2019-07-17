@@ -40,7 +40,7 @@ class SBMLlayout:
             self.__layout_alg_options = layout_alg_options
         else:
             self.__layout_alg_options = sbnw.fr_alg_options(
-                10.0,        # k
+                20.0,        # k
                 0,           # grav, has to be > 5 for effect
                 500.0,       # baryx
                 500.0,       # baryy
@@ -1799,7 +1799,8 @@ class SBMLlayout:
         fig = createNetworkFigure(self, self.__arrowhead_scale, show, dpi,
                                   width_shift, height_shift, scaling_factor)
         if(save_file_name):
-            fig.savefig(save_file_name)
+            bg_color = self.__network.bg_color
+            fig.savefig(save_file_name, facecolor=bg_color)
 
         return fig
 

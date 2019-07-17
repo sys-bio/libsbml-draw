@@ -2,7 +2,7 @@
 Draw the SBML model's network which consists of nodes and reactions.
 """
 import numpy as np
-from matplotlib.patches import BoxStyle, FancyArrowPatch, FancyBboxPatch
+from matplotlib.patches import BoxStyle, Ellipse, FancyArrowPatch, FancyBboxPatch, PathPatch
 from matplotlib.path import Path
 from matplotlib import pyplot as plt
 
@@ -74,31 +74,76 @@ def draw_nodes(nodes, fig, scaling_factor, nw_height_inches):
     node_patches = []
 
     for node in nodes:
+        
+        print("node shape: ", node.shape)
+        print("rect rounding: ", node.rectangle_rounding)
 
-        fbbp = FancyBboxPatch(
-            [scaling_factor*node.lower_left_point[0]*INCHES_PER_POINT +
-             WIDTH_SHIFT,
-
-             scaling_factor*(nw_height_inches - 
-             node.lower_left_point[1]*INCHES_PER_POINT -
-             node.height*INCHES_PER_POINT) + HEIGHT_SHIFT],
-
-            scaling_factor*node.width*INCHES_PER_POINT,
-            scaling_factor*node.height*INCHES_PER_POINT,
-            edgecolor=node.edge_color,
-            facecolor=node.fill_color,
-            linewidth=node.edge_width,
-            boxstyle=BoxStyle("round",
+        if node.shape =="round_box":
+        
+            node_patch = FancyBboxPatch(
+                [scaling_factor*node.lower_left_point[0]*INCHES_PER_POINT +
+                 WIDTH_SHIFT,
+                 scaling_factor*(nw_height_inches - 
+                 node.lower_left_point[1]*INCHES_PER_POINT -
+                 node.height*INCHES_PER_POINT) + HEIGHT_SHIFT],
+                scaling_factor*node.width*INCHES_PER_POINT,
+                scaling_factor*node.height*INCHES_PER_POINT,
+                edgecolor=node.edge_color,
+                facecolor=node.fill_color,
+                linewidth=node.edge_width,
+                boxstyle=BoxStyle("round",
                               pad=0,
-                              rounding_size=.1),
-            transform=fig.dpi_scale_trans
-            )
+                              rounding_size=node.rectangle_rounding),
+                transform=fig.dpi_scale_trans
+                )
 
-        node_patches.append(fbbp)
+        elif node.shape == "ellipse":
+            
+            node_patch = Ellipse(
+                    (scaling_factor*node.center.x*INCHES_PER_POINT + WIDTH_SHIFT, 
+                     scaling_factor*(nw_height_inches - node.center.y*INCHES_PER_POINT) + HEIGHT_SHIFT), 
+                     scaling_factor*node.width*INCHES_PER_POINT, 
+                     scaling_factor*node.height*INCHES_PER_POINT,
+                     edgecolor=node.edge_color,
+                     facecolor=node.fill_color,
+                     linewidth=node.edge_width,
+                     transform=fig.dpi_scale_trans
+                    )
+
+        elif node.shape == "polygon":
+
+            node_points = _adjust_x_and_y_values(node.polygon_points)
+            
+            # need to adjust the y's
+            path = Path(node_points, node.polygon_codes)
+
+            node_patch = PathPatch(
+                    path, 
+                    facecolor=node.fill_color, 
+                    edgecolor=node.edge_color,
+                    linewidth=node.edge_width,
+                    transform=fig.dpi_scale_trans
+                )
+        else:
+            pass
+
+        node_patches.append(node_patch)
 
     return node_patches
 
+def _adjust_x_and_y_values(self, node_points, scaling_factor, nw_height_inches):
+    """ """
+    
+    for node_point in node_points:
+        # x
+        node_point[0] = scaling_factor*node_point[0]*INCHES_PER_POINT + WIDTH_SHIFT
 
+        # y
+        node_point[1] = scaling_factor*(nw_height_inches - 
+                  node_point[1]*INCHES_PER_POINT) + HEIGHT_SHIFT    
+        
+    return node_points    
+    
 def draw_reactions(reactions, mutation_scale, fig, scaling_factor, nw_height_inches):
     """Create a list of FancyArrow Patches, one for each curve in a reaction.
 
@@ -278,7 +323,7 @@ def createNetworkFigure(sbml_layout, arrowhead_mutation_scale,
 
     network = sbml_layout._SBMLlayout__network
 
-    fig.set_facecolor(network.bgcolor)
+    fig.set_facecolor(network.bg_color)
 
     # draw the compartments
     compartment_patches = draw_compartments(

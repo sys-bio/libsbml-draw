@@ -8,6 +8,7 @@ from matplotlib.colors import is_color_like
 from matplotlib.font_manager import findSystemFonts
 import numpy as np
 from pathlib import Path
+import matplotlib.path as mplp
 
 import pkg_resources
 import xml.etree.ElementTree as ET 
@@ -481,7 +482,6 @@ class Render:
                 reaction.fill_color = reaction_edge_color.color
             else:
                 pass
-                # stick with default value
 
             reaction.curve_width = reaction_edge_width
 
@@ -672,13 +672,19 @@ class Render:
                        global_render_info.getBackgroundColor() )
 
                     if bg_color.is_valid_color:
-                        network.bg_color = bg_color.color 
+                        network.bg_color = bg_color.color
 
                     self.linear_gradients = self._collectLinearGradients(
                             global_render_info)
                     
                     self.line_endings = self._collectLineEndings(
                             global_render_info)
+                    
+                    network.line_endings = self.line_endings
+
+                    print("global, bg color: ", bg_color)
+                    print("global, num linear gradients: ", len(self.line_gradients))
+                    print("global, num line endings: ", len(self.line_endings))
 
                     global_styles = global_render_info.getListOfStyles()
                 
@@ -998,6 +1004,13 @@ class Render:
                     self.line_endings = self._collectLineEndings(
                             local_render_info)
                     
+                    network.line_endings = self.line_endings
+
+                    print("local, bg color: ", bg_color)
+                    print("local, num linear gradients: ", len(self.line_gradients))
+                    print("local, num line endings: ", len(self.line_endings))
+
+                    
                 local_styles = local_render_info.getListOfStyles()
                    
                 # Nodes - assign a style
@@ -1108,11 +1121,19 @@ class Render:
                                     curve_assigned = True                
                                     break            
                                 
+                            # has idList, no roleList
+                            elif local_style.getIdList.size():
+                                if local_style.isInIdList(glyph_id):
+                                    self._updateCurve(curve, local_style)                    
+                                    curve_assigned = True                
+                                    break     
+                                
                             # has roleList, no IdList 
                             elif local_style.getRoleList().size():
                                 for role in ROLES:
                                     if local_style.isInRoleList(role.lower()):
-                                        roles_type[role] = local_style       
+                                        roles_type[role] = local_style
+                                        
                             # has typeList, no roleList            
                             elif local_style.getTypeList().size():
                                 for reaction_type in REACTION_TYPES:
@@ -1136,12 +1157,15 @@ class Render:
         """ 
         """
         
-        node_fill_color = self._set_plot_color_and_validity(
-                render_style.getGroup().getElement(0).getFillColor())
-        node_edge_color = self._set_plot_color_and_validity(
-                render_style.getGroup().getElement(0).getStroke())
-        node_edge_width = render_style.getGroup().getElement(0).getStrokeWidth()
+        node_element = render_style.getGroup().getElement(0)
         
+        node_fill_color = self._set_plot_color_and_validity(
+                node_element.getFillColor())
+        node_edge_color = self._set_plot_color_and_validity(
+                node_element.getStroke())
+        node_edge_width = node_element.getStrokeWidth()
+        
+        node_shape = node_element.getElementName() 
 
         if node_fill_color.is_valid_color:
             node.fill_color = node_fill_color.color
@@ -1153,8 +1177,67 @@ class Render:
         else:
             pass
 
-        node.edge_width = node_edge_width        
+        node.edge_width = node_edge_width
     
+        if node_shape == "rectangle":
+            node.shape = "round_box"
+            node_rx = node_element.getRX().getAbsoluteValue()
+            node_ry = node_element.getRY().getAbsoluteValue()
+            node.rectangle_rounding = max(node_rx,node_ry)/max(node.width, node.height)
+
+        elif node_shape == "polygon":
+
+            node.shape = node_shape
+
+            points = []
+            codes = []
+
+            curve_count = 0
+
+            for curve in node_element.getListOfElements():
+
+                curve_count += 1
+                 
+                print("node shape curve: ", type(curve))
+                print("curve name: ", curve.getElementName())                
+
+# curve_name = curve.getElementName()
+
+# CubicBezier
+            
+# 
+# if curve_name == "CubicBezier":
+#     if curve count == 1: 
+#         codes.append(mplp.Path.MOVETO)                 
+#     else:
+#          codes.append(mplp.Path.LINETO)      
+#     codes.append(mplp.Path.CURVE4)
+#     codes.append(mplp.Path.CURVE4)
+#     codes.append(mplp.Path.CURVE4)
+
+#     points.append((curve.getStart().getX(), curve.getStart().getY()))
+#     points.append((curve.getBasePoint1().getX(), curve.getBasePoint1().getY()))
+#     points.append((curve.getBasePoint2().getX(), curve.getBasePoint2().getY()))
+#     points.append((curve.getEnd().getX(), curve.getEnd().getY()))
+
+# elif curve_name == "LineSegment":
+#     if curve count == 1: 
+#         codes.append(mplp.Path.MOVETO)                 
+#     else:
+#          codes.append(mplp.Path.LINETO) 
+#     codes.append(mplp.Path.LINETO)
+
+#     points.append((curve.getStart().getX(), curve.getStart().getY()))
+#     points.append((curve.getEnd().getX(), curve.getEnd().getY()))                
+
+# node.polygon_points = points
+# node.polygon_codes = codes                
+
+        elif node_shape == "ellipse":
+            node.shape = node_shape
+
+        else:
+            pass
     
     def _updateNodeText(self, node, render_style):
         """ 
