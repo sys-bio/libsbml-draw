@@ -29,7 +29,7 @@ class SBMLlayout:
 
     def __init__(self, sbml_source=None, layout_alg_options=None,
                  layout_number=0, fitToWindow=tuple(),
-                 autoComputeLayout=False, applyRender=False):
+                 autoComputeLayout=False, applyRender=True):
 
         self.__sbml_source = sbml_source
         self.__layout_number = layout_number
