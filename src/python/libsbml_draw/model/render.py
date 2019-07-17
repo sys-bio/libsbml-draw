@@ -588,7 +588,7 @@ class Render:
         """
         linear_gradients = {}
 
-        for linear_gradient in render_info.getListOfLinearGradients():
+        for linear_gradient in render_info.getListOfGradientDefinitions():
       
             spread_method = linear_gradient.getSpreadMethodString()
             
@@ -625,23 +625,20 @@ class Render:
 
             line_ending_points = []
             
-            element_name = line_ending.getGroup().getElement(0).getElementName()
+            element = line_ending.getGroup().getElement(0)
             
-            if element_name == "polygon":
+            if element.getElementName() == "polygon":
                 
-                for curve in element_name.getListOfElements():                     
+                for curve in element.getListOfElements():                     
 
-                    for curve_segment in curve.getListOfCurveSegments():
-                        
-                        print("curve element name: ", curve_segment.getElementName())    
-                        print("curve type code: ", curve_segment.getTypeCode())                                            
-                        print("curve start: ", curve_segment.getStart().getXOffset(), curve_segment.getStart().getYOffset())
-                        print("curve end: ", curve_segment.getEnd().getXOffset(), curve_segment.getEnd().getYOffset())
+                    print("curve type: ", type(curve))                                  
+                    print("curve start: ", curve.getX().getRelativeValue(), curve.getY().getRelativeValue())
+                    print("curve end: ", curve.getX().getRelativeValue(), curve.getY().getRelativeValue())
 
-                        # arrow1_points = np.array([[0,0], [10,5], [10,5], [0,10], [0,10], [3.3,5], [3.3,5], [0,0]])
+                    # arrow1_points = np.array([[0,0], [10,5], [10,5], [0,10], [0,10], [3.3,5], [3.3,5], [0,0]])
 
-                        line_ending_points.append([curve_segment.getStart().getXOffset(), curve_segment.getStart().getYOffset()]) 
-                        line_ending_points.append([curve_segment.getEnd().getXOffset(), curve_segment.getEnd().getYOffset()])
+                    line_ending_points.append([curve.getX().getAbsoluteValue(), curve.getY().getAbsoluteValue()]) 
+                    line_ending_points.append([curve.getX().getAbsoluteValue(), curve.getY().getAbsoluteValue()])
 
             line_endings[line_ending_id] = np.array(line_ending_points)  
 
@@ -683,7 +680,7 @@ class Render:
                     network.line_endings = self.line_endings
 
                     print("global, bg color: ", bg_color)
-                    print("global, num linear gradients: ", len(self.line_gradients))
+                    print("global, num linear gradients: ", len(self.linear_gradients))
                     print("global, num line endings: ", len(self.line_endings))
 
                     global_styles = global_render_info.getListOfStyles()
@@ -1007,8 +1004,8 @@ class Render:
                     network.line_endings = self.line_endings
 
                     print("local, bg color: ", bg_color)
-                    print("local, num linear gradients: ", len(self.line_gradients))
-                    print("local, num line endings: ", len(self.line_endings))
+                    print("local, num linear gradients: ", len(self.linear_gradients), self.linear_gradients.keys())
+                    print("local, num line endings: ", len(self.line_endings), self.line_endings.keys())
 
                     
                 local_styles = local_render_info.getListOfStyles()
@@ -1122,7 +1119,7 @@ class Render:
                                     break            
                                 
                             # has idList, no roleList
-                            elif local_style.getIdList.size():
+                            elif local_style.getIdList().size():
                                 if local_style.isInIdList(glyph_id):
                                     self._updateCurve(curve, local_style)                    
                                     curve_assigned = True                
@@ -1191,47 +1188,66 @@ class Render:
 
             points = []
             codes = []
+            types = []
 
             curve_count = 0
 
             for curve in node_element.getListOfElements():
 
                 curve_count += 1
-                 
+
+                types.append(type(curve))
+               
+                print("curve count: ", curve_count)  
                 print("node shape curve: ", type(curve))
-                print("curve name: ", curve.getElementName())                
-
-# curve_name = curve.getElementName()
-
-# CubicBezier
+                print("curve name: ", curve.getElementName(), "type code = ", curve.getTypeCode())                
+                print("curve x, y: ", curve.getX().getAbsoluteValue(), curve.getX().isSetRelativeValue(), curve.getX().isSetAbsoluteValue())
             
-# 
-# if curve_name == "CubicBezier":
-#     if curve count == 1: 
-#         codes.append(mplp.Path.MOVETO)                 
-#     else:
-#          codes.append(mplp.Path.LINETO)      
-#     codes.append(mplp.Path.CURVE4)
-#     codes.append(mplp.Path.CURVE4)
-#     codes.append(mplp.Path.CURVE4)
+                if curve.getTypeCode() == libsbml.SBML_RENDER_CUBICBEZIER:
 
-#     points.append((curve.getStart().getX(), curve.getStart().getY()))
-#     points.append((curve.getBasePoint1().getX(), curve.getBasePoint1().getY()))
-#     points.append((curve.getBasePoint2().getX(), curve.getBasePoint2().getY()))
-#     points.append((curve.getEnd().getX(), curve.getEnd().getY()))
+                    print("curve: Cubic Bezier")
 
-# elif curve_name == "LineSegment":
-#     if curve count == 1: 
-#         codes.append(mplp.Path.MOVETO)                 
-#     else:
-#          codes.append(mplp.Path.LINETO) 
-#     codes.append(mplp.Path.LINETO)
+                    if curve_count == 1: 
+                        codes.append(mplp.Path.MOVETO)                 
+                    else:
+                        codes.append(mplp.Path.LINETO)      
 
-#     points.append((curve.getStart().getX(), curve.getStart().getY()))
-#     points.append((curve.getEnd().getX(), curve.getEnd().getY()))                
+                    codes.append(mplp.Path.CURVE4)
+                    codes.append(mplp.Path.CURVE4)
+                    codes.append(mplp.Path.CURVE4)
 
-# node.polygon_points = points
-# node.polygon_codes = codes                
+                    points.append([curve.getX().getAbsoluteValue(), curve.getY().getAbsoluteValue() ])
+                    points.append([curve.getBasePoint1_x().getAbsoluteValue(), 
+                                   curve.getBasePoint1_y().getAbsoluteValue() ])
+                    points.append([curve.getBasePoint2_x().getAbsoluteValue(), 
+                                   curve.getBasePoint2_y().getAbsoluteValue() ])
+                    points.append([curve.getX().getAbsoluteValue(), curve.getY().getAbsoluteValue() ])
+                   
+                elif curve.getTypeCode() == libsbml.SBML_RENDER_POINT:
+
+                    if curve_count == 1: 
+                        codes.append(mplp.Path.MOVETO)                 
+                    else:
+                        codes.append(mplp.Path.LINETO)
+
+                    points.append([curve.getX().getAbsoluteValue(), curve.getY().getAbsoluteValue() ])
+                    
+                else:
+                    pass             
+
+            print("curve count: ", curve_count)
+            print("types count: ", len(types))
+            print("num node polygon points: ", len(points)) 
+            print("num node polygon codes: ", len(codes))                      
+
+            for i in range(0,len(points)):
+                print("points, codes: ", points[i], codes[i])
+
+            for type_curve in types:
+                print("curve type: ", type_curve)
+
+            node.polygon_points = points
+            node.polygon_codes = codes                
 
         elif node_shape == "ellipse":
             node.shape = node_shape

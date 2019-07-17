@@ -78,7 +78,7 @@ def draw_nodes(nodes, fig, scaling_factor, nw_height_inches):
         print("node shape: ", node.shape)
         print("rect rounding: ", node.rectangle_rounding)
 
-        if node.shape =="round_box":
+        if node.shape =="round_box" or node.shape == "polygon":
         
             node_patch = FancyBboxPatch(
                 [scaling_factor*node.lower_left_point[0]*INCHES_PER_POINT +
@@ -110,9 +110,13 @@ def draw_nodes(nodes, fig, scaling_factor, nw_height_inches):
                      transform=fig.dpi_scale_trans
                     )
 
-        elif node.shape == "polygon":
+        elif node.shape == "polygon_later":
 
-            node_points = _adjust_x_and_y_values(node.polygon_points)
+            node_points = _adjust_x_and_y_values(node.polygon_points, scaling_factor, nw_height_inches, node)
+
+            node_points = np.array(node_points)
+
+            print("type node_points: ", type(node_points), node_points.shape)
             
             # need to adjust the y's
             path = Path(node_points, node.polygon_codes)
@@ -131,14 +135,17 @@ def draw_nodes(nodes, fig, scaling_factor, nw_height_inches):
 
     return node_patches
 
-def _adjust_x_and_y_values(self, node_points, scaling_factor, nw_height_inches):
+def _adjust_x_and_y_values(node_points, scaling_factor, nw_height_inches, node):
     """ """
     
     for node_point in node_points:
+
         # x
+        node_point[0] = node_point[0] + node.lower_left_point[0]
         node_point[0] = scaling_factor*node_point[0]*INCHES_PER_POINT + WIDTH_SHIFT
 
         # y
+        node_point[1] = node_point[1] + node.lower_left_point[1]
         node_point[1] = scaling_factor*(nw_height_inches - 
                   node_point[1]*INCHES_PER_POINT) + HEIGHT_SHIFT    
         
