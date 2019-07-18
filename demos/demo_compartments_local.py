@@ -21,6 +21,13 @@ sll.setCompartmentEdgeColor("vol1", "blue")
 sll.setCompartmentFillColor("vol1", "lightpink")
 sll.setCompartmentLineWidth("vol1", 5)
 
+for node in sll._SBMLlayout__network.nodes.values():
+    print("Node shape points: ", node.shape, len(node.polygon_points), len(node.polygon_codes))
+    for point in node.polygon_points:
+        print("point: ", point)
+    for code in node.polygon_codes:
+        print("code: ", code)
+
 sll.drawNetwork()
 
 print(sll.getCompartmentEdgeColor("vol1"))

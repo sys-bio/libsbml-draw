@@ -638,20 +638,34 @@ class Render:
                 for curve in element.getListOfElements():                     
 
                     print("curve type: ", type(curve))                                  
-                    print("curve isSet rel abs: ", curve.isSetRelativeValue(), curve.isSetAbsoluteValue())
-                    print("curve rel: ", curve.getX().getRelativeValue(), curve.getY().getRelativeValue())
-                    print("curve abs: ", curve.getX().getAbsoluteValue(), curve.getY().getAbsoluteValue())
+#                    print("curve isSet rel abs: ", curve.getX().isSetRelativeValue(), curve.getX().isSetAbsoluteValue())
+#                    print("curve rel: ", curve.getX().getRelativeValue(), curve.getY().getRelativeValue())
+#                    print("curve abs: ", curve.getX().getAbsoluteValue(), curve.getY().getAbsoluteValue())
 
                     # arrow1_points = np.array([[0,0], [10,5], [10,5], [0,10], [0,10], [3.3,5], [3.3,5], [0,0]])
 
-                    if curve.isSetAbsoluteValue():
-                        line_ending_points.append([curve.getX().getAbsoluteValue(), curve.getY().getAbsoluteValue()]) 
-                    elif curve.isSetRelativeValue():
-                        x = curve.getX().getRelativeValue()*bounding_box_width + bounding_box_x_offset
-                        y = curve.getY().getRelativeValue()*bounding_box_height + bounding_box_y_offset
-                        line_ending_points.append([x, y])
+                    if not curve.getX().isSetAbsoluteValue() and not curve.getX().isSetRelativeValue():
+                        x = 0
+                    elif curve.getX().isSetRelativeValue():
+                        x = curve.getX().getRelativeValue()*bounding_box_width/100                    
+                    elif curve.getX().isSetAbsoluteValue():
+                        x = curve.getX()
+                    x = x + bounding_box_x_offset
+
+                    if not curve.getY().isSetAbsoluteValue() and not curve.getY().isSetRelativeValue():
+                        y = 0
+                    elif curve.getY().isSetRelativeValue():
+                        y = curve.getY().getRelativeValue()*bounding_box_height/100                    
+                    elif curve.getY().isSetAbsoluteValue():
+                        y = curve.getY()                       
+                    y = y + bounding_box_y_offset
+                    
+                    line_ending_points.append([x, y])
 
             line_endings[line_ending_id] = np.array(line_ending_points)  
+
+            for point in line_ending_points:
+                print("le point: ", point) 
 
         return line_endings
 

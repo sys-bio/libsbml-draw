@@ -2,7 +2,7 @@
 Draw the SBML model's network which consists of nodes and reactions.
 """
 import numpy as np
-from matplotlib.patches import BoxStyle, Ellipse, FancyArrowPatch, FancyBboxPatch, PathPatch
+from matplotlib.patches import BoxStyle, Ellipse, FancyArrowPatch, FancyBboxPatch, PathPatch, Polygon
 from matplotlib.path import Path
 from matplotlib import pyplot as plt
 
@@ -78,7 +78,7 @@ def draw_nodes(nodes, fig, scaling_factor, nw_height_inches):
         print("node shape: ", node.shape)
         print("rect rounding: ", node.rectangle_rounding)
 
-        if node.shape =="round_box" or node.shape == "polygon":
+        if node.shape =="round_box" or node.shape == "polygon_pause":
         
             node_patch = FancyBboxPatch(
                 [scaling_factor*node.lower_left_point[0]*INCHES_PER_POINT +
@@ -110,7 +110,7 @@ def draw_nodes(nodes, fig, scaling_factor, nw_height_inches):
                      transform=fig.dpi_scale_trans
                     )
 
-        elif node.shape == "polygon_later":
+        elif node.shape == "polygon":
 
             node_points = _adjust_x_and_y_values(node.polygon_points, scaling_factor, nw_height_inches, node)
 
@@ -137,21 +137,47 @@ def draw_nodes(nodes, fig, scaling_factor, nw_height_inches):
 
 def _adjust_x_and_y_values(node_points, scaling_factor, nw_height_inches, node):
     """ """
-    
+    adjusted_node_points = []    
+
     for node_point in node_points:
 
         # x
-        node_point[0] = node_point[0] + node.lower_left_point[0]
-        node_point[0] = scaling_factor*node_point[0]*INCHES_PER_POINT + WIDTH_SHIFT
+        x = node_point[0] + node.lower_left_point[0]
+        x = scaling_factor*x*INCHES_PER_POINT + WIDTH_SHIFT
 
         # y
-        node_point[1] = node_point[1] + node.lower_left_point[1]
-        node_point[1] = scaling_factor*(nw_height_inches - 
-                  node_point[1]*INCHES_PER_POINT) + HEIGHT_SHIFT    
+        y = node_point[1] + node.lower_left_point[1]
+        y = scaling_factor*(nw_height_inches - y*INCHES_PER_POINT) + HEIGHT_SHIFT    
+
+        adjusted_node_points.append([x, y])
         
-    return node_points    
+    return adjusted_node_points    
+
+def _adjust_arrowhead_x_and_y_values(path_points, scaling_factor, nw_height_inches, center_point):
+    """ """
+    adjusted_points = []    
+
+    print("nw height inches: ", nw_height_inches)
+
+    for point in path_points:
+           
+        print("point x, y: ", point[0], point[1])
+
+        # x
+        x = point[0] + center_point.x
+        x = scaling_factor*x*INCHES_PER_POINT + WIDTH_SHIFT
+
+        # y
+        y = point[1] + center_point.y
+        y = scaling_factor*(nw_height_inches - y*INCHES_PER_POINT) + HEIGHT_SHIFT    
+
+        print("adj point x, y: ", x, y)
+
+        adjusted_points.append([x, y])
+        
+    return np.array(adjusted_points)    
     
-def draw_reactions(reactions, mutation_scale, fig, scaling_factor, nw_height_inches):
+def draw_reactions(reactions, mutation_scale, fig, scaling_factor, nw_height_inches, line_endings):
     """Create a list of FancyArrow Patches, one for each curve in a reaction.
 
     Args:
@@ -210,6 +236,25 @@ def draw_reactions(reactions, mutation_scale, fig, scaling_factor, nw_height_inc
                     )
 
             reaction_patches.append(fap)
+
+            if curve.role_name.lower() == "product":
+                if "product" in line_endings:
+                    arrow_path = line_endings["product"]   
+
+                    print("arrow path type: ", type(arrow_path))
+                    print("curve end point: ", curve.end_point.x, curve.end_point.y)
+
+                    adjusted_arrow_path = _adjust_arrowhead_x_and_y_values(arrow_path, scaling_factor, nw_height_inches, curve.end_point)
+
+                    print("adj arrow path: ", type(adjusted_arrow_path), adjusted_arrow_path)
+
+                    arrow_patch = Polygon(adjusted_arrow_path, edgecolor="black", facecolor="black", lw=1, transform=fig.dpi_scale_trans) 
+
+#                    codes = [Path.MOVETO, Path.LINETO, Path.LINETO, Path.LINETO, Path.LINETO]
+
+#                    arrow_patch = PathPatch(Path(adjusted_arrow_path, codes), edgecolor="black", facecolor="black", lw=1, transform=fig.dpi_scale_trans)
+
+                    reaction_patches.append(arrow_patch)
 
     return reaction_patches
 
@@ -342,7 +387,7 @@ def createNetworkFigure(sbml_layout, arrowhead_mutation_scale,
     # draw the reactions
     reaction_patches = draw_reactions(
             network.reactions.values(),
-            arrowhead_mutation_scale, fig, scaling_factor, nw_height_inches)
+            arrowhead_mutation_scale, fig, scaling_factor, nw_height_inches, network.line_endings)
     for reaction_patch in reaction_patches:
         ax.add_patch(reaction_patch)
 
