@@ -623,6 +623,12 @@ class Render:
             line_ending_id = line_ending.getId()
             print("line ending id: ", line_ending_id)
 
+            bounding_box = line_ending.getBoundingBox()
+            bounding_box_width = bounding_box.getWidth()
+            bounding_box_height = bounding_box.getHeight()
+            bounding_box_x_offset = bounding_box.getX()
+            bounding_box_y_offset = bounding_box.getY()
+
             line_ending_points = []
             
             element = line_ending.getGroup().getElement(0)
@@ -632,13 +638,18 @@ class Render:
                 for curve in element.getListOfElements():                     
 
                     print("curve type: ", type(curve))                                  
-                    print("curve start: ", curve.getX().getRelativeValue(), curve.getY().getRelativeValue())
-                    print("curve end: ", curve.getX().getRelativeValue(), curve.getY().getRelativeValue())
+                    print("curve isSet rel abs: ", curve.isSetRelativeValue(), curve.isSetAbsoluteValue())
+                    print("curve rel: ", curve.getX().getRelativeValue(), curve.getY().getRelativeValue())
+                    print("curve abs: ", curve.getX().getAbsoluteValue(), curve.getY().getAbsoluteValue())
 
                     # arrow1_points = np.array([[0,0], [10,5], [10,5], [0,10], [0,10], [3.3,5], [3.3,5], [0,0]])
 
-                    line_ending_points.append([curve.getX().getAbsoluteValue(), curve.getY().getAbsoluteValue()]) 
-                    line_ending_points.append([curve.getX().getAbsoluteValue(), curve.getY().getAbsoluteValue()])
+                    if curve.isSetAbsoluteValue():
+                        line_ending_points.append([curve.getX().getAbsoluteValue(), curve.getY().getAbsoluteValue()]) 
+                    elif curve.isSetRelativeValue():
+                        x = curve.getX().getRelativeValue()*bounding_box_width + bounding_box_x_offset
+                        y = curve.getY().getRelativeValue()*bounding_box_height + bounding_box_y_offset
+                        line_ending_points.append([x, y])
 
             line_endings[line_ending_id] = np.array(line_ending_points)  
 
@@ -1208,15 +1219,16 @@ class Render:
                     print("curve: Cubic Bezier")
 
                     if curve_count == 1: 
-                        codes.append(mplp.Path.MOVETO)                 
+                        raise ValueError("First Element must be RenderPoint, not RenderCubicBezier")
+                        # codes.append(mplp.Path.MOVETO)                 
                     else:
-                        codes.append(mplp.Path.LINETO)      
+                        pass
+                        #codes.append(mplp.Path.LINETO)      
 
                     codes.append(mplp.Path.CURVE4)
                     codes.append(mplp.Path.CURVE4)
                     codes.append(mplp.Path.CURVE4)
 
-                    points.append([curve.getX().getAbsoluteValue(), curve.getY().getAbsoluteValue() ])
                     points.append([curve.getBasePoint1_x().getAbsoluteValue(), 
                                    curve.getBasePoint1_y().getAbsoluteValue() ])
                     points.append([curve.getBasePoint2_x().getAbsoluteValue(), 
