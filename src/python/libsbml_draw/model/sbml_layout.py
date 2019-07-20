@@ -29,7 +29,7 @@ class SBMLlayout:
 
     def __init__(self, sbml_source=None, layout_alg_options=None,
                  layout_number=0, fitToWindow=tuple(),
-                 autoComputeLayout=False, applyRender=True):
+                 autoComputeLayout=False, applyRender=False):
 
         self.__sbml_source = sbml_source
         self.__layout_number = layout_number
@@ -122,6 +122,23 @@ class SBMLlayout:
 
         else:  # User can separately load a file
             pass
+
+    def getCurvesAttachedToNodes(self,):
+        """ """      
+        h_network = self.__h_network
+        
+        print("num nodes: ", sbnw.nw_getNumNodes(h_network) )
+        
+
+        h_node = sbnw.nw_getNodep(h_network, 0)
+
+        num_curves = 0
+        h_curves = []
+        
+        x = sbnw.node_getAttachedCurves(h_node, h_network, num_curves, h_curves)
+
+        print("x, num_curves, len h_curves: ", x, num_curves, h_curves)
+
 
     def loadSBMLFile(self, sbml_file):
         """Loads the SBML model into SBMLlayout.

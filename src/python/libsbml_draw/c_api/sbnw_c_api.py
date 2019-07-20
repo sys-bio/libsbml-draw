@@ -295,6 +295,12 @@ slib.gf_node_make_alias.restype = ctypes.c_int
 slib.gf_node_isAliased.argtypes = [ctypes.c_uint64]
 slib.gf_node_isAliased.restype = ctypes.c_int
 
+slib.gf_node_getAttachedCurves.argtypes = [ctypes.c_uint64, ctypes.c_uint64, ctypes.c_uint64, POINTER(curveCP)]
+slib.gf_node_getAttachedCurves.restype = ctypes.c_int	
+
+
+def node_getAttachedCurves(h_node, h_network, num_curves, h_curves):
+    return slib.gf_node_getAttachedCurves(h_node, h_network, num_curves, h_curves)
 
 def node_getCentroid(h_node):
     return slib.gf_node_getCentroid(h_node)

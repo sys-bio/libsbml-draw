@@ -19,8 +19,11 @@ print("reaction ids: ", sl.getReactionIds())
 sl.drawNetwork()
 
 
-out_file = "model_out.xml"        
-sl.writeSBMLFile("model_out.xml")
+#out_file = "model_out.xml"        
+#sl.writeSBMLFile("model_out.xml")
+
+#sl.getCurvesAttachedToNodes()
+
 
 
 #sl2 = SBMLlayout(out_file)
