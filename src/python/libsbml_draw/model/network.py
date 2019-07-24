@@ -62,6 +62,7 @@ class Node():
         self.rectangle_rounding = 0.1
         self.polygon_points = []
         self.polygon_codes = []
+        self.polygon = None
 
 class Curve():
     """Part of a complete reaction curve. As an example, a reaction between a

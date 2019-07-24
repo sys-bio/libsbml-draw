@@ -1,6 +1,7 @@
 """
 Draw the SBML model's network which consists of nodes and reactions.
 """
+import math
 import numpy as np
 from matplotlib.patches import BoxStyle, Ellipse, FancyArrowPatch, FancyBboxPatch, PathPatch, Polygon
 from matplotlib.path import Path
@@ -153,25 +154,45 @@ def _adjust_x_and_y_values(node_points, scaling_factor, nw_height_inches, node):
         
     return adjusted_node_points    
 
-def _adjust_arrowhead_x_and_y_values(path_points, scaling_factor, nw_height_inches, center_point):
+def rotate_point(point, angle):
+    """ 
+    
+    Args: 
+        point 
+        angle (float): rotate the point by this amount of degrees
+    
+    Return:
+        
+    """
+    angle = math.radians(angle)
+
+    sin_angle = math.sin(angle)
+    cos_angle = math.cos(angle)
+
+    x = point[0]*cos_angle - point[1]*sin_angle
+    y = point[0]*sin_angle + point[1]*cos_angle
+    
+    rotated_point = (x, y)    
+    
+    return rotated_point
+
+def _adjust_arrowhead_x_and_y_values(path_points, scaling_factor, 
+                                     nw_height_inches, center_point, theta):
     """ """
     adjusted_points = []    
 
-    print("nw height inches: ", nw_height_inches)
-
     for point in path_points:
-           
-        print("point x, y: ", point[0], point[1])
+    
+        rotated_point = rotate_point(point, theta)
 
         # x
-        x = point[0] + center_point.x
+        x = rotated_point[0] + center_point.x
         x = scaling_factor*x*INCHES_PER_POINT + WIDTH_SHIFT
 
         # y
-        y = point[1] + center_point.y
-        y = scaling_factor*(nw_height_inches - y*INCHES_PER_POINT) + HEIGHT_SHIFT    
-
-        print("adj point x, y: ", x, y)
+        y = rotated_point[1] + center_point.y
+        y = scaling_factor*(
+                nw_height_inches - y*INCHES_PER_POINT) + HEIGHT_SHIFT    
 
         adjusted_points.append([x, y])
         
@@ -241,10 +262,22 @@ def draw_reactions(reactions, mutation_scale, fig, scaling_factor, nw_height_inc
                 if "product" in line_endings:
                     arrow_path = line_endings["product"]   
 
-                    print("arrow path type: ", type(arrow_path))
-                    print("curve end point: ", curve.end_point.x, curve.end_point.y)
+#                    print("arrow path type: ", type(arrow_path))
+#                    print("curve end point: ", curve.end_point.x, curve.end_point.y)
 
-                    adjusted_arrow_path = _adjust_arrowhead_x_and_y_values(arrow_path, scaling_factor, nw_height_inches, curve.end_point)
+                    slope = 3*(curve.end_point.y - curve.control_point_2.y)/(
+                               curve.end_point.x - curve.control_point_2.x)
+
+                    if slope < 0:
+                        theta = 180 + abs(math.degrees(math.atan(slope))) + 90
+                    else:
+                        theta = 180 + math.degrees(math.atan(slope))                        
+
+                    print("theta: ", theta)
+
+                    adjusted_arrow_path = _adjust_arrowhead_x_and_y_values(
+                            arrow_path, scaling_factor, nw_height_inches, 
+                            curve.end_point, theta)
 
                     print("adj arrow path: ", type(adjusted_arrow_path), adjusted_arrow_path)
 
