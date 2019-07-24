@@ -27,17 +27,13 @@ ROLES = ["substrate", "product", "sidesubstrate", "sideproduct",
 # The values in these "types" vars are sorted by specificity:
 # most specific to least specific
 
-COMPARTMENT_TYPES = ["COMPARTMENTGLYPH", "GENERALGLYPH", 
-                     "GRAPHICALOBJECT", "ANY"]
+COMPARTMENT_TYPES = ["COMPARTMENTGLYPH", "ANY"]
         
-SPECIES_TYPES = ["SPECIESGLYPH", "GENERALGLYPH", 
-                 "GRAPHICALOBJECT", "ANY"]
+SPECIES_TYPES = ["SPECIESGLYPH", "ANY"]
 
-TEXT_TYPES = ["TEXTGLYPH", "GENERALGLYPH", 
-              "GRAPHICALOBJECT", "ANY"]
+TEXT_TYPES = ["TEXTGLYPH", "ANY"]
 
-REACTION_TYPES = ["REACTIONGLYPH", "GENERALGLYPH", 
-                  "GRAPHICALOBJECT", "ANY"]
+REACTION_TYPES = ["REACTIONGLYPH", "ANY"]
 
 
 class Render:
@@ -79,10 +75,24 @@ class Render:
         self.reactionGlyphs = self._createReactionGlyphsDirectory()
         self.reactionToGlyphs = self._createReactionsDirectory()
         self.glyphsDirectory = self._createGlyphsDirectory()
+        self.findSpeciesReferenceGlyphId = self._createSpeciesReferenceGlyphDirectory()
 
 #        print("num compartment glyphs: ", len(self.compartmentGlyphs))
 #        print("num species glyphs: ", len(self.speciesGlyphs))
 #        print("num text glyphs: ", len(self.textGlyphs))
+
+    def _createSpeciesReferenceGlyphDirectory(self,):
+        """ """
+        srgDirectory = dict()
+
+        for reaction in self.layout.getListOfReactionGlyphs():
+            for srg in reaction.getListOfSpeciesReferenceGlyphs():           
+                srgDirectory[(reaction.getReactionId(), srg.getRoleString(), 
+                              srg.getSpeciesReferenceId())] = srg.getId()            
+
+        print("len srgDirectory: ", len(srgDirectory), srgDirectory)                                     
+        
+        return srgDirectory
 
     def _createSpeciesDirectory(self,):
         """ """
@@ -649,7 +659,7 @@ class Render:
                     elif curve.getX().isSetRelativeValue():
                         x = curve.getX().getRelativeValue()*bounding_box_width/100                    
                     elif curve.getX().isSetAbsoluteValue():
-                        x = curve.getX()
+                        x = curve.getX().getAbsoluteValue()
                     x = x + bounding_box_x_offset
 
                     if not curve.getY().isSetAbsoluteValue() and not curve.getY().isSetRelativeValue():
@@ -657,7 +667,7 @@ class Render:
                     elif curve.getY().isSetRelativeValue():
                         y = curve.getY().getRelativeValue()*bounding_box_height/100                    
                     elif curve.getY().isSetAbsoluteValue():
-                        y = curve.getY()                       
+                        y = curve.getY().getAbsoluteValue()                       
                     y = y + bounding_box_y_offset
                     
                     line_ending_points.append([x, y])
@@ -762,7 +772,7 @@ class Render:
                             pass
 
                     node_color = nodes_type["SPECIESGLYPH"].getGroup().getElement(0).getStroke()
-                    print("color defn: ", self.color_definitions[node_color])
+                    print("color defn: ", node_color)
                     print("len nodes_type: ", len(nodes_type), 
                           node_color)
                     print("len text type: ", len(node_text_type), 

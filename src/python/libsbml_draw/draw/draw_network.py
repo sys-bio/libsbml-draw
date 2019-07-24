@@ -248,7 +248,10 @@ def draw_reactions(reactions, mutation_scale, fig, scaling_factor, nw_height_inc
 
                     print("adj arrow path: ", type(adjusted_arrow_path), adjusted_arrow_path)
 
-                    arrow_patch = Polygon(adjusted_arrow_path, edgecolor="black", facecolor="black", lw=1, transform=fig.dpi_scale_trans) 
+                    arrow_patch = Polygon(
+                            adjusted_arrow_path, edgecolor=curve.edge_color, 
+                            facecolor=curve.fill_color, lw=1,
+                            transform=fig.dpi_scale_trans) 
 
 #                    codes = [Path.MOVETO, Path.LINETO, Path.LINETO, Path.LINETO, Path.LINETO]
 

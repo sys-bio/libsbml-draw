@@ -2,6 +2,8 @@
 """
 from enum import IntEnum
 
+import ctypes
+
 from matplotlib.patches import ArrowStyle
 
 import libsbml_draw.c_api.sbnw_c_api as sbnw
@@ -80,17 +82,18 @@ class Curve():
 
     def __init__(self, h_curve):
 
-        curveCPs = sbnw.getCurveCPs(h_curve)
-        self.start_point = curveCPs.start
-        self.end_point = curveCPs.end
-        self.control_point_1 = curveCPs.control_point_1
-        self.control_point_2 = curveCPs.control_point_2
+        self.curveCPs = sbnw.getCurveCPs(h_curve)
+        self.start_point = self.curveCPs.start
+        self.end_point = self.curveCPs.end
+        self.control_point_1 = self.curveCPs.control_point_1
+        self.control_point_2 = self.curveCPs.control_point_2
         self.role = sbnw.curve_getRole(h_curve)
         self.role_name = Role(self.role).name
         self.curveArrowStyle = Curve.role_arrowstyles[self.role]
         self.edge_color = "#0000ff"
         self.fill_color = "#0000ff"
         self.curve_width = 1
+        self.species = None
 
 class Reaction():
     """Represents a reaction in the SBML model."""
@@ -120,6 +123,25 @@ class Network():
         self.aliasedNodes = {}
         self.bg_color = "#ffffff"
         self.line_endings = {}
+
+        self._assign_species_to_curves()
+
+#        for reaction in self.reactions.values():
+#            for curve in reaction.curves:
+#                print("curve: ", reaction.id, curve.role, curve.species)
+
+    def _assign_species_to_curves(self,):
+        """ """
+        for node_index in range(sbnw.nw_getNumNodes(self.h_network)):
+            h_node = sbnw.nw_getNodep(self.h_network, node_index)
+            node_id = sbnw.node_getID(h_node)
+            gf_curves = sbnw.node_getAttachedCurves(h_node, self.h_network)
+            for attached_curve in gf_curves:
+                curve_points = sbnw.getCurveCPs(ctypes.byref(attached_curve))
+                for reaction in self.reactions.values():
+                    for curve in reaction.curves:
+                        if self._curveCPs_equal(curve_points, curve.curveCPs):
+                            curve.species = node_id
 
     def _remove_node(self, node_id):
         """Remove a node from the network.
@@ -328,3 +350,32 @@ class Network():
         self._update_compartments_layout()
         self._update_nodes_layout()
         self._update_reactions_layout()
+
+    def _floats_equal(self, a, b):
+        """ """
+        epsilon = .0000001        
+        return abs(a - b) < epsilon
+ 
+    def _curveCPs_equal(self, curveCP1, curveCP2):
+        """ """
+        if (
+            self._floats_equal(curveCP1.start.x, curveCP2.start.x) and 
+            self._floats_equal(curveCP1.start.y, curveCP2.start.y) and
+            self._floats_equal(curveCP1.control_point_1.x,
+                               curveCP2.control_point_1.x) and
+            self._floats_equal(curveCP1.control_point_1.y,
+                               curveCP2.control_point_1.y) and 
+            self._floats_equal(curveCP1.control_point_2.x,
+                               curveCP2.control_point_2.x) and
+            self._floats_equal(curveCP1.control_point_2.y,
+                               curveCP2.control_point_2.y) and 
+            self._floats_equal(curveCP1.end.x, curveCP2.end.x) and 
+            self._floats_equal(curveCP1.end.y, curveCP2.end.y)                               
+            ):
+            
+            return True
+        
+        else:
+            return False
+               
+        

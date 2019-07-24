@@ -4,6 +4,8 @@ models defined in an SBML file, making use of a c API and libsbml."""
 from collections import namedtuple
 import os
 
+import ctypes
+
 from matplotlib.colors import is_color_like
 
 import libsbml
@@ -29,7 +31,7 @@ class SBMLlayout:
 
     def __init__(self, sbml_source=None, layout_alg_options=None,
                  layout_number=0, fitToWindow=tuple(),
-                 autoComputeLayout=False, applyRender=False):
+                 autoComputeLayout=False, applyRender=True):
 
         self.__sbml_source = sbml_source
         self.__layout_number = layout_number
@@ -130,14 +132,18 @@ class SBMLlayout:
         print("num nodes: ", sbnw.nw_getNumNodes(h_network) )
         
 
-        h_node = sbnw.nw_getNodep(h_network, 0)
-
-        num_curves = 0
-        h_curves = []
+        h_node = sbnw.nw_getNodep(h_network, 1)
         
-        x = sbnw.node_getAttachedCurves(h_node, h_network, num_curves, h_curves)
+        gf_curves = sbnw.node_getAttachedCurves(h_node, h_network)
 
-        print("x, num_curves, len h_curves: ", x, num_curves, h_curves)
+        print("gf_curves: ", type(gf_curves), len(gf_curves), gf_curves)
+
+        print()
+        for curve in gf_curves:
+            print("type gf_curve: ", type(curve))
+            print("curve role: ", sbnw.curve_getRole(ctypes.byref(curve)))
+
+        return gf_curves
 
 
     def loadSBMLFile(self, sbml_file):

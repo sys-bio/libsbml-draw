@@ -30,6 +30,8 @@ for node in sll._SBMLlayout__network.nodes.values():
 
 sll.drawNetwork()
 
+sll.writeSBMLFile("simple_local_out.xml")
+
 print(sll.getCompartmentEdgeColor("vol1"))
 print(sll.getCompartmentFillColor("vol1"))
 print(sll.getCompartmentLineWidth("vol1"))
