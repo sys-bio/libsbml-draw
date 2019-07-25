@@ -12,11 +12,11 @@ sl = SBMLlayout(str(model_file))
 sl._describeModel()
 
 fig = sl.drawNetwork()
-fig = sl.drawNetwork(node_mutation_scale=5)
+#fig = sl.drawNetwork(node_mutation_scale=5)
 
-sl.setArrowheadScale(1, 15)
-sl.setArrowheadScale(4, 15)
+#sl.setArrowheadScale(1, 15)
+#sl.setArrowheadScale(4, 15)
 
-fig = sl.drawNetwork(node_mutation_scale=5)
+#fig = sl.drawNetwork(node_mutation_scale=5)
 
 
