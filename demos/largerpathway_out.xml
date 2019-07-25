@@ -749,43 +749,43 @@
                 <render:g render:stroke="black" render:font-family="Verdana" render:font-weight="normal" render:font-style="normal" render:text-anchor="middle" render:vtext-anchor="middle" render:font-size="12"/>
               </render:style>
               <render:style render:idList="layout_glyph_21">
-                <render:g render:stroke="#000000a0" render:stroke-width="3" render:fill="#000000a0"/>
+                <render:g render:stroke="#000000a0" render:stroke-width="3" render:fill="#000000a0" render:endHead="substrate"/>
               </render:style>
               <render:style render:idList="layout_glyph_23">
-                <render:g render:stroke="#000000a0" render:stroke-width="3" render:fill="#000000a0" render:endHead="product"/>
+                <render:g render:stroke="#000000a0" render:stroke-width="3" render:fill="#000000a0" render:endHead="TransitionHead"/>
               </render:style>
               <render:style render:idList="layout_glyph_17">
-                <render:g render:stroke="#000000a0" render:stroke-width="3" render:fill="#000000a0"/>
+                <render:g render:stroke="#000000a0" render:stroke-width="3" render:fill="#000000a0" render:endHead="substrate"/>
               </render:style>
               <render:style render:idList="layout_glyph_19">
-                <render:g render:stroke="#000000a0" render:stroke-width="3" render:fill="#000000a0" render:endHead="product"/>
+                <render:g render:stroke="#000000a0" render:stroke-width="3" render:fill="#000000a0" render:endHead="TransitionHead"/>
               </render:style>
               <render:style render:idList="layout_glyph_20">
-                <render:g render:stroke="#000000a0" render:stroke-width="3" render:fill="#000000a0" render:endHead="product"/>
+                <render:g render:stroke="#000000a0" render:stroke-width="3" render:fill="#000000a0" render:endHead="TransitionHead"/>
               </render:style>
               <render:style render:idList="layout_glyph_6">
-                <render:g render:stroke="#000000a0" render:stroke-width="3" render:fill="#000000a0"/>
+                <render:g render:stroke="#000000a0" render:stroke-width="3" render:fill="#000000a0" render:endHead="substrate"/>
               </render:style>
               <render:style render:idList="layout_glyph_8">
-                <render:g render:stroke="#000000a0" render:stroke-width="3" render:fill="#000000a0" render:endHead="product"/>
+                <render:g render:stroke="#000000a0" render:stroke-width="3" render:fill="#000000a0" render:endHead="TransitionHead"/>
               </render:style>
               <render:style render:idList="layout_glyph_9">
-                <render:g render:stroke="#000000a0" render:stroke-width="3" render:fill="#000000a0"/>
+                <render:g render:stroke="#000000a0" render:stroke-width="3" render:fill="#000000a0" render:endHead="substrate"/>
               </render:style>
               <render:style render:idList="layout_glyph_11">
-                <render:g render:stroke="#000000a0" render:stroke-width="3" render:fill="#000000a0" render:endHead="product"/>
+                <render:g render:stroke="#000000a0" render:stroke-width="3" render:fill="#000000a0" render:endHead="TransitionHead"/>
               </render:style>
               <render:style render:idList="layout_glyph_12">
-                <render:g render:stroke="#000000a0" render:stroke-width="3" render:fill="#000000a0" render:endHead="product"/>
+                <render:g render:stroke="#000000a0" render:stroke-width="3" render:fill="#000000a0" render:endHead="TransitionHead"/>
               </render:style>
               <render:style render:idList="layout_glyph_13">
-                <render:g render:stroke="#000000a0" render:stroke-width="3" render:fill="#000000a0"/>
+                <render:g render:stroke="#000000a0" render:stroke-width="3" render:fill="#000000a0" render:endHead="substrate"/>
               </render:style>
               <render:style render:idList="layout_glyph_13">
-                <render:g render:stroke="#000000a0" render:stroke-width="3" render:fill="#000000a0"/>
+                <render:g render:stroke="#000000a0" render:stroke-width="3" render:fill="#000000a0" render:endHead="substrate"/>
               </render:style>
               <render:style render:idList="layout_glyph_16">
-                <render:g render:stroke="#000000a0" render:stroke-width="3" render:fill="#000000a0" render:endHead="product"/>
+                <render:g render:stroke="#000000a0" render:stroke-width="3" render:fill="#000000a0" render:endHead="TransitionHead"/>
               </render:style>
             </render:listOfStyles>
           </render:renderInformation>

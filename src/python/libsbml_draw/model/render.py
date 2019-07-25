@@ -1705,6 +1705,8 @@ class Render:
 
             local_render_info = rPlugin.createLocalRenderInformation()
 
+            print("Adding local styles render info")
+
             self._addLocalStylesRenderInformation(local_render_info, network)
 
 
