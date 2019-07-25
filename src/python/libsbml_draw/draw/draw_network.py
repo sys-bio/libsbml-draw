@@ -269,9 +269,9 @@ def draw_reactions(reactions, mutation_scale, fig, scaling_factor, nw_height_inc
                                curve.end_point.x - curve.control_point_2.x)
 
                     if slope < 0:
-                        theta = 180 + abs(math.degrees(math.atan(slope))) + 90
+                        theta = abs(math.degrees(math.atan(slope))) + 90
                     else:
-                        theta = 180 + math.degrees(math.atan(slope))                        
+                        theta = math.degrees(math.atan(slope))                        
 
                     print("theta: ", theta)
 

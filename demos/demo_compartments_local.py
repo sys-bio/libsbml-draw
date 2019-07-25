@@ -17,8 +17,8 @@ sll._describeModel()
 
 sll.drawNetwork()
 
-sll.setCompartmentEdgeColor("vol1", "blue")
-sll.setCompartmentFillColor("vol1", "lightpink")
+sll.setCompartmentEdgeColor("vol1", "#0000ff")
+sll.setCompartmentFillColor("vol1", "#ff000010")
 sll.setCompartmentLineWidth("vol1", 5)
 
 for node in sll._SBMLlayout__network.nodes.values():

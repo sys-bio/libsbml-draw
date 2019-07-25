@@ -1,0 +1,188 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<sbml xmlns="http://www.sbml.org/sbml/level2" level="2" version="1">
+  <model>
+    <notes>
+      <p xmlns="http://www.w3.org/1999/xhtml">
+				Simple Model one compartment, with two species, and a reaction.		
+				It also contains one Layout for the model along with a local
+				Render information object that describes how the layout glyphs
+				should be rendered. 
+			</p>
+    </notes>
+    <annotation>
+      <layout:listOfLayouts xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:layout="http://projects.eml.org/bcb/sbml/level2">
+        <layout:layout layout:id="JDesigner2_0">
+          <annotation xmlns="http://www.sbml.org/sbml/level2">
+            <render:listOfRenderInformation xmlns:render="http://projects.eml.org/bcb/sbml/render/level2">
+              <render:renderInformation render:id="localRenderInfo" render:name="Render Information">
+                <render:listOfLineEndings>
+                  <render:lineEnding render:id="product">
+                    <layout:boundingBox>
+                      <layout:position layout:x="-10" layout:y="-5"/>
+                      <layout:dimensions layout:width="10" layout:height="10"/>
+                    </layout:boundingBox>
+                    <render:g render:stroke="Color_3" render:stroke-width="0.001" render:fill="Color_3" render:font-weight="normal" render:font-style="normal" render:text-anchor="start" render:vtext-anchor="top" render:font-size="0">
+                      <render:polygon render:fill="Color_3">
+                        <render:listOfElements>
+                          <render:element xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:type="RenderPoint" render:x="0" render:y="0"/>
+                          <render:element xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:type="RenderPoint" render:x="100%" render:y="50%"/>
+                          <render:element xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:type="RenderPoint" render:x="0" render:y="100%"/>
+                          <render:element xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:type="RenderPoint" render:x="33%" render:y="50%"/>
+                          <render:element xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:type="RenderPoint" render:x="0" render:y="0"/>
+                        </render:listOfElements>
+                      </render:polygon>
+                    </render:g>
+                  </render:lineEnding>
+                </render:listOfLineEndings>
+                <render:listOfStyles>
+                  <render:style render:idList="sGlyph_0">
+                    <render:g render:stroke="#ff9900" render:stroke-width="2" render:fill="#c9e0fb">
+                      <render:polygon render:stroke="#ff9900" render:stroke-width="2" render:fill="#c9e0fb">
+                        <render:listOfElements>
+                          <render:element xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:type="RenderPoint" render:x="20" render:y="0"/>
+                          <render:element xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:type="RenderCubicBezier" render:x="0" render:y="20" render:basePoint1_x="8.95431" render:basePoint1_y="0" render:basePoint2_x="0" render:basePoint2_y="8.95431"/>
+                          <render:element xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:type="RenderCubicBezier" render:x="20" render:y="40" render:basePoint1_x="0" render:basePoint1_y="31.0457" render:basePoint2_x="8.95431" render:basePoint2_y="40"/>
+                          <render:element xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:type="RenderPoint" render:x="42" render:y="40"/>
+                          <render:element xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:type="RenderCubicBezier" render:x="62" render:y="20" render:basePoint1_x="53.0457" render:basePoint1_y="40" render:basePoint2_x="62" render:basePoint2_y="31.0457"/>
+                          <render:element xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:type="RenderCubicBezier" render:x="42" render:y="0" render:basePoint1_x="62" render:basePoint1_y="8.95431" render:basePoint2_x="53.0457" render:basePoint2_y="0"/>
+                          <render:element xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:type="RenderPoint" render:x="20" render:y="0"/>
+                        </render:listOfElements>
+                      </render:polygon>
+                    </render:g>
+                  </render:style>
+                  <render:style render:idList="tGlyph_0">
+                    <render:g render:stroke="#000000" render:font-family="Arial" render:font-weight="normal" render:font-style="normal" render:text-anchor="middle" render:vtext-anchor="top" render:font-size="11"/>
+                  </render:style>
+                  <render:style render:idList="sGlyph_1">
+                    <render:g render:stroke="#ff9900" render:stroke-width="2" render:fill="#c9e0fb">
+                      <render:polygon render:stroke="#ff9900" render:stroke-width="2" render:fill="#c9e0fb">
+                        <render:listOfElements>
+                          <render:element xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:type="RenderPoint" render:x="20" render:y="0"/>
+                          <render:element xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:type="RenderCubicBezier" render:x="0" render:y="20" render:basePoint1_x="8.95431" render:basePoint1_y="0" render:basePoint2_x="0" render:basePoint2_y="8.95431"/>
+                          <render:element xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:type="RenderCubicBezier" render:x="20" render:y="40" render:basePoint1_x="0" render:basePoint1_y="31.0457" render:basePoint2_x="8.95431" render:basePoint2_y="40"/>
+                          <render:element xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:type="RenderPoint" render:x="42" render:y="40"/>
+                          <render:element xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:type="RenderCubicBezier" render:x="62" render:y="20" render:basePoint1_x="53.0457" render:basePoint1_y="40" render:basePoint2_x="62" render:basePoint2_y="31.0457"/>
+                          <render:element xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:type="RenderCubicBezier" render:x="42" render:y="0" render:basePoint1_x="62" render:basePoint1_y="8.95431" render:basePoint2_x="53.0457" render:basePoint2_y="0"/>
+                          <render:element xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:type="RenderPoint" render:x="20" render:y="0"/>
+                        </render:listOfElements>
+                      </render:polygon>
+                    </render:g>
+                  </render:style>
+                  <render:style render:idList="tGlyph_1">
+                    <render:g render:stroke="#000000" render:font-family="Arial" render:font-weight="normal" render:font-style="normal" render:text-anchor="middle" render:vtext-anchor="top" render:font-size="11"/>
+                  </render:style>
+                  <render:style render:idList="SpeciesReference_J0_2">
+                    <render:g render:stroke="#008000" render:stroke-width="2" render:fill="#008000"/>
+                  </render:style>
+                  <render:style render:idList="SpeciesReference_J0_0">
+                    <render:g render:stroke="#008000" render:stroke-width="2" render:fill="#008000" render:endHead="product"/>
+                  </render:style>
+                  <render:style render:idList="cGlyph_0">
+                    <render:g render:stroke="#0000ff" render:stroke-width="5" render:fill="#ff000010">
+                      <render:rectangle render:stroke="#0000ff" render:stroke-width="5" render:fill="#ff000010" render:x="0" render:y="0" render:width="100%" render:height="100%"/>
+                    </render:g>
+                  </render:style>
+                </render:listOfStyles>
+              </render:renderInformation>
+            </render:listOfRenderInformation>
+          </annotation>
+          <layout:dimensions layout:width="436" layout:height="232"/>
+          <layout:listOfCompartmentGlyphs>
+            <layout:compartmentGlyph layout:id="cGlyph_0" layout:compartment="vol1">
+              <layout:boundingBox>
+                <layout:position layout:x="48" layout:y="21"/>
+                <layout:dimensions layout:width="340" layout:height="190"/>
+              </layout:boundingBox>
+            </layout:compartmentGlyph>
+          </layout:listOfCompartmentGlyphs>
+          <layout:listOfSpeciesGlyphs>
+            <layout:speciesGlyph layout:id="sGlyph_0" layout:species="Node0">
+              <layout:boundingBox>
+                <layout:position layout:x="79" layout:y="91"/>
+                <layout:dimensions layout:width="62" layout:height="40"/>
+              </layout:boundingBox>
+            </layout:speciesGlyph>
+            <layout:speciesGlyph layout:id="sGlyph_1" layout:species="Node1">
+              <layout:boundingBox>
+                <layout:position layout:x="297" layout:y="91"/>
+                <layout:dimensions layout:width="62" layout:height="40"/>
+              </layout:boundingBox>
+            </layout:speciesGlyph>
+          </layout:listOfSpeciesGlyphs>
+          <layout:listOfReactionGlyphs>
+            <layout:reactionGlyph layout:id="rGlyph_0" layout:reaction="J0">
+              <layout:boundingBox>
+                <layout:position layout:x="0" layout:y="0"/>
+                <layout:dimensions layout:width="0" layout:height="0"/>
+              </layout:boundingBox>
+              <layout:listOfSpeciesReferenceGlyphs>
+                <layout:speciesReferenceGlyph xmlns:render="http://projects.eml.org/bcb/sbml/render/level2" layout:id="SpeciesReference_J0_0" render:objectRole="product" layout:speciesReference="Node1" layout:speciesGlyph="sGlyph_1" layout:role="product">
+                  <layout:curve>
+                    <layout:listOfCurveSegments>
+                      <layout:curveSegment xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:type="CubicBezier">
+                        <layout:start layout:x="149" layout:y="111"/>
+                        <layout:end layout:x="289" layout:y="111"/>
+                        <layout:basePoint1 layout:x="219" layout:y="111"/>
+                        <layout:basePoint2 layout:x="219" layout:y="111"/>
+                      </layout:curveSegment>
+                    </layout:listOfCurveSegments>
+                  </layout:curve>
+                </layout:speciesReferenceGlyph>
+                <layout:speciesReferenceGlyph xmlns:render="http://projects.eml.org/bcb/sbml/render/level2" layout:id="SpeciesReference_J0_2" render:objectRole="substrate" layout:speciesReference="Node0" layout:speciesGlyph="sGlyph_0" layout:role="substrate">
+                  <layout:boundingBox>
+                    <layout:position layout:x="0" layout:y="0"/>
+                    <layout:dimensions layout:width="0" layout:height="0"/>
+                  </layout:boundingBox>
+                </layout:speciesReferenceGlyph>
+              </layout:listOfSpeciesReferenceGlyphs>
+            </layout:reactionGlyph>
+          </layout:listOfReactionGlyphs>
+          <layout:listOfTextGlyphs>
+            <layout:textGlyph layout:id="tGlyph_0" layout:text="Node0" layout:graphicalObject="sGlyph_0">
+              <layout:boundingBox>
+                <layout:position layout:x="79" layout:y="91"/>
+                <layout:dimensions layout:width="62" layout:height="40"/>
+              </layout:boundingBox>
+            </layout:textGlyph>
+            <layout:textGlyph layout:id="tGlyph_1" layout:text="Node1" layout:graphicalObject="sGlyph_1">
+              <layout:boundingBox>
+                <layout:position layout:x="297" layout:y="91"/>
+                <layout:dimensions layout:width="62" layout:height="40"/>
+              </layout:boundingBox>
+            </layout:textGlyph>
+          </layout:listOfTextGlyphs>
+        </layout:layout>
+      </layout:listOfLayouts>
+    </annotation>
+    <listOfCompartments>
+      <compartment id="compartment" size="1"/>
+      <compartment id="vol1" size="1"/>
+    </listOfCompartments>
+    <listOfSpecies>
+      <species id="Node0" compartment="vol1" initialConcentration="0" boundaryCondition="false"/>
+      <species id="Node1" compartment="vol1" initialConcentration="0" boundaryCondition="false"/>
+    </listOfSpecies>
+    <listOfParameters>
+      <parameter id="J0_k" value="0.1"/>
+    </listOfParameters>
+    <listOfReactions>
+      <reaction id="J0" reversible="false">
+        <listOfReactants>
+          <speciesReference species="Node0" stoichiometry="1"/>
+        </listOfReactants>
+        <listOfProducts>
+          <speciesReference species="Node1" stoichiometry="1"/>
+        </listOfProducts>
+        <kineticLaw>
+          <math xmlns="http://www.w3.org/1998/Math/MathML">
+            <apply>
+              <times/>
+              <ci> J0_k </ci>
+              <ci> Node0 </ci>
+            </apply>
+          </math>
+        </kineticLaw>
+      </reaction>
+    </listOfReactions>
+  </model>
+</sbml>

@@ -29,7 +29,6 @@ ROLES = (GF_ROLE_SUBSTRATE,
          GF_ROLE_ACTIVATOR,
          GF_ROLE_INHIBITOR) = tuple(map(ctypes.c_uint, range(7)))
 
-
 # Classes
 class fr_alg_options(ctypes.Structure):
     _fields_ = [("k", ctypes.c_double),

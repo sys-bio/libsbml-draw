@@ -88,8 +88,18 @@ class Render:
 
         for reaction in self.layout.getListOfReactionGlyphs():
             for srg in reaction.getListOfSpeciesReferenceGlyphs():           
+                if srg.isSetSpeciesReferenceId():
+                    species_id = srg.getSpeciesReferenceId()
+                elif srg.isSetSpeciesGlyphId():
+                    species_glyph_id = srg.getSpeciesGlyphId()
+                    if species_glyph_id in self.speciesGlyphs:
+                        species_id = self.speciesGlyphs[species_glyph_id]
+                else:
+                    species_id = ""
+                    raise RuntimeWarning("Can't create proper species reference glyph key.", 
+                                         "species id = ", species_id)
                 srgDirectory[(reaction.getReactionId(), srg.getRoleString(), 
-                              srg.getSpeciesReferenceId())] = srg.getId()            
+                    species_id)] = srg.getId()            
 
         print("len srgDirectory: ", len(srgDirectory), srgDirectory)                                     
         
@@ -780,7 +790,9 @@ class Render:
                     # update nodes
                     for glyph_type in SPECIES_TYPES:
                         if glyph_type in nodes_type:
+                            print("GLOBAL: ", glyph_type)
                             for node in network.nodes.values():
+                                print("updating node: ", node.id)
                                 self._updateNode(
                                         node,
                                         nodes_type[glyph_type])                                
@@ -1217,14 +1229,29 @@ class Render:
     def _updateNode(self, node, render_style):
         """ 
         """
+        render_group = render_style.getGroup()
+        node_element = render_group.getElement(0)
         
-        node_element = render_style.getGroup().getElement(0)
-        
+        if node_element.isSetFillColor():
+            fill_color = node_element.getFillColor()
+        else:
+            fill_color = render_group.getFillColor()
+
         node_fill_color = self._set_plot_color_and_validity(
-                node_element.getFillColor())
+                fill_color)
+        
+        if node_element.isSetStroke():
+            edge_color = node_element.getStroke()
+        else:
+            edge_color = render_group.getStroke()
+
         node_edge_color = self._set_plot_color_and_validity(
-                node_element.getStroke())
-        node_edge_width = node_element.getStrokeWidth()
+                edge_color)
+
+        if node_element.isSetStrokeWidth():
+            node_edge_width = node_element.getStrokeWidth()
+        else:
+            node_edge_width = render_group.getStrokeWidth()    
         
         node_shape = node_element.getElementName() 
 
@@ -1618,7 +1645,7 @@ class Render:
             style.getGroup().setStrokeWidth(compartment.line_width)
             style.addId(self.compartmentsToGlyphs[compartment.id])
             
-            if compartment.shape == "rectangle" or node.shape == "round_box":
+            if compartment.shape == "rectangle" or compartment.shape == "round_box":
                 rectangle = style.getGroup().createRectangle()
                 rectangle.setX(libsbml.RelAbsVector("000%"))
                 rectangle.setY(libsbml.RelAbsVector("000%"))
