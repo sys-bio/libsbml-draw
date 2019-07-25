@@ -101,7 +101,7 @@ class Render:
                 srgDirectory[(reaction.getReactionId(), srg.getRoleString(), 
                     species_id)] = srg.getId()            
 
-        print("len srgDirectory: ", len(srgDirectory), srgDirectory)                                     
+#        print("len srgDirectory: ", len(srgDirectory), srgDirectory)                                     
         
         return srgDirectory
 
@@ -211,31 +211,31 @@ class Render:
             glyph_id = compartment.getId()
             compartment_id = compartment.getCompartmentId()
             glyphsDirectory[glyph_id] = GlyphProperty("compartment", compartment_id)
-            print("compartment glyph: ", glyph_id)     
-            print("compartment: ", compartment_id)
+#            print("compartment glyph: ", glyph_id)     
+#            print("compartment: ", compartment_id)
             
         for reaction in self.layout.getListOfReactionGlyphs(): 
             glyph_id = reaction.getId()
             reaction_id = reaction.getReactionId()
             glyphsDirectory[glyph_id] = GlyphProperty("reaction", reaction_id)
-            print("reaction glyph: ", glyph_id)     
-            print("reaction: ", reaction_id)
+#            print("reaction glyph: ", glyph_id)     
+#            print("reaction: ", reaction_id)
             
         for species in self.layout.getListOfSpeciesGlyphs():
             glyph_id = species.getId()
             species_id = species.getSpeciesId()
             glyphsDirectory[glyph_id] = GlyphProperty("species", species_id)
-            print("species glyph: ", glyph_id)     
-            print("species: ", species_id)
+#            print("species glyph: ", glyph_id)     
+#            print("species: ", species_id)
             
         for text in self.layout.getListOfTextGlyphs():
             glyph_id = text.getId()
             species_id = self.speciesGlyphs[text.getGraphicalObjectId()]
             glyphsDirectory[glyph_id] = GlyphProperty("text", species_id)
-            print("text glyph: ", glyph_id)     
-            print("text: ", species_id)    
-
-        print("size glyphs dir:", len(glyphsDirectory))
+#           print("text glyph: ", glyph_id)     
+#            print("text: ", species_id)    
+#
+#        print("size glyphs dir:", len(glyphsDirectory))
 
         return glyphsDirectory
         
@@ -645,7 +645,7 @@ class Render:
             libsbml_line_endings.append(line_ending)
             
             line_ending_id = line_ending.getId()
-            print("line ending id: ", line_ending_id)
+#            print("line ending id: ", line_ending_id)
 
             bounding_box = line_ending.getBoundingBox()
             bounding_box_width = bounding_box.getWidth()
@@ -661,7 +661,7 @@ class Render:
                 
                 for curve in element.getListOfElements():                     
 
-                    print("curve type: ", type(curve))                                  
+#                    print("curve type: ", type(curve))                                  
 #                    print("curve isSet rel abs: ", curve.getX().isSetRelativeValue(), curve.getX().isSetAbsoluteValue())
 #                    print("curve rel: ", curve.getX().getRelativeValue(), curve.getY().getRelativeValue())
 #                    print("curve abs: ", curve.getX().getAbsoluteValue(), curve.getY().getAbsoluteValue())
@@ -688,8 +688,8 @@ class Render:
 
             line_endings[line_ending_id] = np.array(line_ending_points)  
 
-            for point in line_ending_points:
-                print("le point: ", point) 
+#            for point in line_ending_points:
+#                print("le point: ", point) 
 
         return (line_endings, libsbml_line_endings)
 
@@ -833,7 +833,7 @@ class Render:
 
         curve_edge_width = render_style.getGroup().getStrokeWidth()
 
-        print("curve: ", curve_edge_color, curve_edge_width)
+#        print("curve: ", curve_edge_color, curve_edge_width)
 
         if curve_edge_color.is_valid_color:
             curve.edge_color = curve_edge_color.color

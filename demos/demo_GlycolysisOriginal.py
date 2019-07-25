@@ -20,10 +20,10 @@ sl.drawNetwork("GlycolysisOriginal.pdf")
 
 #sl.drawNetwork(figsize=(20,20))
 
-sl.setNodeFontSize("all", 8)
+#sl.setNodeFontSize("all", 8)
 
-sl.drawNetwork()
+#sl.drawNetwork()
 
-for node in sl._SBMLlayout__network.nodes.values():
-    print("node id, name: ", node.id, node.name)
+#for node in sl._SBMLlayout__network.nodes.values():
+#    print("node id, name: ", node.id, node.name)
     

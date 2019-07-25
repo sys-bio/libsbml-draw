@@ -95,6 +95,7 @@ class Curve():
         self.fill_color = "#0000ff"
         self.curve_width = 1
         self.species = None
+        self.endHead = None
 
 class Reaction():
     """Represents a reaction in the SBML model."""

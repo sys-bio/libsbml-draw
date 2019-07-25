@@ -76,8 +76,8 @@ def draw_nodes(nodes, fig, scaling_factor, nw_height_inches):
 
     for node in nodes:
         
-        print("node shape: ", node.shape)
-        print("rect rounding: ", node.rectangle_rounding)
+#        print("node shape: ", node.shape)
+#        print("rect rounding: ", node.rectangle_rounding)
 
         if node.shape =="round_box" or node.shape == "polygon_pause":
         
@@ -270,12 +270,18 @@ def draw_reactions(reactions, mutation_scale, fig, scaling_factor, nw_height_inc
                                curve.end_point.x - curve.control_point_2.x)
 
                     angle_deg = math.degrees(math.atan(slope))
+                    
+                    if angle_deg < 0:
+                        angle_deg += 180
+                    else: 
+                        if curve.control_point_2.x > curve.end_point.x:
+                            angle_deg += 180
             
                     print("slope, angle degrees: ", reaction.id, slope, angle_deg)
 
                     adjusted_arrow_path = _adjust_arrowhead_x_and_y_values(
                             arrow_path, scaling_factor, nw_height_inches, 
-                            curve.end_point, theta)
+                            curve.end_point, angle_deg)
 
 #                    print("adj arrow path: ", type(adjusted_arrow_path), adjusted_arrow_path)
 
