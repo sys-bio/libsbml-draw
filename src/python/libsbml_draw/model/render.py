@@ -843,6 +843,8 @@ class Render:
 
         if curve_edge_width > 0:
             curve.curve_width = curve_edge_width                
+
+        curve.endHead = render_style.getGroup().getEndHead() 
         
         
     def _getLocalIdList(self, local_style, network_id_set):
@@ -1629,8 +1631,10 @@ class Render:
                 style.getGroup().setFillColor(curve.fill_color)
                 style.getGroup().setStrokeWidth(curve.curve_width)
 
-                if curve.role_name.lower() == "product":
-                    style.getGroup().setEndHead("product")                    
+                if curve.endHead:
+                    style.getGroup().setEndHead(curve.endHead)
+                else: 
+                    style.getGroup().setEndHead(curve.role_name.lower())                    
 
                 if curve_glyph_id:
                     style.addId(curve_glyph_id)
