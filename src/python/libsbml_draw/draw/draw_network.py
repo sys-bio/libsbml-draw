@@ -178,20 +178,23 @@ def rotate_point(point, angle_deg, center_point=(0,0)):
     return rotated_point
 
 def _adjust_arrowhead_x_and_y_values(path_points, scaling_factor, 
-                                     nw_height_inches, center_point, angle_deg):
+                                     nw_height_inches, center_point, 
+                                     angle_degrees, box_dimensions):
     """ """
     adjusted_points = []    
 
     for point in path_points:
     
-        rotated_point = rotate_point(point, angle_deg, (-5,0))
+        arrowhead_center = (box_dimensions.width/2, box_dimensions.height/2)
+        
+        rotated_point = rotate_point(point, angle_degrees, arrowhead_center)
 
         # x
-        x = rotated_point[0] + center_point.x
+        x = rotated_point[0] + center_point.x + box_dimensions.x_offset
         x = scaling_factor*x*INCHES_PER_POINT + WIDTH_SHIFT
 
         # y
-        y = rotated_point[1] + center_point.y
+        y = rotated_point[1] + center_point.y + box_dimensions.y_offset
         y = scaling_factor*(
                 nw_height_inches - y*INCHES_PER_POINT) + HEIGHT_SHIFT    
 
@@ -261,27 +264,15 @@ def draw_reactions(reactions, mutation_scale, fig, scaling_factor, nw_height_inc
 
             if curve.role_name.lower() == "product":
                 if "product" in line_endings:
-                    arrow_path = line_endings["product"]   
 
-#                    print("arrow path type: ", type(arrow_path))
-#                    print("curve end point: ", curve.end_point.x, curve.end_point.y)
+                    arrow_path = line_endings["product"][0]                       
+                    box_dimensions = line_endings["product"][1]
 
-                    slope = 3*(curve.end_point.y - curve.control_point_2.y)/(
-                               curve.end_point.x - curve.control_point_2.x)
-
-                    angle_deg = math.degrees(math.atan(slope))
-                    
-                    if angle_deg < 0:
-                        angle_deg += 180
-                    else: 
-                        if curve.control_point_2.x > curve.end_point.x:
-                            angle_deg += 180
-            
-                    print("slope, angle degrees: ", reaction.id, slope, angle_deg)
+                    angle_degrees = compute_line_ending_rotation_angle(curve)
 
                     adjusted_arrow_path = _adjust_arrowhead_x_and_y_values(
                             arrow_path, scaling_factor, nw_height_inches, 
-                            curve.end_point, angle_deg)
+                            curve.end_point, angle_degrees, box_dimensions)
 
 #                    print("adj arrow path: ", type(adjusted_arrow_path), adjusted_arrow_path)
 
@@ -298,6 +289,20 @@ def draw_reactions(reactions, mutation_scale, fig, scaling_factor, nw_height_inc
 
     return reaction_patches
 
+def compute_line_ending_rotation_angle(self, curve):
+    """ """
+    slope = 3*(curve.end_point.y - curve.control_point_2.y)/(
+               curve.end_point.x - curve.control_point_2.x)
+
+    angle_degrees = math.degrees(math.atan(slope))
+                    
+    if angle_degrees < 0:
+        angle_degrees += 180
+    else: 
+        if curve.control_point_2.x > curve.end_point.x:
+            angle_degrees += 180
+            
+    return angle_degrees
 
 def add_labels(nodes, fig, scaling_factor, nw_height_inches):
     """Add text to the nodes.

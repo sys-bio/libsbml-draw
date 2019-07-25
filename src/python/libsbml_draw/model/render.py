@@ -18,6 +18,8 @@ import libsbml
 PlotColor = namedtuple("PlotColor", ["is_valid_color", "color"])
 FontProperty = namedtuple("FontProperty", ["is_valid_value", "value"])
 GlyphProperty = namedtuple("GlyphProperty", ["type", "entity_id"])
+BoxDimensions = namedtuple("BoxDimensions", 
+                              ["x_offset", "y_offset", "width", "height"])
 
 FONT_STYLES = ["none", "normal", "italic"]
 
@@ -648,11 +650,13 @@ class Render:
 #            print("line ending id: ", line_ending_id)
 
             bounding_box = line_ending.getBoundingBox()
-            bounding_box_width = bounding_box.getWidth()
-            bounding_box_height = bounding_box.getHeight()
-            bounding_box_x_offset = bounding_box.getX()
-            bounding_box_y_offset = bounding_box.getY()
-
+            
+            box_dimensions = BoxDimensions(
+                    bounding_box.getX(), 
+                    bounding_box.getY(),
+                    bounding_box.getWidth(),
+                    bounding_box.getHeight())
+            
             line_ending_points = []
             
             element = line_ending.getGroup().getElement(0)
@@ -671,22 +675,21 @@ class Render:
                     if not curve.getX().isSetAbsoluteValue() and not curve.getX().isSetRelativeValue():
                         x = 0
                     elif curve.getX().isSetRelativeValue():
-                        x = curve.getX().getRelativeValue()*bounding_box_width/100                    
+                        x = curve.getX().getRelativeValue()*box_dimensions.width/100                    
                     elif curve.getX().isSetAbsoluteValue():
                         x = curve.getX().getAbsoluteValue()
-                    x = x + bounding_box_x_offset
 
                     if not curve.getY().isSetAbsoluteValue() and not curve.getY().isSetRelativeValue():
                         y = 0
                     elif curve.getY().isSetRelativeValue():
-                        y = curve.getY().getRelativeValue()*bounding_box_height/100                    
+                        y = curve.getY().getRelativeValue()*box_dimensions.height/100                    
                     elif curve.getY().isSetAbsoluteValue():
                         y = curve.getY().getAbsoluteValue()                       
-                    y = y + bounding_box_y_offset
                     
                     line_ending_points.append([x, y])
 
-            line_endings[line_ending_id] = np.array(line_ending_points)  
+            line_endings[line_ending_id] = (np.array(line_ending_points), 
+                                            box_dimensions)  
 
 #            for point in line_ending_points:
 #                print("le point: ", point) 
