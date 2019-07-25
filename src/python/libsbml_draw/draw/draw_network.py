@@ -173,7 +173,9 @@ def rotate_point(point, angle_deg, center_point=(0,0)):
     x = new_point[0]*math.cos(angle_rad) - new_point[1]*math.sin(angle_rad)
     y = new_point[0]*math.sin(angle_rad) + new_point[1]*math.cos(angle_rad)
 
-    rotated_point = (x + center_point[0], y + center_point[1])
+#    rotated_point = (x + center_point[0], y + center_point[1])
+ 
+    rotated_point = (x, y)
     
     return rotated_point
 
@@ -190,11 +192,11 @@ def _adjust_arrowhead_x_and_y_values(path_points, scaling_factor,
         rotated_point = rotate_point(point, angle_degrees, arrowhead_center)
 
         # x
-        x = rotated_point[0] + center_point.x + box_dimensions.x_offset
+        x = rotated_point[0] + center_point.x
         x = scaling_factor*x*INCHES_PER_POINT + WIDTH_SHIFT
 
         # y
-        y = rotated_point[1] + center_point.y + box_dimensions.y_offset
+        y = rotated_point[1] + center_point.y
         y = scaling_factor*(
                 nw_height_inches - y*INCHES_PER_POINT) + HEIGHT_SHIFT    
 
@@ -289,9 +291,9 @@ def draw_reactions(reactions, mutation_scale, fig, scaling_factor, nw_height_inc
 
     return reaction_patches
 
-def compute_line_ending_rotation_angle(self, curve):
+def compute_line_ending_rotation_angle(curve):
     """ """
-    slope = 3*(curve.end_point.y - curve.control_point_2.y)/(
+    slope = (curve.end_point.y - curve.control_point_2.y)/(
                curve.end_point.x - curve.control_point_2.x)
 
     angle_degrees = math.degrees(math.atan(slope))
