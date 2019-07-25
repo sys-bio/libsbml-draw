@@ -154,8 +154,8 @@ def _adjust_x_and_y_values(node_points, scaling_factor, nw_height_inches, node):
         
     return adjusted_node_points    
 
-def rotate_point(point, angle):
-    """ 
+def rotate_point(point, angle_deg, center_point=(0,0)):
+    """rotate counter-clockwise 
     
     Args: 
         point 
@@ -164,26 +164,27 @@ def rotate_point(point, angle):
     Return:
         
     """
-    angle = math.radians(angle)
+    angle_rad = math.radians(angle_deg)
 
-    sin_angle = math.sin(angle)
-    cos_angle = math.cos(angle)
-
-    x = point[0]*cos_angle - point[1]*sin_angle
-    y = point[0]*sin_angle + point[1]*cos_angle
+    #shift point so center_point becomes the origin
     
-    rotated_point = (x, y)    
+    new_point = (point[0] - center_point[0], point[1] - center_point[1])
+
+    x = new_point[0]*math.cos(angle_rad) - new_point[1]*math.sin(angle_rad)
+    y = new_point[0]*math.sin(angle_rad) + new_point[1]*math.cos(angle_rad)
+
+    rotated_point = (x + center_point[0], y + center_point[1])
     
     return rotated_point
 
 def _adjust_arrowhead_x_and_y_values(path_points, scaling_factor, 
-                                     nw_height_inches, center_point, theta):
+                                     nw_height_inches, center_point, angle_deg):
     """ """
     adjusted_points = []    
 
     for point in path_points:
     
-        rotated_point = rotate_point(point, theta)
+        rotated_point = rotate_point(point, angle_deg, (-5,0))
 
         # x
         x = rotated_point[0] + center_point.x
@@ -268,18 +269,15 @@ def draw_reactions(reactions, mutation_scale, fig, scaling_factor, nw_height_inc
                     slope = 3*(curve.end_point.y - curve.control_point_2.y)/(
                                curve.end_point.x - curve.control_point_2.x)
 
-                    if slope < 0:
-                        theta = abs(math.degrees(math.atan(slope))) + 90
-                    else:
-                        theta = math.degrees(math.atan(slope))                        
-
-                    print("theta: ", theta)
+                    angle_deg = math.degrees(math.atan(slope))
+            
+                    print("slope, angle degrees: ", reaction.id, slope, angle_deg)
 
                     adjusted_arrow_path = _adjust_arrowhead_x_and_y_values(
                             arrow_path, scaling_factor, nw_height_inches, 
                             curve.end_point, theta)
 
-                    print("adj arrow path: ", type(adjusted_arrow_path), adjusted_arrow_path)
+#                    print("adj arrow path: ", type(adjusted_arrow_path), adjusted_arrow_path)
 
                     arrow_patch = Polygon(
                             adjusted_arrow_path, edgecolor=curve.edge_color, 
