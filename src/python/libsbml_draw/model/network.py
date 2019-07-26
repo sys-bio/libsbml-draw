@@ -125,6 +125,7 @@ class Network():
         self.aliasedNodes = {}
         self.bg_color = "#ffffff"
         self.line_endings = {}
+        self.stylesheet_line_endings = {}
 
         self._assign_species_to_curves()
 

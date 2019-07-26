@@ -20,6 +20,10 @@ FontProperty = namedtuple("FontProperty", ["is_valid_value", "value"])
 GlyphProperty = namedtuple("GlyphProperty", ["type", "entity_id"])
 BoxDimensions = namedtuple("BoxDimensions", 
                               ["x_offset", "y_offset", "width", "height"])
+EllipseData = namedtuple("EllipseData",
+                         "x", "y", "rx", "ry", "stroke_width")
+
+LINE_ENDINGS_STYLE_SHEET = "render-stylesheet_global.xml"
 
 FONT_STYLES = ["none", "normal", "italic"]
 
@@ -101,9 +105,7 @@ class Render:
                     raise RuntimeWarning("Can't create proper species reference glyph key.", 
                                          "species id = ", species_id)
                 srgDirectory[(reaction.getReactionId(), srg.getRoleString(), 
-                    species_id)] = srg.getId()            
-
-#        print("len srgDirectory: ", len(srgDirectory), srgDirectory)                                     
+                    species_id)] = srg.getId()                                            
         
         return srgDirectory
 
@@ -647,7 +649,6 @@ class Render:
             libsbml_line_endings.append(line_ending)
             
             line_ending_id = line_ending.getId()
-#            print("line ending id: ", line_ending_id)
 
             bounding_box = line_ending.getBoundingBox()
             
@@ -672,30 +673,76 @@ class Render:
 
                     # arrow1_points = np.array([[0,0], [10,5], [10,5], [0,10], [0,10], [3.3,5], [3.3,5], [0,0]])
 
-                    if not curve.getX().isSetAbsoluteValue() and not curve.getX().isSetRelativeValue():
-                        x = 0
-                    elif curve.getX().isSetRelativeValue():
-                        x = curve.getX().getRelativeValue()*box_dimensions.width/100                    
-                    elif curve.getX().isSetAbsoluteValue():
-                        x = curve.getX().getAbsoluteValue()
+#                    if not curve.getX().isSetAbsoluteValue() and not curve.getX().isSetRelativeValue():
+#                        x = 0
+#                    elif curve.getX().isSetRelativeValue():
+#                        x = curve.getX().getRelativeValue()*box_dimensions.width/100                    
+#                    elif curve.getX().isSetAbsoluteValue():
+#                        x = curve.getX().getAbsoluteValue()
 
-                    if not curve.getY().isSetAbsoluteValue() and not curve.getY().isSetRelativeValue():
-                        y = 0
-                    elif curve.getY().isSetRelativeValue():
-                        y = curve.getY().getRelativeValue()*box_dimensions.height/100                    
-                    elif curve.getY().isSetAbsoluteValue():
-                        y = curve.getY().getAbsoluteValue()                       
+                    x = self._getAbsoluteValue(curve.getX(), 
+                                               box_dimensions.width)
+
+#                    if not curve.getY().isSetAbsoluteValue() and not curve.getY().isSetRelativeValue():
+#                        y = 0
+#                    elif curve.getY().isSetRelativeValue():
+#                        y = curve.getY().getRelativeValue()*box_dimensions.height/100                    
+#                    elif curve.getY().isSetAbsoluteValue():
+#                        y = curve.getY().getAbsoluteValue()                       
+
+                    y = self._getAbsoluteValue(curve.getY(), 
+                                               box_dimensions.height)
                     
                     line_ending_points.append([x, y])
+                
+                line_endings[line_ending_id] = (
+                        "polygon", 
+                        np.array(line_ending_points), 
+                        box_dimensions)
+                
+            elif element.getElementName() == "ellipse":            
+                
+                x = self._getAbsoluteValue(element.getCX(), 
+                                           box_dimensions.width)
 
-            line_endings[line_ending_id] = (np.array(line_ending_points), 
-                                            box_dimensions)  
+                y = self._getAbsoluteValue(element.getCY(), 
+                                           box_dimensions.height)    
+                
+                rx = self._getAbsoluteValue(element.getRX(), 
+                                           box_dimensions.width)
 
-#            for point in line_ending_points:
-#                print("le point: ", point) 
+                ry = self._getAbsoluteValue(element.getRY(), 
+                                           box_dimensions.height) 
+
+                stroke_width = element.getStrokeWidth()
+                
+                ellipseData = EllipseData(x, y, rx, ry, stroke_width)
+                
+                line_endings[line_ending_id] = (
+                        "ellipse", 
+                        ellipseData, 
+                        box_dimensions)
 
         return (line_endings, libsbml_line_endings)
 
+    def _getAbsoluteValue(self, element_value, box_dimension):
+        """ """
+        
+        if (not element_value.isSetAbsoluteValue() and 
+            not element_value.isSetRelativeValue() ):
+
+            abs_value = 0
+
+        elif element_value.isSetRelativeValue():
+
+            abs_value = element_value.getRelativeValue()*box_dimension/100                    
+
+        elif element_value.isSetAbsoluteValue():
+
+            abs_value = element_value.getAbsoluteValue()           
+        
+        return abs_value
+        
     def _applyGlobalRenderInformation(self, network):
         """Applies global style render information as specified in the
         roleList (eg. product) or typeList (eg. SPECIESGLYPH).
@@ -1712,6 +1759,34 @@ class Render:
 
             self._addLocalStylesRenderInformation(local_render_info, network)
 
+    def readLineEndingsStyleSheet(self, network):
+        """ """
+        LINE_ENDINGS_FILE = Path(pkg_resources.resource_filename(
+        "libsbml_draw",
+        "model/data/" + LINE_ENDINGS_STYLE_SHEET))
+
+        doc = libsbml.readSBMLFromFile(str(LINE_ENDINGS_FILE))        
+        model = doc.getModel()
+        layout_plugin = model.getPlugin("layout")
+        layout = layout_plugin.getLayout(0) if (
+            layout_plugin and layout_plugin.getNumLayouts() > 0) else None
+        # SBasePlugin, RenderLayoutPlugin
+        rPlugin = layout.getPlugin("render") if layout else None
+        # SBasePlugin, RenderListOfLayoutsPlugin
+        render_plugin = layout_plugin.getListOfLayouts(
+            ).getPlugin("render") if layout_plugin else None
+
+        if (render_plugin and
+            render_plugin.getNumGlobalRenderInformationObjects() > 0):
+
+            for global_render_info in \
+                render_plugin.getListOfGlobalRenderInformation():
+
+                if global_render_info:
+                    
+                    line_endings = _collectLineEndings(self, global_render_info)
+
+                    network.stylesheet_line_endings = line_endings
 
     def applyRenderInformation(self, network):
         """Applies global style render information as specified in the
@@ -1725,5 +1800,6 @@ class Render:
         """
         self._applyGlobalRenderInformation(network)
         self._applyLocalRenderInformation(network)
+        self._readLineEndingStyleSheet(network)
 
         

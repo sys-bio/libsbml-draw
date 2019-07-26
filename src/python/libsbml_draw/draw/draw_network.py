@@ -267,8 +267,8 @@ def draw_reactions(reactions, mutation_scale, fig, scaling_factor, nw_height_inc
             if curve.role_name.lower() == "product":
                 if "product" in line_endings:
 
-                    arrow_path = line_endings["product"][0]                       
-                    box_dimensions = line_endings["product"][1]
+                    arrow_path = line_endings["product"][1]                       
+                    box_dimensions = line_endings["product"][2]
 
                     angle_degrees = compute_line_ending_rotation_angle(curve)
 
@@ -289,6 +289,28 @@ def draw_reactions(reactions, mutation_scale, fig, scaling_factor, nw_height_inc
 
                     reaction_patches.append(arrow_patch)
 
+            elif curve.role_name.lower() == "activator":
+                if "activator" in line_endings:
+                    
+                    ellipse_data = line_endings["activator"][1]
+                    box_dimensions = line_endings["activator"][2]
+
+                    ellipse_center_x = curve.end_point.x
+                    ellipse_center_y = curve.end_point.y
+
+                    ellipse_width = ellipse_data.width
+                    ellipse_height = ellipse_data.height
+                    
+                    arrow_patch = Ellipse(
+                        (scaling_factor*ellipse_center_x*INCHES_PER_POINT + WIDTH_SHIFT, 
+                        scaling_factor*(nw_height_inches - ellipse_center_y*INCHES_PER_POINT) + HEIGHT_SHIFT), 
+                        scaling_factor*ellipse_width*INCHES_PER_POINT, 
+                        scaling_factor*ellipse_height*INCHES_PER_POINT, 
+                        edgecolor=curve.edge_color, 
+                        facecolor=curve.fill_color, 
+                        lw=ellipse_data.stroke_width,
+                        transform=fig.dpi_scale_trans)
+                
     return reaction_patches
 
 def compute_line_ending_rotation_angle(curve):
@@ -432,9 +454,10 @@ def createNetworkFigure(sbml_layout, arrowhead_mutation_scale,
         ax.add_patch(compartment_patch)
 
     # draw the reactions
+    line_endings = network.line_endings if network.line_endings else network.stylesheet_line_endings
     reaction_patches = draw_reactions(
             network.reactions.values(),
-            arrowhead_mutation_scale, fig, scaling_factor, nw_height_inches, network.line_endings)
+            arrowhead_mutation_scale, fig, scaling_factor, nw_height_inches, line_endings)
     for reaction_patch in reaction_patches:
         ax.add_patch(reaction_patch)
 
