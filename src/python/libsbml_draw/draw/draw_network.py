@@ -223,6 +223,8 @@ def draw_reactions(reactions, mutation_scale, fig, scaling_factor, nw_height_inc
 
         for curve in curves:
 
+            print("curve role: ", curve.role_name.lower())
+
             start_point = np.array([
                     scaling_factor*curve.start_point.x*INCHES_PER_POINT +
                     WIDTH_SHIFT,
@@ -289,8 +291,13 @@ def draw_reactions(reactions, mutation_scale, fig, scaling_factor, nw_height_inc
 
                     reaction_patches.append(arrow_patch)
 
-            elif curve.role_name.lower() == "activator":
+            elif curve.role_name.lower() == "modifier":
+
+                print("line endings: ", type(line_endings))
+                
                 if "activator" in line_endings:
+                    
+                    print("activator: ", line_endings["activator"])
                     
                     ellipse_data = line_endings["activator"][1]
                     box_dimensions = line_endings["activator"][2]
@@ -298,8 +305,8 @@ def draw_reactions(reactions, mutation_scale, fig, scaling_factor, nw_height_inc
                     ellipse_center_x = curve.end_point.x
                     ellipse_center_y = curve.end_point.y
 
-                    ellipse_width = ellipse_data.width
-                    ellipse_height = ellipse_data.height
+                    ellipse_width = ellipse_data.rx
+                    ellipse_height = ellipse_data.ry
                     
                     arrow_patch = Ellipse(
                         (scaling_factor*ellipse_center_x*INCHES_PER_POINT + WIDTH_SHIFT, 
@@ -311,6 +318,8 @@ def draw_reactions(reactions, mutation_scale, fig, scaling_factor, nw_height_inc
                         lw=ellipse_data.stroke_width,
                         transform=fig.dpi_scale_trans)
                 
+                    reaction_patches.append(arrow_patch)
+                
     return reaction_patches
 
 def compute_line_ending_rotation_angle(curve):
@@ -321,7 +330,8 @@ def compute_line_ending_rotation_angle(curve):
     angle_degrees = math.degrees(math.atan(slope))
                     
     if angle_degrees < 0:
-        angle_degrees += 180
+        if curve.end_point.x < curve.control_point_2.x:
+            angle_degrees += 180
     else: 
         if curve.control_point_2.x > curve.end_point.x:
             angle_degrees += 180
@@ -454,7 +464,12 @@ def createNetworkFigure(sbml_layout, arrowhead_mutation_scale,
         ax.add_patch(compartment_patch)
 
     # draw the reactions
-    line_endings = network.line_endings if network.line_endings else network.stylesheet_line_endings
+    line_endings = network.line_endings if network.line_endings else network.stylesheet_line_endings[0]
+ 
+    print("len nw le's: ", len(network.line_endings))
+    print("len nw ss le's:", len(network.stylesheet_line_endings))
+    print("len le's: ", len(line_endings), type(line_endings))
+    
     reaction_patches = draw_reactions(
             network.reactions.values(),
             arrowhead_mutation_scale, fig, scaling_factor, nw_height_inches, line_endings)

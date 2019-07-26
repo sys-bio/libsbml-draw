@@ -21,7 +21,7 @@ GlyphProperty = namedtuple("GlyphProperty", ["type", "entity_id"])
 BoxDimensions = namedtuple("BoxDimensions", 
                               ["x_offset", "y_offset", "width", "height"])
 EllipseData = namedtuple("EllipseData",
-                         "x", "y", "rx", "ry", "stroke_width")
+                         ["x", "y", "rx", "ry", "stroke_width"])
 
 LINE_ENDINGS_STYLE_SHEET = "render-stylesheet_global.xml"
 
@@ -277,7 +277,7 @@ class Render:
 
     def _collectColorDefinitions(self, render_info):
         """Gets the render color definitions.
-
+ 
         Args:
             render_info(libsbml.Render):
 
@@ -1759,7 +1759,7 @@ class Render:
 
             self._addLocalStylesRenderInformation(local_render_info, network)
 
-    def readLineEndingsStyleSheet(self, network):
+    def _readLineEndingsStyleSheet(self, network):
         """ """
         LINE_ENDINGS_FILE = Path(pkg_resources.resource_filename(
         "libsbml_draw",
@@ -1768,10 +1768,10 @@ class Render:
         doc = libsbml.readSBMLFromFile(str(LINE_ENDINGS_FILE))        
         model = doc.getModel()
         layout_plugin = model.getPlugin("layout")
-        layout = layout_plugin.getLayout(0) if (
-            layout_plugin and layout_plugin.getNumLayouts() > 0) else None
+        #layout = layout_plugin.getLayout(0) if (
+        #    layout_plugin and layout_plugin.getNumLayouts() > 0) else None
         # SBasePlugin, RenderLayoutPlugin
-        rPlugin = layout.getPlugin("render") if layout else None
+        # rPlugin = layout.getPlugin("render") if layout else None
         # SBasePlugin, RenderListOfLayoutsPlugin
         render_plugin = layout_plugin.getListOfLayouts(
             ).getPlugin("render") if layout_plugin else None
@@ -1784,9 +1784,11 @@ class Render:
 
                 if global_render_info:
                     
-                    line_endings = _collectLineEndings(self, global_render_info)
+                    line_endings = self._collectLineEndings(global_render_info)
 
                     network.stylesheet_line_endings = line_endings
+
+                    print("render le's: ", type(line_endings))
 
     def applyRenderInformation(self, network):
         """Applies global style render information as specified in the
@@ -1800,6 +1802,6 @@ class Render:
         """
         self._applyGlobalRenderInformation(network)
         self._applyLocalRenderInformation(network)
-        self._readLineEndingStyleSheet(network)
+        self._readLineEndingsStyleSheet(network)
 
         
