@@ -1,0 +1,64 @@
+\section{The Python API}
+\label{sec:codeexamples}
+
+See awesome Table~\ref{tab:table1}.
+
+\begin{table}[!htbp]
+ \caption{Editable Text Attributes}
+  \centering
+  \begin{tabular}{lll}
+    \toprule
+    Attribute     & Values Allowed  \\
+    \midrule
+    font size   & float  \\
+    font family & sans-serif serif or font family name \\
+    font color  & 6 or 8 digit RGB hex \\
+    font style  & normal or italic  \\
+    font weight & normal or bold \\
+    \bottomrule
+  \end{tabular}
+  \label{tab:table1}
+\end{table}
+
+\begin{table}[!htbp]
+ \caption{Editable Species Attributes}
+  \centering
+  \begin{tabular}{lll}
+    \toprule
+    Attribute     & Values Allowed  \\
+    \midrule
+    fill color   & 6 or 8 digit RGB hex \\
+    edge color  &  6 or 8 digit RGB hex \\
+    \bottomrule
+  \end{tabular}
+  \label{tab:table1}
+\end{table}
+
+\begin{table}[!htbp]
+ \caption{Editable Compartment Attributes}
+  \centering
+  \begin{tabular}{lll}
+    \toprule
+    Attribute     & Values Allowed  \\
+    \midrule
+    fill color   & 6 or 8 digit RGB hex \\
+    edge color  & 6 or 8 digit RGB hex \\
+    \bottomrule
+  \end{tabular}
+  \label{tab:table3}
+\end{table}
+
+\begin{table}[!htbp]
+ \caption{Editable Reaction Attributes}
+  \centering
+  \begin{tabular}{lll}
+    \toprule
+    Attribute     & Values Allowed  \\
+    \midrule
+    fill color by curve based on role & 6 or 8 digit RGB hex \\
+    edge color by curve based on role &  6 or 8 digit RGB hex \\
+    \bottomrule
+  \end{tabular}
+  \label{tab:table4}
+\end{table}
+
