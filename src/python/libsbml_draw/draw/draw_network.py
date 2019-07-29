@@ -464,7 +464,7 @@ def createNetworkFigure(sbml_layout, arrowhead_mutation_scale,
         ax.add_patch(compartment_patch)
 
     # draw the reactions
-    line_endings = network.line_endings if network.line_endings else network.stylesheet_line_endings[0]
+    line_endings = network.line_endings if network.line_endings else network.stylesheet_line_endings
  
     print("len nw le's: ", len(network.line_endings))
     print("len nw ss le's:", len(network.stylesheet_line_endings))

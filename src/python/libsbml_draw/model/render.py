@@ -1784,11 +1784,11 @@ class Render:
 
                 if global_render_info:
                     
-                    line_endings = self._collectLineEndings(global_render_info)
+                    line_endings_tuple = self._collectLineEndings(global_render_info)
 
-                    network.stylesheet_line_endings = line_endings
-
-                    print("render le's: ", type(line_endings))
+                    network.stylesheet_line_endings = line_endings_tuple[0]
+     
+                    network.stylesheet_libsbml_line_endings = line_endings_tuple[1]
 
     def applyRenderInformation(self, network):
         """Applies global style render information as specified in the

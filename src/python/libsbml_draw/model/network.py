@@ -125,8 +125,9 @@ class Network():
         self.aliasedNodes = {}
         self.bg_color = "#ffffff"
         self.line_endings = {}
+        self.libsbml_line_endings = {}
         self.stylesheet_line_endings = {}
-
+        self.stylesheet_libsbml_line_endings = {}
         self._assign_species_to_curves()
 
 #        for reaction in self.reactions.values():

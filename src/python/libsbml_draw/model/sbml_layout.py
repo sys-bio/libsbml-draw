@@ -6,7 +6,7 @@ import os
 
 import ctypes
 
-from matplotlib.colors import is_color_like
+from matplotlib.colors import is_color_like, to_hex
 
 import libsbml
 
@@ -1547,22 +1547,23 @@ class SBMLlayout:
 
         if reaction_id == "all":
             for reaction in self.__network.reactions.values():
-                reaction.fill_color = reaction_color
-                reaction.edge_color = reaction_color
+                for curve in reaction.curves:
+                    curve.fill_color = reaction_color
+                    curve.edge_color = reaction_color
 
         elif (isinstance(reaction_id, str) and
               reaction_id in self.getReactionIds()):
-            self.__network.reactions[reaction_id].edge_color = reaction_color
-            self.__network.reactions[reaction_id].fill_color = reaction_color
+            for curve in self.__network.reactions[reaction_id].curves:
+                curve.edge_color = to_hex(reaction_color)
+                curve.fill_color = to_hex(reaction_color)
 
         elif isinstance(reaction_id, list):
             full_model_reactionIds = self.getReactionIds()
             for this_id in reaction_id:
                 if this_id in full_model_reactionIds:
-                    self.__network.reactions[this_id].edge_color = \
-                        reaction_color
-                    self.__network.reactions[this_id].fill_color = \
-                        reaction_color
+                    for curve in self.__network.reactions[this_id].curves:
+                        curve.edge_color = to_hex(reaction_color)
+                        curve.fill_color = to_hex(reaction_color)
                 else:
                     raise ValueError(
                             f"This id in the input list is invalid {this_id}, "
@@ -1598,17 +1599,20 @@ class SBMLlayout:
 
         if reaction_id == "all":
             for reaction in self.__network.reactions.values():
-                reaction.edge_color = edge_color
+                for curve in reaction.curves:
+                    curve.edge_color = to_hex(edge_color)
 
         elif (isinstance(reaction_id, str) and
               reaction_id in self.getReactionIds()):
-            self.__network.reactions[reaction_id].edge_color = edge_color
+            for curve in self.__network.reactions[reaction_id].curves:
+                curve.edge_color = to_hex(edge_color)
 
         elif isinstance(reaction_id, list):
             full_model_reactionIds = self.getReactionIds()
             for this_id in reaction_id:
                 if this_id in full_model_reactionIds:
-                    self.__network.reactions[this_id].edge_color = edge_color
+                    for curve in self.__network.reactions[this_id].curves:
+                        curve.edge_color = to_hex(edge_color)
                 else:
                     raise ValueError(
                             f"This id in the input list is invalid {this_id}, "

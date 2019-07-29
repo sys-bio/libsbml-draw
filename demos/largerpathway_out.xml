@@ -701,91 +701,91 @@
             </render:listOfLineEndings>
             <render:listOfStyles>
               <render:style render:idList="layout_glyph_2">
-                <render:g render:stroke="#0000ff" render:stroke-width="NaN" render:fill="#a0e0a030">
-                  <render:rectangle render:stroke="#0000ff" render:stroke-width="NaN" render:fill="#a0e0a030" render:x="0" render:y="0" render:width="100%" render:height="100%"/>
+                <render:g render:stroke="#00ff0030" render:stroke-width="NaN" render:fill="#00ff0030">
+                  <render:rectangle render:stroke="#00ff0030" render:stroke-width="NaN" render:fill="#00ff0030" render:x="0" render:y="0" render:width="100%" render:height="100%"/>
                 </render:g>
               </render:style>
               <render:style render:idList="layout_glyph_26">
                 <render:g render:stroke="black" render:font-family="Verdana" render:font-weight="normal" render:font-style="normal" render:text-anchor="middle" render:vtext-anchor="middle" render:font-size="12"/>
               </render:style>
               <render:style render:idList="layout_glyph_1">
-                <render:g render:stroke="#0000ff" render:stroke-width="NaN" render:fill="#a0e0a030">
-                  <render:rectangle render:stroke="#0000ff" render:stroke-width="NaN" render:fill="#a0e0a030" render:x="0" render:y="0" render:width="100%" render:height="100%"/>
+                <render:g render:stroke="#00ff0030" render:stroke-width="NaN" render:fill="#00ff0030">
+                  <render:rectangle render:stroke="#00ff0030" render:stroke-width="NaN" render:fill="#00ff0030" render:x="0" render:y="0" render:width="100%" render:height="100%"/>
                 </render:g>
               </render:style>
               <render:style render:idList="layout_glyph_25">
                 <render:g render:stroke="black" render:font-family="Verdana" render:font-weight="normal" render:font-style="normal" render:text-anchor="middle" render:vtext-anchor="middle" render:font-size="12"/>
               </render:style>
               <render:style render:idList="layout_glyph_3">
-                <render:g render:stroke="#0000ff" render:stroke-width="NaN" render:fill="#a0e0a030">
-                  <render:rectangle render:stroke="#0000ff" render:stroke-width="NaN" render:fill="#a0e0a030" render:x="0" render:y="0" render:width="100%" render:height="100%"/>
+                <render:g render:stroke="#00ff0030" render:stroke-width="NaN" render:fill="#00ff0030">
+                  <render:rectangle render:stroke="#00ff0030" render:stroke-width="NaN" render:fill="#00ff0030" render:x="0" render:y="0" render:width="100%" render:height="100%"/>
                 </render:g>
               </render:style>
               <render:style render:idList="layout_glyph_27">
                 <render:g render:stroke="black" render:font-family="Verdana" render:font-weight="normal" render:font-style="normal" render:text-anchor="middle" render:vtext-anchor="middle" render:font-size="12"/>
               </render:style>
               <render:style render:idList="layout_glyph_0">
-                <render:g render:stroke="#0000ff" render:stroke-width="NaN" render:fill="#a0e0a030">
-                  <render:rectangle render:stroke="#0000ff" render:stroke-width="NaN" render:fill="#a0e0a030" render:x="0" render:y="0" render:width="100%" render:height="100%"/>
+                <render:g render:stroke="#00ff0030" render:stroke-width="NaN" render:fill="#00ff0030">
+                  <render:rectangle render:stroke="#00ff0030" render:stroke-width="NaN" render:fill="#00ff0030" render:x="0" render:y="0" render:width="100%" render:height="100%"/>
                 </render:g>
               </render:style>
               <render:style render:idList="layout_glyph_24">
                 <render:g render:stroke="black" render:font-family="Verdana" render:font-weight="normal" render:font-style="normal" render:text-anchor="middle" render:vtext-anchor="middle" render:font-size="12"/>
               </render:style>
               <render:style render:idList="layout_glyph_4">
-                <render:g render:stroke="#0000ff" render:stroke-width="NaN" render:fill="#a0e0a030">
-                  <render:rectangle render:stroke="#0000ff" render:stroke-width="NaN" render:fill="#a0e0a030" render:x="0" render:y="0" render:width="100%" render:height="100%"/>
+                <render:g render:stroke="#00ff0030" render:stroke-width="NaN" render:fill="#00ff0030">
+                  <render:rectangle render:stroke="#00ff0030" render:stroke-width="NaN" render:fill="#00ff0030" render:x="0" render:y="0" render:width="100%" render:height="100%"/>
                 </render:g>
               </render:style>
               <render:style render:idList="layout_glyph_28">
                 <render:g render:stroke="black" render:font-family="Verdana" render:font-weight="normal" render:font-style="normal" render:text-anchor="middle" render:vtext-anchor="middle" render:font-size="12"/>
               </render:style>
               <render:style render:idList="layout_glyph_5">
-                <render:g render:stroke="#0000ff" render:stroke-width="NaN" render:fill="#a0e0a030">
-                  <render:rectangle render:stroke="#0000ff" render:stroke-width="NaN" render:fill="#a0e0a030" render:x="0" render:y="0" render:width="100%" render:height="100%"/>
+                <render:g render:stroke="#00ff0030" render:stroke-width="NaN" render:fill="#00ff0030">
+                  <render:rectangle render:stroke="#00ff0030" render:stroke-width="NaN" render:fill="#00ff0030" render:x="0" render:y="0" render:width="100%" render:height="100%"/>
                 </render:g>
               </render:style>
               <render:style render:idList="layout_glyph_29">
                 <render:g render:stroke="black" render:font-family="Verdana" render:font-weight="normal" render:font-style="normal" render:text-anchor="middle" render:vtext-anchor="middle" render:font-size="12"/>
               </render:style>
               <render:style render:idList="layout_glyph_21">
-                <render:g render:stroke="#000000a0" render:stroke-width="3" render:fill="#000000a0" render:endHead="substrate"/>
+                <render:g render:stroke="#0000ff50" render:stroke-width="3" render:fill="#0000ff50" render:endHead="substrate"/>
               </render:style>
               <render:style render:idList="layout_glyph_23">
-                <render:g render:stroke="#000000a0" render:stroke-width="3" render:fill="#000000a0" render:endHead="TransitionHead"/>
+                <render:g render:stroke="#0000ff50" render:stroke-width="3" render:fill="#0000ff50" render:endHead="TransitionHead"/>
               </render:style>
               <render:style render:idList="layout_glyph_17">
-                <render:g render:stroke="#000000a0" render:stroke-width="3" render:fill="#000000a0" render:endHead="substrate"/>
+                <render:g render:stroke="#0000ff50" render:stroke-width="3" render:fill="#0000ff50" render:endHead="substrate"/>
               </render:style>
               <render:style render:idList="layout_glyph_19">
-                <render:g render:stroke="#000000a0" render:stroke-width="3" render:fill="#000000a0" render:endHead="TransitionHead"/>
+                <render:g render:stroke="#0000ff50" render:stroke-width="3" render:fill="#0000ff50" render:endHead="TransitionHead"/>
               </render:style>
               <render:style render:idList="layout_glyph_20">
-                <render:g render:stroke="#000000a0" render:stroke-width="3" render:fill="#000000a0" render:endHead="TransitionHead"/>
+                <render:g render:stroke="#0000ff50" render:stroke-width="3" render:fill="#0000ff50" render:endHead="TransitionHead"/>
               </render:style>
               <render:style render:idList="layout_glyph_6">
-                <render:g render:stroke="#000000a0" render:stroke-width="3" render:fill="#000000a0" render:endHead="substrate"/>
+                <render:g render:stroke="#0000ff50" render:stroke-width="3" render:fill="#0000ff50" render:endHead="substrate"/>
               </render:style>
               <render:style render:idList="layout_glyph_8">
-                <render:g render:stroke="#000000a0" render:stroke-width="3" render:fill="#000000a0" render:endHead="TransitionHead"/>
+                <render:g render:stroke="#0000ff50" render:stroke-width="3" render:fill="#0000ff50" render:endHead="TransitionHead"/>
               </render:style>
               <render:style render:idList="layout_glyph_9">
-                <render:g render:stroke="#000000a0" render:stroke-width="3" render:fill="#000000a0" render:endHead="substrate"/>
+                <render:g render:stroke="#0000ff50" render:stroke-width="3" render:fill="#0000ff50" render:endHead="substrate"/>
               </render:style>
               <render:style render:idList="layout_glyph_11">
-                <render:g render:stroke="#000000a0" render:stroke-width="3" render:fill="#000000a0" render:endHead="TransitionHead"/>
+                <render:g render:stroke="#0000ff50" render:stroke-width="3" render:fill="#0000ff50" render:endHead="TransitionHead"/>
               </render:style>
               <render:style render:idList="layout_glyph_12">
-                <render:g render:stroke="#000000a0" render:stroke-width="3" render:fill="#000000a0" render:endHead="TransitionHead"/>
+                <render:g render:stroke="#0000ff50" render:stroke-width="3" render:fill="#0000ff50" render:endHead="TransitionHead"/>
               </render:style>
               <render:style render:idList="layout_glyph_13">
-                <render:g render:stroke="#000000a0" render:stroke-width="3" render:fill="#000000a0" render:endHead="substrate"/>
+                <render:g render:stroke="#0000ff50" render:stroke-width="3" render:fill="#0000ff50" render:endHead="substrate"/>
               </render:style>
               <render:style render:idList="layout_glyph_13">
-                <render:g render:stroke="#000000a0" render:stroke-width="3" render:fill="#000000a0" render:endHead="substrate"/>
+                <render:g render:stroke="#0000ff50" render:stroke-width="3" render:fill="#0000ff50" render:endHead="substrate"/>
               </render:style>
               <render:style render:idList="layout_glyph_16">
-                <render:g render:stroke="#000000a0" render:stroke-width="3" render:fill="#000000a0" render:endHead="TransitionHead"/>
+                <render:g render:stroke="#0000ff50" render:stroke-width="3" render:fill="#0000ff50" render:endHead="TransitionHead"/>
               </render:style>
             </render:listOfStyles>
           </render:renderInformation>

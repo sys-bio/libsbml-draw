@@ -16,7 +16,9 @@ sl = SBMLlayout(str(MODEL_FILE))
 
 #sl.describeModel()
 
-
+sl.setReactionColor("all", "#0000ff50")  
+sl.setNodeColor("all", "#00ff0030")
+                    
 #sl.setNodeFontSize("all", 24)
 
 sl.drawNetwork("largerpathway.png")
@@ -30,6 +32,7 @@ print()
 
 for node in sl._SBMLlayout__network.nodes.values():
     print("node fs: ", node.font_size, node.font_family)
+      
     
 sl.writeSBMLFile("largerpathway_out.xml")
     
