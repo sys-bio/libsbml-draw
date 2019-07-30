@@ -1530,40 +1530,95 @@ class SBMLlayout:
 
         Returns: list of Reaction ids
         """
-        return list(self.__network.reactions.keys())
+        return list(self.__network.reactions.keys())    
+    
+    def __setCurvePropertyByResolvingValueType(self, curve, value, value_type):
+        """ """
+        if value_type == "both" or value_type == "fill":
+            curve.fill_color = to_hex(value, keep_alpha=True)
+        if value_type == "both" or value_type == "edge":    
+            curve.edge_color = to_hex(value, keep_alpha=True)
+        if value_type == "width":
+            curve.line_width = value
 
-    def setReactionColor(self, reaction_id, reaction_color):
+    def __setCurveProperty(self, curve, value, value_type, role_name, species):
+        """ """
+        if role_name:
+            if curve.role_name.lower() == role_name.lower():
+                if species:
+                    if curve.species.lower() == species.lower():
+                        self.__setCurvePropertyByResolvingValueType(
+                                curve, 
+                                value, 
+                                value_type)                       
+                    else:
+                        pass
+                else:    
+                    self.__setCurvePropertyByResolvingValueType(
+                            curve, 
+                            value, 
+                            value_type)
+            else:         
+                pass
+        else:
+            self.__setCurvePropertyByResolvingValueType(
+                    curve, 
+                    value, 
+                    value_type)                
+        
+    def setReactionColor(self, reaction_id, reaction_color, role_name=None, 
+                         species=None):
         """
-        Sets the reaction edge color and fill color to the same value.
+        Sets the reaction edge color and fill color to the same value.  If the
+        role or species args are set, then the color is set only for curves in
+        a reaction which have that role or are connected to that species.
 
         Args:
             reaction_id (str): id of the reaction to change the color of one
                 reaction, or 'all' to change the color of all the reactions
             reaction_color (str): id of the color
-
+            role (optional, str): role of the curve in the reaction, 
+                for example, "product"
+            species (optional, str): species to which the curve is connected,
+                for example, "A" or "Node0"
+ 
         Returns: None
         """
         SBMLlayout._validatePlotColor(reaction_color)
 
+        edge_or_fill_color = "both"
+
         if reaction_id == "all":
             for reaction in self.__network.reactions.values():
-                for curve in reaction.curves:
-                    curve.fill_color = reaction_color
-                    curve.edge_color = reaction_color
-
-        elif (isinstance(reaction_id, str) and
+                for curve in reaction.curves:                    
+                    self.__setCurveProperty(
+                            curve, 
+                            reaction_color, 
+                            edge_or_fill_color, 
+                            role_name, 
+                            species)
+                                
+        elif (isinstance(reaction_id, str) and 
               reaction_id in self.getReactionIds()):
             for curve in self.__network.reactions[reaction_id].curves:
-                curve.edge_color = to_hex(reaction_color)
-                curve.fill_color = to_hex(reaction_color)
-
+                self.__setCurveProperty(
+                            curve, 
+                            reaction_color, 
+                            edge_or_fill_color, 
+                            role_name, 
+                            species)
+                
         elif isinstance(reaction_id, list):
             full_model_reactionIds = self.getReactionIds()
             for this_id in reaction_id:
                 if this_id in full_model_reactionIds:
                     for curve in self.__network.reactions[this_id].curves:
-                        curve.edge_color = to_hex(reaction_color)
-                        curve.fill_color = to_hex(reaction_color)
+                        self.__setCurveProperty(
+                                curve, 
+                                reaction_color, 
+                                edge_or_fill_color, 
+                                role_name, 
+                                species)
                 else:
                     raise ValueError(
                             f"This id in the input list is invalid {this_id}, "
@@ -1577,14 +1632,19 @@ class SBMLlayout:
         Args:
             reaction_id (str): id for the reaction
 
-        Returns: str
+        Returns: list of tuples of (curve species, curve role name, and curve 
+            color) for each curve in the reaction
         """
         if reaction_id in self.__network.reactions:
-            return self.__network.reactions[reaction_id].edge_color
+            curve_colors = []
+            for curve in self.__network.reactions[reaction_id].curves:
+                curve_colors.append((curve.species, curve.role_name, 
+                                     curve.edge_color))                
         else:
             raise ValueError(f"Reaction {reaction_id} not found in network.")
 
-    def setReactionEdgeColor(self, reaction_id, edge_color):
+    def setReactionEdgeColor(self, reaction_id, edge_color, role_name=None, 
+                         species=None):
         """
         Sets the reaction edge color.
 
@@ -1592,27 +1652,48 @@ class SBMLlayout:
             reaction_id (str): id of the reaction to change the color of one
                 reaction, or 'all' to change the color of all the reactions
             edge_color (str): id of the color
+            role (optional, str): role of the curve in the reaction, 
+                for example, "product"
+            species (optional, str): species to which the curve is connected,
+                for example, "A" or "Node0"
 
         Returns: None
         """
         SBMLlayout._validatePlotColor(edge_color)
 
+        edge_or_fill_color = "edge"
+
         if reaction_id == "all":
             for reaction in self.__network.reactions.values():
                 for curve in reaction.curves:
-                    curve.edge_color = to_hex(edge_color)
+                    self.__setCurveProperty(
+                            curve, 
+                            edge_color, 
+                            edge_or_fill_color, 
+                            role_name, 
+                            species)
 
         elif (isinstance(reaction_id, str) and
               reaction_id in self.getReactionIds()):
             for curve in self.__network.reactions[reaction_id].curves:
-                curve.edge_color = to_hex(edge_color)
+                self.__setCurveProperty(
+                        curve, 
+                        edge_color, 
+                        edge_or_fill_color, 
+                        role_name, 
+                        species)
 
         elif isinstance(reaction_id, list):
             full_model_reactionIds = self.getReactionIds()
             for this_id in reaction_id:
                 if this_id in full_model_reactionIds:
                     for curve in self.__network.reactions[this_id].curves:
-                        curve.edge_color = to_hex(edge_color)
+                        self.__setCurveProperty(
+                                curve, 
+                                edge_color, 
+                                edge_or_fill_color, 
+                                role_name, 
+                                species)
                 else:
                     raise ValueError(
                             f"This id in the input list is invalid {this_id}, "
