@@ -42,3 +42,31 @@ sl.drawNetwork()
 #sl2.writeSBMLFile("model_out_render.xml")
 
 
+
+sl.setReactionColor("_J0", "red", species="A")
+
+sl.setReactionEdgeColor("_J3", "orange")
+
+sl.setReactionEdgeColor("_J4", "pink", species="D")
+
+# only applies to FancyArrowPatch arrowhead 
+sl.setReactionFillColor("_J2", "lightgreen")
+
+sl.setReactionCurveWidth("_J0", 5, role_name="product")
+sl.setReactionCurveWidth("_J4", 10)
+sl.setReactionCurveWidth(["_J1", "_J2", "_J3"], 15)
+
+sl.drawNetwork()
+
+print("_J0 width: ", sl.getReactionCurveWidth("_J0"))
+
+print("_J1 edge color: ", sl.getReactionEdgeColor("_J1"))
+print("_J1 fill color: ", sl.getReactionFillColor("_J1"))
+
+print("_J3 edge color: ", sl.getReactionEdgeColor("_J3"))
+print("_J3 fill color: ", sl.getReactionFillColor("_J3"))
+
+print("_J4 edge color: ", sl.getReactionEdgeColor("_J4"))
+print("_J4 fill color: ", sl.getReactionFillColor("_J4"))
+
+

@@ -36,6 +36,7 @@ class Compartment():
         self.shape = "round_box"
         self.rectangle_rounding = 0.6
 
+
 class Node():
     """Represents a node in the SBMl model."""
 
@@ -57,12 +58,13 @@ class Node():
         self.font_style = "normal"
         self.text_anchor = "center"
         self.vtext_anchor = "bottom"
-        self.font_weight = "normal" 
+        self.font_weight = "normal"
         self.shape = "round_box"
         self.rectangle_rounding = 0.1
         self.polygon_points = []
         self.polygon_codes = []
         self.polygon = None
+
 
 class Curve():
     """Part of a complete reaction curve. As an example, a reaction between a
@@ -97,6 +99,7 @@ class Curve():
         self.species = None
         self.endHead = None
 
+
 class Reaction():
     """Represents a reaction in the SBML model."""
     def __init__(self, h_reaction):
@@ -130,12 +133,15 @@ class Network():
         self.stylesheet_libsbml_line_endings = {}
         self._assign_species_to_curves()
 
-#        for reaction in self.reactions.values():
-#            for curve in reaction.curves:
-#                print("curve: ", reaction.id, curve.role, curve.species)
-
     def _assign_species_to_curves(self,):
-        """ """
+        """Each curve has a species connected to it, either at the start of the
+        curve or at the end of the curve.  This function identifies that
+        species and assigns it to a curve's species attribute.
+
+        Args: None
+
+        Returns: None
+        """
         for node_index in range(sbnw.nw_getNumNodes(self.h_network)):
             h_node = sbnw.nw_getNodep(self.h_network, node_index)
             node_id = sbnw.node_getID(h_node)
@@ -355,31 +361,46 @@ class Network():
         self._update_nodes_layout()
         self._update_reactions_layout()
 
-    def _floats_equal(self, a, b):
-        """ """
-        epsilon = .0000001        
+    def _floats_equal(self, a, b, epsilon=.0000001):
+        """Returns True if two floats are equal within an amount epsilon.
+
+        Args:
+            a (float): value to compare
+            b (float): value to compare
+            epsilon (optional, float): default value is 10^-7
+
+        Returns: boolean
+        """
+
         return abs(a - b) < epsilon
- 
+
     def _curveCPs_equal(self, curveCP1, curveCP2):
-        """ """
+        """Returns True if the two curves have the same values for each of the
+        four points - the start, end, and two control points.
+
+        Args:
+            curveCP1 (libsbml_draw.sbnw_c_api.curveCP): curve to compare
+            curveCP2 (libsbml_draw.sbnw_c_api.curveCP): curve to compare
+
+        Returns: boolean
+        """
         if (
-            self._floats_equal(curveCP1.start.x, curveCP2.start.x) and 
+            self._floats_equal(curveCP1.start.x, curveCP2.start.x) and
             self._floats_equal(curveCP1.start.y, curveCP2.start.y) and
             self._floats_equal(curveCP1.control_point_1.x,
                                curveCP2.control_point_1.x) and
             self._floats_equal(curveCP1.control_point_1.y,
-                               curveCP2.control_point_1.y) and 
+                               curveCP2.control_point_1.y) and
             self._floats_equal(curveCP1.control_point_2.x,
                                curveCP2.control_point_2.x) and
             self._floats_equal(curveCP1.control_point_2.y,
-                               curveCP2.control_point_2.y) and 
-            self._floats_equal(curveCP1.end.x, curveCP2.end.x) and 
-            self._floats_equal(curveCP1.end.y, curveCP2.end.y)                               
-            ):
-            
+                               curveCP2.control_point_2.y) and
+            self._floats_equal(curveCP1.end.x, curveCP2.end.x) and
+            self._floats_equal(curveCP1.end.y, curveCP2.end.y)
+        ):
+
             return True
-        
+
         else:
+
             return False
-               
-        
