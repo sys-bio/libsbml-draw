@@ -45,7 +45,7 @@ sl.drawNetwork()
 
 sl.setReactionColor("_J0", "red", species="A")
 
-sl.setReactionEdgeColor("_J3", "orange")
+sl.setReactionEdgeColor("_J3", "#0000ff30")
 
 sl.setReactionEdgeColor("_J4", "pink", species="D")
 
@@ -55,6 +55,10 @@ sl.setReactionFillColor("_J2", "lightgreen")
 sl.setReactionCurveWidth("_J0", 5, role_name="product")
 sl.setReactionCurveWidth("_J4", 10)
 sl.setReactionCurveWidth(["_J1", "_J2", "_J3"], 15)
+
+sl.setNodeFillColor("A", "pink")
+sl.setNodeEdgeColor("all", "green")
+sl.setNodeEdgeWidth(["D","X1","C"], 3)
 
 sl.drawNetwork()
 
@@ -68,5 +72,14 @@ print("_J3 fill color: ", sl.getReactionFillColor("_J3"))
 
 print("_J4 edge color: ", sl.getReactionEdgeColor("_J4"))
 print("_J4 fill color: ", sl.getReactionFillColor("_J4"))
+
+print("A: fill color: ", sl.getNodeFillColor("A"))
+print("B: edge color: ", sl.getNodeEdgeColor("B"))
+print("C: edge width: ", sl.getNodeEdgeWidth("C"))
+
+
+
+
+
 
 

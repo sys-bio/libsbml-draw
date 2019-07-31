@@ -629,7 +629,7 @@ class SBMLlayout:
         else:
             raise ValueError(f"species {node_id} is not in the network.")
 
-    def setNodeCentroid(self, node_id, x, y):
+    def __setNodeCentroid(self, node_id, x, y):
         """Sets the center point of the node.
 
         Args:
@@ -931,6 +931,137 @@ class SBMLlayout:
         else:
             return list()
 
+    def __setNodeProperty(self, node_id, property_value, property_type):
+        """Sets a property value on a node.
+
+        Args:
+            node_id (str): id of the node
+            property_value (str or float): value for the property to be set,
+            eg. "#0000ff"
+            property_type (str): identifier for the property, eg. "fill"
+
+        Returns: None
+        """
+
+        if property_type == "fill_and_edge":
+            self.__network.nodes[node_id].edge_color = to_hex(
+                    property_value,
+                    keep_alpha=True)
+            self.__network.nodes[node_id].fill_color = to_hex(
+                    property_value,
+                    keep_alpha=True)
+        elif property_type == "fill":
+            self.__network.nodes[node_id].fill_color = to_hex(
+                    property_value,
+                    keep_alpha=True)
+        elif property_type == "edge":
+            self.__network.nodes[node_id].edge_color = to_hex(
+                    property_value,
+                    keep_alpha=True)
+        elif property_type == "edge_width":
+            self.__network.nodes[node_id].edge_width = property_value
+        elif property_type == "text_anchor":
+            self.__network.nodes[node_id].text_anchor = property_value
+        elif property_type == "vtext_anchor":
+            self.__network.nodes[node_id].vtext_anchor = property_value
+        elif property_type == "shape":
+            self.__network.nodes[node_id].shape = property_value
+        elif property_type == "font_size":
+            self.__network.nodes[node_id].font_size = property_value
+        elif property_type == "font_family":
+            self.__network.nodes[node_id].font_family = property_value
+        elif property_type == "font_color":
+            self.__network.nodes[node_id].font_color = to_hex(
+                    property_value,
+                    keep_alpha=True)
+        elif property_type == "font_style":
+            self.__network.nodes[node_id].font_style = property_value
+        elif property_type == "font_weight":
+            self.__network.nodes[node_id].font_weight = property_value
+        else:
+            raise ValueError("property_value is not valid: ",
+                             property_value)
+
+    def __setKeywordNodesProperty(self, node_keyword, property_value,
+                                  property_type):
+        """Sets a property value on a node if the node is part of the
+        node_keyword group. For example, with the keyword "all", the property
+        will be set on all the nodes.
+
+        Args:
+            node_keyword (str): "all", "boundary" or "floating"
+            property_value (str or float): value for the property to be set,
+            eg. "#0000ff"
+            property_type (str): identifier for the property, eg. "fill"
+
+        Returns: None
+        """
+        for node_id in self.getNodeKeywordIds(str(node_keyword).lower()):
+
+            self.__setNodeProperty(node_id, property_value, property_type)
+
+    def __setListOfNodesProperty(self, node_ids, property_value,
+                                 property_type):
+        """Sets a property value on a list of nodes.
+
+        Args:
+            node_ids (list of str): ids of the nodes
+            property_value (str or float): value for the property to be set,
+            eg. "#0000ff"
+            property_type (str): identifier for the property, eg. "fill"
+
+        Returns: None
+        """
+        full_model_nodeIds = self.getNodeIds()
+
+        for node_id in node_ids:
+            if node_id in full_model_nodeIds:
+
+                self.__setNodeProperty(node_id, property_value, property_type)
+
+            else:
+                raise ValueError(
+                        f"This id in the input list is invalid {node_id}, "
+                        f"so cannot set color for this id.")
+
+    def __setNodeBasedOnId(self, node_id, property_value, property_type):
+        """Set the property on a node, based on the type of id list provided.
+
+        Args:
+            node_id (str or list of str): id of the node to change,
+                or keyword 'all', 'boundary', or 'floating' to change the color
+                of all the nodes of that type,
+            property_value (str or float): value for the property to be set,
+            eg. "#0000ff"
+            property_type (str): identifier for the property, eg. "fill"
+
+        Returns: None
+        """
+        if (isinstance(node_id, str) and
+                node_id.lower() in SBMLlayout.NODE_KEYWORDS):
+
+            self.__setKeywordNodesProperty(
+                    node_id,
+                    property_value,
+                    property_type)
+
+        elif (isinstance(node_id, str) and
+              node_id in self.getNodeIds()):
+
+            self.__setNodeProperty(node_id, property_value, property_type)
+
+        elif isinstance(node_id, list):
+
+            self.__setListOfNodesProperty(
+                    node_id,
+                    property_value,
+                    property_type)
+
+        else:
+            raise ValueError(f"Invalid input for node_id: {node_id}. Node id"
+                             f"must be a Species id, a list of Species ids, or"
+                             f"a node keyword ({SBMLlayout.NODE_KEYWORDS}).")
+
     def setNodeColor(self, node_id, node_color):
         """
         Sets the node edge color and fill color to the same value.
@@ -945,31 +1076,9 @@ class SBMLlayout:
         """
         SBMLlayout._validatePlotColor(node_color)
 
-        if (isinstance(node_id, str) and
-                node_id.lower() in SBMLlayout.NODE_KEYWORDS):
-            for node_id in self.getNodeKeywordIds(str(node_id).lower()):
-                self.__network.nodes[node_id].edge_color = node_color
-                self.__network.nodes[node_id].fill_color = node_color
+        property_type = "fill_and_edge"
 
-        elif (isinstance(node_id, str) and
-              node_id in self.getNodeIds()):
-            self.__network.nodes[node_id].edge_color = node_color
-            self.__network.nodes[node_id].fill_color = node_color
-
-        elif isinstance(node_id, list):
-            full_model_nodeIds = self.getNodeIds()
-            for this_id in node_id:
-                if this_id in full_model_nodeIds:
-                    self.__network.nodes[this_id].edge_color = node_color
-                    self.__network.nodes[this_id].fill_color = node_color
-                else:
-                    raise ValueError(
-                            f"This id in the input list is invalid {this_id}, "
-                            f"so cannot set color for this id.")
-        else:
-            raise ValueError(f"Invalid input for node_id: {node_id}. Node id"
-                             f"must be a Species id, a list of Species ids, or"
-                             f"a node keyword ({SBMLlayout.NODE_KEYWORDS}).")
+        self.__setNodeBasedOnId(node_id, node_color, property_type)
 
     def getNodeFillColor(self, node_id):
         """Returns the color id for the node fill color.
@@ -998,29 +1107,9 @@ class SBMLlayout:
         """
         SBMLlayout._validatePlotColor(fill_color)
 
-        if (isinstance(node_id, str) and
-                node_id.lower() in SBMLlayout.NODE_KEYWORDS):
-            for node_id in self.getNodeKeywordIds(str(node_id).lower()):
-                self.__network.nodes[node_id].fill_color = fill_color
+        property_type = "fill"
 
-        elif (isinstance(node_id, str) and
-              node_id in self.getNodeIds()):
-            self.__network.nodes[node_id].fill_color = fill_color
-
-        elif isinstance(node_id, list):
-            full_model_nodeIds = self.getNodeIds()
-            for this_id in node_id:
-                if this_id in full_model_nodeIds:
-                    self.__network.nodes[this_id].fill_color = fill_color
-                else:
-                    raise ValueError(
-                            f"This id in the input list is invalid {this_id}, "
-                            f"so cannot set node fill color for this id.")
-        else:
-            raise ValueError(f"Invalid input for node_id: {node_id}. "
-                             f"Node id must be a Species id, a list of "
-                             f"Species ids, or a node keyword "
-                             f"({SBMLlayout.NODE_KEYWORDS} ).")
+        self.__setNodeBasedOnId(node_id, fill_color, property_type)
 
     def getNodeEdgeColor(self, node_id):
         """Returns the color id for the node edge color.
@@ -1049,27 +1138,9 @@ class SBMLlayout:
         """
         SBMLlayout._validatePlotColor(edge_color)
 
-        if (isinstance(node_id, str) and
-                node_id.lower() in SBMLlayout.NODE_KEYWORDS):
-            for node_id in self.getNodeKeywordIds(str(node_id).lower()):
-                self.__network.nodes[node_id].edge_color = edge_color
-        elif (isinstance(node_id, str) and
-              node_id in self.getNodeIds()):
-            self.__network.nodes[node_id].edge_color = edge_color
-        elif isinstance(node_id, list):
-            full_model_nodeIds = self.getNodeIds()
-            for this_id in node_id:
-                if this_id in full_model_nodeIds:
-                    self.__network.nodes[this_id].edge_color = edge_color
-                else:
-                    raise ValueError(
-                            f"This id in the input list is invalid {this_id}, "
-                            f"so cannot set node edge color for this id.")
-        else:
-            raise ValueError(f"Invalid input for node_id: {node_id}. "
-                             f"Node id must be a Species id, a list of "
-                             f"Species ids, or a node keyword "
-                             f"({SBMLlayout.NODE_KEYWORDS} ).")
+        property_type = "edge"
+
+        self.__setNodeBasedOnId(node_id, edge_color, property_type)
 
     def getNodeEdgeWidth(self, node_id):
         """Returns the line width for the node edge.
@@ -1096,28 +1167,9 @@ class SBMLlayout:
 
         Returns: None
         """
+        property_type = "edge_width"
 
-        if (isinstance(node_id, str) and
-                node_id.lower() in SBMLlayout.NODE_KEYWORDS):
-            for node_id in self.getNodeKeywordIds(str(node_id).lower()):
-                self.__network.nodes[node_id].edge_width = edge_width
-        elif (isinstance(node_id, str) and
-              node_id in self.getNodeIds()):
-            self.__network.nodes[node_id].edge_width = edge_width
-        elif isinstance(node_id, list):
-            full_model_nodeIds = self.getNodeIds()
-            for this_id in node_id:
-                if this_id in full_model_nodeIds:
-                    self.__network.nodes[this_id].edge_width = edge_width
-                else:
-                    raise ValueError(
-                            f"This id in the input list is invalid {this_id}, "
-                            f"so cannot set node edge width for this id.")
-        else:
-            raise ValueError(f"Invalid input for node_id: {node_id}. "
-                             f"Node id must be a Species id, a list of "
-                             f"Species ids, or a node keyword "
-                             f"({SBMLlayout.NODE_KEYWORDS} ).")
+        self.__setNodeBasedOnId(node_id, edge_width, property_type)
 
     def getNodeFontSize(self, node_id):
         """Returns the font size of the node text.
@@ -1143,29 +1195,9 @@ class SBMLlayout:
 
         Returns: None
         """
-        if (isinstance(node_id, str) and
-                node_id.lower() in SBMLlayout.NODE_KEYWORDS):
-            for node_id in self.getNodeKeywordIds(str(node_id).lower()):
-                self.__network.nodes[node_id].font_size = font_size
+        property_type = "font_size"
 
-        elif (isinstance(node_id, str) and
-              node_id in self.getNodeIds()):
-            self.__network.nodes[node_id].font_size = font_size
-
-        elif isinstance(node_id, list):
-            full_model_nodeIds = self.getNodeIds()
-            for this_id in node_id:
-                if this_id in full_model_nodeIds:
-                    self.__network.nodes[this_id].font_size = font_size
-                else:
-                    raise ValueError(
-                            f"This id in the input list is invalid {this_id}, "
-                            f"so cannot set node font size for this id.")
-        else:
-            raise ValueError(f"Invalid input for node_id: {node_id}. "
-                             f"Node id must be a Species id, a list of "
-                             f"Species ids, or a node keyword "
-                             f"({SBMLlayout.NODE_KEYWORDS} ).")
+        self.__setNodeBasedOnId(node_id, font_size, property_type)
 
     def getNodeFontName(self, node_id):
         """Returns the font family value, which can be the font family or
@@ -1192,29 +1224,10 @@ class SBMLlayout:
 
         Returns: None
         """
-        if (isinstance(node_id, str) and
-                node_id.lower() in SBMLlayout.NODE_KEYWORDS):
-            for node_id in self.getNodeKeywordIds(str(node_id).lower()):
-                self.__network.nodes[node_id].font_family = font_name
 
-        elif (isinstance(node_id, str) and
-              node_id in self.getNodeIds()):
-            self.__network.nodes[node_id].font_family = font_name
+        property_type = "font_family"
 
-        elif isinstance(node_id, list):
-            full_model_nodeIds = self.getNodeIds()
-            for this_id in node_id:
-                if this_id in full_model_nodeIds:
-                    self.__network.nodes[this_id].font_family = font_name
-                else:
-                    raise ValueError(
-                            f"This id in the input list is invalid {this_id}, "
-                            f"so cannot set node font family for this id.")
-        else:
-            raise ValueError(f"Invalid input for node_id: {node_id}. "
-                             f"Node id must be a Species id, a list of "
-                             f"Species ids, or a node keyword "
-                             f"({SBMLlayout.NODE_KEYWORDS} ).")
+        self.__setNodeBasedOnId(node_id, font_name, property_type)
 
     def getNodeFontFamily(self, node_id):
         """Returns the font family value, which can be the font family or
@@ -1236,29 +1249,10 @@ class SBMLlayout:
 
         Returns: None
         """
-        if (isinstance(node_id, str) and
-                node_id.lower() in SBMLlayout.NODE_KEYWORDS):
-            for node_id in self.getNodeKeywordIds(str(node_id).lower()):
-                self.__network.nodes[node_id].font_family = font_family
 
-        elif (isinstance(node_id, str) and
-              node_id in self.getNodeIds()):
-            self.__network.nodes[node_id].font_family = font_family
+        property_type = "font_family"
 
-        elif isinstance(node_id, list):
-            full_model_nodeIds = self.getNodeIds()
-            for this_id in node_id:
-                if this_id in full_model_nodeIds:
-                    self.__network.nodes[this_id].font_family = font_family
-                else:
-                    raise ValueError(
-                            f"This id in the input list is invalid {this_id}, "
-                            f"so cannot set node font family for this id.")
-        else:
-            raise ValueError(f"Invalid input for node_id: {node_id}. "
-                             f"Node id must be a Species id, a list of "
-                             f"Species ids, or a node keyword "
-                             f"({SBMLlayout.NODE_KEYWORDS} ).")
+        self.__setNodeBasedOnId(node_id, font_family, property_type)
 
     def getNodeFontColor(self, node_id):
         """Returns the color of the node's text.
@@ -1287,29 +1281,9 @@ class SBMLlayout:
         """
         SBMLlayout._validatePlotColor(font_color)
 
-        if (isinstance(node_id, str) and
-                node_id.lower() in SBMLlayout.NODE_KEYWORDS):
-            for node_id in self.getNodeKeywordIds(str(node_id).lower()):
-                self.__network.nodes[node_id].font_color = font_color
+        property_type = "font_color"
 
-        elif (isinstance(node_id, str) and
-              node_id in self.getNodeIds()):
-            self.__network.nodes[node_id].font_color = font_color
-
-        elif isinstance(node_id, list):
-            full_model_nodeIds = self.getNodeIds()
-            for this_id in node_id:
-                if this_id in full_model_nodeIds:
-                    self.__network.nodes[this_id].font_color = font_color
-                else:
-                    raise ValueError(
-                            f"This id in the input list is invalid {this_id}, "
-                            f"so cannot set node font color for this id.")
-        else:
-            raise ValueError(f"Invalid input for node_id: {node_id}. "
-                             f"Node id must be a Species id, a list of "
-                             f"Species ids, or a node keyword "
-                             f"({SBMLlayout.NODE_KEYWORDS} ).")
+        self.__setNodeBasedOnId(node_id, font_color, property_type)
 
     def getNodeFontStyle(self, node_id):
         """Returns the style of the font for the given node.
@@ -1339,29 +1313,9 @@ class SBMLlayout:
         """
         SBMLlayout._validateFontStyle(font_style)
 
-        if (isinstance(node_id, str) and
-                node_id.lower() in SBMLlayout.NODE_KEYWORDS):
-            for node_id in self.getNodeKeywordIds(str(node_id).lower()):
-                self.__network.nodes[node_id].font_style = font_style
+        property_type = "font_style"
 
-        elif (isinstance(node_id, str) and
-              node_id in self.getNodeIds()):
-            self.__network.nodes[node_id].font_style = font_style
-
-        elif isinstance(node_id, list):
-            full_model_nodeIds = self.getNodeIds()
-            for this_id in node_id:
-                if this_id in full_model_nodeIds:
-                    self.__network.nodes[this_id].font_style = font_style
-                else:
-                    raise ValueError(
-                            f"This id in the input list is invalid {this_id}, "
-                            f"so cannot set node font style for this id.")
-        else:
-            raise ValueError(f"Invalid input for node_id: {node_id}. "
-                             f"Node id must be a Species id, a list of "
-                             f"Species ids, or a node keyword "
-                             f"({SBMLlayout.NODE_KEYWORDS} ).")
+        self.__setNodeBasedOnId(node_id, font_style, property_type)
 
     def getNodeWidth(self, node_id):
         """Returns the width of the node.
