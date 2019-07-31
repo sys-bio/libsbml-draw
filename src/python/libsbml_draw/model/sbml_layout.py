@@ -808,27 +808,12 @@ class SBMLlayout:
         """
         self.__validatePlotColor(edge_color)
 
-        if compartment_id == "all":
-            for compartment in self.__network.compartments.values():
-                compartment.edge_color = edge_color
+        property_type = "edge"
 
-        elif (isinstance(compartment_id, str) and
-              compartment_id in self.getCompartmentIds()):
-            self.__network.compartments[compartment_id].edge_color = edge_color
-
-        elif isinstance(compartment_id, list):
-            full_model_compartmentIds = self.getCompartmentIds()
-            for this_id in compartment_id:
-                if this_id in full_model_compartmentIds:
-                    self.__network.compartments[this_id].edge_color = \
-                        edge_color
-                else:
-                    raise ValueError(
-                            f"Id {this_id} in the input list is invalid, "
-                            f"so cannot set color for this id.")
-        else:
-            raise ValueError(f"Invalid input for compartment ids: "
-                             f"{compartment_id}")
+        self.__setCompartmentPropertyById(
+                compartment_id,
+                edge_color,
+                property_type)
 
     def getCompartmentEdgeColor(self, compartment_id):
         """Returns the color id for the compartment edge color.
@@ -842,6 +827,84 @@ class SBMLlayout:
             return self.__network.compartments[compartment_id].edge_color
         else:
             raise ValueError(f"Compartment {compartment_id} not in network.")
+
+    def __setCompartmentProperty(self, compartment_id, property_value,
+                                 property_type):
+        """Sets a property value on a compartment.
+
+        Args:
+            compartment_id (str): id of the compartment
+            property_value (str or float): value for the property to be set,
+            eg. "#0000ff"
+            property_type (str): identifier for the property, eg. "fill"
+
+        Returns: None
+        """
+
+        if property_type == "fill":
+            self.__network.compartments[compartment_id].fill_color = to_hex(
+                    property_value,
+                    keep_alpha=True)
+        elif property_type == "edge":
+            self.__network.compartments[compartment_id].edge_color = to_hex(
+                    property_value,
+                    keep_alpha=True)
+        elif property_type == "line_width":
+            self.__network.compartments[
+                    compartment_id].line_width = property_value
+        else:
+            raise ValueError("property_type is not valid: ",
+                             property_type)
+
+    def __setCompartmentBasedOnId(self, compartment_id, property_value,
+                                  property_type):
+        """Set the property on a compartment, based on the type of id list
+        provided.
+
+        Args:
+            compartment_id (str or list of str): id of the compartment to
+                change, or keyword 'all' to change the color of all the
+                compartments of that type,
+            property_value (str or float): value for the property to be set,
+                eg. "#0000ff"
+            property_type (str): identifier for the property, eg. "fill"
+
+        Returns: None
+        """
+
+        if compartment_id == "all":
+            for this_id in self.getCompartmentIds():
+
+                self.__setCompartmentProperty(
+                        this_id,
+                        property_value,
+                        property_type)
+
+        elif (isinstance(compartment_id, str) and
+              compartment_id in self.getCompartmentIds()):
+
+            self.__setCompartmentProperty(
+                    compartment_id,
+                    property_value,
+                    property_type)
+
+        elif isinstance(compartment_id, list):
+            full_model_compartmentIds = self.getCompartmentIds()
+            for this_id in compartment_id:
+                if this_id in full_model_compartmentIds:
+
+                    self.__setCompartmentProperty(
+                        this_id,
+                        property_value,
+                        property_type)
+
+                else:
+                    raise ValueError(
+                            f"Id {this_id} in the input list is invalid, "
+                            f"so cannot set color for this id.")
+        else:
+            raise ValueError(f"Invalid input for compartment ids: "
+                             f"{compartment_id}")
 
     def setCompartmentFillColor(self, compartment_id, fill_color):
         """
@@ -857,27 +920,12 @@ class SBMLlayout:
         """
         self.__validatePlotColor(fill_color)
 
-        if compartment_id == "all":
-            for compartment in self.__network.compartments.values():
-                compartment.fill_color = fill_color
+        property_type = "fill"
 
-        elif (isinstance(compartment_id, str) and
-              compartment_id in self.getCompartmentIds()):
-            self.__network.compartments[compartment_id].fill_color = fill_color
-
-        elif isinstance(compartment_id, list):
-            full_model_compartmentIds = self.getCompartmentIds()
-            for this_id in compartment_id:
-                if this_id in full_model_compartmentIds:
-                    self.__network.compartments[this_id].fill_color = \
-                        fill_color
-                else:
-                    raise ValueError(
-                            f"Id {this_id} in the input list is invalid, "
-                            f"so cannot set color for this id.")
-        else:
-            raise ValueError(f"Invalid input for compartment ids: "
-                             f"{compartment_id}")
+        self.__setCompartmentPropertyById(
+                compartment_id,
+                fill_color,
+                property_type)
 
     def getCompartmentFillColor(self, compartment_id):
         """Returns the color id for the compartment fill color.
@@ -916,27 +964,12 @@ class SBMLlayout:
 
         Returns: None
         """
-        if compartment_id == "all":
-            for compartment in self.__network.compartments.values():
-                compartment.line_width = line_width
+        property_type = "line_width"
 
-        elif (isinstance(compartment_id, str) and
-              compartment_id in self.getCompartmentIds()):
-            self.__network.compartments[compartment_id].line_width = line_width
-
-        elif isinstance(compartment_id, list):
-            full_model_compartmentIds = self.getCompartmentIds()
-            for this_id in compartment_id:
-                if this_id in full_model_compartmentIds:
-                    self.__network.compartments[this_id].line_width = \
-                        line_width
-                else:
-                    raise ValueError(
-                            f"Id in the input list is invalid {this_id}, so "
-                            f"cannot set compartment line width for this id.")
-        else:
-            raise ValueError(f"Invalid input for compartment ids: "
-                             f"{compartment_id}")
+        self.__setCompartmentPropertyById(
+                compartment_id,
+                line_width,
+                property_type)
 
     # Node Methods
 
@@ -1027,8 +1060,8 @@ class SBMLlayout:
         elif property_type == "font_weight":
             self.__network.nodes[node_id].font_weight = property_value
         else:
-            raise ValueError("property_value is not valid: ",
-                             property_value)
+            raise ValueError("property_type is not valid: ",
+                             property_type)
 
     def __setKeywordNodesProperty(self, node_keyword, property_value,
                                   property_type):
