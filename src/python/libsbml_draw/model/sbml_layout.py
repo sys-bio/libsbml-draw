@@ -36,7 +36,7 @@ class SBMLlayout:
         self.__fitWindow = fitToWindow
         self.__applyRender = applyRender
 
-        if self._validate_layout_alg_options(layout_alg_options):
+        if self.__validate_layout_alg_options(layout_alg_options):
             self.__layout_alg_options = layout_alg_options
         else:
             self.__layout_alg_options = sbnw.fr_alg_options(
@@ -50,7 +50,7 @@ class SBMLlayout:
 
         if isinstance(self.__sbml_source, str):
 
-            if SBMLlayout._validate_sbml_filename(self.__sbml_source):
+            if self.__validate_sbml_filename(self.__sbml_source):
                 self.__h_model = sbnw.loadSBMLFile(self.__sbml_source)
             else:
                 if self.__sbml_source.startswith("<?xml"):
@@ -99,7 +99,7 @@ class SBMLlayout:
                 self.regenerateLayout()
 
             else:
-                if SBMLlayout._validate_sbml_filename(sbml_source):
+                if self.__validate_sbml_filename(sbml_source):
                     self.__doc = libsbml.readSBMLFromFile(sbml_source)
                 else:
                     self.__doc = libsbml.readSBMLFromString(sbml_source)
@@ -260,7 +260,7 @@ class SBMLlayout:
 
     # Validation Methods
 
-    def _validate_sbml_filename(sbml_filename):
+    def __validate_sbml_filename(self, sbml_filename):
         """
         Check if the file actually exists.
 
@@ -274,7 +274,7 @@ class SBMLlayout:
         else:
             return False
 
-    def _validate_layout_alg_options(self, layout_alg_options):
+    def __validate_layout_alg_options(self, layout_alg_options):
         """
         Check if the user supplied an instance of fr_alg_options class.
 
@@ -289,7 +289,7 @@ class SBMLlayout:
         else:
             return False
 
-    def _validatePlotColor(plot_color):
+    def __validatePlotColor(self, plot_color):
         """
         Check if the color supplied is a valid matplotlib color value.
 
@@ -303,7 +303,7 @@ class SBMLlayout:
         else:
             return True
 
-    def _validateFontStyle(font_style):
+    def __validateFontStyle(self, font_style):
         """ Check if the font style is a valid value for matplotlib.
 
         Args:
@@ -319,6 +319,54 @@ class SBMLlayout:
         else:
             raise ValueError(f"Font Style, {font_style} is not valid, "
                              f"must be one of: {valid_font_styles}.")
+
+    def __validateFontWeight(self, font_weight):
+        """ Check if the font weight is a valid value for matplotlib and
+        libsbml.
+
+        Args:
+            font_weight(str): name of a font weight, which can be "normal",
+                or "bold"
+
+        Return: True or raises ValueError
+        """
+        valid_font_weights = {"normal", "bold"}
+
+        if font_weight in valid_font_weights:
+            return True
+        else:
+            raise ValueError(f"Font Weight, {font_weight} is not valid, "
+                             f"must be one of: {valid_font_weights}.")
+
+    def __validateTextAnchor(self, text_anchor, anchor_type):
+        """ Check if the text anchor is a valid value for matplotlib and
+        libsbml.
+
+        Args:
+            text_anchor(str): location to anchor the text
+            anchor_type(str): specifies "horizontal" or "vertical" anchor
+
+        Return: True or raises ValueError
+        """
+        valid_text_anchors = {"center", "left", "right"}
+        valid_vtext_anchors = {"center", "top", "bottom"}
+
+        if anchor_type == "horizontal":
+            if text_anchor in valid_text_anchors:
+                return True
+            else:
+                raise ValueError(f"Text anchor, {text_anchor} is not valid, "
+                                 f"must be one of: {valid_text_anchors}.")
+
+        elif anchor_type == "vertical":
+            if text_anchor in valid_vtext_anchors:
+                return True
+            else:
+                raise ValueError(f"Text anchor, {text_anchor} is not valid, "
+                                 f"must be one of: {valid_vtext_anchors}.")
+        else:
+            raise ValueError(f"anchor_type {anchor_type} must be either ",
+                             "horizontal or vertical.")
 
     # Layout Methods
 
@@ -758,7 +806,7 @@ class SBMLlayout:
 
         Returns: None
         """
-        SBMLlayout._validatePlotColor(edge_color)
+        self.__validatePlotColor(edge_color)
 
         if compartment_id == "all":
             for compartment in self.__network.compartments.values():
@@ -807,7 +855,7 @@ class SBMLlayout:
 
         Returns: None
         """
-        SBMLlayout._validatePlotColor(fill_color)
+        self.__validatePlotColor(fill_color)
 
         if compartment_id == "all":
             for compartment in self.__network.compartments.values():
@@ -1074,7 +1122,7 @@ class SBMLlayout:
 
         Returns: None
         """
-        SBMLlayout._validatePlotColor(node_color)
+        self.__validatePlotColor(node_color)
 
         property_type = "fill_and_edge"
 
@@ -1105,7 +1153,7 @@ class SBMLlayout:
 
         Returns: None
         """
-        SBMLlayout._validatePlotColor(fill_color)
+        self.__validatePlotColor(fill_color)
 
         property_type = "fill"
 
@@ -1136,7 +1184,7 @@ class SBMLlayout:
 
         Returns: None
         """
-        SBMLlayout._validatePlotColor(edge_color)
+        self.__validatePlotColor(edge_color)
 
         property_type = "edge"
 
@@ -1170,6 +1218,68 @@ class SBMLlayout:
         property_type = "edge_width"
 
         self.__setNodeBasedOnId(node_id, edge_width, property_type)
+
+    def getNodeTextAnchor(self, node_id):
+        """Returns the horizontal text anchor for the node.
+
+        Args:
+            node_id(str): id for the node
+
+        Returns: str
+        """
+        if node_id in self.__network.nodes:
+            return self.__network.nodes[node_id].text_anchor
+        else:
+            raise ValueError(f"Species {node_id} not found in network.")
+
+    def setNodeTextAnchor(self, node_id, text_anchor):
+        """
+        Sets the horizontal text anchor for the node.
+
+        Args:
+            node_id (str or list of str): id of the node to change,
+                or keyword 'all', 'boundary', or 'floating' to change the color
+                of all the nodes of that type, or a list of node ids to change.
+            text_anchor (str): "center", "left", "right"
+
+        Returns: None
+        """
+        self.__validateTextAnchor(text_anchor, "horizontal")
+
+        property_type = "text_anchor"
+
+        self.__setNodeBasedOnId(node_id, text_anchor, property_type)
+
+    def getNodeVTextAnchor(self, node_id):
+        """Returns the vertical text anchor for the node.
+
+        Args:
+            node_id(str): id for the node
+
+        Returns: str
+        """
+        if node_id in self.__network.nodes:
+            return self.__network.nodes[node_id].vtext_anchor
+        else:
+            raise ValueError(f"Species {node_id} not found in network.")
+
+    def setNodeVTextAnchor(self, node_id, vtext_anchor):
+        """
+        Sets the vertical text anchor for the node.
+
+        Args:
+            node_id (str or list of str): id of the node to change,
+                or keyword 'all', 'boundary', or 'floating' to change the color
+                of all the nodes of that type, or a list of node ids to change.
+            vtext_anchor (str): "center", "bottom", "top"
+
+        Returns: None
+        """
+        self.__validateTextAnchor(vtext_anchor, "vertical")
+
+        property_type = "vtext_anchor"
+
+        self.__setNodeBasedOnId(node_id, vtext_anchor, property_type)
 
     def getNodeFontSize(self, node_id):
         """Returns the font size of the node text.
@@ -1279,7 +1389,7 @@ class SBMLlayout:
 
         Returns: None
         """
-        SBMLlayout._validatePlotColor(font_color)
+        self.__validatePlotColor(font_color)
 
         property_type = "font_color"
 
@@ -1311,11 +1421,42 @@ class SBMLlayout:
 
         Returns: None
         """
-        SBMLlayout._validateFontStyle(font_style)
+        self.__validateFontStyle(font_style)
 
         property_type = "font_style"
 
         self.__setNodeBasedOnId(node_id, font_style, property_type)
+
+    def getNodeFontWeight(self, node_id):
+        """Returns the weight of the font for the given node.
+
+        Args:
+            node_id (str): id for the node
+
+        Returns: str, "bold" or "normal"
+        """
+        if node_id in self.__network.nodes:
+            return self.__network.nodes[node_id].font_weight
+        else:
+            raise ValueError(f"Species {node_id} not found in network.")
+
+    def setNodeFontWeight(self, node_id, font_weight):
+        """
+        Sets the node font weight.
+
+        Args:
+            node_id (str or list of str): id of the node to change,
+                or keyword 'all', 'boundary', or 'floating' to change the color
+                of all the nodes of that type, or a list of node ids to change.
+            font_weight (str): Available font weights are normal or bold.
+
+        Returns: None
+        """
+        self.__validateFontWeight(font_weight)
+
+        property_type = "font_weight"
+
+        self.__setNodeBasedOnId(node_id, font_weight, property_type)
 
     def getNodeWidth(self, node_id):
         """Returns the width of the node.
@@ -1551,7 +1692,7 @@ class SBMLlayout:
 
         Returns: None
         """
-        SBMLlayout._validatePlotColor(reaction_color)
+        self.__validatePlotColor(reaction_color)
 
         edge_or_fill_color = "both"
 
@@ -1700,7 +1841,7 @@ class SBMLlayout:
 
         Returns: None
         """
-        SBMLlayout._validatePlotColor(edge_color)
+        self.__validatePlotColor(edge_color)
 
         edge_or_fill_color = "edge"
 
@@ -1797,7 +1938,7 @@ class SBMLlayout:
 
         Returns: None
         """
-        SBMLlayout._validatePlotColor(fill_color)
+        self.__validatePlotColor(fill_color)
 
         property_type = "fill"
 

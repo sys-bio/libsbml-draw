@@ -357,6 +357,7 @@ def add_labels(nodes, fig, scaling_factor, nw_height_inches):
                  color=node.font_color,
                  fontname=node.font_family,
                  fontstyle=node.font_style,
+                 fontweight=node.font_weight,
                  horizontalalignment=node.text_anchor,
                  verticalalignment=node.vtext_anchor,
                  transform=fig.dpi_scale_trans)

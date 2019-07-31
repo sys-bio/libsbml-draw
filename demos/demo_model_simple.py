@@ -60,6 +60,12 @@ sl.setNodeFillColor("A", "pink")
 sl.setNodeEdgeColor("all", "green")
 sl.setNodeEdgeWidth(["D","X1","C"], 3)
 
+sl.setNodeFontWeight(["X0","A","B","C","D","X1"], "bold")
+
+sl.setNodeTextAnchor("X0", "right")
+sl.setNodeTextAnchor("A", "left")
+sl.setNodeVTextAnchor("B", "center")
+
 sl.drawNetwork()
 
 print("_J0 width: ", sl.getReactionCurveWidth("_J0"))
@@ -78,7 +84,12 @@ print("B: edge color: ", sl.getNodeEdgeColor("B"))
 print("C: edge width: ", sl.getNodeEdgeWidth("C"))
 
 
+print("X0: text anchor: ", sl.getNodeTextAnchor("X0"))
+print("A: text anchor: ", sl.getNodeTextAnchor("A"))
+print("B: vtext anchor: ", sl.getNodeVTextAnchor("B"))
 
+
+sl.writeSBMLFile("model_simple_out.xml")
 
 
 
