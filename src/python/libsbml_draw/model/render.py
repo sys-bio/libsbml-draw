@@ -658,6 +658,8 @@ class Render:
                     bounding_box.getWidth(),
                     bounding_box.getHeight())
             
+            enable_rotational_mapping = line_ending.getEnableRotationalMapping()  #noqa
+            
             line_ending_points = []
             
             element = line_ending.getGroup().getElement(0)
@@ -698,7 +700,8 @@ class Render:
                 line_endings[line_ending_id] = (
                         "polygon", 
                         np.array(line_ending_points), 
-                        box_dimensions)
+                        box_dimensions,
+                        enable_rotational_mapping)
                 
             elif element.getElementName() == "ellipse":            
                 
@@ -721,7 +724,8 @@ class Render:
                 line_endings[line_ending_id] = (
                         "ellipse", 
                         ellipseData, 
-                        box_dimensions)
+                        box_dimensions, 
+                        enable_rotational_mapping)
 
         return (line_endings, libsbml_line_endings)
 

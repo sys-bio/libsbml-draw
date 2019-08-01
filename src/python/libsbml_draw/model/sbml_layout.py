@@ -661,6 +661,29 @@ class SBMLlayout:
         else:
             raise ValueError(f"species {node_id} is not in the network.")
 
+    def setNetworkBackgroundColor(self, bg_color):
+        """
+        Sets the background color of the network.
+
+        Args:
+            bg_color (str): id of the color for the background
+
+        Returns: None
+        """
+        self.__validatePlotColor(bg_color)
+
+        self.__network.bg_color = bg_color
+
+    def getNetworkBackgroundColor(self, ):
+        """Returns the color id for the background color of the network.
+
+        Args: None
+
+        Returns: str
+        """
+
+        return self.__network.bg_color
+
     def getNodeCentroid(self, node_id):
         """Returns the center point of the node.
 

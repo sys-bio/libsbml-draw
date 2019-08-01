@@ -3,13 +3,14 @@ Draw the SBML model's network which consists of nodes and reactions.
 """
 import math
 import numpy as np
-from matplotlib.patches import BoxStyle, Ellipse, FancyArrowPatch, FancyBboxPatch, PathPatch, Polygon
+from matplotlib.patches import (BoxStyle, Ellipse, FancyArrowPatch,
+                                FancyBboxPatch, PathPatch, Polygon, Rectangle)
 from matplotlib.path import Path
 from matplotlib import pyplot as plt
 
 
-WIDTH_SHIFT = .25
-HEIGHT_SHIFT = .25
+WIDTH_SHIFT = .25  # inches
+HEIGHT_SHIFT = .25  # inches
 
 INCHES_PER_POINT = 1/72
 
@@ -43,7 +44,7 @@ def draw_compartments(compartments, fig, scaling_factor, nw_height_inches):
         fbbp = FancyBboxPatch(
             [scaling_factor*compartment.lower_left_point[0]*INCHES_PER_POINT +
              WIDTH_SHIFT,
-             scaling_factor*(nw_height_inches - 
+             scaling_factor*(nw_height_inches -
              compartment.lower_left_point[1]*INCHES_PER_POINT -
              compartment.height*INCHES_PER_POINT) +
              HEIGHT_SHIFT],
@@ -75,16 +76,13 @@ def draw_nodes(nodes, fig, scaling_factor, nw_height_inches):
     node_patches = []
 
     for node in nodes:
-        
-#        print("node shape: ", node.shape)
-#        print("rect rounding: ", node.rectangle_rounding)
 
-        if node.shape =="round_box" or node.shape == "polygon_pause":
-        
+        if node.shape == "round_box" or node.shape == "polygon_pause":
+
             node_patch = FancyBboxPatch(
                 [scaling_factor*node.lower_left_point[0]*INCHES_PER_POINT +
                  WIDTH_SHIFT,
-                 scaling_factor*(nw_height_inches - 
+                 scaling_factor*(nw_height_inches -
                  node.lower_left_point[1]*INCHES_PER_POINT -
                  node.height*INCHES_PER_POINT) + HEIGHT_SHIFT],
                 scaling_factor*node.width*INCHES_PER_POINT,
@@ -92,39 +90,45 @@ def draw_nodes(nodes, fig, scaling_factor, nw_height_inches):
                 edgecolor=node.edge_color,
                 facecolor=node.fill_color,
                 linewidth=node.edge_width,
-                boxstyle=BoxStyle("round",
-                              pad=0,
-                              rounding_size=node.rectangle_rounding),
+                boxstyle=BoxStyle(
+                        "round",
+                        pad=0,
+                        rounding_size=node.rectangle_rounding),
                 transform=fig.dpi_scale_trans
                 )
 
         elif node.shape == "ellipse":
-            
+
             node_patch = Ellipse(
-                    (scaling_factor*node.center.x*INCHES_PER_POINT + WIDTH_SHIFT, 
-                     scaling_factor*(nw_height_inches - node.center.y*INCHES_PER_POINT) + HEIGHT_SHIFT), 
-                     scaling_factor*node.width*INCHES_PER_POINT, 
-                     scaling_factor*node.height*INCHES_PER_POINT,
-                     edgecolor=node.edge_color,
-                     facecolor=node.fill_color,
-                     linewidth=node.edge_width,
-                     transform=fig.dpi_scale_trans
+                    (scaling_factor*node.center.x*INCHES_PER_POINT +
+                     WIDTH_SHIFT,
+                     scaling_factor*(nw_height_inches -
+                                     node.center.y*INCHES_PER_POINT) +
+                     HEIGHT_SHIFT),
+                    scaling_factor*node.width*INCHES_PER_POINT,
+                    scaling_factor*node.height*INCHES_PER_POINT,
+                    edgecolor=node.edge_color,
+                    facecolor=node.fill_color,
+                    linewidth=node.edge_width,
+                    transform=fig.dpi_scale_trans
                     )
 
         elif node.shape == "polygon":
 
-            node_points = _adjust_x_and_y_values(node.polygon_points, scaling_factor, nw_height_inches, node)
+            node_points = _adjust_x_and_y_values(
+                    node.polygon_points,
+                    scaling_factor,
+                    nw_height_inches,
+                    node)
 
             node_points = np.array(node_points)
 
-            print("type node_points: ", type(node_points), node_points.shape)
-            
             # need to adjust the y's
             path = Path(node_points, node.polygon_codes)
 
             node_patch = PathPatch(
-                    path, 
-                    facecolor=node.fill_color, 
+                    path,
+                    facecolor=node.fill_color,
                     edgecolor=node.edge_color,
                     linewidth=node.edge_width,
                     transform=fig.dpi_scale_trans
@@ -136,9 +140,13 @@ def draw_nodes(nodes, fig, scaling_factor, nw_height_inches):
 
     return node_patches
 
-def _adjust_x_and_y_values(node_points, scaling_factor, nw_height_inches, node):
-    """ """
-    adjusted_node_points = []    
+
+def _adjust_x_and_y_values(node_points, scaling_factor, nw_height_inches,
+                           node):
+    """
+
+    """
+    adjusted_node_points = []
 
     for node_point in node_points:
 
@@ -148,47 +156,53 @@ def _adjust_x_and_y_values(node_points, scaling_factor, nw_height_inches, node):
 
         # y
         y = node_point[1] + node.lower_left_point[1]
-        y = scaling_factor*(nw_height_inches - y*INCHES_PER_POINT) + HEIGHT_SHIFT    
+        y = scaling_factor*(nw_height_inches -
+                            y*INCHES_PER_POINT) + HEIGHT_SHIFT
 
         adjusted_node_points.append([x, y])
-        
-    return adjusted_node_points    
 
-def rotate_point(point, angle_deg, center_point=(0,0)):
-    """rotate counter-clockwise 
-    
-    Args: 
-        point 
+    return adjusted_node_points
+
+
+def rotate_point(point, angle_deg, center_point=(0, 0)):
+    """rotate counter-clockwise
+
+    Args:
+        point
         angle (float): rotate the point by this amount of degrees
-    
+
     Return:
-        
+
     """
     angle_rad = math.radians(angle_deg)
 
-    #shift point so center_point becomes the origin
-    
+    # shift point so center_point becomes the origin
+
     new_point = (point[0] - center_point[0], point[1] - center_point[1])
 
     x = new_point[0]*math.cos(angle_rad) - new_point[1]*math.sin(angle_rad)
     y = new_point[0]*math.sin(angle_rad) + new_point[1]*math.cos(angle_rad)
 
-#    rotated_point = (x + center_point[0], y + center_point[1])
- 
     rotated_point = (x, y)
-    
+
     return rotated_point
 
-def _adjust_arrowhead_x_and_y_values(path_points, scaling_factor, 
-                                     nw_height_inches, center_point, 
+
+def _adjust_arrowhead_x_and_y_values(path_points, scaling_factor,
+                                     nw_height_inches, center_point,
                                      angle_degrees, box_dimensions):
-    """ """
-    adjusted_points = []    
+    """
+
+    Args:
+
+    Returns:
+    """
+    adjusted_points = []
 
     for point in path_points:
-    
+
         arrowhead_center = (box_dimensions.width/2, box_dimensions.height/2)
-        
+
         rotated_point = rotate_point(point, angle_degrees, arrowhead_center)
 
         # x
@@ -198,13 +212,15 @@ def _adjust_arrowhead_x_and_y_values(path_points, scaling_factor,
         # y
         y = rotated_point[1] + center_point.y
         y = scaling_factor*(
-                nw_height_inches - y*INCHES_PER_POINT) + HEIGHT_SHIFT    
+                nw_height_inches - y*INCHES_PER_POINT) + HEIGHT_SHIFT
 
         adjusted_points.append([x, y])
-        
-    return np.array(adjusted_points)    
-    
-def draw_reactions(reactions, mutation_scale, fig, scaling_factor, nw_height_inches, line_endings):
+
+    return np.array(adjusted_points)
+
+
+def draw_reactions(reactions, mutation_scale, fig, scaling_factor,
+                   nw_height_inches, line_endings):
     """Create a list of FancyArrow Patches, one for each curve in a reaction.
 
     Args:
@@ -223,27 +239,29 @@ def draw_reactions(reactions, mutation_scale, fig, scaling_factor, nw_height_inc
 
         for curve in curves:
 
-            print("curve role: ", curve.role_name.lower())
-
             start_point = np.array([
                     scaling_factor*curve.start_point.x*INCHES_PER_POINT +
                     WIDTH_SHIFT,
-                    scaling_factor*(nw_height_inches - curve.start_point.y*INCHES_PER_POINT) +
+                    scaling_factor*(nw_height_inches -
+                                    curve.start_point.y*INCHES_PER_POINT) +
                     HEIGHT_SHIFT])
             end_point = np.array([
                     scaling_factor*curve.end_point.x*INCHES_PER_POINT +
                     WIDTH_SHIFT,
-                    scaling_factor*(nw_height_inches - curve.end_point.y*INCHES_PER_POINT) +
+                    scaling_factor*(nw_height_inches -
+                                    curve.end_point.y*INCHES_PER_POINT) +
                     HEIGHT_SHIFT])
             control_point_1 = np.array([
                     scaling_factor*curve.control_point_1.x*INCHES_PER_POINT +
                     WIDTH_SHIFT,
-                    scaling_factor*(nw_height_inches - curve.control_point_1.y*INCHES_PER_POINT) +
+                    scaling_factor*(nw_height_inches -
+                                    curve.control_point_1.y*INCHES_PER_POINT) +
                     HEIGHT_SHIFT])
             control_point_2 = np.array([
                     scaling_factor*curve.control_point_2.x*INCHES_PER_POINT +
                     WIDTH_SHIFT,
-                    scaling_factor*(nw_height_inches - curve.control_point_2.y*INCHES_PER_POINT) +
+                    scaling_factor*(nw_height_inches -
+                                    curve.control_point_2.y*INCHES_PER_POINT) +
                     HEIGHT_SHIFT])
 
             cubic_bezier_curve_path = Path(
@@ -253,10 +271,15 @@ def draw_reactions(reactions, mutation_scale, fig, scaling_factor, nw_height_inc
                      end_point],
                     [Path.MOVETO, Path.CURVE4, Path.CURVE4, Path.CURVE4])
 
+            if curve.endHead in line_endings:
+                curve_arrowstyle = "-"
+            else:
+                curve_arrowstyle = curve.curveArrowStyle
+
             fap = FancyArrowPatch(
                     facecolor=curve.fill_color,
                     edgecolor=curve.edge_color,
-                    arrowstyle=curve.curveArrowStyle,
+                    arrowstyle=curve_arrowstyle,
                     clip_on=False,
                     linewidth=curve.curve_width,
                     mutation_scale=mutation_scale.get(curve.role, 10),
@@ -266,77 +289,196 @@ def draw_reactions(reactions, mutation_scale, fig, scaling_factor, nw_height_inc
 
             reaction_patches.append(fap)
 
-            if curve.role_name.lower() == "product":
-                if "product" in line_endings:
+            # add line ending patches, if any
 
-                    arrow_path = line_endings["product"][1]                       
-                    box_dimensions = line_endings["product"][2]
+            if curve.endHead in line_endings:
 
-                    angle_degrees = compute_line_ending_rotation_angle(curve)
+                line_ending = line_endings[curve.endHead]
 
-                    adjusted_arrow_path = _adjust_arrowhead_x_and_y_values(
-                            arrow_path, scaling_factor, nw_height_inches, 
-                            curve.end_point, angle_degrees, box_dimensions)
+                if line_ending[0] == "polygon":
 
-#                    print("adj arrow path: ", type(adjusted_arrow_path), adjusted_arrow_path)
-
-                    arrow_patch = Polygon(
-                            adjusted_arrow_path, edgecolor=curve.edge_color, 
-                            facecolor=curve.fill_color, lw=1,
-                            transform=fig.dpi_scale_trans) 
-
-#                    codes = [Path.MOVETO, Path.LINETO, Path.LINETO, Path.LINETO, Path.LINETO]
-
-#                    arrow_patch = PathPatch(Path(adjusted_arrow_path, codes), edgecolor="black", facecolor="black", lw=1, transform=fig.dpi_scale_trans)
+                    arrow_patch = create_polygon_line_ending_patch(
+                            curve,
+                            line_ending,
+                            scaling_factor,
+                            nw_height_inches,
+                            fig)
 
                     reaction_patches.append(arrow_patch)
 
-            elif curve.role_name.lower() == "modifier":
+                elif line_ending[0] == "ellipse":
 
-                print("line endings: ", type(line_endings))
-                
-                if "activator" in line_endings:
-                    
-                    print("activator: ", line_endings["activator"])
-                    
-                    ellipse_data = line_endings["activator"][1]
-                    box_dimensions = line_endings["activator"][2]
+                    arrow_patch = create_ellipse_line_ending_patch(
+                            curve,
+                            line_ending,
+                            scaling_factor,
+                            nw_height_inches,
+                            fig)
 
-                    ellipse_center_x = curve.end_point.x
-                    ellipse_center_y = curve.end_point.y
-
-                    ellipse_width = ellipse_data.rx
-                    ellipse_height = ellipse_data.ry
-                    
-                    arrow_patch = Ellipse(
-                        (scaling_factor*ellipse_center_x*INCHES_PER_POINT + WIDTH_SHIFT, 
-                        scaling_factor*(nw_height_inches - ellipse_center_y*INCHES_PER_POINT) + HEIGHT_SHIFT), 
-                        scaling_factor*ellipse_width*INCHES_PER_POINT, 
-                        scaling_factor*ellipse_height*INCHES_PER_POINT, 
-                        edgecolor=curve.edge_color, 
-                        facecolor=curve.fill_color, 
-                        lw=ellipse_data.stroke_width,
-                        transform=fig.dpi_scale_trans)
-                
                     reaction_patches.append(arrow_patch)
-                
+
+                elif line_ending[0] == "rectangle":
+
+                    arrow_patch = create_rectangle_line_ending_patch(
+                            curve,
+                            line_ending,
+                            scaling_factor,
+                            nw_height_inches,
+                            fig)
+
+                    reaction_patches.append(arrow_patch)
+
     return reaction_patches
 
+
+def create_rectangle_line_ending_patch(curve, line_ending, scaling_factor,
+                                       nw_height_inches, fig):
+    """Creates a patch for a line ending which has the shape of a rectangle
+
+    Args:
+        curve (libsbml_draw.network.Curve): curve needing a line ending
+        line_ending (3-tuple containing (line ending type, data for drawing,
+            bounding box data)): the line ending data for the curve
+        scaling_factor (float): scaling_factor to decrease or increase the
+            figure size
+        nw_height_inches (float): height of the network in inches
+        fig (matplotlib.figure.Figure): the figure of the network
+
+    Returns: matplotlib.patches.Rectangle
+    """
+    rectangle_data = line_ending[1]
+    enable_rotational_mapping = line_ending[3]
+
+    if enable_rotational_mapping:
+        angle_degrees = compute_line_ending_rotation_angle(curve)
+    else:
+        angle_degrees = 0
+
+    rectangle_lower_left_x = curve.end_point.x
+    rectangle_lower_left_y = curve.end_point.y - rectangle_data.height/2
+
+    rectangle_width = rectangle_data.width
+    rectangle_height = rectangle_data.height
+
+    arrow_patch = Rectangle(
+            (scaling_factor*rectangle_lower_left_x*INCHES_PER_POINT +
+             WIDTH_SHIFT,
+             scaling_factor*(nw_height_inches -
+                             rectangle_lower_left_y*INCHES_PER_POINT) +
+             HEIGHT_SHIFT),
+            scaling_factor*rectangle_width*INCHES_PER_POINT,
+            scaling_factor*rectangle_height*INCHES_PER_POINT,
+            edgecolor=curve.edge_color,
+            facecolor=curve.fill_color,
+            lw=rectangle_data.stroke_width,
+            angle=angle_degrees,
+            transform=fig.dpi_scale_trans)
+
+    return arrow_patch
+
+
+def create_ellipse_line_ending_patch(curve, line_ending, scaling_factor,
+                                     nw_height_inches, fig):
+    """Creates a patch for a line ending which has the shape of an ellipse
+
+    Args:
+        curve (libsbml_draw.network.Curve): curve needing a line ending
+        line_ending (3-tuple containing (line ending type, data for drawing,
+            bounding box data)): the line ending data for the curve
+        scaling_factor (float): scaling_factor to decrease or increase the
+            figure size
+        nw_height_inches (float): height of the network in inches
+        fig (matplotlib.figure.Figure): the figure of the network
+
+    Returns: matplotlib.patches.Ellipse
+    """
+    ellipse_data = line_ending[1]
+    enable_rotational_mapping = line_ending[3]
+
+    if enable_rotational_mapping:
+        angle_degrees = compute_line_ending_rotation_angle(curve)
+    else:
+        angle_degrees = 0
+
+    ellipse_center_x = curve.end_point.x
+    ellipse_center_y = curve.end_point.y
+
+    ellipse_width = ellipse_data.rx
+    ellipse_height = ellipse_data.ry
+
+    arrow_patch = Ellipse(
+            (scaling_factor*ellipse_center_x*INCHES_PER_POINT + WIDTH_SHIFT,
+             scaling_factor*(nw_height_inches -
+                             ellipse_center_y*INCHES_PER_POINT) +
+             HEIGHT_SHIFT),
+            scaling_factor*ellipse_width*INCHES_PER_POINT,
+            scaling_factor*ellipse_height*INCHES_PER_POINT,
+            edgecolor=curve.edge_color,
+            facecolor=curve.fill_color,
+            lw=ellipse_data.stroke_width,
+            angle=angle_degrees,
+            transform=fig.dpi_scale_trans)
+
+    return arrow_patch
+
+
+def create_polygon_line_ending_patch(curve, line_ending, scaling_factor,
+                                     nw_height_inches, fig):
+    """Creates a polygon patch for the line ending.
+
+    Args:
+        curve (libsbml_draw.network.Curve): curve needing a line ending
+        line_ending (3-tuple containing (line ending type, data for drawing,
+            bounding box data)): the line ending data for the curve
+        scaling_factor (float): scaling_factor to decrease or increase the
+            figure size
+        nw_height_inches (float): height of the network in inches
+        fig (matplotlib.figure.Figure): the figure of the network
+
+    Returns: matplotlib.patches.Polygon
+    """
+
+    arrow_path = line_ending[1]
+    box_dimensions = line_ending[2]
+    enable_rotational_mapping = line_ending[3]
+
+    if enable_rotational_mapping:
+        angle_degrees = compute_line_ending_rotation_angle(curve)
+    else:
+        angle_degrees = 0
+
+    adjusted_arrow_path = _adjust_arrowhead_x_and_y_values(
+            arrow_path, scaling_factor, nw_height_inches,
+            curve.end_point, angle_degrees, box_dimensions)
+
+    arrow_patch = Polygon(
+            adjusted_arrow_path,
+            edgecolor=curve.edge_color,
+            facecolor=curve.fill_color,
+            lw=1,
+            transform=fig.dpi_scale_trans)
+
+    return arrow_patch
+
+
 def compute_line_ending_rotation_angle(curve):
-    """ """
+    """
+
+    """
     slope = (curve.end_point.y - curve.control_point_2.y)/(
                curve.end_point.x - curve.control_point_2.x)
 
     angle_degrees = math.degrees(math.atan(slope))
-                    
+
     if angle_degrees < 0:
         if curve.end_point.x < curve.control_point_2.x:
             angle_degrees += 180
-    else: 
+    else:
         if curve.control_point_2.x > curve.end_point.x:
             angle_degrees += 180
-            
+
     return angle_degrees
+
 
 def add_labels(nodes, fig, scaling_factor, nw_height_inches):
     """Add text to the nodes.
@@ -351,7 +493,9 @@ def add_labels(nodes, fig, scaling_factor, nw_height_inches):
     """
     for node in nodes:
         plt.text(scaling_factor*node.center.x*INCHES_PER_POINT + WIDTH_SHIFT,
-                 scaling_factor*(nw_height_inches - node.center.y*INCHES_PER_POINT) + HEIGHT_SHIFT,
+                 scaling_factor*(nw_height_inches -
+                                 node.center.y*INCHES_PER_POINT) +
+                 HEIGHT_SHIFT,
                  node.name,
                  fontsize=scaling_factor*node.font_size,
                  color=node.font_color,
@@ -448,7 +592,7 @@ def createNetworkFigure(sbml_layout, arrowhead_mutation_scale,
 
     fig = plt.figure(figsize=figsize, dpi=dpi)
     ax = plt.gca()
-    
+
     fig.add_axes(ax)
     # create a figure without any margins
     fig.subplots_adjust(0, 0, 1, 1)
@@ -459,26 +603,36 @@ def createNetworkFigure(sbml_layout, arrowhead_mutation_scale,
 
     # draw the compartments
     compartment_patches = draw_compartments(
-            network.compartments.values(), fig, scaling_factor, nw_height_inches)
+            network.compartments.values(),
+            fig,
+            scaling_factor,
+            nw_height_inches)
 
     for compartment_patch in compartment_patches:
         ax.add_patch(compartment_patch)
 
     # draw the reactions
-    line_endings = network.line_endings if network.line_endings else network.stylesheet_line_endings
- 
-    print("len nw le's: ", len(network.line_endings))
-    print("len nw ss le's:", len(network.stylesheet_line_endings))
-    print("len le's: ", len(line_endings), type(line_endings))
-    
+    if network.line_endings:
+        line_endings = network.line_endings
+    else:
+        line_endings = network.stylesheet_line_endings
+
     reaction_patches = draw_reactions(
             network.reactions.values(),
-            arrowhead_mutation_scale, fig, scaling_factor, nw_height_inches, line_endings)
+            arrowhead_mutation_scale,
+            fig,
+            scaling_factor,
+            nw_height_inches,
+            line_endings)
     for reaction_patch in reaction_patches:
         ax.add_patch(reaction_patch)
 
     # draw the nodes
-    node_patches = draw_nodes(network.nodes.values(), fig, scaling_factor, nw_height_inches)
+    node_patches = draw_nodes(
+            network.nodes.values(),
+            fig,
+            scaling_factor,
+            nw_height_inches)
     for node_patch in node_patches:
         ax.add_patch(node_patch)
 

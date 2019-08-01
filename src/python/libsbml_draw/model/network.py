@@ -73,10 +73,10 @@ class Curve():
     pointing to the product."""
 
     role_arrowstyles = ["-",                                  # SUBSTRATE
-                        "-",                                # PRODUCT
+                        "-|>",                                # PRODUCT
                         "-",                                  # SIDESUBSTRATE
                         "-|>",                                # SIDEPRODUCT
-                        "-",                                # MODIFIER
+                        "-|>",                                # MODIFIER
                         "-|>",                                # ACTIVATOR
                         ArrowStyle("|-|",
                                    widthA=0, angleA=None,
