@@ -29,13 +29,17 @@ class Compartment():
         self.min_corner = sbnw.compartment_getMinCorner(h_compartment)
         self.max_corner = sbnw.compartment_getMaxCorner(h_compartment)
         self.lower_left_point = [self.min_corner.x, self.min_corner.y]
+        self.center_x = self.min_corner.x + self.width/2
+        self.center_y = self.min_corner.y + self.height/2
         self.id = sbnw.compartment_getID(h_compartment)
         self.edge_color = "#0000ff30"  # 30% blue
         self.fill_color = "#0000ff05"  # 5% blue
         self.line_width = 3
         self.shape = "round_box"
         self.rectangle_rounding = 0.6
-
+        self.polygon_points
+        self.polygon_codes
+        
 
 class Node():
     """Represents a node in the SBMl model."""

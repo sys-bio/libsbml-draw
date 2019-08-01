@@ -1,5 +1,6 @@
 """
-Draw the SBML model's network which consists of nodes and reactions.
+Draw the SBML model's network which consists of compartments, nodes and
+reactions.
 """
 import math
 import numpy as np
@@ -34,29 +35,72 @@ def draw_compartments(compartments, fig, scaling_factor, nw_height_inches):
         fig (matplotlib.figure.Figure): the figure of the network
         scaling_factor (float): scaling_factor to decrease or increase the
             figure size
+        nw_height_inches (float): height of the network in inches
 
-    Returns: list of matplotlib.patches.FancyBboxPatch
+    Returns: list of matplotlib.patches - FancyBboxPatch, Ellipse, or Polygon
     """
     compartment_patches = []
 
     for compartment in compartments:
 
-        fbbp = FancyBboxPatch(
-            [scaling_factor*compartment.lower_left_point[0]*INCHES_PER_POINT +
-             WIDTH_SHIFT,
-             scaling_factor*(nw_height_inches -
-             compartment.lower_left_point[1]*INCHES_PER_POINT -
-             compartment.height*INCHES_PER_POINT) +
-             HEIGHT_SHIFT],
-            scaling_factor*compartment.width*INCHES_PER_POINT,
-            scaling_factor*compartment.height*INCHES_PER_POINT,
-            edgecolor=compartment.edge_color,
-            facecolor=compartment.fill_color,
-            linewidth=compartment.line_width,
-            boxstyle=BoxStyle("round", pad=0, rounding_size=0.6),
-            transform=fig.dpi_scale_trans)
+        if compartment.shape == "round_box":
 
-        compartment_patches.append(fbbp)
+            compartment_patch = FancyBboxPatch(
+                [scaling_factor*compartment.lower_left_point[0]*INCHES_PER_POINT +  # noqa
+                 WIDTH_SHIFT,
+                 scaling_factor*(nw_height_inches -
+                 compartment.lower_left_point[1]*INCHES_PER_POINT -
+                 compartment.height*INCHES_PER_POINT) +
+                 HEIGHT_SHIFT],
+                scaling_factor*compartment.width*INCHES_PER_POINT,
+                scaling_factor*compartment.height*INCHES_PER_POINT,
+                edgecolor=compartment.edge_color,
+                facecolor=compartment.fill_color,
+                linewidth=compartment.line_width,
+                boxstyle=BoxStyle("round", pad=0, rounding_size=0.6),
+                transform=fig.dpi_scale_trans)
+
+        elif compartment.shape == "ellipse":
+
+            compartment_patch = Ellipse(
+                    (scaling_factor*compartment.center_x*INCHES_PER_POINT +
+                     WIDTH_SHIFT,
+                     scaling_factor*(nw_height_inches -
+                                     compartment.center_y*INCHES_PER_POINT) +
+                     HEIGHT_SHIFT),
+                    scaling_factor*compartment.width*INCHES_PER_POINT,
+                    scaling_factor*compartment.height*INCHES_PER_POINT,
+                    edgecolor=compartment.edge_color,
+                    facecolor=compartment.fill_color,
+                    linewidth=compartment.line_width,
+                    transform=fig.dpi_scale_trans
+                    )
+
+        elif compartment.shape == "polygon":
+
+            compartment_points = _adjust_x_and_y_values(
+                    compartment.polygon_points,
+                    scaling_factor,
+                    nw_height_inches,
+                    compartment)
+
+            compartment_points = np.array(compartment_points)
+
+            # need to adjust the y's
+            path = Path(compartment_points, compartment.polygon_codes)
+
+            compartment_patch = PathPatch(
+                    path,
+                    facecolor=compartment.fill_color,
+                    edgecolor=compartment.edge_color,
+                    linewidth=compartment.line_width,
+                    transform=fig.dpi_scale_trans
+                )
+
+        else:
+            pass
+
+        compartment_patches.append(compartment_patch)
 
     return compartment_patches
 
@@ -69,15 +113,16 @@ def draw_nodes(nodes, fig, scaling_factor, nw_height_inches):
         fig (matplotlib.figure.Figure): the figure of the network
         scaling_factor (float): scaling_factor to decrease or increase the
             figure size
+        nw_height_inches (float): height of the network in inches
 
-    Returns: list of matplotlib.patches.FancyBboxPatch
+    Returns: list of matplotlib.patches - FancyBboxPatch, Ellipse, or Polygon
     """
 
     node_patches = []
 
     for node in nodes:
 
-        if node.shape == "round_box" or node.shape == "polygon_pause":
+        if node.shape == "round_box":
 
             node_patch = FancyBboxPatch(
                 [scaling_factor*node.lower_left_point[0]*INCHES_PER_POINT +
@@ -141,38 +186,49 @@ def draw_nodes(nodes, fig, scaling_factor, nw_height_inches):
     return node_patches
 
 
-def _adjust_x_and_y_values(node_points, scaling_factor, nw_height_inches,
-                           node):
-    """
+def _adjust_x_and_y_values(polygon_points, scaling_factor, nw_height_inches,
+                           element):
+    """Adjust the values of the points defining the polygon, so that they
+    plot correctly.
 
-    """
-    adjusted_node_points = []
+    Args:
+        polygon_points(list of 2-tuples (x,y)): define the polygon
+        scaling_factor (float): scaling_factor to decrease or increase the
+            figure size
+        nw_height_inches (float): height of the network in inches
+        element ()
 
-    for node_point in node_points:
+    Return: list of 2-tuples (x,y)
+    """
+    adjusted_polygon_points = []
+
+    for polygon_point in polygon_points:
 
         # x
-        x = node_point[0] + node.lower_left_point[0]
+        x = polygon_point[0] + element.lower_left_point[0]
         x = scaling_factor*x*INCHES_PER_POINT + WIDTH_SHIFT
 
         # y
-        y = node_point[1] + node.lower_left_point[1]
+        y = polygon_point[1] + element.lower_left_point[1]
         y = scaling_factor*(nw_height_inches -
                             y*INCHES_PER_POINT) + HEIGHT_SHIFT
 
-        adjusted_node_points.append([x, y])
+        adjusted_polygon_points.append([x, y])
 
-    return adjusted_node_points
+    return adjusted_polygon_points
 
 
 def rotate_point(point, angle_deg, center_point=(0, 0)):
-    """rotate counter-clockwise
+    """Rotate an (x, y) point counter-clockwise, after centering the point
+    around (0,0).
 
     Args:
-        point
-        angle (float): rotate the point by this amount of degrees
+        point (2-tuple (x, y)): point in a polygon to rotate
+        angle_deg (float): rotate the point by this amount of degrees
+        center_point (2-tuple (x, y)): center point of the polygon that the
+           point belongs to
 
-    Return:
-
+    Return: 2-tuple (x, y)
     """
     angle_rad = math.radians(angle_deg)
 
@@ -191,11 +247,21 @@ def rotate_point(point, angle_deg, center_point=(0, 0)):
 def _adjust_arrowhead_x_and_y_values(path_points, scaling_factor,
                                      nw_height_inches, center_point,
                                      angle_degrees, box_dimensions):
-    """
+    """Adjust the arrowhead x and y values so that they plot correctly.
 
     Args:
+        path_points(list of 2-tuples (x, y)): define the polygon representing
+            the arrowhead
+        scaling_factor (float): scaling_factor to decrease or increase the
+            figure size
+        nw_height_inches (float): height of the network in inches
+        center_point():
+        angle_degrees(float): number of degrees to rotate the arrowhead so that
+            it has the same slope as the cubic Bezier curve
+        box_dimensions(libsbml_draw.render.BoxDimensions): bounding box of the
+            arrowhead
 
-    Returns:
+    Returns: list of 2-tuples (x, y)
     """
     adjusted_points = []
 
@@ -462,8 +528,14 @@ def create_polygon_line_ending_patch(curve, line_ending, scaling_factor,
 
 
 def compute_line_ending_rotation_angle(curve):
-    """
+    """Computes the angle in degrees that a line ending would need to be
+    rotated in order to align with the slope of the cubic Bezier curve and
+    point in the correct direction.
 
+    Args:
+        curve (libsbml_draw.network.Curve):
+
+    Returns: float
     """
     slope = (curve.end_point.y - curve.control_point_2.y)/(
                curve.end_point.x - curve.control_point_2.x)
