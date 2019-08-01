@@ -11,15 +11,15 @@ from pathlib import Path
 import matplotlib.path as mplp
 
 import pkg_resources
-import xml.etree.ElementTree as ET 
+import xml.etree.ElementTree as ET
 
 import libsbml
 
 PlotColor = namedtuple("PlotColor", ["is_valid_color", "color"])
 FontProperty = namedtuple("FontProperty", ["is_valid_value", "value"])
 GlyphProperty = namedtuple("GlyphProperty", ["type", "entity_id"])
-BoxDimensions = namedtuple("BoxDimensions", 
-                              ["x_offset", "y_offset", "width", "height"])
+BoxDimensions = namedtuple("BoxDimensions",
+                           ["x_offset", "y_offset", "width", "height"])
 EllipseData = namedtuple("EllipseData",
                          ["x", "y", "rx", "ry", "stroke_width"])
 
@@ -34,7 +34,7 @@ ROLES = ["substrate", "product", "sidesubstrate", "sideproduct",
 # most specific to least specific
 
 COMPARTMENT_TYPES = ["COMPARTMENTGLYPH", "ANY"]
-        
+
 SPECIES_TYPES = ["SPECIESGLYPH", "ANY"]
 
 TEXT_TYPES = ["TEXTGLYPH", "ANY"]
@@ -69,31 +69,25 @@ class Render:
         self.linear_gradients = {}
         self.line_endings = {}
         self.libsbml_line_endings = []
-#        self.compartmentGlyphs = self.layout.getListOfCompartmentGlyphs()
-#        self.reactionGlyphs = self.layout.getListOfReactionGlyphs()
-#        self.speciesGlyphs = self.layout.getListOfSpeciesGlyphs()
-#        self.textGlyphs = self.layout.getListOfTextGlyphs()
         self.speciesGlyphs = self._createSpeciesGlyphsDirectory()
         self.speciesToGlyphs = self._createSpeciesDirectory()
-        self.textToGlyphs = self._createSpeciesTextDirectory()        
+        self.textToGlyphs = self._createSpeciesTextDirectory()
         self.textGlyphs = self._createTextGlyphsDirectory()
         self.compartmentGlyphs = self._createCompartmentGlyphsDirectory()
         self.compartmentsToGlyphs = self._createCompartmentsDirectory()
         self.reactionGlyphs = self._createReactionGlyphsDirectory()
         self.reactionToGlyphs = self._createReactionsDirectory()
         self.glyphsDirectory = self._createGlyphsDirectory()
-        self.findSpeciesReferenceGlyphId = self._createSpeciesReferenceGlyphDirectory()
-
-#        print("num compartment glyphs: ", len(self.compartmentGlyphs))
-#        print("num species glyphs: ", len(self.speciesGlyphs))
-#        print("num text glyphs: ", len(self.textGlyphs))
+        self.findSpeciesReferenceGlyphId = self._createSpeciesReferenceGlyphDirectory()  # noqa
 
     def _createSpeciesReferenceGlyphDirectory(self,):
-        """ """
+        """
+
+        """
         srgDirectory = dict()
 
         for reaction in self.layout.getListOfReactionGlyphs():
-            for srg in reaction.getListOfSpeciesReferenceGlyphs():           
+            for srg in reaction.getListOfSpeciesReferenceGlyphs():
                 if srg.isSetSpeciesReferenceId():
                     species_id = srg.getSpeciesReferenceId()
                 elif srg.isSetSpeciesGlyphId():
@@ -102,55 +96,56 @@ class Render:
                         species_id = self.speciesGlyphs[species_glyph_id]
                 else:
                     species_id = ""
-                    raise RuntimeWarning("Can't create proper species reference glyph key.", 
-                                         "species id = ", species_id)
-                srgDirectory[(reaction.getReactionId(), srg.getRoleString(), 
-                    species_id)] = srg.getId()                                            
-        
+                    raise RuntimeWarning(
+                            "Can't create proper species reference glyph key.",
+                            "species id = ", species_id)
+                srgDirectory[(reaction.getReactionId(), srg.getRoleString(),
+                              species_id)] = srg.getId()
+
         return srgDirectory
 
     def _createSpeciesDirectory(self,):
         """ """
         speciesDirectory = dict()
-        
+
         for species in self.layout.getListOfSpeciesGlyphs():
             glyph_id = species.getId()
             species_id = species.getSpeciesId()
             speciesDirectory[species_id] = glyph_id
-        
+
         return speciesDirectory
 
     def _createSpeciesTextDirectory(self,):
         """ """
         speciesTextDirectory = dict()
-        
+
         for text in self.layout.getListOfTextGlyphs():
             glyph_id = text.getId()
             species_id = self.speciesGlyphs[text.getGraphicalObjectId()]
             speciesTextDirectory[species_id] = glyph_id
-        
+
         return speciesTextDirectory
 
     def _createReactionsDirectory(self,):
         """ """
         reactionsDirectory = dict()
-        
+
         for reaction in self.layout.getListOfReactionGlyphs():
             glyph_id = reaction.getId()
             reaction_id = self.reactionGlyphs[reaction.getId()]
             reactionsDirectory[reaction_id] = glyph_id
-        
+
         return reactionsDirectory
 
     def _createCompartmentsDirectory(self,):
         """ """
         compartmentsDirectory = dict()
-        
+
         for compartment in self.layout.getListOfCompartmentGlyphs():
             glyph_id = compartment.getId()
             compartment_id = self.compartmentGlyphs[compartment.getId()]
             compartmentsDirectory[compartment_id] = glyph_id
-        
+
         return compartmentsDirectory
 
     def _createSpeciesGlyphsDirectory(self,):
@@ -163,9 +158,9 @@ class Render:
             glyph_id = species.getId()
             species_id = species.getSpeciesId()
             speciesGlyphsDirectory[glyph_id] = species_id
-        
+
         return speciesGlyphsDirectory
-    
+
     def _createTextGlyphsDirectory(self,):
         """
         Returns: dictionary, key=glyph_id, value=species_id
@@ -176,7 +171,7 @@ class Render:
             glyph_id = text.getId()
             species_id = self.speciesGlyphs[text.getGraphicalObjectId()]
             textDirectory[glyph_id] = species_id
-        
+
         return textDirectory
 
     def _createCompartmentGlyphsDirectory(self,):
@@ -189,7 +184,7 @@ class Render:
             glyph_id = compartment.getId()
             compartment_id = compartment.getCompartmentId()
             compartmentDirectory[glyph_id] = compartment_id
-        
+
         return compartmentDirectory
 
     def _createReactionGlyphsDirectory(self,):
@@ -202,47 +197,37 @@ class Render:
             glyph_id = reaction.getId()
             reaction_id = reaction.getReactionId()
             reactionDirectory[glyph_id] = reaction_id
-        
+
         return reactionDirectory
 
-
     def _createGlyphsDirectory(self,):
-        """        
         """
-        glyphsDirectory = dict()        
+        """
+        glyphsDirectory = dict()
 
         for compartment in self.layout.getListOfCompartmentGlyphs():
             glyph_id = compartment.getId()
             compartment_id = compartment.getCompartmentId()
-            glyphsDirectory[glyph_id] = GlyphProperty("compartment", compartment_id)
-#            print("compartment glyph: ", glyph_id)     
-#            print("compartment: ", compartment_id)
-            
-        for reaction in self.layout.getListOfReactionGlyphs(): 
+            glyphsDirectory[glyph_id] = GlyphProperty(
+                    "compartment",
+                    compartment_id)
+
+        for reaction in self.layout.getListOfReactionGlyphs():
             glyph_id = reaction.getId()
             reaction_id = reaction.getReactionId()
             glyphsDirectory[glyph_id] = GlyphProperty("reaction", reaction_id)
-#            print("reaction glyph: ", glyph_id)     
-#            print("reaction: ", reaction_id)
-            
+
         for species in self.layout.getListOfSpeciesGlyphs():
             glyph_id = species.getId()
             species_id = species.getSpeciesId()
             glyphsDirectory[glyph_id] = GlyphProperty("species", species_id)
-#            print("species glyph: ", glyph_id)     
-#            print("species: ", species_id)
-            
+
         for text in self.layout.getListOfTextGlyphs():
             glyph_id = text.getId()
             species_id = self.speciesGlyphs[text.getGraphicalObjectId()]
             glyphsDirectory[glyph_id] = GlyphProperty("text", species_id)
-#           print("text glyph: ", glyph_id)     
-#            print("text: ", species_id)    
-#
-#        print("size glyphs dir:", len(glyphsDirectory))
 
         return glyphsDirectory
-        
 
     def _getFontProperties(self,):
         """Finds the font families on the system, and provides valid values for
@@ -261,7 +246,7 @@ class Render:
                                            "fantasy", "monospace"],
             "size": ["xx-small", "x-small", "small", "medium", "large",
                      "x-large", "xx-large"],
-            "weight": ["normal", "bold"]         
+            "weight": ["normal", "bold"]
         }
 
         return font_properties
@@ -277,7 +262,7 @@ class Render:
 
     def _collectColorDefinitions(self, render_info):
         """Gets the render color definitions.
- 
+
         Args:
             render_info(libsbml.Render):
 
@@ -316,16 +301,13 @@ class Render:
             idList(list): list of ids to update
 
         Returns: None
-        """        
-#        element = render_style.getGroup().getElement(0)
-#        print("element data ", type(element), element.isRectangle(), element.isRenderCurve(), element.getStroke())
-        
+        """
         node_fill_color = self._set_plot_color_and_validity(
                 render_style.getGroup().getFillColor())
         node_edge_color = self._set_plot_color_and_validity(
                 render_style.getGroup().getElement(0).getStroke())
-        node_edge_width = render_style.getGroup().getElement(0).getStrokeWidth()
-        
+        node_edge_width = render_style.getGroup().getElement(0).getStrokeWidth()  # noqa
+
         nodes_to_update = {k: network.nodes[k]
                            for k in network.nodes.keys() & idList}
 
@@ -376,7 +358,7 @@ class Render:
                 font_property = FontProperty(True, property_value)
             else:
                 font_property = FontProperty(False, property_value)
-                
+
         elif font_property == "textanchor":
             if property_value == "middle":
                 font_property = FontProperty(True, "center")
@@ -388,7 +370,7 @@ class Render:
                 font_property = FontProperty(True, property_value)
             else:
                 font_property = FontProperty(False, property_value)
-                
+
         elif font_property == "vtextanchor":
             # flip top, bottom, and baseline since (0,0) is lower-left corner
             # for matplotlib in draw_network.py
@@ -400,18 +382,18 @@ class Render:
                 font_property = FontProperty(True, "top")
             elif property_value == "baseline":
                 font_property = FontProperty(True, "top")
-            elif property_value in ("center", "top", "bottom", "baseline", 
+            elif property_value in ("center", "top", "bottom", "baseline",
                                     "center_baseline"):
                 font_property = FontProperty(True, property_value)
             else:
-                font_property = FontProperty(False, property_value)  
+                font_property = FontProperty(False, property_value)
 
         elif font_property == "weight":
             if property_value in self.font_properties[font_property]:
                 font_property = FontProperty(True, FONT_STYLES[property_value])
             else:
                 font_property = FontProperty(False, property_value)
-                    
+
         else:
             font_property = FontProperty(False, property_value)
 
@@ -447,9 +429,9 @@ class Render:
                 render_style.getGroup().getFontStyle())
 
         node_horizontal_alignment = self._set_font_property(
-                "textanchor", 
+                "textanchor",
                 render_style.getGroup().getTextAnchorAsString())
-        
+
         node_vertical_alignment = self._set_font_property(
                 "vtextanchor",
                 render_style.getGroup().getVTextAnchorAsString())
@@ -473,7 +455,7 @@ class Render:
 
             if node_horizontal_alignment.is_valid_value:
                 node.text_anchor = node_horizontal_alignment.value
-                
+
             if node_vertical_alignment.is_valid_value:
                 node.vtext_anchor = node_vertical_alignment.value
 
@@ -525,37 +507,31 @@ class Render:
 
         Returns: None
         """
-        print("UPDATING COMPARTMENTS")
-
-        try:         
-            compartment_edge_color = self._set_plot_color_and_validity(
+        compartment_edge_color = self._set_plot_color_and_validity(
                 render_style.getGroup().getElement(0).getStroke())
 
-            compartment_fill_color = self._set_plot_color_and_validity(
+        compartment_fill_color = self._set_plot_color_and_validity(
                 render_style.getGroup().getElement(0).getFillColor())
 
-            compartment_line_width = render_style.getGroup().getElement(0).getStrokeWidth()
+        compartment_line_width = render_style.getGroup().getElement(0).getStrokeWidth()  # noqa
 
-            compartments_to_update = {k: network.compartments[k] for k in
+        compartments_to_update = {k: network.compartments[k] for k in
                                   network.compartments.keys() & idList}
 
-            for compartment in compartments_to_update.values():
+        for compartment in compartments_to_update.values():
 
-                if compartment_edge_color.is_valid_color:
-                    compartment.edge_color = compartment_edge_color.color
-                else:
-                    pass
+            if compartment_edge_color.is_valid_color:
+                compartment.edge_color = compartment_edge_color.color
+            else:
+                pass
 
-                if compartment_fill_color.is_valid_color:
-                    compartment.fill_color = compartment_fill_color.color
-                else:
-                    pass
+            if compartment_fill_color.is_valid_color:
+                compartment.fill_color = compartment_fill_color.color
+            else:
+                pass
 
-                if compartment_line_width > 0:
-                    compartment.line_width = compartment_line_width
-                    
-        except: 
-            pass            
+            if compartment_line_width > 0:
+                compartment.line_width = compartment_line_width
 
     def _applyGlobalRenderInformationOrig(self, network):
         """Applies global style render information as specified in the
@@ -578,7 +554,7 @@ class Render:
                             global_render_info)
 
                     for global_style in global_render_info.getListOfStyles():
-                        
+
                         if global_style.isInTypeList("SPECIESGLYPH"):
                             self._updateNodesBasedOnSpeciesGlyph(
                                     global_style,
@@ -601,34 +577,35 @@ class Render:
                                     network.compartments.keys())
                         else:
                             pass
-                        
+
     def _collectLinearGradients(self, render_info):
         """Gets the render linear gradient definitions.
 
         Args:
             render_info(libsbml.Render):
 
-        Returns: dict, keys = linear gradient id, 
+        Returns: dict, keys = linear gradient id,
             values = tuple of (spread_method, list of stop colors)
         """
         linear_gradients = {}
 
         for linear_gradient in render_info.getListOfGradientDefinitions():
-      
+
             spread_method = linear_gradient.getSpreadMethodString()
-            
+
             stop_colors = list()
-            
+
             for gradient_stop in linear_gradient.getListOfGradientStops():
-                
+
                 gradient_stop_color = self._set_plot_color_and_validity(
                     gradient_stop.getStopColor())
-                
+
                 if gradient_stop_color.is_valid_color:
-                    stop_colors.append(gradient_stop_color)                
-                
-            linear_gradients[linear_gradient.getId()] = (spread_method, 
-                             stop_colors) 
+                    stop_colors.append(gradient_stop_color)
+
+            linear_gradients[linear_gradient.getId()] = (
+                    spread_method,
+                    stop_colors)
 
         return linear_gradients
 
@@ -638,7 +615,7 @@ class Render:
         Args:
             render_info(libsbml.Render):
 
-        Returns: dict, keys = line ending id, 
+        Returns: dict, keys = line ending id,
             values = np.array of [x,y] points
         """
         line_endings = {}
@@ -647,106 +624,85 @@ class Render:
         for line_ending in render_info.getListOfLineEndings():
 
             libsbml_line_endings.append(line_ending)
-            
+
             line_ending_id = line_ending.getId()
 
             bounding_box = line_ending.getBoundingBox()
-            
+
             box_dimensions = BoxDimensions(
-                    bounding_box.getX(), 
+                    bounding_box.getX(),
                     bounding_box.getY(),
                     bounding_box.getWidth(),
                     bounding_box.getHeight())
-            
-            enable_rotational_mapping = line_ending.getEnableRotationalMapping()  #noqa
-            
+
+            enable_rotational_mapping = line_ending.getEnableRotationalMapping()  # noqa
+
             line_ending_points = []
-            
+
             element = line_ending.getGroup().getElement(0)
-            
+
             if element.getElementName() == "polygon":
-                
-                for curve in element.getListOfElements():                     
 
-#                    print("curve type: ", type(curve))                                  
-#                    print("curve isSet rel abs: ", curve.getX().isSetRelativeValue(), curve.getX().isSetAbsoluteValue())
-#                    print("curve rel: ", curve.getX().getRelativeValue(), curve.getY().getRelativeValue())
-#                    print("curve abs: ", curve.getX().getAbsoluteValue(), curve.getY().getAbsoluteValue())
+                for curve in element.getListOfElements():
 
-                    # arrow1_points = np.array([[0,0], [10,5], [10,5], [0,10], [0,10], [3.3,5], [3.3,5], [0,0]])
-
-#                    if not curve.getX().isSetAbsoluteValue() and not curve.getX().isSetRelativeValue():
-#                        x = 0
-#                    elif curve.getX().isSetRelativeValue():
-#                        x = curve.getX().getRelativeValue()*box_dimensions.width/100                    
-#                    elif curve.getX().isSetAbsoluteValue():
-#                        x = curve.getX().getAbsoluteValue()
-
-                    x = self._getAbsoluteValue(curve.getX(), 
+                    x = self._getAbsoluteValue(curve.getX(),
                                                box_dimensions.width)
 
-#                    if not curve.getY().isSetAbsoluteValue() and not curve.getY().isSetRelativeValue():
-#                        y = 0
-#                    elif curve.getY().isSetRelativeValue():
-#                        y = curve.getY().getRelativeValue()*box_dimensions.height/100                    
-#                    elif curve.getY().isSetAbsoluteValue():
-#                        y = curve.getY().getAbsoluteValue()                       
-
-                    y = self._getAbsoluteValue(curve.getY(), 
+                    y = self._getAbsoluteValue(curve.getY(),
                                                box_dimensions.height)
-                    
+
                     line_ending_points.append([x, y])
-                
+
                 line_endings[line_ending_id] = (
-                        "polygon", 
-                        np.array(line_ending_points), 
+                        "polygon",
+                        np.array(line_ending_points),
                         box_dimensions,
                         enable_rotational_mapping)
-                
-            elif element.getElementName() == "ellipse":            
-                
-                x = self._getAbsoluteValue(element.getCX(), 
+
+            elif element.getElementName() == "ellipse":
+
+                x = self._getAbsoluteValue(element.getCX(),
                                            box_dimensions.width)
 
-                y = self._getAbsoluteValue(element.getCY(), 
-                                           box_dimensions.height)    
-                
-                rx = self._getAbsoluteValue(element.getRX(), 
-                                           box_dimensions.width)
+                y = self._getAbsoluteValue(element.getCY(),
+                                           box_dimensions.height)
 
-                ry = self._getAbsoluteValue(element.getRY(), 
-                                           box_dimensions.height) 
+                rx = self._getAbsoluteValue(element.getRX(),
+                                            box_dimensions.width)
+
+                ry = self._getAbsoluteValue(element.getRY(),
+                                            box_dimensions.height)
 
                 stroke_width = element.getStrokeWidth()
-                
+
                 ellipseData = EllipseData(x, y, rx, ry, stroke_width)
-                
+
                 line_endings[line_ending_id] = (
-                        "ellipse", 
-                        ellipseData, 
-                        box_dimensions, 
+                        "ellipse",
+                        ellipseData,
+                        box_dimensions,
                         enable_rotational_mapping)
 
         return (line_endings, libsbml_line_endings)
 
     def _getAbsoluteValue(self, element_value, box_dimension):
         """ """
-        
-        if (not element_value.isSetAbsoluteValue() and 
-            not element_value.isSetRelativeValue() ):
+
+        if (not element_value.isSetAbsoluteValue() and
+                not element_value.isSetRelativeValue()):
 
             abs_value = 0
 
         elif element_value.isSetRelativeValue():
 
-            abs_value = element_value.getRelativeValue()*box_dimension/100                    
+            abs_value = element_value.getRelativeValue()*box_dimension/100
 
         elif element_value.isSetAbsoluteValue():
 
-            abs_value = element_value.getAbsoluteValue()           
-        
+            abs_value = element_value.getAbsoluteValue()
+
         return abs_value
-        
+
     def _applyGlobalRenderInformation(self, network):
         """Applies global style render information as specified in the
         roleList (eg. product) or typeList (eg. SPECIESGLYPH).
@@ -755,7 +711,7 @@ class Render:
             network (libsbml_draw.model.Network): the model's network
 
         Returns: None
-        """        
+        """
         if (self.render_plugin and
                 self.render_plugin.getNumGlobalRenderInformationObjects() > 0):
 
@@ -768,51 +724,47 @@ class Render:
                             global_render_info)
 
                     bg_color = self._set_plot_color_and_validity(
-                       global_render_info.getBackgroundColor() )
+                       global_render_info.getBackgroundColor())
 
                     if bg_color.is_valid_color:
                         network.bg_color = bg_color.color
 
                     self.linear_gradients = self._collectLinearGradients(
                             global_render_info)
-                   
+
                     line_endings_tuple = self._collectLineEndings(
                             global_render_info)
 
-                    self.line_endings = line_endings_tuple[0]                    
+                    self.line_endings = line_endings_tuple[0]
                     self.libsbml_line_endings = line_endings_tuple[1]
-                    
+
                     network.line_endings = self.line_endings
                     network.libsbml_line_endings = self.libsbml_line_endings
 
-#                    print("global, bg color: ", bg_color)
-#                    print("global, num linear gradients: ", len(self.linear_gradients))
-#                    print("global, num line endings: ", len(self.line_endings))
-
                     global_styles = global_render_info.getListOfStyles()
-                
+
                     compartments_type = dict()
                     nodes_type = dict()
                     node_text_type = dict()
                     reaction_type = dict()
                     role_type = dict()
-                    
+
                     for global_style in global_styles:
 
                         # collect types which apply to compartments
-                        for glyph_type in COMPARTMENT_TYPES:                            
+                        for glyph_type in COMPARTMENT_TYPES:
                             if global_style.isInTypeList(glyph_type):
                                 compartments_type[glyph_type] = global_style
                             else:
                                 pass
                         # collect types which apply to nodes
-                        for glyph_type in SPECIES_TYPES:                            
+                        for glyph_type in SPECIES_TYPES:
                             if global_style.isInTypeList(glyph_type):
                                 nodes_type[glyph_type] = global_style
                             else:
                                 pass
                         # collect types which apply to node text
-                        for glyph_type in TEXT_TYPES:                            
+                        for glyph_type in TEXT_TYPES:
                             if global_style.isInTypeList(glyph_type):
                                 node_text_type[glyph_type] = global_style
                             else:
@@ -830,13 +782,13 @@ class Render:
                             else:
                                 pass
 
-                    # update compartments                            
-                    for glyph_type in COMPARTMENT_TYPES:                            
-                        if glyph_type in compartments_type:                            
+                    # update compartments
+                    for glyph_type in COMPARTMENT_TYPES:
+                        if glyph_type in compartments_type:
                             for compartment in network.compartments.values():
                                 self._updateCompartment(
-                                        compartment, 
-                                        compartments_type[glyph_type])                            
+                                        compartment,
+                                        compartments_type[glyph_type])
                             break
                         else:
                             pass
@@ -849,7 +801,7 @@ class Render:
                                 print("updating node: ", node.id)
                                 self._updateNode(
                                         node,
-                                        nodes_type[glyph_type])                                
+                                        nodes_type[glyph_type])
                             break
                         else:
                             pass
@@ -858,36 +810,38 @@ class Render:
                     for glyph_type in TEXT_TYPES:
                         if glyph_type in node_text_type:
                             for node in network.nodes.values():
-                                self._updateNodeText(node,
-                                    node_text_type[glyph_type])
+                                self._updateNodeText(
+                                        node,
+                                        node_text_type[glyph_type])
                             break
-                        else: 
+                        else:
                             pass
 
-                    # update reaction curves                        
+                    # update reaction curves
                     for reaction in network.reactions.values():
                         for curve in reaction.curves:
                             if curve.role_name.lower() in role_type:
-                                self._updateCurve(curve, 
+                                self._updateCurve(
+                                        curve,
                                         role_type[curve.role_name.lower()])
                             else:
                                 for glyph_type in REACTION_TYPES:
                                     if glyph_type in reaction_type:
-                                        self._updateCurve(curve, 
-                                            reaction_type[curve.role_name.lower()])
-                                        break   
+                                        self._updateCurve(
+                                                curve,
+                                                reaction_type[curve.role_name.lower()])  # noqa
+                                        break
                                     else:
                                         pass
 
-
     def _updateCurve(self, curve, render_style):
-        """ """
+        """
+
+        """
         curve_edge_color = self._set_plot_color_and_validity(
                 render_style.getGroup().getStroke())
 
         curve_edge_width = render_style.getGroup().getStrokeWidth()
-
-#        print("curve: ", curve_edge_color, curve_edge_width)
 
         if curve_edge_color.is_valid_color:
             curve.edge_color = curve_edge_color.color
@@ -896,11 +850,10 @@ class Render:
             pass
 
         if curve_edge_width > 0:
-            curve.curve_width = curve_edge_width                
+            curve.curve_width = curve_edge_width
 
-        curve.endHead = render_style.getGroup().getEndHead() 
-        
-        
+        curve.endHead = render_style.getGroup().getEndHead()
+
     def _getLocalIdList(self, local_style, network_id_set):
         """Gets a list of ids from the network (nodes, reactions, or
         compartments), which are found in the LocalStyle's id list.
@@ -918,8 +871,8 @@ class Render:
 
         return idList
 
-    def _applyLocalRenderInformationBasedOnTypeList(self, network, local_style):  #noqa
-        """Sets values in the model's nodes, reactions, or compartments as 
+    def _applyLocalRenderInformationBasedOnTypeList(self, network, local_style):  # noqa
+        """Sets values in the model's nodes, reactions, or compartments as
         specified by the typeList for each local style.
 
         Args:
@@ -958,7 +911,7 @@ class Render:
         if len(compartments_id_list) > 0:
 
             if local_style.isInTypeList("COMPARTMENTGLYPH"):
-                self._updateCompartmentsBasedOnCompartmentGlyph(  
+                self._updateCompartmentsBasedOnCompartmentGlyph(
                     local_style, network, compartments_id_list)
 
     def _getCompartmentIdsInIdList(self, idList):
@@ -967,7 +920,7 @@ class Render:
 
         for glyph in self.compartmentGlyphs:
 
-            if idList.has_key(glyph):
+            if idList.has_key(glyph):  # noqa
                 compartmentIds.append(self.compartmentGlyphs[glyph])
 
         return compartmentIds
@@ -978,7 +931,7 @@ class Render:
 
         for glyph in self.speciesGlyphs:
 
-            if idList.has_key(glyph):
+            if idList.has_key(glyph):  # noqa
                 speciesIds.append(self.speciesGlyphs[glyph])
 
         return speciesIds
@@ -989,7 +942,7 @@ class Render:
 
         for glyph in self.textGlyphs:
 
-            if idList.has_key(glyph):
+            if idList.has_key(glyph):  # noqa
                 speciesIdsForText.append(self.textGlyphs[glyph])
 
         return speciesIdsForText
@@ -1000,10 +953,10 @@ class Render:
 
         for glyph in self.reactionGlyphs:
 
-            if idList.has_key(glyph):
+            if idList.has_key(glyph):  # noqa
                 reactionIds.append(self.reactionGlyphs[glyph])
 
-        return reactionIds        
+        return reactionIds
 
     def _applyLocalRenderInformationTwo(self, network):
         """Sets values in the model's nodes and reactions as specified by
@@ -1021,7 +974,7 @@ class Render:
                     self.rPlugin.getListOfLocalRenderInformation():
 
                 if local_render_info:
-                    
+
                     self.color_definitions = self._collectColorDefinitions(
                             local_render_info)
 
@@ -1030,20 +983,14 @@ class Render:
                         idList = local_style.getIdList()
                         roleList = local_style.getRoleList()
                         typeList = local_style.getTypeList()
-                        
+
                         if idList.size():
                             # get the id's of the elements to update
-                            compartmentIds = self._getCompartmentIdsInIdList(idList)                            
+                            compartmentIds = self._getCompartmentIdsInIdList(idList)  # noqa
                             speciesIds = self._getSpeciesIdsInIdList(idList)
                             reactionIds = self._getReactionIdsInIdList(idList)
-                            textIds = self._getSpeciesIdsForTextInIdList(idList)
-                            print()
-                            print("num compartment ids: ", len(compartmentIds))
-                            print("num species ids: ", len(speciesIds))
-                            print("num reaction ids: ", len(reactionIds))
-                            print("num text ids: ", len(textIds))
-                            print()
-                            
+                            textIds = self._getSpeciesIdsForTextInIdList(idList)  # noqa
+
                             if len(compartmentIds) > 0:
                                 self._updateCompartmentsBasedOnCompartmentGlyph(  # noqa  
                                     local_style, network, compartmentIds)
@@ -1059,21 +1006,21 @@ class Render:
                             if len(reactionIds) > 0:
                                 self._updateReactionsBasedOnReactionGlyph(
                                     local_style, network, reactionIds)
-                                
+
                         elif roleList.size():
-                            pass                            
-                        
+                            pass
+
                         elif typeList.size():
                             self._applyLocalRenderInformationBasedOnTypeList(
-                                    network, local_style)                            
+                                    network, local_style)
                         else:
                             pass
-                        
+
     def _applyLocalRenderInformation(self, network):
-        """Sets values in the model's species (nodes), reactions, and 
-        compartments by finding the most specific local style that applies. 
-        Styles can be applied based on an id (of a glyph), role (of a curve), 
-        or type of glyph (SPECIES, TEXT, REACTION, and COMPARTMENT). 
+        """Sets values in the model's species (nodes), reactions, and
+        compartments by finding the most specific local style that applies.
+        Styles can be applied based on an id (of a glyph), role (of a curve),
+        or type of glyph (SPECIES, TEXT, REACTION, and COMPARTMENT).
 
         Args:
             network (libsbml_draw.model.Network): the model's network
@@ -1086,15 +1033,15 @@ class Render:
                     self.rPlugin.getListOfLocalRenderInformation():
 
                 if local_render_info:
-                    
+
                     self.color_definitions = self._collectColorDefinitions(
                             local_render_info)
 
                     bg_color = self._set_plot_color_and_validity(
-                       local_render_info.getBackgroundColor() )
+                       local_render_info.getBackgroundColor())
 
                     if bg_color.is_valid_color:
-                        network.bg_color = bg_color.color 
+                        network.bg_color = bg_color.color
 
                     self.linear_gradients = self._collectLinearGradients(
                             local_render_info)
@@ -1102,39 +1049,35 @@ class Render:
                     line_endings_tuple = self._collectLineEndings(
                             local_render_info)
 
-                    self.line_endings = line_endings_tuple[0]                    
+                    self.line_endings = line_endings_tuple[0]
                     self.libsbml_line_endings = line_endings_tuple[1]
-                    
+
                     network.line_endings = self.line_endings
                     network.libsbml_line_endings = self.libsbml_line_endings
 
-#                    print("local, bg color: ", bg_color)
-#                    print("local, num linear gradients: ", len(self.linear_gradients), self.linear_gradients.keys())
-#                    print("local, num line endings: ", len(self.line_endings), self.line_endings.keys())
-                    
                 local_styles = local_render_info.getListOfStyles()
-                   
+
                 # Nodes - assign a style
                 for node in network.nodes.values():
 
-                    nodes_type = dict()                    
-                    node_assigned = False                  
+                    nodes_type = dict()
+                    node_assigned = False
                     glyph_id = self.speciesToGlyphs[node.id]
-                    
+
                     for local_style in local_styles:
-                        idList = local_style.getIdList() 
+                        idList = local_style.getIdList()
                         if idList.size():
-                            if local_style.isInIdList(glyph_id):                       
+                            if local_style.isInIdList(glyph_id):
                                 self._updateNode(node, local_style)
                                 node_assigned = True
                                 break
-                        # has type list and no id list    
+                        # has type list and no id list
                         elif local_style.getTypeList().size():
                             for node_type in SPECIES_TYPES:
-                                if (local_style.isInTypeList(node_type) and 
-                                    node_type not in nodes_type):
+                                if (local_style.isInTypeList(node_type) and
+                                        node_type not in nodes_type):
                                     # want the first one found
-                                    nodes_type[node_type] = local_style                            
+                                    nodes_type[node_type] = local_style
                         else:
                             pass
 
@@ -1143,62 +1086,62 @@ class Render:
                             if node_type in nodes_type:
                                 self._updateNode(node, nodes_type[node_type])
                                 break
-                             
+
                 # Nodes text - assign a style
                 for node in network.nodes.values():
 
                     node_text_type = dict()
                     node_assigned = False
                     glyph_id = self.textToGlyphs[node.id]
-                    
+
                     for local_style in local_styles:
-                        idList = local_style.getIdList() 
+                        idList = local_style.getIdList()
                         if idList.size():
-                            if local_style.isInIdList(glyph_id):                       
+                            if local_style.isInIdList(glyph_id):
                                 self._updateNodeText(node, local_style)
                                 node_assigned = True
                                 break
-                        # has type list and no id list    
+                        # has type list and no id list
                         elif local_style.getTypeList().size():
                             for node_type in TEXT_TYPES:
                                 if (local_style.isInTypeList(node_type) and
-                                    node_type not in node_text_type):
+                                        node_type not in node_text_type):
                                     # want the first one found
-                                    node_text_type[node_type] = local_style                            
+                                    node_text_type[node_type] = local_style
                         else:
                             pass
 
                     if not node_assigned:
                         for node_type in TEXT_TYPES:
                             if node_type in node_text_type:
-                                self._updateNodeText(node, 
+                                self._updateNodeText(node,
                                                      nodes_type[node_type])
                                 break
 
                 # Compartments - assign a style
                 for compartment in network.compartments.values():
-                                        
+
                     compartments_type = dict()
                     compartment_assigned = False
                     glyph_id = self.compartmentsToGlyphs[compartment.id]
-                    
+
                     for local_style in local_styles:
-                        idList = local_style.getIdList() 
+                        idList = local_style.getIdList()
                         if idList.size():
-                            if local_style.isInIdList(glyph_id):                       
+                            if local_style.isInIdList(glyph_id):
                                 self._updateCompartment(
                                         compartment, local_style)
                                 compartment_assigned = True
                                 break
-                        # has type list and no id list    
+                        # has type list and no id list
                         elif local_style.getTypeList().size():
                             for compartment_type in COMPARTMENT_TYPES:
                                 if (local_style.isInTypeList(compartment_type)
-                                    and 
-                                    compartment_type not in compartments_type):
+                                        and compartment_type
+                                        not in compartments_type):
                                     # want the first one found
                                     compartments_type[
-                                            compartment_type] = local_style                            
+                                            compartment_type] = local_style
                         else:
                             pass
 
@@ -1206,10 +1149,10 @@ class Render:
                         for compartment_type in COMPARTMENT_TYPES:
                             if compartment_type in compartments_type:
                                 self._updateCompartment(
-                                        compartment, 
+                                        compartment,
                                         compartments_type[compartment_type])
                                 break
-                                        
+
                 # Reactions - assign a style to each curve
                 for reaction in network.reactions.values():
 
@@ -1217,62 +1160,62 @@ class Render:
                     roles_type = dict()
                     rxn_id_style = None
                     rxn_glyph_id = self.reactionToGlyphs[reaction.id]
-                    
+
                     for curve in reaction.curves:
 
-                        id_key = (reaction.id, 
-                                  curve.role_name.lower(), 
+                        id_key = (reaction.id,
+                                  curve.role_name.lower(),
                                   curve.species)
-                        
+
                         if id_key in self.findSpeciesReferenceGlyphId:
                             curve_id = self.findSpeciesReferenceGlyphId[id_key]
                         else:
                             curve_id = None
-                        
+
                         curve_assigned = False
-                        
+
                         for local_style in local_styles:
-                        
+
                             # has idList
-                            if local_style.getIdList().size():                                
-                                if local_style.isInIdList(curve_id):                
-                                    self._updateCurve(curve, local_style)                    
-                                    curve_assigned = True                
+                            if local_style.getIdList().size():
+                                if local_style.isInIdList(curve_id):
+                                    self._updateCurve(curve, local_style)
+                                    curve_assigned = True
                                     break
                                 elif (local_style.isInIdList(rxn_glyph_id) and
-                                    not rxn_id_style):
-                                    rxn_id_style = local_style              
+                                        not rxn_id_style):
+                                    rxn_id_style = local_style
 
                             # has roleList
                             elif local_style.getRoleList().size():
                                 if (local_style.isInRoleList(
-                                        curve.role_name.lower()) and 
-                                        curve.role_name.lower() 
+                                        curve.role_name.lower()) and
+                                        curve.role_name.lower()
                                         not in roles_type):
                                     # want first one found
                                     roles_type[
                                         curve.role_name.lower()] = local_style
-                                        
-                            # has typeList  
+
+                            # has typeList
                             elif local_style.getTypeList().size():
                                 for reaction_type in REACTION_TYPES:
                                     if (local_style.isInTypeList(reaction_type)
-                                        and 
-                                        reaction_type not in reactions_type):
+                                            and reaction_type
+                                            not in reactions_type):
                                         reactions_type[
                                                 reaction_type] = local_style
 
-                        if not curve_assigned:                
-                            # assign based on role                            
+                        if not curve_assigned:
+                            # assign based on role
                             if curve.role_name.lower() in roles_type:
                                 self._updateCurve(
-                                        curve, 
-                                        roles_type[curve.role_name.lower()])   
+                                        curve,
+                                        roles_type[curve.role_name.lower()])
                             # assign based on rxn id
                             elif rxn_id_style:
                                 self._updateCurve(
-                                        curve, 
-                                        rxn_id_style)   
+                                        curve,
+                                        rxn_id_style)
                             # assign based on type
                             else:
                                 for reaction_type in REACTION_TYPES:
@@ -1281,13 +1224,13 @@ class Render:
                                         break
                         else:
                             pass
-                            
+
     def _updateNode(self, node, render_style):
-        """ 
+        """
         """
         render_group = render_style.getGroup()
         node_element = render_group.getElement(0)
-        
+
         if node_element.isSetFillColor():
             fill_color = node_element.getFillColor()
         else:
@@ -1295,7 +1238,7 @@ class Render:
 
         node_fill_color = self._set_plot_color_and_validity(
                 fill_color)
-        
+
         if node_element.isSetStroke():
             edge_color = node_element.getStroke()
         else:
@@ -1307,9 +1250,9 @@ class Render:
         if node_element.isSetStrokeWidth():
             node_edge_width = node_element.getStrokeWidth()
         else:
-            node_edge_width = render_group.getStrokeWidth()    
-        
-        node_shape = node_element.getElementName() 
+            node_edge_width = render_group.getStrokeWidth()
+
+        node_shape = node_element.getElementName()
 
         if node_fill_color.is_valid_color:
             node.fill_color = node_fill_color.color
@@ -1322,12 +1265,13 @@ class Render:
             pass
 
         node.edge_width = node_edge_width
-    
+
         if node_shape == "rectangle":
             node.shape = "round_box"
             node_rx = node_element.getRX().getAbsoluteValue()
             node_ry = node_element.getRY().getAbsoluteValue()
-            node.rectangle_rounding = max(node_rx,node_ry)/max(node.width, node.height)
+            node.rectangle_rounding = (max(node_rx, node_ry) /
+                                       max(node.width, node.height))
 
         elif node_shape == "polygon":
 
@@ -1345,67 +1289,53 @@ class Render:
                 curve_count += 1
 
                 types.append(type(curve))
-               
-#                print("curve count: ", curve_count)  
-#                print("node shape curve: ", type(curve))
-#                print("curve name: ", curve.getElementName(), "type code = ", curve.getTypeCode())                
-#                print("curve x, y: ", curve.getX().getAbsoluteValue(), curve.getX().isSetRelativeValue(), curve.getX().isSetAbsoluteValue())
-            
+
                 if curve.getTypeCode() == libsbml.SBML_RENDER_CUBICBEZIER:
 
-                    print("curve: Cubic Bezier")
-
-                    if curve_count == 1: 
-                        raise ValueError("First Element must be RenderPoint, not RenderCubicBezier")
-                        # codes.append(mplp.Path.MOVETO)                 
+                    if curve_count == 1:
+                        raise ValueError(
+                                "First Element must be RenderPoint",
+                                " not RenderCubicBezier")
+                        # codes.append(mplp.Path.MOVETO)
                     else:
                         pass
-                        #codes.append(mplp.Path.LINETO)      
+                        # codes.append(mplp.Path.LINETO)
 
                     codes.append(mplp.Path.CURVE4)
                     codes.append(mplp.Path.CURVE4)
                     codes.append(mplp.Path.CURVE4)
 
-                    points.append([curve.getBasePoint1_x().getAbsoluteValue(), 
-                                   curve.getBasePoint1_y().getAbsoluteValue() ])
-                    points.append([curve.getBasePoint2_x().getAbsoluteValue(), 
-                                   curve.getBasePoint2_y().getAbsoluteValue() ])
-                    points.append([curve.getX().getAbsoluteValue(), curve.getY().getAbsoluteValue() ])
-                   
+                    points.append([curve.getBasePoint1_x().getAbsoluteValue(),
+                                   curve.getBasePoint1_y().getAbsoluteValue()])
+                    points.append([curve.getBasePoint2_x().getAbsoluteValue(),
+                                   curve.getBasePoint2_y().getAbsoluteValue()])
+                    points.append([curve.getX().getAbsoluteValue(),
+                                   curve.getY().getAbsoluteValue()])
+
                 elif curve.getTypeCode() == libsbml.SBML_RENDER_POINT:
 
-                    if curve_count == 1: 
-                        codes.append(mplp.Path.MOVETO)                 
+                    if curve_count == 1:
+                        codes.append(mplp.Path.MOVETO)
                     else:
                         codes.append(mplp.Path.LINETO)
 
-                    points.append([curve.getX().getAbsoluteValue(), curve.getY().getAbsoluteValue() ])
-                    
+                    points.append([curve.getX().getAbsoluteValue(),
+                                   curve.getY().getAbsoluteValue()])
+
                 else:
-                    pass             
-
-#            print("curve count: ", curve_count)
-#            print("types count: ", len(types))
-#            print("num node polygon points: ", len(points)) 
-#            print("num node polygon codes: ", len(codes))                      
-
-#            for i in range(0,len(points)):
-#                print("points, codes: ", points[i], codes[i])
-
-#            for type_curve in types:
-#                print("curve type: ", type_curve)
+                    pass
 
             node.polygon_points = points
-            node.polygon_codes = codes                
+            node.polygon_codes = codes
 
         elif node_shape == "ellipse":
             node.shape = node_shape
 
         else:
             pass
-    
+
     def _updateNodeText(self, node, render_style):
-        """ 
+        """
         """
         node_font_color = self._set_plot_color_and_validity(
                 render_style.getGroup().getStroke())
@@ -1423,9 +1353,9 @@ class Render:
                 render_style.getGroup().getFontStyle())
 
         node_horizontal_alignment = self._set_font_property(
-                "textanchor", 
+                "textanchor",
                 render_style.getGroup().getTextAnchorAsString())
-        
+
         node_vertical_alignment = self._set_font_property(
                 "vtextanchor",
                 render_style.getGroup().getVTextAnchorAsString())
@@ -1448,22 +1378,23 @@ class Render:
 
         if node_horizontal_alignment.is_valid_value:
             node.text_anchor = node_horizontal_alignment.value
-                
+
         if node_vertical_alignment.is_valid_value:
             node.vtext_anchor = node_vertical_alignment.value
 
         if node_weight.is_valid_value:
             node.weight = node_weight.value
-        
-    def _updateCompartment(self, compartment, render_style):    
-        """ """
+
+    def _updateCompartment(self, compartment, render_style):
+        """
+        """
         compartment_edge_color = self._set_plot_color_and_validity(
                 render_style.getGroup().getElement(0).getStroke())
 
         compartment_fill_color = self._set_plot_color_and_validity(
                 render_style.getGroup().getElement(0).getFillColor())
 
-        compartment_line_width = render_style.getGroup().getElement(0).getStrokeWidth()
+        compartment_line_width = render_style.getGroup().getElement(0).getStrokeWidth()  # noqa
 
         if compartment_edge_color.is_valid_color:
             compartment.edge_color = compartment_edge_color.color
@@ -1477,7 +1408,7 @@ class Render:
 
         if compartment_line_width > 0:
             compartment.line_width = compartment_line_width
-        
+
     def _getCompartmentIdsFromCGlyphs(self, local_style, network):
         """
         """
@@ -1506,7 +1437,7 @@ class Render:
             elif text_anchor == "right":
                 return "end"
             else:
-                return "middle"            
+                return "middle"
         elif alignment_direction == "vertical":
             # the plotting in draw_network has (0,0) in lower-left corner
             # so flip here
@@ -1521,31 +1452,28 @@ class Render:
             else:
                 return "middle"
         else:
-            raise ValueError("Invalid value for alignment_direction: ", 
+            raise ValueError("Invalid value for alignment_direction: ",
                              alignment_direction)
-        
+
     def _getLineEndingsFromStyleSheet(self,):
         """ """
         line_endings = {}
 
         stylesheet_file_name = "LineEnding_styles.xml"
-        stylesheet_file = Path(pkg_resources.resource_filename("libsbml_draw", 
-            "model/data/" + stylesheet_file_name))
+        stylesheet_file = Path(pkg_resources.resource_filename("libsbml_draw",
+                               "model/data/" + stylesheet_file_name))
 
-        tree = ET.parse(stylesheet_file) 
-    
-#        ns_lole = "{http://projects.eml.org/bcb/sbml/render/level2}listOfLineEndings"
-#        ns_le = "{http://projects.eml.org/bcb/sbml/render/level2}lineEnding"
-        
-        nns_le = "lineEnding"    
-    
+        tree = ET.parse(stylesheet_file)
+
+        nns_le = "lineEnding"
+
         root = tree.getroot()
-    
+
         for le in root.findall(nns_le):
             line_endings[le.attrib["id"]] = ET.tostring(le, encoding="unicode")
-   
+
         return line_endings
-    
+
     def _addLocalStylesRenderInformation(self, local_render_info, network):
         """Add a LocalStyle for each compartment, node, node text, and reaction
         curve.
@@ -1566,51 +1494,20 @@ class Render:
                 result = local_render_info.addLineEnding(line_ending)
 
                 if result != libsbml.LIBSBML_OPERATION_SUCCESS:
-                    raise RuntimeWarning("libsbml could not add line ending", 
+                    raise RuntimeWarning("libsbml could not add line ending",
                                          result)
         else:
             # read line endings from style sheet?
             pass
 
-#        line_endings = self._getLineEndingsFromStyleSheet()
-#        print("num le's: ", len(line_endings))
-#        lep = line_endings["product"]
-#        for line_ending in line_endings:
-#        xml_node = libsbml.XMLNode.convertStringToXMLNode(lep)            
-#        print("xml_node: ", xml_node.getAttributesLength())
-#
-#        line_ending = libsbml.LineEnding(xml_node, 1)         
-#
-#        print("le: ", line_ending.getId(), 
-#              line_ending.getBoundingBox().getWidth(), 
-#              line_ending.getBoundingBox().getHeight() )
-#               
-#        result = local_render_info.addLineEnding(line_ending)
-#
-#        print("result: ", result)
-#        print("success would be: ", libsbml.LIBSBML_OPERATION_SUCCESS)
-#        print("not success would be level mm: ", libsbml.LIBSBML_LEVEL_MISMATCH)
-#        print("version mm: ", libsbml.LIBSBML_VERSION_MISMATCH)  
-             
-#        line_ending_product = local_render_info.createLineEnding()
-#        line_ending_product.setId("product")
-#        bbox_product = line_ending_product.createBoundingBox()
-#        bbox_product.setX(-10)
-#        bbox_product.setY(-5)
-#        bbox_product.setWidth(10)
-#        bbox_product.setHeight(10)       
-#        line_ending_product.setBoundingBox(bbox_product)        
-#        line_ending_inhibitor = local_render_info.createLineEnding()
-#        line_ending_inhibitor.setId("inhibitor")
-
         for node in network.nodes.values():
             # LocalStyle, RenderGroup
-            
-            # node body            
+
+            # node body
             style = local_render_info.createStyle("")
             style.getGroup().setFillColor(node.fill_color)
             style.getGroup().setStroke(node.edge_color)
-            style.getGroup().setStrokeWidth(node.edge_width)           
+            style.getGroup().setStrokeWidth(node.edge_width)
             style.addId(self.speciesToGlyphs[node.id])
 
             if node.shape == "rectangle" or node.shape == "round_box":
@@ -1633,17 +1530,16 @@ class Render:
                 ellipse.setFill(node.fill_color)
                 ellipse.setStroke(node.edge_color)
                 ellipse.setStrokeWidth(node.edge_width)
-                
+
             elif node.shape == "polygon":
-#                polygon = style.getGroup().createPolygon()
-                 node.polygon.setFill(node.fill_color)
-                 node.polygon.setStroke(node.edge_color)
-                 node.polygon.setStrokeWidth(node.edge_width)
-                 result = style.getGroup().addElement(node.polygon)
-                 if result != libsbml.LIBSBML_OPERATION_SUCCESS:
-                     raise RuntimeWarning(
-                         "Could not add polygon to local style for node: ", 
-                         node.id)                     
+                node.polygon.setFill(node.fill_color)
+                node.polygon.setStroke(node.edge_color)
+                node.polygon.setStrokeWidth(node.edge_width)
+                result = style.getGroup().addElement(node.polygon)
+                if result != libsbml.LIBSBML_OPERATION_SUCCESS:
+                    raise RuntimeWarning(
+                        "Could not add polygon to local style for node: ",
+                        node.id)
             else:
                 raise ValueError("invalid node shape: ", node.shape)
 
@@ -1659,11 +1555,9 @@ class Render:
                     self._getSBMLRenderTextAnchor(
                             node.vtext_anchor, "vertical"))
             if node.font_style == "italic":
-                 style.getGroup().setFontStyle(libsbml.FONT_STYLE_ITALIC)
-#                style.getGroup().setFontStyle(2)
+                style.getGroup().setFontStyle(libsbml.FONT_STYLE_ITALIC)
             else:  # "normal"
-                 style.getGroup().setFontStyle(libsbml.FONT_STYLE_NORMAL)
-#                style.getGroup().setFontStyle(1)
+                style.getGroup().setFontStyle(libsbml.FONT_STYLE_NORMAL)
             style.getGroup().setStroke(node.font_color)
             style.addId(self.textToGlyphs[node.id])
 
@@ -1671,13 +1565,13 @@ class Render:
         for reaction in network.reactions.values():
             rxn_glyph_id = self.reactionToGlyphs[reaction.id]
             for curve in reaction.curves:
-                curve_key = (reaction.id, 
-                             curve.role_name.lower(), 
+                curve_key = (reaction.id,
+                             curve.role_name.lower(),
                              curve.species)
                 if curve_key in self.findSpeciesReferenceGlyphId:
                     curve_glyph_id = self.findSpeciesReferenceGlyphId[
-                        curve_key] 
-                else: 
+                        curve_key]
+                else:
                     curve_glyph_id = None
 
                 style = local_render_info.createStyle("")
@@ -1687,13 +1581,13 @@ class Render:
 
                 if curve.endHead:
                     style.getGroup().setEndHead(curve.endHead)
-                else: 
-                    style.getGroup().setEndHead(curve.role_name.lower())                    
+                else:
+                    style.getGroup().setEndHead(curve.role_name.lower())
 
                 if curve_glyph_id:
                     style.addId(curve_glyph_id)
                 else:
-                    style.addId(rxn_glyph_id)                    
+                    style.addId(rxn_glyph_id)
 
         # compartments
         for compartment in network.compartments.values():
@@ -1702,8 +1596,9 @@ class Render:
             style.getGroup().setFillColor(compartment.fill_color)
             style.getGroup().setStrokeWidth(compartment.line_width)
             style.addId(self.compartmentsToGlyphs[compartment.id])
-            
-            if compartment.shape == "rectangle" or compartment.shape == "round_box":
+
+            if (compartment.shape == "rectangle" or
+                    compartment.shape == "round_box"):
                 rectangle = style.getGroup().createRectangle()
                 rectangle.setX(libsbml.RelAbsVector("000%"))
                 rectangle.setY(libsbml.RelAbsVector("000%"))
@@ -1720,11 +1615,10 @@ class Render:
 #        style.addRole("product")
 #        style.getGroup().setEndHead("product")
 
-
     def addRenderInformation(self, network):
         """Add render information to the model as Local Style render
         information.  If local render information already exists, remove it,
-        and add new entries for the compartments (if any), nodes, node text, 
+        and add new entries for the compartments (if any), nodes, node text,
         and reaction curves.
 
         Args:
@@ -1744,7 +1638,7 @@ class Render:
 
             # add local_styles to represent the render info
             local_render_info = self.rPlugin.createLocalRenderInformation()
-            
+
             self._addLocalStylesRenderInformation(local_render_info, network)
 
         else:
@@ -1766,13 +1660,13 @@ class Render:
     def _readLineEndingsStyleSheet(self, network):
         """ """
         LINE_ENDINGS_FILE = Path(pkg_resources.resource_filename(
-        "libsbml_draw",
-        "model/data/" + LINE_ENDINGS_STYLE_SHEET))
+                                 "libsbml_draw",
+                                 "model/data/" + LINE_ENDINGS_STYLE_SHEET))
 
-        doc = libsbml.readSBMLFromFile(str(LINE_ENDINGS_FILE))        
+        doc = libsbml.readSBMLFromFile(str(LINE_ENDINGS_FILE))
         model = doc.getModel()
         layout_plugin = model.getPlugin("layout")
-        #layout = layout_plugin.getLayout(0) if (
+        # layout = layout_plugin.getLayout(0) if (
         #    layout_plugin and layout_plugin.getNumLayouts() > 0) else None
         # SBasePlugin, RenderLayoutPlugin
         # rPlugin = layout.getPlugin("render") if layout else None
@@ -1781,18 +1675,19 @@ class Render:
             ).getPlugin("render") if layout_plugin else None
 
         if (render_plugin and
-            render_plugin.getNumGlobalRenderInformationObjects() > 0):
+                render_plugin.getNumGlobalRenderInformationObjects() > 0):
 
             for global_render_info in \
-                render_plugin.getListOfGlobalRenderInformation():
+                    render_plugin.getListOfGlobalRenderInformation():
 
                 if global_render_info:
-                    
-                    line_endings_tuple = self._collectLineEndings(global_render_info)
+
+                    line_endings_tuple = self._collectLineEndings(
+                            global_render_info)
 
                     network.stylesheet_line_endings = line_endings_tuple[0]
-     
-                    network.stylesheet_libsbml_line_endings = line_endings_tuple[1]
+
+                    network.stylesheet_libsbml_line_endings = line_endings_tuple[1]  # noqa
 
     def applyRenderInformation(self, network):
         """Applies global style render information as specified in the
@@ -1807,5 +1702,3 @@ class Render:
         self._applyGlobalRenderInformation(network)
         self._applyLocalRenderInformation(network)
         self._readLineEndingsStyleSheet(network)
-
-        
