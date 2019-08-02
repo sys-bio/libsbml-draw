@@ -81,7 +81,7 @@ class SBMLlayout:
                         self.__getSBMLWithLayoutString())
 
                 self.__network = self.__createNetwork()
-#                if self.applyRender:
+#                if self.__applyRender:
 #                    self.__applyRenderInformation()
 
                 # compute and set width and height for node boxes
