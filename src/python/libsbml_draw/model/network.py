@@ -37,9 +37,10 @@ class Compartment():
         self.line_width = 3
         self.shape = "round_box"
         self.rectangle_rounding = 0.6
-        self.polygon_points
-        self.polygon_codes
-        
+        self.polygon_points = []
+        self.polygon_codes = []
+        self.polygon = None        
+
 
 class Node():
     """Represents a node in the SBMl model."""
@@ -61,7 +62,7 @@ class Node():
         self.font_color = "#000000"
         self.font_style = "normal"
         self.text_anchor = "center"
-        self.vtext_anchor = "bottom"
+        self.vtext_anchor = "center"
         self.font_weight = "normal"
         self.shape = "round_box"
         self.rectangle_rounding = 0.1
@@ -99,7 +100,7 @@ class Curve():
         self.curveArrowStyle = Curve.role_arrowstyles[self.role]
         self.edge_color = "#0000ff"
         self.fill_color = "#0000ff"
-        self.curve_width = 1
+        self.curve_width = 2
         self.species = None
         self.endHead = None
 

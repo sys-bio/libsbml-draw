@@ -1065,9 +1065,19 @@ class SBMLlayout:
         elif property_type == "edge_width":
             self.__network.nodes[node_id].edge_width = property_value
         elif property_type == "text_anchor":
-            self.__network.nodes[node_id].text_anchor = property_value
+            if property_value == "left":
+                self.__network.nodes[node_id].text_anchor = "right"
+            elif property_value == "right":
+                self.__network.nodes[node_id].text_anchor = "left"
+            else:
+                self.__network.nodes[node_id].text_anchor = property_value
         elif property_type == "vtext_anchor":
-            self.__network.nodes[node_id].vtext_anchor = property_value
+            if property_value == "top":
+                self.__network.nodes[node_id].vtext_anchor = "bottom"
+            elif property_value == "bottom":
+                self.__network.nodes[node_id].vtext_anchor = "top"
+            else:
+                self.__network.nodes[node_id].vtext_anchor = property_value
         elif property_type == "shape":
             self.__network.nodes[node_id].shape = property_value
         elif property_type == "font_size":
