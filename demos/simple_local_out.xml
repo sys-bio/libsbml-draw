@@ -78,8 +78,8 @@
                     <render:g render:stroke="#008000" render:stroke-width="2" render:fill="#008000" render:endHead="product"/>
                   </render:style>
                   <render:style render:idList="cGlyph_0">
-                    <render:g render:stroke="#0000ff" render:stroke-width="5" render:fill="#ff000010">
-                      <render:rectangle render:stroke="#0000ff" render:stroke-width="5" render:fill="#ff000010" render:x="0" render:y="0" render:width="100%" render:height="100%"/>
+                    <render:g render:stroke="#0000ffff" render:stroke-width="5" render:fill="#ff000010">
+                      <render:rectangle render:stroke="#0000ffff" render:stroke-width="5" render:fill="#ff000010" render:x="0" render:y="0" render:width="100%" render:height="100%"/>
                     </render:g>
                   </render:style>
                 </render:listOfStyles>

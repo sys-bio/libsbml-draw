@@ -29,7 +29,7 @@ class SBMLlayout:
 
     def __init__(self, sbml_source=None, layout_alg_options=None,
                  layout_number=0, fitToWindow=tuple(),
-                 autoComputeLayout=False, applyRender=False):
+                 autoComputeLayout=False, applyRender=True):
 
         self.__sbml_source = sbml_source
         self.__layout_number = layout_number
@@ -833,7 +833,7 @@ class SBMLlayout:
 
         property_type = "edge"
 
-        self.__setCompartmentPropertyById(
+        self.__setCompartmentProperty(
                 compartment_id,
                 edge_color,
                 property_type)
@@ -945,7 +945,7 @@ class SBMLlayout:
 
         property_type = "fill"
 
-        self.__setCompartmentPropertyById(
+        self.__setCompartmentProperty(
                 compartment_id,
                 fill_color,
                 property_type)
@@ -989,7 +989,7 @@ class SBMLlayout:
         """
         property_type = "line_width"
 
-        self.__setCompartmentPropertyById(
+        self.__setCompartmentProperty(
                 compartment_id,
                 line_width,
                 property_type)
