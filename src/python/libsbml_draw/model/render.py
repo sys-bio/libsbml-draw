@@ -918,6 +918,40 @@ class Render:
                         else:
                             pass
 
+    def _computeRectangleRounding(self, element, nw_element):
+        """Computes a value to use in matplotlib for rounding of rectangle
+        corners.
+
+        Args:
+            element (libsbml.Rectangle): rectangle data from the SBML file
+            nw_element (libsbml_draw.network.Node or
+                libsbml_draw.network.Compartment): graphical element in the
+                network to which the SBML data will be applied.
+
+        Returns: float
+        """
+        rx = element.getRX()
+        ry = element.getRY()
+
+        if rx.isSetAbsoluteValue():
+            node_rx = rx.getAbsoluteValue()
+        elif rx.isSetRelativeValue():
+            node_rx = rx.getRelativeValue()*nw_element.width/100
+        else:
+            node_rx = 0
+
+        if ry.isSetAbsoluteValue():    
+            node_ry = ry.getAbsoluteValue()
+        elif ry.isSetRelativeValue():
+            node_ry = ry.getRelativeValue()*nw_element.height/100
+        else:
+            node_ry = 0
+                
+        rectangle_rounding = (max(node_rx, node_ry) /
+                              max(nw_element.width, nw_element.height))
+
+        return rectangle_rounding
+
     def _updateNode(self, node, render_style):
         """Update the node attributes by applying the render style found in
         the input SBML file.
@@ -953,8 +987,6 @@ class Render:
         else:
             node_edge_width = render_group.getStrokeWidth()
 
-        node_shape = node_element.getElementName()
-
         if node_fill_color.is_valid_color:
             node.fill_color = node_fill_color.color
         else:
@@ -967,17 +999,35 @@ class Render:
 
         node.edge_width = node_edge_width
 
-        if node_shape == "rectangle":
-            node.shape = "round_box"
-            node_rx = node_element.getRX().getAbsoluteValue()
-            node_ry = node_element.getRY().getAbsoluteValue()
-            node.rectangle_rounding = (max(node_rx, node_ry) /
-                                       max(node.width, node.height))
+        node_shape = node_element.getElementName()
+        self._setShapeData(node_element, node, node_shape)
 
-        elif node_shape == "polygon":
+    def _setShapeData(self, libsbml_element, nw_element, nw_element_shape):
+        """Collects the data needed to draw the shape of a node or a
+        compartment, and stores it on the node or compartment representation.
 
-            node.shape = node_shape
-            node.polygon = node_element
+        Args:
+            libsbml_elemnet (libsbml.Element): a libsbml Rectangle, Polygon,
+                or Ellipse
+            nw_element (libsbml_draw.model.network.Node or
+                libsbml_draw.model.network.Compartment: set the shape data on
+                    this element
+            nw_element_shape (str): "rectangle", "polygon" or "ellipse"
+
+        Returns: None
+        """
+        if nw_element_shape == "rectangle":            
+ 
+            nw_element.shape = "round_box"
+                
+            nw_element.rectangle_rounding = self._computeRectangleRounding(
+                    libsbml_element, nw_element)
+
+        elif nw_element_shape == "polygon":
+
+            nw_element.shape = nw_element_shape
+
+            nw_element.polygon = libsbml_element
 
             points = []
             codes = []
@@ -985,7 +1035,7 @@ class Render:
 
             curve_count = 0
 
-            for curve in node_element.getListOfElements():
+            for curve in libsbml_element.getListOfElements():
 
                 curve_count += 1
 
@@ -997,21 +1047,28 @@ class Render:
                         raise ValueError(
                                 "First Element must be RenderPoint",
                                 " not RenderCubicBezier")
-                        # codes.append(mplp.Path.MOVETO)
                     else:
                         pass
-                        # codes.append(mplp.Path.LINETO)
 
                     codes.append(mplp.Path.CURVE4)
                     codes.append(mplp.Path.CURVE4)
                     codes.append(mplp.Path.CURVE4)
 
-                    points.append([curve.getBasePoint1_x().getAbsoluteValue(),
-                                   curve.getBasePoint1_y().getAbsoluteValue()])
-                    points.append([curve.getBasePoint2_x().getAbsoluteValue(),
-                                   curve.getBasePoint2_y().getAbsoluteValue()])
-                    points.append([curve.getX().getAbsoluteValue(),
-                                   curve.getY().getAbsoluteValue()])
+                    points.append([
+                            self._getAbsoluteValue(curve.getBasePoint1_x(), 
+                                                   nw_element.width),
+                            self._getAbsoluteValue(curve.getBasePoint1_y(), 
+                                                   nw_element.height)])
+                    points.append([
+                            self._getAbsoluteValue(curve.getBasePoint2_x(), 
+                                                   nw_element.width),
+                            self._getAbsoluteValue(curve.getBasePoint2_y(), 
+                                                   nw_element.height)])
+                    points.append([
+                            self._getAbsoluteValue(curve.getX(),
+                                                   nw_element.width), 
+                            self._getAbsoluteValue(curve.getY(), 
+                                                   nw_element.height)])
 
                 elif curve.getTypeCode() == libsbml.SBML_RENDER_POINT:
 
@@ -1020,21 +1077,24 @@ class Render:
                     else:
                         codes.append(mplp.Path.LINETO)
 
-                    points.append([curve.getX().getAbsoluteValue(),
-                                   curve.getY().getAbsoluteValue()])
+                    points.append([
+                            self._getAbsoluteValue(curve.getX(), 
+                                                   nw_element.width),
+                            self._getAbsoluteValue(curve.getY(),
+                                                   nw_element.height)])
 
                 else:
                     pass
 
-            node.polygon_points = points
-            node.polygon_codes = codes
+            nw_element.polygon_points = points
+            nw_element.polygon_codes = codes
 
-        elif node_shape == "ellipse":
-            node.shape = node_shape
+        elif nw_element_shape == "ellipse":
+            nw_element.shape = nw_element_shape
 
         else:
-            pass
-
+            pass        
+        
     def _updateNodeText(self, node, render_style):
         """Update the node text attributes by applying the render style found
         in the input SBML file.
@@ -1105,14 +1165,16 @@ class Render:
                 to apply.
 
         Returns: None
-        """
+        """       
+        compartment_element = render_style.getGroup().getElement(0)
+        
         compartment_edge_color = self._set_plot_color_and_validity(
-                render_style.getGroup().getElement(0).getStroke())
+                compartment_element.getStroke())
 
         compartment_fill_color = self._set_plot_color_and_validity(
-                render_style.getGroup().getElement(0).getFillColor())
+                compartment_element.getFillColor())
 
-        compartment_line_width = render_style.getGroup().getElement(0).getStrokeWidth()  # noqa
+        compartment_line_width = compartment_element.getStrokeWidth()  # noqa
 
         if compartment_edge_color.is_valid_color:
             compartment.edge_color = compartment_edge_color.color
@@ -1126,6 +1188,9 @@ class Render:
 
         if compartment_line_width > 0:
             compartment.line_width = compartment_line_width
+
+        compartment_shape = compartment_element.getElementName()
+        self._setShapeData(compartment_element, compartment, compartment_shape)
 
     def _getSBMLRenderTextAnchor(self, text_anchor, alignment_direction):
         """Returns the text anchor value needed for libsbml_draw.draw_network
