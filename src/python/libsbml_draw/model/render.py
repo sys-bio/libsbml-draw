@@ -940,13 +940,13 @@ class Render:
         else:
             node_rx = 0
 
-        if ry.isSetAbsoluteValue():    
+        if ry.isSetAbsoluteValue():
             node_ry = ry.getAbsoluteValue()
         elif ry.isSetRelativeValue():
             node_ry = ry.getRelativeValue()*nw_element.height/100
         else:
             node_ry = 0
-                
+
         rectangle_rounding = (max(node_rx, node_ry) /
                               max(nw_element.width, nw_element.height))
 
@@ -1016,10 +1016,10 @@ class Render:
 
         Returns: None
         """
-        if nw_element_shape == "rectangle":            
- 
+        if nw_element_shape == "rectangle":
+
             nw_element.shape = "round_box"
-                
+
             nw_element.rectangle_rounding = self._computeRectangleRounding(
                     libsbml_element, nw_element)
 
@@ -1055,19 +1055,19 @@ class Render:
                     codes.append(mplp.Path.CURVE4)
 
                     points.append([
-                            self._getAbsoluteValue(curve.getBasePoint1_x(), 
+                            self._getAbsoluteValue(curve.getBasePoint1_x(),
                                                    nw_element.width),
-                            self._getAbsoluteValue(curve.getBasePoint1_y(), 
+                            self._getAbsoluteValue(curve.getBasePoint1_y(),
                                                    nw_element.height)])
                     points.append([
-                            self._getAbsoluteValue(curve.getBasePoint2_x(), 
+                            self._getAbsoluteValue(curve.getBasePoint2_x(),
                                                    nw_element.width),
-                            self._getAbsoluteValue(curve.getBasePoint2_y(), 
+                            self._getAbsoluteValue(curve.getBasePoint2_y(),
                                                    nw_element.height)])
                     points.append([
                             self._getAbsoluteValue(curve.getX(),
-                                                   nw_element.width), 
-                            self._getAbsoluteValue(curve.getY(), 
+                                                   nw_element.width),
+                            self._getAbsoluteValue(curve.getY(),
                                                    nw_element.height)])
 
                 elif curve.getTypeCode() == libsbml.SBML_RENDER_POINT:
@@ -1078,7 +1078,7 @@ class Render:
                         codes.append(mplp.Path.LINETO)
 
                     points.append([
-                            self._getAbsoluteValue(curve.getX(), 
+                            self._getAbsoluteValue(curve.getX(),
                                                    nw_element.width),
                             self._getAbsoluteValue(curve.getY(),
                                                    nw_element.height)])
@@ -1093,8 +1093,8 @@ class Render:
             nw_element.shape = nw_element_shape
 
         else:
-            pass        
-        
+            pass
+
     def _updateNodeText(self, node, render_style):
         """Update the node text attributes by applying the render style found
         in the input SBML file.
@@ -1165,9 +1165,9 @@ class Render:
                 to apply.
 
         Returns: None
-        """       
+        """
         compartment_element = render_style.getGroup().getElement(0)
-        
+
         compartment_edge_color = self._set_plot_color_and_validity(
                 compartment_element.getStroke())
 

@@ -100,7 +100,7 @@ class Curve():
         self.curveArrowStyle = Curve.role_arrowstyles[self.role]
         self.edge_color = "#0000ff"
         self.fill_color = "#0000ff"
-        self.curve_width = 2
+        self.curve_width = 3
         self.species = None
         self.endHead = None
 
