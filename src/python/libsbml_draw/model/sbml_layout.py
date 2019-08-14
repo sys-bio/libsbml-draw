@@ -117,7 +117,7 @@ class SBMLlayout:
             if self.__applyRender:
                 self.__applyRenderInformation()
 
-            self.__arrowhead_scale = {key: 10 for key in
+            self.__arrowhead_scale = {key: 15 for key in
                                       range(self.getNumberOfRoles())}
 
         else:  # User can separately load a file
