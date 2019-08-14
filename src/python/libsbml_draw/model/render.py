@@ -1264,6 +1264,8 @@ class Render:
 
         Returns: None
         """
+        print("adding local styles info")
+        
         local_render_info.setId("localRenderInfo")
         local_render_info.setName("Render Information")
 
@@ -1276,8 +1278,21 @@ class Render:
                 if result != libsbml.LIBSBML_OPERATION_SUCCESS:
                     raise RuntimeWarning("libsbml could not add line ending",
                                          result)
+                    
+        elif network.stylesheet_line_endings:
+
+            print("Adding stylesheet le's")
+            
+            for line_ending in network.stylesheet_libsbml_line_endings:
+
+                print("le: ", type(line_ending), type(local_render_info))
+                
+#                result = local_render_info.addLineEnding(line_ending)
+
+#                if result != libsbml.LIBSBML_OPERATION_SUCCESS:
+#                    raise RuntimeWarning("libsbml could not add line ending",
+#                                         result)
         else:
-            # read line endings from style sheet?
             pass
 
         for node in network.nodes.values():
@@ -1433,8 +1448,6 @@ class Render:
 
             local_render_info = rPlugin.createLocalRenderInformation()
 
-            print("Adding local styles render info")
-
             self._addLocalStylesRenderInformation(local_render_info, network)
 
     def _readLineEndingsStyleSheet(self, network):
@@ -1475,6 +1488,12 @@ class Render:
                     network.stylesheet_line_endings = line_endings_tuple[0]
 
                     network.stylesheet_libsbml_line_endings = line_endings_tuple[1]  # noqa
+
+        if network.stylesheet_line_endings:
+            print("stylesheet le's: ", type(network.stylesheet_line_endings),
+                  network.stylesheet_line_endings.keys())
+        else:
+            print("no ss le's")
 
     def applyRenderInformation(self, network):
         """Applies global style render information as specified in the

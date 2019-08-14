@@ -808,6 +808,7 @@ class SBMLlayout:
         Returns: None
         """
         self.__addRenderInformation()
+        
         libsbml.writeSBMLToFile(self.__doc, out_file_name)
 
     # Compartment Methods
@@ -2118,6 +2119,7 @@ class SBMLlayout:
         """
         renderInfo = Render(self.__doc, self.__layout_number)
         renderInfo.addRenderInformation(self.__network)
+        # update doc, it will be used to write new output xml file
         self.__doc = renderInfo.doc
 
     def __applyRenderInformation(self,):
