@@ -12,6 +12,6 @@ from randMANetGen import randMANetGen # imports the random network generator fun
 
 #%% Generate random network
 # specify number of species, number of reactions, number of floating and boundary species in randMANetGen function call
-sbmlMod = randMANetGen(numSpecies = 12, numReactions = 12) # assign SBML string to 'sbmlMod' 
+sbmlMod = randMANetGen(numSpecies = 5, numReactions = 4) # assign SBML string to 'sbmlMod' 
 r = te.loadSBMLModel(sbmlMod) # load SBML model with tellurium to generate roadrunner instance, 'r'
-r.exportToSBML('random_network_12s_12r.xml', current = True) # exports SBML model (.xml) named 'examplenetwork' to current directory
+r.exportToSBML('random_network_5s_4r.xml', current = True) # exports SBML model (.xml) named 'examplenetwork' to current directory
