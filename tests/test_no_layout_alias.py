@@ -7,7 +7,7 @@ model_file_name = "model.xml"
 
 model_file = Path(pkg_resources.resource_filename("libsbml_draw", "model/data/" + model_file_name))
 
-applyRender = False
+applyRender = True
 
 sl = SBMLlayout(str(model_file), applyRender=applyRender)
 
@@ -30,7 +30,8 @@ print()
 #print("string: ", sl._SBMLlayout__getSBMLWithLayoutString())
 
 sl.setNodeColor("B_1", "#00ff0030")
-
+sl.setNodeColor("A", "#00ff0030")
+                
 sl.lockNode("B_1")
 sl.lockNode("D")
 sl.unlockNode("X0")

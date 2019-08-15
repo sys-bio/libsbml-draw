@@ -14,9 +14,9 @@ sl._describeModel()
 
 sl.drawNetwork("boris_ejb_override.pdf")
 
-#sl.writeSBMLFile("test_layout_override.xml")
+sl.writeSBMLFile("test_layout_override.xml")
 
-#slr = SBMLlayout("test_layout_override.xml", autoComputeLayout=False)
+slr = SBMLlayout("test_layout_override.xml", autoComputeLayout=False)
 
-#slr.drawNetwork()
+slr.drawNetwork()
 

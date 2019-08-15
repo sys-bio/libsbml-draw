@@ -8,7 +8,7 @@ model_file_name = "model.xml"
 model_file = Path(pkg_resources.resource_filename(
         "libsbml_draw", "model/data/" + model_file_name))
 
-applyRender = False
+applyRender = True
 
 sl = SBMLlayout(str(model_file), applyRender=applyRender)
 
@@ -69,12 +69,12 @@ slr = SBMLlayout("test_no_layout.xml", applyRender=applyRender)
 
 slr._describeModel()
 
-slr.drawNetwork()
+slr.drawNetwork("model_simple_curve_colors_with_les.pdf")
     
 if applyRender:
 
-    assert slr.getNodeEdgeColor("X1") == "#00ff00ff"    
-    assert slr.getNodeFillColor("X1") == "#ff0000ff"    
+    assert slr.getNodeEdgeColor("X1") == "#ff0000ff"    
+    assert slr.getNodeFillColor("X1") == "#ff000030"    
     assert slr.getNodeEdgeWidth("X1") == 3
 
 else:
@@ -86,4 +86,4 @@ else:
 assert slr.getNodeEdgeColor("A") == "#0000ff"
 assert slr.getNodeFillColor("A") == "#c9e0fb"
 
-
+sl.writeSBMLFile("test_no_layout_read_back_in.xml")
