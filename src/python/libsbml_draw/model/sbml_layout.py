@@ -807,8 +807,8 @@ class SBMLlayout:
 
         Returns: None
         """
-        print("doc level: ", self.__doc.getLevel())
-        print("doc version: ", self.__doc.getVersion())
+#        print("doc level: ", self.__doc.getLevel())
+#        print("doc version: ", self.__doc.getVersion())
                       
         self.__addRenderInformation()
         

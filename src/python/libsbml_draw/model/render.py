@@ -22,7 +22,8 @@ BoxDimensions = namedtuple("BoxDimensions",
                            ["x_offset", "y_offset", "width", "height"])
 EllipseData = namedtuple("EllipseData",
                          ["x", "y", "rx", "ry", "stroke_width"])
-SpeciesGlyph = namedtuple("SpeciesGlyph", ["glyph_id", "x", "y"])
+GlyphObject = namedtuple("GlyphObject", ["glyph_id", "x", "y"])
+
 
 LINE_ENDINGS_STYLE_SHEET = "render-stylesheet_global.xml"
 
@@ -117,24 +118,20 @@ class Render:
 
         Args: None
 
-        Returns: dictionary, keys = "species id", values = "species glyph id"
+        Returns: dictionary, keys = "species id", values = list of GlyphObjects
         """
         speciesDirectory = defaultdict(list)
 
         for species in self.layout.getListOfSpeciesGlyphs():
             glyph_id = species.getId()
-            x = species.getBoundingBox().getX()
-            y = species.getBoundingBox().getY()
+            bbox = species.getBoundingBox()
+            x = bbox.getX() + bbox.getWidth()/2
+            y = bbox.getY() + bbox.getHeight()/2
             species_id = species.getSpeciesId() 
             
-            species_glyph = SpeciesGlyph(glyph_id, x, y)
-            
-            print("csd: ", glyph_id, species_id, x, y, type(species_glyph))
+            species_glyph = GlyphObject(glyph_id, x, y)
                         
             speciesDirectory[species_id].append(species_glyph)
-
-        print("csd: len sd: ", len(speciesDirectory))
-        print("csd B: ", type(speciesDirectory["B"]), len(speciesDirectory["B"]), speciesDirectory["B"])
                 
         return speciesDirectory
 
@@ -145,14 +142,20 @@ class Render:
         Args: None
 
         Returns: dictionary, keys = "species id",
-            values = "species text glyph id"
+            values = list of GlyphObjects
         """
-        speciesTextDirectory = dict()
+        speciesTextDirectory = defaultdict(list)
 
         for text in self.layout.getListOfTextGlyphs():
             glyph_id = text.getId()
+            bbox = text.getBoundingBox()
+            x = bbox.getX() + bbox.getWidth()/2
+            y = bbox.getY() + bbox.getHeight()/2
             species_id = self.speciesGlyphs[text.getGraphicalObjectId()]
-            speciesTextDirectory[species_id] = glyph_id
+
+            text_glyph = GlyphObject(glyph_id, x, y)
+
+            speciesTextDirectory[species_id].append(text_glyph)
 
         return speciesTextDirectory
 
@@ -733,20 +736,25 @@ class Render:
         return abs(a - b) < epsilon
 
     def _getSpeciesGlyphId(self, node):
-        """ """
-        print("species: ", self.speciesToGlyphs.keys())
-        print("node: ", node.id, node.name)
-        print("node in stg: ", node.id in self.speciesToGlyphs)
+        """Finds the species glyph id for the node.  If the node is an alias, 
+        the (x, y) coordinates of the node are compared with those from each of
+        the alias glyphs to find the matching glyph.
         
+        Args:
+            node (libsbml_draw.model.network.Node): species for which we need
+                a species glyph id.
+        
+        Returns: str
+        """
+
         if node.id in self.speciesToGlyphs:
+            
             speciesGlyphs = self.speciesToGlyphs[node.id]
-            print("type sg: ", type(speciesGlyphs), type(speciesGlyphs[0]))
+
         else:
             pass
 
         glyph_id = ""
-
-        print("sg: ", type(speciesGlyphs), speciesGlyphs)
         
         if len(speciesGlyphs) == 1:
 
@@ -755,9 +763,53 @@ class Render:
         elif len(speciesGlyphs) > 1:
 
             for speciesGlyph in speciesGlyphs:
-                if (self._floats_equal(node.center.x, speciesGlyph.x) and 
-                    self._floats_equal(node.center.y, speciesGlyph.y)):
+                
+                if (self._floats_equal(node.center.x, speciesGlyph.x, 1.0) and 
+                    self._floats_equal(node.center.y, speciesGlyph.y, 1.0)):
+
                     glyph_id = speciesGlyph.glyph_id
+
+                else:
+                    pass
+        else:
+            pass
+                    
+        return glyph_id
+
+    def _getSpeciesTextGlyphId(self, node):
+        """Finds the text glyph id for the node.  If the node is an alias, 
+        the (x, y) coordinates of the node are compared with those from each of
+        the alias glyphs to find the matching glyph.
+        
+        Args:
+            node (libsbml_draw.model.network.Node): species for which we need
+                a text glyph id.
+        
+        Returns: str
+        """
+
+        if node.id in self.textToGlyphs:
+            
+            textGlyphs = self.textToGlyphs[node.id]
+
+        else:
+            pass
+
+        glyph_id = ""
+        
+        if len(textGlyphs) == 1:
+
+            glyph_id = textGlyphs[0].glyph_id
+
+        elif len(textGlyphs) > 1:
+
+            for textGlyph in textGlyphs:
+                
+                if (self._floats_equal(node.center.x, textGlyph.x, 1.0) and 
+                    self._floats_equal(node.center.y, textGlyph.y, 1.0)):
+
+                    glyph_id = textGlyph.glyph_id
+
                 else:
                     pass
         else:
@@ -842,7 +894,8 @@ class Render:
 
                     node_text_type = dict()
                     node_assigned = False
-                    glyph_id = self.textToGlyphs[node.id]
+
+                    glyph_id = self._getSpeciesTextGlyphId(node)
 
                     for local_style in local_styles:
                         idList = local_style.getIdList()
@@ -1335,13 +1388,9 @@ class Render:
                                          result)
                     
         elif network.stylesheet_line_endings:
-
-            print("Adding stylesheet le's")
             
             for line_ending in network.stylesheet_libsbml_line_endings:
-
-                print("le: ", type(line_ending), type(local_render_info))
-                
+                pass
 #                result = local_render_info.addLineEnding(line_ending)
 
 #                if result != libsbml.LIBSBML_OPERATION_SUCCESS:
@@ -1410,15 +1459,20 @@ class Render:
             else:  # "normal"
                 style.getGroup().setFontStyle(libsbml.FONT_STYLE_NORMAL)
             style.getGroup().setStroke(node.font_color)
-            style.addId(self.textToGlyphs[node.id])
+            glyph_id = self._getSpeciesTextGlyphId(node)
+            style.addId(glyph_id)
 
         # curves
+        
         for reaction in network.reactions.values():
             rxn_glyph_id = self.reactionToGlyphs[reaction.id]
+
             for curve in reaction.curves:
+                
                 curve_key = (reaction.id,
                              curve.role_name.lower(),
                              curve.species)
+
                 if curve_key in self.findSpeciesReferenceGlyphId:
                     curve_glyph_id = self.findSpeciesReferenceGlyphId[
                         curve_key]
@@ -1544,12 +1598,6 @@ class Render:
                     network.stylesheet_line_endings = line_endings_tuple[0]
 
                     network.stylesheet_libsbml_line_endings = line_endings_tuple[1]  # noqa
-
-        if network.stylesheet_line_endings:
-            print("stylesheet le's: ", type(network.stylesheet_line_endings),
-                  network.stylesheet_line_endings.keys())
-        else:
-            print("no ss le's")
 
     def applyRenderInformation(self, network):
         """Applies global style render information as specified in the

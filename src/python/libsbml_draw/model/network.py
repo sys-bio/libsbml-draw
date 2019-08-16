@@ -365,6 +365,7 @@ class Network():
         self._update_compartments_layout()
         self._update_nodes_layout()
         self._update_reactions_layout()
+        self._assign_species_to_curves()
 
     def _floats_equal(self, a, b, epsilon=.0000001):
         """Returns True if two floats are equal within an amount epsilon.

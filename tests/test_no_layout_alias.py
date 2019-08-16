@@ -40,8 +40,6 @@ sl.regenerateLayout()
 
 sl.drawNetwork()
 
-sl.regenerateLayout()
-
 
 sl.writeSBMLFile("test_no_layout_alias.xml")
 
@@ -55,9 +53,9 @@ assert sl2.getNumberOfNodes() == 7
 assert sl2.getNumberOfReactions() == 6
 
 
-print("node ids: ", sl2.getNodeIds())
-for node in sl2._SBMLlayout__network.nodes.values():
-    print(node.id, node.name)
+#print("node ids: ", sl2.getNodeIds())
+#for node in sl2._SBMLlayout__network.nodes.values():
+#    print(node.id, node.name)
 
 
 

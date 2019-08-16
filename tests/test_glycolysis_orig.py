@@ -14,7 +14,11 @@ sl._describeModel()
 
 sl.drawNetwork("GlycolysisOriginal.pdf")
 
+sl.writeSBMLFile("glycolysis_original.xml")
 
+slr = SBMLlayout("glycolysis_original.xml")
+
+slr.drawNetwork()
 
 
 
