@@ -1,7 +1,7 @@
 """Apply render information from SBML file, and add new render information to
 the SBML file."""
 
-from collections import namedtuple
+from collections import namedtuple, defaultdict
 import math
 
 from matplotlib.colors import is_color_like
@@ -22,6 +22,7 @@ BoxDimensions = namedtuple("BoxDimensions",
                            ["x_offset", "y_offset", "width", "height"])
 EllipseData = namedtuple("EllipseData",
                          ["x", "y", "rx", "ry", "stroke_width"])
+SpeciesGlyph = namedtuple("SpeciesGlyph", ["glyph_id", "x", "y"])
 
 LINE_ENDINGS_STYLE_SHEET = "render-stylesheet_global.xml"
 
@@ -118,13 +119,23 @@ class Render:
 
         Returns: dictionary, keys = "species id", values = "species glyph id"
         """
-        speciesDirectory = dict()
+        speciesDirectory = defaultdict(list)
 
         for species in self.layout.getListOfSpeciesGlyphs():
             glyph_id = species.getId()
-            species_id = species.getSpeciesId()
-            speciesDirectory[species_id] = glyph_id
+            x = species.getBoundingBox().getX()
+            y = species.getBoundingBox().getY()
+            species_id = species.getSpeciesId() 
+            
+            species_glyph = SpeciesGlyph(glyph_id, x, y)
+            
+            print("csd: ", glyph_id, species_id, x, y, type(species_glyph))
+                        
+            speciesDirectory[species_id].append(species_glyph)
 
+        print("csd: len sd: ", len(speciesDirectory))
+        print("csd B: ", type(speciesDirectory["B"]), len(speciesDirectory["B"]), speciesDirectory["B"])
+                
         return speciesDirectory
 
     def _createSpeciesTextDirectory(self,):
@@ -709,6 +720,51 @@ class Render:
 
         curve.endHead = render_style.getGroup().getEndHead()
 
+    def _floats_equal(self, a, b, epsilon=.0000001):
+        """Returns True if two floats are equal within an amount epsilon.
+
+        Args:
+            a (float): value to compare
+            b (float): value to compare
+            epsilon (optional, float): default value is 10^-7
+
+        Returns: boolean
+        """
+        return abs(a - b) < epsilon
+
+    def _getSpeciesGlyphId(self, node):
+        """ """
+        print("species: ", self.speciesToGlyphs.keys())
+        print("node: ", node.id, node.name)
+        print("node in stg: ", node.id in self.speciesToGlyphs)
+        
+        if node.id in self.speciesToGlyphs:
+            speciesGlyphs = self.speciesToGlyphs[node.id]
+            print("type sg: ", type(speciesGlyphs), type(speciesGlyphs[0]))
+        else:
+            pass
+
+        glyph_id = ""
+
+        print("sg: ", type(speciesGlyphs), speciesGlyphs)
+        
+        if len(speciesGlyphs) == 1:
+
+            glyph_id = speciesGlyphs[0].glyph_id
+
+        elif len(speciesGlyphs) > 1:
+
+            for speciesGlyph in speciesGlyphs:
+                if (self._floats_equal(node.center.x, speciesGlyph.x) and 
+                    self._floats_equal(node.center.y, speciesGlyph.y)):
+                    glyph_id = speciesGlyph.glyph_id
+                else:
+                    pass
+        else:
+            pass
+                    
+        return glyph_id
+
     def _applyLocalRenderInformation(self, network):
         """Sets values in the model's species (nodes), reactions, and
         compartments by finding the most specific local style that applies.
@@ -755,7 +811,8 @@ class Render:
 
                     nodes_type = dict()
                     node_assigned = False
-                    glyph_id = self.speciesToGlyphs[node.id]
+                    
+                    glyph_id = self._getSpeciesGlyphId(node)
 
                     for local_style in local_styles:
                         idList = local_style.getIdList()
@@ -863,7 +920,7 @@ class Render:
                         if id_key in self.findSpeciesReferenceGlyphId:
                             curve_id = self.findSpeciesReferenceGlyphId[id_key]
                         else:
-                            curve_id = None
+                            curve_id = ""
 
                         curve_assigned = False
 
@@ -1263,9 +1320,7 @@ class Render:
             network (libsbml_draw.model.Network): the model's network
 
         Returns: None
-        """
-        print("adding local styles info")
-        
+        """      
         local_render_info.setId("localRenderInfo")
         local_render_info.setName("Render Information")
 
@@ -1303,7 +1358,8 @@ class Render:
             style.getGroup().setFillColor(node.fill_color)
             style.getGroup().setStroke(node.edge_color)
             style.getGroup().setStrokeWidth(node.edge_width)
-            style.addId(self.speciesToGlyphs[node.id])
+            glyph_id = self._getSpeciesGlyphId(node)
+            style.addId(glyph_id)
 
             if node.shape == "rectangle" or node.shape == "round_box":
                 rectangle = style.getGroup().createRectangle()
@@ -1420,7 +1476,7 @@ class Render:
             network (libsbml_draw.model.Network): the model's network
 
         Returns: None
-        """
+        """        
         # add local styles
         if (self.rPlugin is not None and
                 self.rPlugin.getNumLocalRenderInformationObjects() > 0):

@@ -76,7 +76,7 @@ class SBMLlayout:
                 self.__randomizeLayout()
                 self.__doLayoutAlgorithm()
 
-                # capture the render info here
+                # no render info here because auto-generating the layout
                 self.__doc = libsbml.readSBMLFromString(
                         self.__getSBMLWithLayoutString())
 
@@ -807,6 +807,9 @@ class SBMLlayout:
 
         Returns: None
         """
+        print("doc level: ", self.__doc.getLevel())
+        print("doc version: ", self.__doc.getVersion())
+                      
         self.__addRenderInformation()
         
         libsbml.writeSBMLToFile(self.__doc, out_file_name)
@@ -2118,9 +2121,17 @@ class SBMLlayout:
         Returns: None
         """
         renderInfo = Render(self.__doc, self.__layout_number)
-        renderInfo.addRenderInformation(self.__network)
-        # update doc, it will be used to write new output xml file
-        self.__doc = renderInfo.doc
+        
+        if (len(renderInfo.speciesToGlyphs) == 0 or 
+            len(renderInfo.reactionToGlyphs) == 0):            
+ 
+           pass            
+
+        else:
+
+            renderInfo.addRenderInformation(self.__network)
+            # update doc, it will be used to write new output xml file
+            self.__doc = renderInfo.doc
 
     def __applyRenderInformation(self,):
         """Apply the render information in the SBML file to nodes, reactions,

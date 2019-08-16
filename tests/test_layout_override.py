@@ -18,5 +18,7 @@ sl.writeSBMLFile("test_layout_override.xml")
 
 slr = SBMLlayout("test_layout_override.xml", autoComputeLayout=False)
 
+slr._describeModel()
+
 slr.drawNetwork()
 
