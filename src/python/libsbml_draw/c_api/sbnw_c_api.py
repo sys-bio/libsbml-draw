@@ -29,6 +29,7 @@ ROLES = (GF_ROLE_SUBSTRATE,
          GF_ROLE_ACTIVATOR,
          GF_ROLE_INHIBITOR) = tuple(map(ctypes.c_uint, range(7)))
 
+
 # Classes
 class fr_alg_options(ctypes.Structure):
     _fields_ = [("k", ctypes.c_double),
@@ -50,8 +51,10 @@ class curveCP(ctypes.Structure):
                 ("control_point_2", point),
                 ("end", point)]
 
+
 class gf_curve(ctypes.Structure):
     _fields_ = [("c", ctypes.c_void_p)]
+
 
 class layout_info(ctypes.Structure):
     _fields_ = [("net", ctypes.c_void_p),
@@ -296,23 +299,23 @@ slib.gf_node_make_alias.restype = ctypes.c_int
 slib.gf_node_isAliased.argtypes = [ctypes.c_uint64]
 slib.gf_node_isAliased.restype = ctypes.c_int
 
-slib.gf_node_getAttachedCurves.argtypes = [ctypes.c_uint64, ctypes.c_uint64, POINTER(ctypes.c_uint), POINTER(POINTER(gf_curve))]
-slib.gf_node_getAttachedCurves.restype = ctypes.c_int	
+slib.gf_node_getAttachedCurves.argtypes = [ctypes.c_uint64, ctypes.c_uint64,
+                                           POINTER(ctypes.c_uint),
+                                           POINTER(POINTER(gf_curve))]
+slib.gf_node_getAttachedCurves.restype = ctypes.c_int
 
 
 def node_getAttachedCurves(h_node, h_network):
-    
+
     num_curves = ctypes.c_uint(0)
 
-    h_curves = POINTER(gf_curve)()       
- 
-#    h_curves = (gf_curve*0)()
-    
-    slib.gf_node_getAttachedCurves(h_node, h_network, ctypes.byref(num_curves), ctypes.byref(h_curves))
+    h_curves = POINTER(gf_curve)()
 
-#    return ctypes.cast(h_curves, (gf_curve*num_curves.value))
+    slib.gf_node_getAttachedCurves(h_node, h_network, ctypes.byref(num_curves),
+                                   ctypes.byref(h_curves))
 
     return [h_curves[k] for k in range(num_curves.value)]
+
 
 def node_getCentroid(h_node):
     return slib.gf_node_getCentroid(h_node)
@@ -395,14 +398,12 @@ def reaction_getCentroid(h_reaction):
 
 # Curve Information
 slib.gf_reaction_getCurvep.argtypes = [ctypes.c_uint64, ctypes.c_uint64]
-#slib.gf_reaction_getCurvep.restype = ctypes.c_uint64
 slib.gf_reaction_getCurvep.restype = POINTER(gf_curve)
 
 slib.gf_getCurveCPs.argtypes = [POINTER(gf_curve)]
 slib.gf_getCurveCPs.restype = curveCP
 
 slib.gf_curve_getRole.argtypes = [POINTER(gf_curve)]
-#slib.gf_curve_getRole.argtypes = [ctypes.c_uint64]
 slib.gf_curve_getRole.restype = ctypes.c_uint
 
 

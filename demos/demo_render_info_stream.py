@@ -13,5 +13,18 @@ les = info.getListOfLineEndings()
 
 print("les: ", type(les), len(les))
 
+for le in les:
 
+    if le.getId() == "product":
+        
+        element = le.getGroup().getElement(0)
+        
+        if element.getElementName() == "polygon":
 
+            print("list of elements: ", len(element.getListOfElements()))
+            
+
+            
+            
+            
+            

@@ -619,7 +619,7 @@ class SBMLlayout:
 
             # aliased nodes have the id of the original node
             if node.id in self.__network.aliasedNodes:
-                alias_index = int(node_id.split("_")[1])                
+                alias_index = int(node_id.split("_")[1])
                 h_node_id = node.id.encode('utf-8')
                 h_node = sbnw.nw_getNodepFromId(self.__h_network, h_node_id)
                 h_alias_node = sbnw.nw_getAliasInstancep(
@@ -807,11 +807,21 @@ class SBMLlayout:
 
         Returns: None
         """
-#        print("doc level: ", self.__doc.getLevel())
-#        print("doc version: ", self.__doc.getVersion())
-                      
+        level = self.__doc.getLevel()
+        version = self.__doc.getVersion()
+
+        layout_number = self.__layout_number
+        layout_plugin = self.__doc.getModel().getPlugin("layout")
+
+        layout = layout_plugin.getLayout(layout_number) if (
+            layout_plugin and layout_plugin.getNumLayouts() > 0) else None
+
+        if not layout.getNumSpeciesGlyphs():
+            raise ValueError(f"""Cannot write file.  
+            This level {level} version {version} document has no layout information.""")  # noqa
+
         self.__addRenderInformation()
-        
+
         libsbml.writeSBMLToFile(self.__doc, out_file_name)
 
     # Compartment Methods
@@ -2119,16 +2129,13 @@ class SBMLlayout:
         Args: None
 
         Returns: None
-        """
+        """        
         renderInfo = Render(self.__doc, self.__layout_number)
-        
-        if (len(renderInfo.speciesToGlyphs) == 0 or 
-            len(renderInfo.reactionToGlyphs) == 0):            
- 
-           pass            
 
-        else:
+        if (len(renderInfo.speciesToGlyphs) == 0 or len(renderInfo.reactionToGlyphs) == 0):
+            pass
 
+        else:            
             renderInfo.addRenderInformation(self.__network)
             # update doc, it will be used to write new output xml file
             self.__doc = renderInfo.doc

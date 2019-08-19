@@ -356,7 +356,6 @@ def draw_reactions(reactions, mutation_scale, fig, scaling_factor,
             reaction_patches.append(fap)
 
             # add line ending patches, if any
-
             if curve.endHead in line_endings:
 
                 line_ending = line_endings[curve.endHead]

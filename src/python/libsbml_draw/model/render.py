@@ -11,7 +11,6 @@ from pathlib import Path
 import matplotlib.path as mplp
 
 import pkg_resources
-import xml.etree.ElementTree as ET
 
 import libsbml
 
@@ -24,8 +23,10 @@ EllipseData = namedtuple("EllipseData",
                          ["x", "y", "rx", "ry", "stroke_width"])
 GlyphObject = namedtuple("GlyphObject", ["glyph_id", "x", "y"])
 
-
 LINE_ENDINGS_STYLE_SHEET = "render-stylesheet_global.xml"
+
+LOCAL_RENDER_INFO_STYLE_SHEET = str(Path(pkg_resources.resource_filename(
+        "libsbml_draw", "model/data/" + "SBGNstyles.xml")))
 
 FONT_STYLES = ["none", "normal", "italic"]
 
@@ -127,12 +128,12 @@ class Render:
             bbox = species.getBoundingBox()
             x = bbox.getX() + bbox.getWidth()/2
             y = bbox.getY() + bbox.getHeight()/2
-            species_id = species.getSpeciesId() 
-            
+            species_id = species.getSpeciesId()
+
             species_glyph = GlyphObject(glyph_id, x, y)
-                        
+
             speciesDirectory[species_id].append(species_glyph)
-                
+
         return speciesDirectory
 
     def _createSpeciesTextDirectory(self,):
@@ -506,11 +507,15 @@ class Render:
 
                     line_ending_points.append([x, y])
 
-                line_endings[line_ending_id] = (
-                        "polygon",
-                        np.array(line_ending_points),
-                        box_dimensions,
-                        enable_rotational_mapping)
+                if len(element.getListOfElements()) > 0:
+
+                    line_endings[line_ending_id] = (
+                            "polygon",
+                            np.array(line_ending_points),
+                            box_dimensions,
+                            enable_rotational_mapping)
+                else:
+                    pass
 
             elif element.getElementName() == "ellipse":
 
@@ -658,9 +663,7 @@ class Render:
                     # update nodes
                     for glyph_type in SPECIES_TYPES:
                         if glyph_type in nodes_type:
-                            print("GLOBAL: ", glyph_type)
                             for node in network.nodes.values():
-                                print("updating node: ", node.id)
                                 self._updateNode(
                                         node,
                                         nodes_type[glyph_type])
@@ -736,26 +739,26 @@ class Render:
         return abs(a - b) < epsilon
 
     def _getSpeciesGlyphId(self, node):
-        """Finds the species glyph id for the node.  If the node is an alias, 
+        """Finds the species glyph id for the node.  If the node is an alias,
         the (x, y) coordinates of the node are compared with those from each of
         the alias glyphs to find the matching glyph.
-        
+
         Args:
             node (libsbml_draw.model.network.Node): species for which we need
                 a species glyph id.
-        
+
         Returns: str
         """
 
         if node.id in self.speciesToGlyphs:
-            
+
             speciesGlyphs = self.speciesToGlyphs[node.id]
 
         else:
             pass
 
         glyph_id = ""
-        
+
         if len(speciesGlyphs) == 1:
 
             glyph_id = speciesGlyphs[0].glyph_id
@@ -763,9 +766,9 @@ class Render:
         elif len(speciesGlyphs) > 1:
 
             for speciesGlyph in speciesGlyphs:
-                
-                if (self._floats_equal(node.center.x, speciesGlyph.x, 1.0) and 
-                    self._floats_equal(node.center.y, speciesGlyph.y, 1.0)):
+
+                if (self._floats_equal(node.center.x, speciesGlyph.x, 1.0) and
+                        self._floats_equal(node.center.y, speciesGlyph.y, 1.0)):  # noqa
 
                     glyph_id = speciesGlyph.glyph_id
 
@@ -773,30 +776,30 @@ class Render:
                     pass
         else:
             pass
-                    
+
         return glyph_id
 
     def _getSpeciesTextGlyphId(self, node):
-        """Finds the text glyph id for the node.  If the node is an alias, 
+        """Finds the text glyph id for the node.  If the node is an alias,
         the (x, y) coordinates of the node are compared with those from each of
         the alias glyphs to find the matching glyph.
-        
+
         Args:
             node (libsbml_draw.model.network.Node): species for which we need
                 a text glyph id.
-        
+
         Returns: str
         """
 
         if node.id in self.textToGlyphs:
-            
+
             textGlyphs = self.textToGlyphs[node.id]
 
         else:
             pass
 
         glyph_id = ""
-        
+
         if len(textGlyphs) == 1:
 
             glyph_id = textGlyphs[0].glyph_id
@@ -804,9 +807,9 @@ class Render:
         elif len(textGlyphs) > 1:
 
             for textGlyph in textGlyphs:
-                
-                if (self._floats_equal(node.center.x, textGlyph.x, 1.0) and 
-                    self._floats_equal(node.center.y, textGlyph.y, 1.0)):
+
+                if (self._floats_equal(node.center.x, textGlyph.x, 1.0) and
+                        self._floats_equal(node.center.y, textGlyph.y, 1.0)):
 
                     glyph_id = textGlyph.glyph_id
 
@@ -814,7 +817,7 @@ class Render:
                     pass
         else:
             pass
-                    
+
         return glyph_id
 
     def _applyLocalRenderInformation(self, network):
@@ -863,7 +866,7 @@ class Render:
 
                     nodes_type = dict()
                     node_assigned = False
-                    
+
                     glyph_id = self._getSpeciesGlyphId(node)
 
                     for local_style in local_styles:
@@ -1338,32 +1341,6 @@ class Render:
             raise ValueError("Invalid value for alignment_direction: ",
                              alignment_direction)
 
-    def _getLineEndingsFromStyleSheet(self,):
-        """Experimental function to get line endings from an SBML file.  Makes
-        use of Python's ElementTree.
-
-        Args: None
-
-        Returns: dictionary, keys=line endings id, values=string of XML line
-            ending block
-        """
-        line_endings = {}
-
-        stylesheet_file_name = "LineEnding_styles.xml"
-        stylesheet_file = Path(pkg_resources.resource_filename("libsbml_draw",
-                               "model/data/" + stylesheet_file_name))
-
-        tree = ET.parse(stylesheet_file)
-
-        nns_le = "lineEnding"
-
-        root = tree.getroot()
-
-        for le in root.findall(nns_le):
-            line_endings[le.attrib["id"]] = ET.tostring(le, encoding="unicode")
-
-        return line_endings
-
     def _addLocalStylesRenderInformation(self, local_render_info, network):
         """Add a LocalStyle for each compartment, node, node text, and reaction
         curve.
@@ -1373,7 +1350,7 @@ class Render:
             network (libsbml_draw.model.Network): the model's network
 
         Returns: None
-        """      
+        """
         local_render_info.setId("localRenderInfo")
         local_render_info.setName("Render Information")
 
@@ -1386,12 +1363,12 @@ class Render:
                 if result != libsbml.LIBSBML_OPERATION_SUCCESS:
                     raise RuntimeWarning("libsbml could not add line ending",
                                          result)
-                    
+
         elif network.stylesheet_line_endings:
-            
-            for line_ending in network.stylesheet_libsbml_line_endings:
-                pass
-#                result = local_render_info.addLineEnding(line_ending)
+            pass
+#           for line_ending in network.stylesheet_libsbml_line_endings:
+
+#               result = local_render_info.addLineEnding(line_ending)
 
 #                if result != libsbml.LIBSBML_OPERATION_SUCCESS:
 #                    raise RuntimeWarning("libsbml could not add line ending",
@@ -1463,12 +1440,12 @@ class Render:
             style.addId(glyph_id)
 
         # curves
-        
+
         for reaction in network.reactions.values():
             rxn_glyph_id = self.reactionToGlyphs[reaction.id]
 
             for curve in reaction.curves:
-                
+
                 curve_key = (reaction.id,
                              curve.role_name.lower(),
                              curve.species)
@@ -1530,7 +1507,7 @@ class Render:
             network (libsbml_draw.model.Network): the model's network
 
         Returns: None
-        """        
+        """
         # add local styles
         if (self.rPlugin is not None and
                 self.rPlugin.getNumLocalRenderInformationObjects() > 0):
@@ -1555,10 +1532,15 @@ class Render:
             self.doc.setPackageRequired("render", False)
 
             rPlugin = self.layout.getPlugin("render")
-
             local_render_info = rPlugin.createLocalRenderInformation()
 
+#            local_render_info = libsbml.LocalRenderInformation()
+#            stream = libsbml.XMLInputStream(LOCAL_RENDER_INFO_STYLE_SHEET)
+#            local_render_info.read(stream)
+
             self._addLocalStylesRenderInformation(local_render_info, network)
+
+#            rPlugin.addLocalRenderInformation(local_render_info)
 
     def _readLineEndingsStyleSheet(self, network):
         """Read in a default line endings style sheet, and assign it to the

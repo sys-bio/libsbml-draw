@@ -39,7 +39,7 @@ class Compartment():
         self.rectangle_rounding = 0.6
         self.polygon_points = []
         self.polygon_codes = []
-        self.polygon = None        
+        self.polygon = None
 
 
 class Node():
