@@ -7,3 +7,4 @@ User Manual
 
    install
    user_manual
+   script_using_antimony
