@@ -72,6 +72,7 @@ class Render:
         self.linear_gradients = {}
         self.line_endings = {}
         self.libsbml_line_endings = []
+        self.libsbml_color_definitions = []
         self.speciesGlyphs = self._createSpeciesGlyphsDirectory()
         self.speciesToGlyphs = self._createSpeciesDirectory()
         self.textToGlyphs = self._createSpeciesTextDirectory()
@@ -337,10 +338,15 @@ class Render:
         Returns: dict, keys = color id, values = color value
         """
         color_definitions = {}
+        libsbml_color_definitions = []
+        
         for color_defn in render_info.getListOfColorDefinitions():
             color_definitions[color_defn.getId()
                               ] = color_defn.createValueString()
-        return color_definitions
+            
+            libsbml_color_definitions.append(color_defn)
+            
+        return (color_definitions, libsbml_color_definitions)
 
     def _set_plot_color_and_validity(self, color):
         """Determines if the plot color is valid.
@@ -587,8 +593,10 @@ class Render:
 
                 if global_render_info:
 
-                    self.color_definitions = self._collectColorDefinitions(
+                    color_defns_tuple = self._collectColorDefinitions(
                             global_render_info)
+                    
+                    self.color_definitions = color_defns_tuple[0]
 
                     bg_color = self._set_plot_color_and_validity(
                        global_render_info.getBackgroundColor())
@@ -774,6 +782,9 @@ class Render:
 
                 else:
                     pass
+                
+                if glyph_id == "":
+                    glyph_id = speciesGlyphs[0].glyph_id
         else:
             pass
 
@@ -838,8 +849,13 @@ class Render:
 
                 if local_render_info:
 
-                    self.color_definitions = self._collectColorDefinitions(
+                    color_defns_tuple = self._collectColorDefinitions(
                             local_render_info)
+
+                    self.color_definitions = color_defns_tuple[0]
+                    self.libsbml_color_definitions = color_defns_tuple[1]
+
+                    network.libsbml_color_definitions = self.libsbml_color_definitions  # noqa
 
                     bg_color = self._set_plot_color_and_validity(
                        local_render_info.getBackgroundColor())
@@ -1060,8 +1076,13 @@ class Render:
         else:
             node_ry = 0
 
-        rectangle_rounding = (max(node_rx, node_ry) /
-                              max(nw_element.width, nw_element.height))
+#        rectangle_rounding = (max(node_rx, node_ry) /
+#                              max(nw_element.width, nw_element.height))
+
+        radius_of_curvature = max(node_rx, node_ry)*2
+        
+        rectangle_rounding = 1/radius_of_curvature if ( 
+                radius_of_curvature > 0) else 0.1                              
 
         return rectangle_rounding
 
@@ -1341,6 +1362,26 @@ class Render:
             raise ValueError("Invalid value for alignment_direction: ",
                              alignment_direction)
 
+    def _computeRadiusOfCurvature(self, rectangle_rounding):
+        """Computes a value for radius of curvature for rectangle corners based
+        on the parameter value used in matplotlib FancyBbox patch.
+
+        Args:
+            rectangle_rounding (libsbml.RelAbsVector): parameter value for
+                matplotlib rounding of rectangle corners
+        
+        Returns: float
+        """
+        if rectangle_rounding > 0:
+
+            radius_of_curvature = (1/rectangle_rounding)*0.5
+
+        else:
+
+            radius_of_curvature = 0
+
+        return radius_of_curvature
+
     def _addLocalStylesRenderInformation(self, local_render_info, network):
         """Add a LocalStyle for each compartment, node, node text, and reaction
         curve.
@@ -1353,6 +1394,16 @@ class Render:
         """
         local_render_info.setId("localRenderInfo")
         local_render_info.setName("Render Information")
+
+        if network.libsbml_color_definitions:
+            
+            for color_defn in network.libsbml_color_definitions:
+
+                result = local_render_info.addColorDefinition(color_defn)
+
+                if result != libsbml.LIBSBML_OPERATION_SUCCESS:
+                    raise RuntimeWarning("libsbml could not add color definition",  # noqa
+                                         result)
 
         if network.libsbml_line_endings:
 
@@ -1396,8 +1447,11 @@ class Render:
                 rectangle.setFill(node.fill_color)
                 rectangle.setStroke(node.edge_color)
                 rectangle.setStrokeWidth(node.edge_width)
-#                rectangle.setRX(node.rectangle_rounding)
-#                rectangle.setRY(node.rectangle_rounding)
+                radius_of_curvature = self._computeRadiusOfCurvature(
+                        node.rectangle_rounding)
+                if radius_of_curvature:
+                    rectangle.setRX(libsbml.RelAbsVector(radius_of_curvature))
+                    rectangle.setRY(libsbml.RelAbsVector(radius_of_curvature))
             elif node.shape == "ellipse":
                 ellipse = style.getGroup().createEllipse()
                 ellipse.setCX(libsbml.RelAbsVector("000%"))

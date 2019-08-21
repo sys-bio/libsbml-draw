@@ -12,6 +12,8 @@ sl = SBMLlayout(str(model_file))
 
 sl._describeModel()
 
+
+
 sl.drawNetwork("GlycolysisOriginal.pdf")
 
 sl.writeSBMLFile("glycolysis_original.xml")

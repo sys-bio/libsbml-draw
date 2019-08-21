@@ -132,10 +132,11 @@ class Network():
         self._add_compartments()
         self.aliasedNodes = {}
         self.bg_color = "#ffffff"
+        self.libsbml_color_definitions = []
         self.line_endings = {}
-        self.libsbml_line_endings = {}
+        self.libsbml_line_endings = []
         self.stylesheet_line_endings = {}
-        self.stylesheet_libsbml_line_endings = {}
+        self.stylesheet_libsbml_line_endings = []
         self._assign_species_to_curves()
 
     def _assign_species_to_curves(self,):
