@@ -1,6 +1,3 @@
-User Guide
-============
-
 SBMLlayout script using antimony
 ---------------------------------
 import tellurium as te
