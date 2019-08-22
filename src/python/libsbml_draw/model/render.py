@@ -339,13 +339,13 @@ class Render:
         """
         color_definitions = {}
         libsbml_color_definitions = []
-        
+
         for color_defn in render_info.getListOfColorDefinitions():
             color_definitions[color_defn.getId()
                               ] = color_defn.createValueString()
-            
+
             libsbml_color_definitions.append(color_defn)
-            
+
         return (color_definitions, libsbml_color_definitions)
 
     def _set_plot_color_and_validity(self, color):
@@ -595,8 +595,11 @@ class Render:
 
                     color_defns_tuple = self._collectColorDefinitions(
                             global_render_info)
-                    
+
                     self.color_definitions = color_defns_tuple[0]
+                    self.libsbml_color_definitions = color_defns_tuple[1]
+
+                    network.libsbml_color_definitions = self.libsbml_color_definitions  # noqa
 
                     bg_color = self._set_plot_color_and_validity(
                        global_render_info.getBackgroundColor())
@@ -782,9 +785,10 @@ class Render:
 
                 else:
                     pass
+
+            if glyph_id == "":
+                glyph_id = speciesGlyphs[0].glyph_id
                 
-                if glyph_id == "":
-                    glyph_id = speciesGlyphs[0].glyph_id
         else:
             pass
 
@@ -826,6 +830,10 @@ class Render:
 
                 else:
                     pass
+                
+            if glyph_id == "":
+                glyph_id = textGlyphs[0].glyph_id    
+                
         else:
             pass
 
@@ -1080,9 +1088,9 @@ class Render:
 #                              max(nw_element.width, nw_element.height))
 
         radius_of_curvature = max(node_rx, node_ry)*2
-        
-        rectangle_rounding = 1/radius_of_curvature if ( 
-                radius_of_curvature > 0) else 0.1                              
+
+        rectangle_rounding = 1/radius_of_curvature if (
+                radius_of_curvature > 0) else 0.1
 
         return rectangle_rounding
 
@@ -1369,7 +1377,7 @@ class Render:
         Args:
             rectangle_rounding (libsbml.RelAbsVector): parameter value for
                 matplotlib rounding of rectangle corners
-        
+
         Returns: float
         """
         if rectangle_rounding > 0:
@@ -1396,7 +1404,7 @@ class Render:
         local_render_info.setName("Render Information")
 
         if network.libsbml_color_definitions:
-            
+
             for color_defn in network.libsbml_color_definitions:
 
                 result = local_render_info.addColorDefinition(color_defn)

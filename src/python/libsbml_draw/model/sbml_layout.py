@@ -143,7 +143,7 @@ class SBMLlayout:
         """
         self.__init__(sbml_string)
 
-    def setLayoutAlgorithmOptions(self, k=None, grav=None, baryx=None,
+    def setLayoutAlgorithmOptions(self, k=None, gravity=None, baryx=None,
                                   baryy=None, autobary=None, padding=None
                                   ):
         """
@@ -161,8 +161,8 @@ class SBMLlayout:
         """
         if k:
             self.__layout_alg_options.k = k
-        if grav:
-            self.__layout_alg_options.grav = grav
+        if gravity:
+            self.__layout_alg_options.gravity = gravity
         if baryx:
             self.__layout_alg_options.baryx = baryx
         if baryy:
@@ -176,27 +176,28 @@ class SBMLlayout:
         """Set the Fruchterman-Reingold layout algorithm parameter 'k'.
 
         Args:
-            k (float):
+            k (float): stiffness parameter
 
         Returns: None
         """
         self.__layout_alg_options.k = k
 
-    def setLayoutAlgorithm_grav(self, gravity):
-        """Set the Fruchterman-Reingold layout algorithm parameter 'grav'.
+    def setLayoutAlgorithm_gravity(self, gravity):
+        """Set the Fruchterman-Reingold layout algorithm parameter 'gravity'.
 
         Args:
-            gravity (float):
+            gravity (float): strength of the gravity, must be greater than 5 to
+                have an effect.
 
         Returns: None
         """
-        self.__layout_alg_options.grav = gravity
+        self.__layout_alg_options.gravity = gravity
 
     def setLayoutAlgorithm_baryx(self, baryx):
         """Set the Fruchterman-Reingold layout algorithm parameter 'baryx'.
 
         Args:
-            baryx (float):
+            baryx (float): x value of the center of gravitational force
 
         Returns: None
         """
@@ -206,7 +207,7 @@ class SBMLlayout:
         """Set the Fruchterman-Reingold layout algorithm parameter 'baryy'.
 
         Args:
-            baryy (float):
+            baryy (float): y value of the center of gravitational force
 
         Returns: None
         """
@@ -214,9 +215,12 @@ class SBMLlayout:
 
     def setLayoutAlgorithm_autobary(self, autobary):
         """Set the Fruchterman-Reingold layout algorithm parameter 'autobary'.
+        This parameter determines if the barycenter is set automatically from
+        layout info.
 
         Args:
-            autobary (int):
+            autobary (int): 1 = set barycenter automatically from layout info,
+                0 means don't set it automatically
 
         Returns: None
         """
@@ -226,7 +230,7 @@ class SBMLlayout:
         """Set the Fruchterman-Reingold layout algorithm parameter 'padding'.
 
         Args:
-            padding (float):
+            padding (float): padding on compartments
 
         Returns: None
         """
@@ -251,7 +255,7 @@ class SBMLlayout:
         """
         print("layout algorithm options: \n",
               "k ", self.__layout_alg_options.k, "\n",
-              "gravity ", self.__layout_alg_options.grav, "\n",
+              "gravity ", self.__layout_alg_options.gravity, "\n",
               "baryx ", self.__layout_alg_options.baryx, "\n",
               "baryy ", self.__layout_alg_options.baryy, "\n",
               "autobary ", self.__layout_alg_options.autobary, "\n",
@@ -2129,13 +2133,14 @@ class SBMLlayout:
         Args: None
 
         Returns: None
-        """        
+        """
         renderInfo = Render(self.__doc, self.__layout_number)
 
-        if (len(renderInfo.speciesToGlyphs) == 0 or len(renderInfo.reactionToGlyphs) == 0):
+        if (len(renderInfo.speciesToGlyphs) == 0 or
+                len(renderInfo.reactionToGlyphs) == 0):
             pass
 
-        else:            
+        else:
             renderInfo.addRenderInformation(self.__network)
             # update doc, it will be used to write new output xml file
             self.__doc = renderInfo.doc

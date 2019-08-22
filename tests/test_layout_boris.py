@@ -12,6 +12,9 @@ sl = SBMLlayout(str(model_file), autoComputeLayout=False)
 
 sl._describeModel()
 
+assert sl.getNumberOfNodes() == 8
+assert sl.getNumberOfReactions() == 10
+
 sl.drawNetwork("boris_ejb_override.png")
 
 sl.writeSBMLFile("test_layout_override.xml")
@@ -21,3 +24,6 @@ slr = SBMLlayout("test_layout_override.xml", autoComputeLayout=False)
 slr._describeModel()
 
 slr.drawNetwork()
+
+assert sl.getNumberOfNodes() == 8
+assert sl.getNumberOfReactions() == 10

@@ -33,7 +33,7 @@ ROLES = (GF_ROLE_SUBSTRATE,
 # Classes
 class fr_alg_options(ctypes.Structure):
     _fields_ = [("k", ctypes.c_double),
-                ("grav", ctypes.c_double),
+                ("gravity", ctypes.c_double),
                 ("baryx", ctypes.c_double),
                 ("baryy", ctypes.c_double),
                 ("autobary", ctypes.c_int),
