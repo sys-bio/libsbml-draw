@@ -1,0 +1,789 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<render:renderInformation render:id="SBGN_default" render:backgroundColor="#FFFFFFFF" xmlns:render="http://www.sbml.org/sbml/level3/version1/render/version1" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:layout="http://www.sbml.org/sbml/level3/version1/layout/version1">
+  <render:listOfColorDefinitions>
+    <render:colorDefinition render:id="black" render:value="#000000" />
+    <render:colorDefinition render:id="white" render:value="#ffffff" />
+    <render:colorDefinition render:id="transparent" render:value="#ffffff00" />
+    <render:colorDefinition render:id="EmptySetOutline" render:value="#808080" />
+    <render:colorDefinition render:id="EmptySetGradientStart" render:value="#ffffff" />
+    <render:colorDefinition render:id="EmptySetGradientEnd" render:value="#d3d3d3" />
+    <render:colorDefinition render:id="CompartmentBorder" render:value="#666666" />
+    <render:colorDefinition render:id="CompartmentGradientStart" render:value="#cccccc" />
+    <render:colorDefinition render:id="CompartmentGradientEnd" render:value="#ccccff" />
+    <render:colorDefinition render:id="CloneMarkerColor" render:value="#ffa500" />
+    <render:colorDefinition render:id="EPNGradientStart" render:value="#ffffff" />
+    <render:colorDefinition render:id="EPNGradientEnd" render:value="#c0c0c0" />
+  </render:listOfColorDefinitions>
+  <render:listOfGradientDefinitions>
+    <render:linearGradient render:id="EPNBackgroundGradient" render:spreadMethod="reflect">
+      <render:stop render:offset="0" render:stop-color="EPNGradientStart" />
+      <render:stop render:offset="100%" render:stop-color="EPNGradientEnd" />
+    </render:linearGradient>
+    <render:linearGradient render:id="cloneMarker" render:x1="50%" render:x2="50%">
+      <render:stop render:offset="0" render:stop-color="transparent" />
+      <render:stop render:offset="0.75" render:stop-color="transparent" />
+      <render:stop render:offset="0.76" render:stop-color="CloneMarkerColor" />
+      <render:stop render:offset="1" render:stop-color="CloneMarkerColor" />
+    </render:linearGradient>
+    <render:linearGradient render:id="EmptySetGradient">
+      <render:stop render:offset="0" render:stop-color="EmptySetGradientStart" />
+      <render:stop render:offset="100%" render:stop-color="EmptySetGradientEnd" />
+    </render:linearGradient>
+    <render:linearGradient render:id="CompartmentGradient">
+      <render:stop render:offset="0" render:stop-color="CompartmentGradientStart" />
+      <render:stop render:offset="100%" render:stop-color="CompartmentGradientEnd" />
+    </render:linearGradient>
+  </render:listOfGradientDefinitions>
+  <render:listOfLineEndings>
+    <render:lineEnding render:id="modulation">
+      <layout:boundingBox layout:id="bb">
+        <layout:position layout:x="-12" layout:y="-6" />
+        <layout:dimensions layout:width="12" layout:height="12" />
+      </layout:boundingBox>
+      <render:g render:stroke="black" render:stroke-width="0.001" render:fill="white" render:font-weight="normal" render:font-style="normal" render:text-anchor="start" render:vtext-anchor="top">
+        <render:polygon render:stroke="black" render:stroke-width="0.001" render:fill="ffffff">
+          <render:listOfElements>
+            <render:element xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:type="RenderPoint" render:x="50%" render:y="0" />
+            <render:element xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:type="RenderPoint" render:x="100%" render:y="50%" />
+            <render:element xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:type="RenderPoint" render:x="50%" render:y="100%" />
+            <render:element xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:type="RenderPoint" render:x="0" render:y="50%" />
+            <render:element xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:type="RenderPoint" render:x="50%" render:y="0" />
+          </render:listOfElements>
+        </render:polygon>
+      </render:g>
+    </render:lineEnding>
+    <render:lineEnding render:id="modulation_black">
+      <layout:boundingBox layout:id="bb">
+        <layout:position layout:x="-12" layout:y="-6" />
+        <layout:dimensions layout:width="12" layout:height="12" />
+      </layout:boundingBox>
+      <render:g render:stroke="black" render:stroke-width="0.001" render:fill="black" render:font-weight="normal" render:font-style="normal" render:text-anchor="start" render:vtext-anchor="top">
+        <render:polygon render:fill="black">
+          <render:listOfElements>
+            <render:element xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:type="RenderPoint" render:x="50%" render:y="0" />
+            <render:element xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:type="RenderPoint" render:x="100%" render:y="50%" />
+            <render:element xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:type="RenderPoint" render:x="50%" render:y="100%" />
+            <render:element xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:type="RenderPoint" render:x="0" render:y="50%" />
+            <render:element xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:type="RenderPoint" render:x="50%" render:y="0" />
+          </render:listOfElements>
+        </render:polygon>
+      </render:g>
+    </render:lineEnding>
+    <render:lineEnding render:id="necessary_stimulation">
+      <layout:boundingBox layout:id="bb">
+        <layout:position layout:x="-12" layout:y="-6" />
+        <layout:dimensions layout:width="12" layout:height="12" />
+      </layout:boundingBox>
+      <render:g render:stroke="black" render:stroke-width="0.001" render:fill="white" render:font-weight="normal" render:font-style="normal" render:text-anchor="start" render:vtext-anchor="top">
+        <render:polygon render:fill="white">
+          <render:listOfElements>
+            <render:element xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:type="RenderPoint" render:x="0" render:y="0" />
+            <render:element xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:type="RenderPoint" render:x="0" render:y="100%" />
+          </render:listOfElements>
+        </render:polygon>
+        <render:polygon render:fill="white">
+          <render:listOfElements>
+            <render:element xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:type="RenderPoint" render:x="30%" render:y="20%" />
+            <render:element xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:type="RenderPoint" render:x="100%" render:y="50%" />
+            <render:element xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:type="RenderPoint" render:x="30%" render:y="90%" />
+            <render:element xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:type="RenderPoint" render:x="33%" render:y="50%" />
+            <render:element xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:type="RenderPoint" render:x="30%" render:y="20%" />
+          </render:listOfElements>
+        </render:polygon>
+      </render:g>
+    </render:lineEnding>
+    <render:lineEnding render:id="old_stimulation">
+      <layout:boundingBox layout:id="bb">
+        <layout:position layout:x="-12" layout:y="-6" />
+        <layout:dimensions layout:width="12" layout:height="12" />
+      </layout:boundingBox>
+      <render:g render:stroke="black" render:stroke-width="0.001" render:fill="white" render:font-weight="normal" render:font-style="normal" render:text-anchor="start" render:vtext-anchor="top">
+        <render:polygon render:fill="white">
+          <render:listOfElements>
+            <render:element xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:type="RenderPoint" render:x="0" render:y="0" />
+            <render:element xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:type="RenderPoint" render:x="100%" render:y="50%" />
+            <render:element xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:type="RenderPoint" render:x="0" render:y="100%" />
+            <render:element xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:type="RenderPoint" render:x="33%" render:y="50%" />
+            <render:element xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:type="RenderPoint" render:x="0" render:y="0" />
+          </render:listOfElements>
+        </render:polygon>
+      </render:g>
+    </render:lineEnding>
+    <render:lineEnding render:id="stimulation">
+      <layout:boundingBox layout:id="bb">
+        <layout:position layout:x="-12" layout:y="-6" />
+        <layout:dimensions layout:width="12" layout:height="12" />
+      </layout:boundingBox>
+      <render:g render:stroke="black" render:stroke-width="0.001" render:fill="white" render:font-weight="normal" render:font-style="normal" render:text-anchor="start" render:vtext-anchor="top">
+        <render:polygon render:fill="white">
+          <render:listOfElements>
+            <render:element xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:type="RenderPoint" render:x="0" render:y="0" />
+            <render:element xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:type="RenderPoint" render:x="100%" render:y="50%" />
+            <render:element xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:type="RenderPoint" render:x="0" render:y="100%" />
+            <render:element xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:type="RenderPoint" render:x="0" render:y="50%" />
+            <render:element xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:type="RenderPoint" render:x="0" render:y="0" />
+          </render:listOfElements>
+        </render:polygon>
+      </render:g>
+    </render:lineEnding>
+    <render:lineEnding render:id="product">
+      <layout:boundingBox layout:id="bb">
+        <layout:position layout:x="-12" layout:y="-6" />
+        <layout:dimensions layout:width="12" layout:height="12" />
+      </layout:boundingBox>
+      <render:g render:stroke="black" render:stroke-width="0.001" render:fill="black" render:font-weight="normal" render:font-style="normal" render:text-anchor="start" render:vtext-anchor="top">
+        <render:polygon render:fill="black">
+          <render:listOfElements>
+            <render:element xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:type="RenderPoint" render:x="0" render:y="0" />
+            <render:element xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:type="RenderPoint" render:x="100%" render:y="50%" />
+            <render:element xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:type="RenderPoint" render:x="0" render:y="100%" />
+            <render:element xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:type="RenderPoint" render:x="33%" render:y="50%" />
+            <render:element xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:type="RenderPoint" render:x="0" render:y="0" />
+          </render:listOfElements>
+        </render:polygon>
+      </render:g>
+    </render:lineEnding>
+    <render:lineEnding render:id="activator">
+      <layout:boundingBox layout:id="bb">
+        <layout:position layout:x="-12" layout:y="-6" />
+        <layout:dimensions layout:width="12" layout:height="12" />
+      </layout:boundingBox>
+      <render:g render:stroke="black" render:stroke-width="1" render:fill="white" render:font-weight="normal" render:font-style="normal" render:text-anchor="start" render:vtext-anchor="top">
+        <render:ellipse render:stroke="black" render:stroke-width="1" render:cx="50%" render:cy="50%" render:rx="50%" />
+      </render:g>
+    </render:lineEnding>
+    <render:lineEnding render:id="association">
+      <layout:boundingBox layout:id="bb">
+        <layout:position layout:x="-1" layout:y="-2.5" />
+        <layout:dimensions layout:width="5" layout:height="5" />
+      </layout:boundingBox>
+      <render:g render:stroke="black" render:stroke-width="1" render:fill="black" render:font-weight="normal" render:font-style="normal" render:text-anchor="start" render:vtext-anchor="top">
+        <render:ellipse render:stroke="black" render:stroke-width="1" render:cx="2.5" render:cy="2.5" render:rx="2" />
+      </render:g>
+    </render:lineEnding>
+    <render:lineEnding render:id="disassociation">
+      <layout:boundingBox layout:id="bb">
+        <layout:position layout:x="-1" layout:y="-2.5" />
+        <layout:dimensions layout:width="5" layout:height="5" />
+      </layout:boundingBox>
+      <render:g render:stroke="black" render:stroke-width="1" render:fill="white" render:font-weight="normal" render:font-style="normal" render:text-anchor="start" render:vtext-anchor="top">
+        <render:ellipse render:stroke="black" render:stroke-width="1" render:cx="2.5" render:cy="2.5" render:rx="2" />
+        <render:ellipse render:stroke="black" render:stroke-width="1" render:cx="2.5" render:cy="2.5" render:rx="1" />
+      </render:g>
+    </render:lineEnding>
+    <render:lineEnding render:id="process">
+      <layout:boundingBox layout:id="bb">
+        <layout:position layout:x="-4" layout:y="-4" />
+        <layout:dimensions layout:width="8" layout:height="8" />
+      </layout:boundingBox>
+      <render:g render:stroke="black" render:stroke-width="1" render:fill="white" render:font-weight="normal" render:font-style="normal" render:text-anchor="start" render:vtext-anchor="top">
+        <render:rectangle render:stroke="black" render:x="0" render:y="0" render:width="8" render:height="8" />
+      </render:g>
+    </render:lineEnding>
+    <render:lineEnding render:id="modifier">
+      <layout:boundingBox layout:id="bb">
+        <layout:position layout:x="0" layout:y="-2.5" />
+        <layout:dimensions layout:width="5" layout:height="5" />
+      </layout:boundingBox>
+      <render:g render:stroke="black" render:stroke-width="1" render:fill="white" render:font-weight="normal" render:font-style="normal" render:text-anchor="start" render:vtext-anchor="top">
+        <render:polygon>
+          <render:listOfElements>
+            <render:element xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:type="RenderPoint" render:x="0" render:y="2.5" />
+            <render:element xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:type="RenderPoint" render:x="2.5" render:y="5" />
+            <render:element xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:type="RenderPoint" render:x="5" render:y="2.5" />
+            <render:element xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:type="RenderPoint" render:x="2.5" render:y="0" />
+            <render:element xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:type="RenderPoint" render:x="0" render:y="2.5" />
+          </render:listOfElements>
+        </render:polygon>
+      </render:g>
+    </render:lineEnding>
+    <render:lineEnding render:id="inhibitor">
+      <layout:boundingBox layout:id="bb">
+        <layout:position layout:x="-0.5" layout:y="-4" />
+        <layout:dimensions layout:width="0.6" layout:height="8" />
+      </layout:boundingBox>
+      <render:g render:stroke="black" render:stroke-width="0.1" render:fill="black" render:font-weight="normal" render:font-style="normal" render:text-anchor="start" render:vtext-anchor="top">
+        <render:polygon>
+          <render:listOfElements>
+            <render:element xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:type="RenderPoint" render:x="0" render:y="0" />
+            <render:element xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:type="RenderPoint" render:x="0.3" render:y="0" />
+            <render:element xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:type="RenderPoint" render:x="0.3" render:y="8" />
+            <render:element xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:type="RenderPoint" render:x="0" render:y="8" />
+          </render:listOfElements>
+        </render:polygon>
+      </render:g>
+    </render:lineEnding>
+    <render:lineEnding render:id="absolute_inhibitor">
+      <layout:boundingBox layout:id="bb">
+        <layout:position layout:x="-2.5" layout:y="-5" />
+        <layout:dimensions layout:width="5" layout:height="10" />
+      </layout:boundingBox>
+      <render:g render:stroke="black" render:stroke-width="0.1" render:fill="black" render:font-weight="normal" render:font-style="normal" render:text-anchor="start" render:vtext-anchor="top">
+        <render:polygon render:stroke="black" render:stroke-width="0.1">
+          <render:listOfElements>
+            <render:element xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:type="RenderPoint" render:x="0" render:y="0" />
+            <render:element xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:type="RenderPoint" render:x="0.3" render:y="0" />
+            <render:element xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:type="RenderPoint" render:x="0.3" render:y="10" />
+            <render:element xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:type="RenderPoint" render:x="0" render:y="10" />
+          </render:listOfElements>
+        </render:polygon>
+        <render:polygon render:stroke="black" render:stroke-width="0.1">
+          <render:listOfElements>
+            <render:element xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:type="RenderPoint" render:x="4" render:y="2" />
+            <render:element xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:type="RenderPoint" render:x="4.2" render:y="2" />
+            <render:element xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:type="RenderPoint" render:x="4.2" render:y="8" />
+            <render:element xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:type="RenderPoint" render:x="4" render:y="8" />
+          </render:listOfElements>
+        </render:polygon>
+      </render:g>
+    </render:lineEnding>
+  </render:listOfLineEndings>
+  <render:listOfStyles>
+    <render:style render:roleList="defaultText">
+      <render:g render:stroke="black" render:stroke-width="1" render:fill-rule="nonzero" render:font-family="Verdana" render:font-weight="normal" render:font-style="normal" render:text-anchor="middle" render:vtext-anchor="top" render:font-size="10" />
+    </render:style>
+    <render:style render:roleList="sidesubstrate substrate">
+      <render:g render:stroke="black" render:stroke-width="2" render:fill-rule="nonzero" render:font-family="sans-serif" render:font-weight="normal" render:font-style="normal" render:text-anchor="start" render:vtext-anchor="top" render:font-size="0" />
+    </render:style>
+    <render:style render:roleList="SBO-0000167">
+      <render:g render:stroke="black" render:stroke-width="2" render:fill="white" render:fill-rule="nonzero" render:endHead="process" render:font-family="sans-serif" render:font-weight="normal" render:font-style="normal" render:text-anchor="start" render:vtext-anchor="top" render:font-size="0" />
+    </render:style>
+    <render:style render:roleList="SBO-0000177">
+      <render:g render:stroke="black" render:stroke-width="2" render:fill-rule="nonzero" render:endHead="association" render:font-family="sans-serif" render:font-weight="normal" render:font-style="normal" render:text-anchor="start" render:vtext-anchor="top" render:font-size="0" />
+    </render:style>
+    <render:style render:roleList="SBO-0000169 inhibition inhibitor">
+      <render:g render:stroke="black" render:stroke-width="2" render:fill-rule="nonzero" render:endHead="inhibitor" render:font-family="sans-serif" render:font-weight="normal" render:font-style="normal" render:text-anchor="start" render:vtext-anchor="top" render:font-size="0" />
+    </render:style>
+    <render:style render:roleList="SBO-0000169 absolute_inhibition absolute_inhibitor">
+      <render:g render:stroke="black" render:stroke-width="2" render:fill-rule="nonzero" render:endHead="absolute_inhibitor" render:font-family="sans-serif" render:font-weight="normal" render:font-style="normal" render:text-anchor="start" render:vtext-anchor="top" render:font-size="0" />
+    </render:style>
+    <render:style render:roleList="SBO-0000171 necessary_stimulation">
+      <render:g render:stroke="black" render:stroke-width="2" render:fill-rule="nonzero" render:endHead="necessary_stimulation" render:font-family="sans-serif" render:font-weight="normal" render:font-style="normal" render:text-anchor="start" render:vtext-anchor="top" render:font-size="0" />
+    </render:style>
+    <render:style render:roleList="SBO-0000168 modifier">
+      <render:g render:stroke="black" render:stroke-width="2" render:fill="white" render:fill-rule="nonzero" render:endHead="modifier" render:font-family="sans-serif" render:font-weight="normal" render:font-style="normal" render:text-anchor="start" render:vtext-anchor="top" render:font-size="0" />
+    </render:style>
+    <render:style render:roleList="SBO-0000172 activator catalysis">
+      <render:g render:stroke="black" render:stroke-width="2" render:fill="white" render:fill-rule="nonzero" render:endHead="activator" render:font-family="sans-serif" render:font-weight="normal" render:font-style="normal" render:text-anchor="start" render:vtext-anchor="top" render:font-size="0" />
+    </render:style>
+    <render:style render:roleList="SBO-0000168 modulation">
+      <render:g render:stroke="black" render:stroke-width="2" render:fill="white" render:fill-rule="nonzero" render:endHead="modulation" render:font-family="sans-serif" render:font-weight="normal" render:font-style="normal" render:text-anchor="start" render:vtext-anchor="top" render:font-size="0" />
+    </render:style>
+    <render:style render:roleList="SBO-0000170 stimulation">
+      <render:g render:stroke="black" render:stroke-width="2" render:fill="white" render:fill-rule="nonzero" render:endHead="stimulation" render:font-family="sans-serif" render:font-weight="normal" render:font-style="normal" render:text-anchor="start" render:vtext-anchor="top" render:font-size="0" />
+    </render:style>
+    <render:style render:roleList="SBO-0000180">
+      <render:g render:stroke="black" render:stroke-width="2" render:fill-rule="nonzero" render:endHead="disassociation" render:font-family="sans-serif" render:font-weight="normal" render:font-style="normal" render:text-anchor="start" render:vtext-anchor="top" render:font-size="0" />
+    </render:style>
+    <render:style render:roleList="product sideproduct" render:typeList="product sideproduct">
+      <render:g render:stroke="black" render:stroke-width="2" render:fill-rule="nonzero" render:endHead="product" render:font-family="sans-serif" render:font-weight="normal" render:font-style="normal" render:text-anchor="start" render:vtext-anchor="top" render:font-size="0" />
+    </render:style>
+    <render:style render:roleList="interaction">
+      <render:g render:stroke="black" render:stroke-width="2" render:fill-rule="nonzero" render:startHead="product" render:endHead="product" render:font-family="sans-serif" render:font-weight="normal" render:font-style="normal" render:text-anchor="start" render:vtext-anchor="top" render:font-size="0" />
+    </render:style>
+    <render:style render:roleList="SBO-0000354">
+      <render:g render:stroke="black" render:stroke-width="2" render:fill="EPNBackgroundGradient" render:fill-rule="nonzero" render:font-family="sans-serif" render:font-weight="normal" render:font-style="normal" render:text-anchor="start" render:vtext-anchor="top" render:font-size="0">
+        <render:polygon render:stroke="black" render:stroke-width="2" render:fill="EPNBackgroundGradient">
+          <render:listOfElements>
+            <render:element xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:type="RenderPoint" render:x="0" render:y="80%" />
+            <render:element xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:type="RenderPoint" render:x="0" render:y="0" />
+            <render:element xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:type="RenderPoint" render:x="100%" render:y="0" />
+            <render:element xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:type="RenderPoint" render:x="100%" render:y="80%" />
+            <render:element xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:type="RenderCubicBezier" render:x="80%" render:y="100%" render:basePoint1_x="100%" render:basePoint1_y="100%" render:basePoint2_x="100%" render:basePoint2_y="100%" />
+            <render:element xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:type="RenderPoint" render:x="20%" render:y="100%" />
+            <render:element xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:type="RenderCubicBezier" render:x="0" render:y="80%" render:basePoint1_x="0" render:basePoint1_y="100%" render:basePoint2_x="0" render:basePoint2_y="100%" />
+          </render:listOfElements>
+        </render:polygon>
+      </render:g>
+    </render:style>
+    <render:style render:roleList="SBO-0000354-multimer">
+      <render:g render:stroke="black" render:stroke-width="2" render:fill="EPNBackgroundGradient" render:fill-rule="nonzero" render:font-family="sans-serif" render:font-weight="normal" render:font-style="normal" render:text-anchor="start" render:vtext-anchor="top" render:font-size="0">
+        <render:polygon render:stroke="black" render:stroke-width="2" render:fill="EPNBackgroundGradient">
+          <render:listOfElements>
+            <render:element xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:type="RenderPoint" render:x="5%" render:y="80%" />
+            <render:element xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:type="RenderPoint" render:x="5%" render:y="5%" />
+            <render:element xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:type="RenderPoint" render:x="100%" render:y="5%" />
+            <render:element xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:type="RenderPoint" render:x="100%" render:y="80%" />
+            <render:element xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:type="RenderCubicBezier" render:x="80%" render:y="100%" render:basePoint1_x="100%" render:basePoint1_y="100%" render:basePoint2_x="100%" render:basePoint2_y="100%" />
+            <render:element xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:type="RenderPoint" render:x="20%" render:y="100%" />
+            <render:element xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:type="RenderCubicBezier" render:x="5%" render:y="80%" render:basePoint1_x="5%" render:basePoint1_y="100%" render:basePoint2_x="5%" render:basePoint2_y="100%" />
+          </render:listOfElements>
+        </render:polygon>
+        <render:polygon render:stroke="black" render:stroke-width="2" render:fill="EPNBackgroundGradient">
+          <render:listOfElements>
+            <render:element xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:type="RenderPoint" render:x="0" render:y="80%" />
+            <render:element xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:type="RenderPoint" render:x="0" render:y="0" />
+            <render:element xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:type="RenderPoint" render:x="95%" render:y="0" />
+            <render:element xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:type="RenderPoint" render:x="95%" render:y="80%" />
+            <render:element xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:type="RenderCubicBezier" render:x="80%" render:y="95%" render:basePoint1_x="95%" render:basePoint1_y="95%" render:basePoint2_x="95%" render:basePoint2_y="95%" />
+            <render:element xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:type="RenderPoint" render:x="20%" render:y="95%" />
+            <render:element xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:type="RenderCubicBezier" render:x="0" render:y="80%" render:basePoint1_x="0" render:basePoint1_y="95%" render:basePoint2_x="0" render:basePoint2_y="95%" />
+          </render:listOfElements>
+        </render:polygon>
+      </render:g>
+    </render:style>
+    <render:style render:roleList="SBO-0000354-clone">
+      <render:g render:stroke="black" render:stroke-width="2" render:fill="EPNBackgroundGradient" render:fill-rule="nonzero" render:font-family="sans-serif" render:font-weight="normal" render:font-style="normal" render:text-anchor="start" render:vtext-anchor="top" render:font-size="0">
+        <render:polygon render:stroke="black" render:stroke-width="2" render:fill="EPNBackgroundGradient">
+          <render:listOfElements>
+            <render:element xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:type="RenderPoint" render:x="0" render:y="80%" />
+            <render:element xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:type="RenderPoint" render:x="0" render:y="0" />
+            <render:element xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:type="RenderPoint" render:x="100%" render:y="0" />
+            <render:element xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:type="RenderPoint" render:x="100%" render:y="80%" />
+            <render:element xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:type="RenderCubicBezier" render:x="80%" render:y="100%" render:basePoint1_x="100%" render:basePoint1_y="100%" render:basePoint2_x="100%" render:basePoint2_y="100%" />
+            <render:element xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:type="RenderPoint" render:x="20%" render:y="100%" />
+            <render:element xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:type="RenderCubicBezier" render:x="0" render:y="80%" render:basePoint1_x="0" render:basePoint1_y="100%" render:basePoint2_x="0" render:basePoint2_y="100%" />
+          </render:listOfElements>
+        </render:polygon>
+        <render:polygon render:fill="cloneMarker">
+          <render:listOfElements>
+            <render:element xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:type="RenderPoint" render:x="0" render:y="80%" />
+            <render:element xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:type="RenderPoint" render:x="0" render:y="0" />
+            <render:element xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:type="RenderPoint" render:x="100%" render:y="0" />
+            <render:element xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:type="RenderPoint" render:x="100%" render:y="80%" />
+            <render:element xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:type="RenderCubicBezier" render:x="80%" render:y="100%" render:basePoint1_x="100%" render:basePoint1_y="100%" render:basePoint2_x="100%" render:basePoint2_y="100%" />
+            <render:element xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:type="RenderPoint" render:x="20%" render:y="100%" />
+            <render:element xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:type="RenderCubicBezier" render:x="0" render:y="80%" render:basePoint1_x="0" render:basePoint1_y="100%" render:basePoint2_x="0" render:basePoint2_y="100%" />
+          </render:listOfElements>
+        </render:polygon>
+      </render:g>
+    </render:style>
+    <render:style render:roleList="SBO-0000354-multimer-clone">
+      <render:g render:stroke="black" render:stroke-width="2" render:fill="EPNBackgroundGradient" render:fill-rule="nonzero" render:font-family="sans-serif" render:font-weight="normal" render:font-style="normal" render:text-anchor="start" render:vtext-anchor="top" render:font-size="0">
+        <render:polygon render:stroke="black" render:stroke-width="2" render:fill="EPNBackgroundGradient">
+          <render:listOfElements>
+            <render:element xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:type="RenderPoint" render:x="5%" render:y="80%" />
+            <render:element xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:type="RenderPoint" render:x="5%" render:y="5%" />
+            <render:element xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:type="RenderPoint" render:x="100%" render:y="5%" />
+            <render:element xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:type="RenderPoint" render:x="100%" render:y="80%" />
+            <render:element xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:type="RenderCubicBezier" render:x="80%" render:y="100%" render:basePoint1_x="100%" render:basePoint1_y="100%" render:basePoint2_x="100%" render:basePoint2_y="100%" />
+            <render:element xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:type="RenderPoint" render:x="20%" render:y="100%" />
+            <render:element xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:type="RenderCubicBezier" render:x="5%" render:y="80%" render:basePoint1_x="5%" render:basePoint1_y="100%" render:basePoint2_x="5%" render:basePoint2_y="100%" />
+          </render:listOfElements>
+        </render:polygon>
+        <render:polygon render:fill="cloneMarker">
+          <render:listOfElements>
+            <render:element xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:type="RenderPoint" render:x="5%" render:y="80%" />
+            <render:element xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:type="RenderPoint" render:x="5%" render:y="5%" />
+            <render:element xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:type="RenderPoint" render:x="100%" render:y="5%" />
+            <render:element xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:type="RenderPoint" render:x="100%" render:y="80%" />
+            <render:element xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:type="RenderCubicBezier" render:x="80%" render:y="100%" render:basePoint1_x="100%" render:basePoint1_y="100%" render:basePoint2_x="100%" render:basePoint2_y="100%" />
+            <render:element xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:type="RenderPoint" render:x="20%" render:y="100%" />
+            <render:element xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:type="RenderCubicBezier" render:x="5%" render:y="80%" render:basePoint1_x="5%" render:basePoint1_y="100%" render:basePoint2_x="5%" render:basePoint2_y="100%" />
+          </render:listOfElements>
+        </render:polygon>
+        <render:polygon render:stroke="black" render:stroke-width="2" render:fill="EPNBackgroundGradient">
+          <render:listOfElements>
+            <render:element xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:type="RenderPoint" render:x="0" render:y="80%" />
+            <render:element xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:type="RenderPoint" render:x="0" render:y="0" />
+            <render:element xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:type="RenderPoint" render:x="95%" render:y="0" />
+            <render:element xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:type="RenderPoint" render:x="95%" render:y="80%" />
+            <render:element xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:type="RenderCubicBezier" render:x="80%" render:y="95%" render:basePoint1_x="95%" render:basePoint1_y="95%" render:basePoint2_x="95%" render:basePoint2_y="95%" />
+            <render:element xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:type="RenderPoint" render:x="20%" render:y="95%" />
+            <render:element xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:type="RenderCubicBezier" render:x="0" render:y="80%" render:basePoint1_x="0" render:basePoint1_y="95%" render:basePoint2_x="0" render:basePoint2_y="95%" />
+          </render:listOfElements>
+        </render:polygon>
+        <render:polygon render:fill="cloneMarker">
+          <render:listOfElements>
+            <render:element xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:type="RenderPoint" render:x="0" render:y="80%" />
+            <render:element xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:type="RenderPoint" render:x="0" render:y="0" />
+            <render:element xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:type="RenderPoint" render:x="95%" render:y="0" />
+            <render:element xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:type="RenderPoint" render:x="95%" render:y="80%" />
+            <render:element xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:type="RenderCubicBezier" render:x="80%" render:y="95%" render:basePoint1_x="95%" render:basePoint1_y="95%" render:basePoint2_x="95%" render:basePoint2_y="95%" />
+            <render:element xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:type="RenderPoint" render:x="20%" render:y="95%" />
+            <render:element xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:type="RenderCubicBezier" render:x="0" render:y="80%" render:basePoint1_x="0" render:basePoint1_y="95%" render:basePoint2_x="0" render:basePoint2_y="95%" />
+          </render:listOfElements>
+        </render:polygon>
+      </render:g>
+    </render:style>
+    <render:style render:roleList="SBO-0000245">
+      <render:g render:stroke="black" render:stroke-width="2" render:fill="EPNBackgroundGradient" render:fill-rule="nonzero" render:font-family="sans-serif" render:font-weight="normal" render:font-style="normal" render:text-anchor="start" render:vtext-anchor="top" render:font-size="0">
+        <render:rectangle render:x="0" render:y="0" render:width="100%" render:height="100%" render:rx="10%" render:ry="10%" />
+      </render:g>
+    </render:style>
+    <render:style render:roleList="SBO-0000245-multimer">
+      <render:g render:stroke="black" render:stroke-width="2" render:fill="EPNBackgroundGradient" render:fill-rule="nonzero" render:font-family="sans-serif" render:font-weight="normal" render:font-style="normal" render:text-anchor="start" render:vtext-anchor="top" render:font-size="0">
+        <render:rectangle render:x="5%" render:y="5%" render:width="95%" render:height="95%" render:rx="10%" render:ry="10%" />
+        <render:rectangle render:x="0" render:y="0" render:width="95%" render:height="95%" render:rx="10%" render:ry="10%" />
+      </render:g>
+    </render:style>
+    <render:style render:roleList="SBO-0000245-clone">
+      <render:g render:stroke="black" render:stroke-width="2" render:fill="EPNBackgroundGradient" render:fill-rule="nonzero" render:font-family="sans-serif" render:font-weight="normal" render:font-style="normal" render:text-anchor="start" render:vtext-anchor="top" render:font-size="0">
+        <render:rectangle render:x="0" render:y="0" render:width="100%" render:height="100%" render:rx="10%" render:ry="10%" />
+        <render:rectangle render:fill="cloneMarker" render:x="0" render:y="0" render:width="100%" render:height="100%" render:rx="10%" render:ry="10%" />
+      </render:g>
+    </render:style>
+    <render:style render:roleList="SBO-0000245-multimer-clone">
+      <render:g render:stroke="black" render:stroke-width="2" render:fill="EPNBackgroundGradient" render:fill-rule="nonzero" render:font-family="sans-serif" render:font-weight="normal" render:font-style="normal" render:text-anchor="start" render:vtext-anchor="top" render:font-size="0">
+        <render:rectangle render:x="5%" render:y="5%" render:width="95%" render:height="95%" render:rx="10%" render:ry="10%" />
+        <render:rectangle render:fill="cloneMarker" render:x="5%" render:y="5%" render:width="95%" render:height="95%" render:rx="10%" render:ry="10%" />
+        <render:rectangle render:x="0" render:y="0" render:width="95%" render:height="95%" render:rx="10%" render:ry="10%" />
+        <render:rectangle render:fill="cloneMarker" render:x="0" render:y="0" render:width="95%" render:height="95%" render:rx="10%" render:ry="10%" />
+      </render:g>
+    </render:style>
+    <render:style render:roleList="NO-SBO SBO-0000285">
+      <render:g render:stroke="black" render:stroke-width="2" render:fill="EPNBackgroundGradient" render:fill-rule="nonzero" render:font-family="sans-serif" render:font-weight="normal" render:font-style="normal" render:text-anchor="start" render:vtext-anchor="top" render:font-size="0">
+        <render:ellipse render:cx="50%" render:cy="50%" render:rx="50%" />
+      </render:g>
+    </render:style>
+    <render:style render:roleList="NO-SBO-multimer SBO-0000285-multimer">
+      <render:g render:stroke="black" render:stroke-width="2" render:fill="EPNBackgroundGradient" render:fill-rule="nonzero" render:font-family="sans-serif" render:font-weight="normal" render:font-style="normal" render:text-anchor="start" render:vtext-anchor="top" render:font-size="0">
+        <render:ellipse render:cx="45%" render:cy="45%" render:rx="45%" />
+        <render:ellipse render:cx="55%" render:cy="55%" render:rx="45%" />
+      </render:g>
+    </render:style>
+    <render:style render:roleList="NO-SBO-clone SBO-0000285-clone">
+      <render:g render:stroke="black" render:stroke-width="2" render:fill="EPNBackgroundGradient" render:fill-rule="nonzero" render:font-family="sans-serif" render:font-weight="normal" render:font-style="normal" render:text-anchor="start" render:vtext-anchor="top" render:font-size="0">
+        <render:ellipse render:cx="50%" render:cy="50%" render:rx="50%" />
+        <render:ellipse render:fill="cloneMarker" render:cx="50%" render:cy="50%" render:rx="50%" />
+      </render:g>
+    </render:style>
+    <render:style render:roleList="NO-SBO-multimer-clone SBO-0000285-multimer-clone">
+      <render:g render:stroke="black" render:stroke-width="2" render:fill="EPNBackgroundGradient" render:fill-rule="nonzero" render:font-family="sans-serif" render:font-weight="normal" render:font-style="normal" render:text-anchor="start" render:vtext-anchor="top" render:font-size="0">
+        <render:ellipse render:cx="45%" render:cy="45%" render:rx="45%" />
+        <render:ellipse render:fill="cloneMarker" render:cx="45%" render:cy="45%" render:rx="45%" />
+        <render:ellipse render:cx="55%" render:cy="55%" render:rx="45%" />
+        <render:ellipse render:fill="cloneMarker" render:cx="55%" render:cy="55%" render:rx="45%" />
+      </render:g>
+    </render:style>
+    <render:style render:roleList="SBO-0000247">
+      <render:g render:stroke="black" render:stroke-width="2" render:fill="EPNBackgroundGradient" render:fill-rule="nonzero" render:font-family="sans-serif" render:font-weight="normal" render:font-style="normal" render:text-anchor="start" render:vtext-anchor="top" render:font-size="0">
+        <render:ellipse render:cx="50%" render:cy="50%" render:rx="50%" />
+      </render:g>
+    </render:style>
+    <render:style render:roleList="SBO-0000247-multimer">
+      <render:g render:stroke="black" render:stroke-width="2" render:fill="EPNBackgroundGradient" render:fill-rule="nonzero" render:font-family="sans-serif" render:font-weight="normal" render:font-style="normal" render:text-anchor="start" render:vtext-anchor="top" render:font-size="0">
+        <render:ellipse render:cx="55%" render:cy="55%" render:rx="45%" />
+        <render:ellipse render:cx="45%" render:cy="45%" render:rx="45%" />
+      </render:g>
+    </render:style>
+    <render:style render:roleList="SBO-0000247-clone">
+      <render:g render:stroke="black" render:stroke-width="2" render:fill="EPNBackgroundGradient" render:fill-rule="nonzero" render:font-family="sans-serif" render:font-weight="normal" render:font-style="normal" render:text-anchor="start" render:vtext-anchor="top" render:font-size="0">
+        <render:ellipse render:cx="50%" render:cy="50%" render:rx="50%" />
+        <render:ellipse render:fill="cloneMarker" render:cx="50%" render:cy="50%" render:rx="50%" />
+      </render:g>
+    </render:style>
+    <render:style render:roleList="SBO-0000247-multimer-clone">
+      <render:g render:stroke="black" render:stroke-width="2" render:fill="EPNBackgroundGradient" render:fill-rule="nonzero" render:font-family="sans-serif" render:font-weight="normal" render:font-style="normal" render:text-anchor="start" render:vtext-anchor="top" render:font-size="0">
+        <render:ellipse render:cx="55%" render:cy="55%" render:rx="45%" />
+        <render:ellipse render:fill="cloneMarker" render:cx="55%" render:cy="55%" render:rx="45%" />
+        <render:ellipse render:cx="45%" render:cy="45%" render:rx="45%" />
+        <render:ellipse render:fill="cloneMarker" render:cx="45%" render:cy="45%" render:rx="45%" />
+      </render:g>
+    </render:style>
+    <render:style render:roleList="SBO-0000291 SBO-0000291-clone">
+      <render:g render:stroke="EmptySetOutline" render:stroke-width="1.25" render:fill="EmptySetGradient" render:fill-rule="nonzero" render:font-family="sans-serif" render:font-weight="normal" render:font-style="normal" render:text-anchor="start" render:vtext-anchor="top" render:font-size="0">
+        <render:curve>
+          <render:listOfElements>
+            <render:element xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:type="RenderPoint" render:x="0" render:y="100%" />
+            <render:element xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:type="RenderPoint" render:x="100%" render:y="0" />
+          </render:listOfElements>
+        </render:curve>
+        <render:ellipse render:cx="50%" render:cy="50%" render:rx="50%" />
+        <render:g render:font-weight="normal" render:font-style="normal" render:text-anchor="start" render:vtext-anchor="top">
+          <render:curve>
+            <render:listOfElements>
+              <render:element xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:type="RenderPoint" render:x="0" render:y="100%" />
+              <render:element xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:type="RenderPoint" render:x="100%" render:y="0" />
+            </render:listOfElements>
+          </render:curve>
+        </render:g>
+      </render:g>
+    </render:style>
+    <render:style render:roleList="SBO-0000253">
+      <render:g render:stroke="black" render:stroke-width="2" render:fill="EPNBackgroundGradient" render:fill-rule="nonzero" render:font-family="sans-serif" render:font-weight="normal" render:font-style="normal" render:text-anchor="start" render:vtext-anchor="top" render:font-size="0">
+        <render:polygon render:stroke="black" render:stroke-width="2" render:fill="EPNBackgroundGradient">
+          <render:listOfElements>
+            <render:element xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:type="RenderPoint" render:x="0" render:y="10" />
+            <render:element xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:type="RenderPoint" render:x="10" render:y="0" />
+            <render:element xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:type="RenderPoint" render:x="-10+100%" render:y="0" />
+            <render:element xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:type="RenderPoint" render:x="100%" render:y="10" />
+            <render:element xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:type="RenderPoint" render:x="100%" render:y="-10+100%" />
+            <render:element xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:type="RenderPoint" render:x="-10+100%" render:y="100%" />
+            <render:element xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:type="RenderPoint" render:x="10" render:y="100%" />
+            <render:element xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:type="RenderPoint" render:x="0" render:y="-10+100%" />
+            <render:element xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:type="RenderPoint" render:x="0" render:y="10" />
+          </render:listOfElements>
+        </render:polygon>
+      </render:g>
+    </render:style>
+    <render:style render:roleList="SBO-0000253-multimer">
+      <render:g render:stroke="black" render:stroke-width="2" render:fill="EPNBackgroundGradient" render:fill-rule="nonzero" render:font-family="sans-serif" render:font-weight="normal" render:font-style="normal" render:text-anchor="start" render:vtext-anchor="top" render:font-size="0">
+        <render:polygon render:stroke="black" render:stroke-width="2" render:fill="EPNBackgroundGradient">
+          <render:listOfElements>
+            <render:element xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:type="RenderPoint" render:x="5%" render:y="15%" />
+            <render:element xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:type="RenderPoint" render:x="15%" render:y="5%" />
+            <render:element xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:type="RenderPoint" render:x="90%" render:y="5%" />
+            <render:element xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:type="RenderPoint" render:x="100%" render:y="15%" />
+            <render:element xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:type="RenderPoint" render:x="100%" render:y="90%" />
+            <render:element xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:type="RenderPoint" render:x="90%" render:y="100%" />
+            <render:element xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:type="RenderPoint" render:x="15%" render:y="100%" />
+            <render:element xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:type="RenderPoint" render:x="5%" render:y="90%" />
+            <render:element xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:type="RenderPoint" render:x="5%" render:y="15%" />
+          </render:listOfElements>
+        </render:polygon>
+        <render:polygon render:stroke="black" render:stroke-width="2" render:fill="EPNBackgroundGradient">
+          <render:listOfElements>
+            <render:element xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:type="RenderPoint" render:x="0" render:y="10%" />
+            <render:element xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:type="RenderPoint" render:x="10%" render:y="0" />
+            <render:element xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:type="RenderPoint" render:x="85%" render:y="0" />
+            <render:element xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:type="RenderPoint" render:x="95%" render:y="10%" />
+            <render:element xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:type="RenderPoint" render:x="95%" render:y="85%" />
+            <render:element xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:type="RenderPoint" render:x="85%" render:y="95%" />
+            <render:element xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:type="RenderPoint" render:x="10%" render:y="95%" />
+            <render:element xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:type="RenderPoint" render:x="0" render:y="85%" />
+            <render:element xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:type="RenderPoint" render:x="0" render:y="10%" />
+          </render:listOfElements>
+        </render:polygon>
+      </render:g>
+    </render:style>
+    <render:style render:roleList="SBO-0000253-clone">
+      <render:g render:stroke="black" render:stroke-width="2" render:fill="EPNBackgroundGradient" render:fill-rule="nonzero" render:font-family="sans-serif" render:font-weight="normal" render:font-style="normal" render:text-anchor="start" render:vtext-anchor="top" render:font-size="0">
+        <render:polygon render:stroke="black" render:stroke-width="2" render:fill="EPNBackgroundGradient">
+          <render:listOfElements>
+            <render:element xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:type="RenderPoint" render:x="0" render:y="10%" />
+            <render:element xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:type="RenderPoint" render:x="10%" render:y="0" />
+            <render:element xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:type="RenderPoint" render:x="90%" render:y="0" />
+            <render:element xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:type="RenderPoint" render:x="100%" render:y="10%" />
+            <render:element xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:type="RenderPoint" render:x="100%" render:y="90%" />
+            <render:element xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:type="RenderPoint" render:x="90%" render:y="100%" />
+            <render:element xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:type="RenderPoint" render:x="10%" render:y="100%" />
+            <render:element xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:type="RenderPoint" render:x="0" render:y="90%" />
+            <render:element xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:type="RenderPoint" render:x="0" render:y="10%" />
+          </render:listOfElements>
+        </render:polygon>
+        <render:polygon render:fill="cloneMarker">
+          <render:listOfElements>
+            <render:element xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:type="RenderPoint" render:x="0" render:y="10%" />
+            <render:element xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:type="RenderPoint" render:x="10%" render:y="0" />
+            <render:element xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:type="RenderPoint" render:x="90%" render:y="0" />
+            <render:element xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:type="RenderPoint" render:x="100%" render:y="10%" />
+            <render:element xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:type="RenderPoint" render:x="100%" render:y="90%" />
+            <render:element xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:type="RenderPoint" render:x="90%" render:y="100%" />
+            <render:element xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:type="RenderPoint" render:x="10%" render:y="100%" />
+            <render:element xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:type="RenderPoint" render:x="0" render:y="90%" />
+            <render:element xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:type="RenderPoint" render:x="0" render:y="10%" />
+          </render:listOfElements>
+        </render:polygon>
+      </render:g>
+    </render:style>
+    <render:style render:roleList="SBO-0000253-multimer-clone">
+      <render:g render:stroke="black" render:stroke-width="2" render:fill="EPNBackgroundGradient" render:fill-rule="nonzero" render:font-family="sans-serif" render:font-weight="normal" render:font-style="normal" render:text-anchor="start" render:vtext-anchor="top" render:font-size="0">
+        <render:polygon render:stroke="black" render:stroke-width="2" render:fill="EPNBackgroundGradient">
+          <render:listOfElements>
+            <render:element xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:type="RenderPoint" render:x="5%" render:y="15%" />
+            <render:element xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:type="RenderPoint" render:x="15%" render:y="5%" />
+            <render:element xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:type="RenderPoint" render:x="90%" render:y="5%" />
+            <render:element xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:type="RenderPoint" render:x="100%" render:y="15%" />
+            <render:element xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:type="RenderPoint" render:x="100%" render:y="90%" />
+            <render:element xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:type="RenderPoint" render:x="90%" render:y="100%" />
+            <render:element xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:type="RenderPoint" render:x="15%" render:y="100%" />
+            <render:element xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:type="RenderPoint" render:x="5%" render:y="90%" />
+            <render:element xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:type="RenderPoint" render:x="5%" render:y="15%" />
+          </render:listOfElements>
+        </render:polygon>
+        <render:polygon render:fill="cloneMarker">
+          <render:listOfElements>
+            <render:element xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:type="RenderPoint" render:x="5%" render:y="15%" />
+            <render:element xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:type="RenderPoint" render:x="15%" render:y="5%" />
+            <render:element xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:type="RenderPoint" render:x="90%" render:y="5%" />
+            <render:element xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:type="RenderPoint" render:x="100%" render:y="15%" />
+            <render:element xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:type="RenderPoint" render:x="100%" render:y="90%" />
+            <render:element xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:type="RenderPoint" render:x="90%" render:y="100%" />
+            <render:element xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:type="RenderPoint" render:x="15%" render:y="100%" />
+            <render:element xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:type="RenderPoint" render:x="5%" render:y="90%" />
+            <render:element xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:type="RenderPoint" render:x="5%" render:y="15%" />
+          </render:listOfElements>
+        </render:polygon>
+        <render:polygon render:stroke="black" render:stroke-width="2" render:fill="EPNBackgroundGradient">
+          <render:listOfElements>
+            <render:element xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:type="RenderPoint" render:x="0" render:y="10%" />
+            <render:element xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:type="RenderPoint" render:x="10%" render:y="0" />
+            <render:element xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:type="RenderPoint" render:x="85%" render:y="0" />
+            <render:element xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:type="RenderPoint" render:x="95%" render:y="10%" />
+            <render:element xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:type="RenderPoint" render:x="95%" render:y="85%" />
+            <render:element xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:type="RenderPoint" render:x="85%" render:y="95%" />
+            <render:element xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:type="RenderPoint" render:x="10%" render:y="95%" />
+            <render:element xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:type="RenderPoint" render:x="0" render:y="85%" />
+            <render:element xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:type="RenderPoint" render:x="0" render:y="10%" />
+          </render:listOfElements>
+        </render:polygon>
+        <render:polygon render:fill="cloneMarker">
+          <render:listOfElements>
+            <render:element xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:type="RenderPoint" render:x="0" render:y="10%" />
+            <render:element xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:type="RenderPoint" render:x="10%" render:y="0" />
+            <render:element xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:type="RenderPoint" render:x="85%" render:y="0" />
+            <render:element xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:type="RenderPoint" render:x="95%" render:y="10%" />
+            <render:element xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:type="RenderPoint" render:x="95%" render:y="85%" />
+            <render:element xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:type="RenderPoint" render:x="85%" render:y="95%" />
+            <render:element xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:type="RenderPoint" render:x="10%" render:y="95%" />
+            <render:element xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:type="RenderPoint" render:x="0" render:y="85%" />
+            <render:element xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:type="RenderPoint" render:x="0" render:y="10%" />
+          </render:listOfElements>
+        </render:polygon>
+      </render:g>
+    </render:style>
+    <render:style render:roleList="SBO-0000405">
+      <render:g render:stroke="black" render:stroke-width="2" render:fill="EPNBackgroundGradient" render:fill-rule="nonzero" render:font-family="sans-serif" render:font-weight="normal" render:font-style="normal" render:text-anchor="start" render:vtext-anchor="top" render:font-size="0">
+        <render:polygon render:stroke="black" render:stroke-width="2" render:fill="EPNBackgroundGradient">
+          <render:listOfElements>
+            <render:element xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:type="RenderPoint" render:x="0" render:y="0" />
+            <render:element xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:type="RenderPoint" render:x="100%" render:y="0" />
+            <render:element xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:type="RenderPoint" render:x="80%" render:y="50%" />
+            <render:element xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:type="RenderPoint" render:x="100%" render:y="100%" />
+            <render:element xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:type="RenderPoint" render:x="0" render:y="100%" />
+            <render:element xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:type="RenderPoint" render:x="20%" render:y="50%" />
+            <render:element xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:type="RenderPoint" render:x="0" render:y="0" />
+          </render:listOfElements>
+        </render:polygon>
+      </render:g>
+    </render:style>
+    <render:style render:roleList="SBO-0000405-clone">
+      <render:g render:stroke="black" render:stroke-width="2" render:fill="EPNBackgroundGradient" render:fill-rule="nonzero" render:font-family="sans-serif" render:font-weight="normal" render:font-style="normal" render:text-anchor="start" render:vtext-anchor="top" render:font-size="0">
+        <render:polygon render:stroke="black" render:stroke-width="2" render:fill="EPNBackgroundGradient">
+          <render:listOfElements>
+            <render:element xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:type="RenderPoint" render:x="0" render:y="0" />
+            <render:element xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:type="RenderPoint" render:x="100%" render:y="0" />
+            <render:element xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:type="RenderPoint" render:x="80%" render:y="50%" />
+            <render:element xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:type="RenderPoint" render:x="100%" render:y="100%" />
+            <render:element xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:type="RenderPoint" render:x="0" render:y="100%" />
+            <render:element xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:type="RenderPoint" render:x="20%" render:y="50%" />
+            <render:element xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:type="RenderPoint" render:x="0" render:y="0" />
+          </render:listOfElements>
+        </render:polygon>
+        <render:polygon render:fill="cloneMarker">
+          <render:listOfElements>
+            <render:element xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:type="RenderPoint" render:x="0" render:y="0" />
+            <render:element xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:type="RenderPoint" render:x="100%" render:y="0" />
+            <render:element xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:type="RenderPoint" render:x="80%" render:y="50%" />
+            <render:element xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:type="RenderPoint" render:x="100%" render:y="100%" />
+            <render:element xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:type="RenderPoint" render:x="0" render:y="100%" />
+            <render:element xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:type="RenderPoint" render:x="20%" render:y="50%" />
+            <render:element xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:type="RenderPoint" render:x="0" render:y="0" />
+          </render:listOfElements>
+        </render:polygon>
+      </render:g>
+    </render:style>
+    <render:style render:roleList="Tag">
+      <render:g render:stroke="black" render:stroke-width="2" render:fill="EPNBackgroundGradient" render:fill-rule="nonzero" render:font-family="sans-serif" render:font-weight="normal" render:font-style="normal" render:text-anchor="start" render:vtext-anchor="top" render:font-size="0">
+        <render:polygon render:stroke="black" render:stroke-width="2" render:fill="EPNBackgroundGradient">
+          <render:listOfElements>
+            <render:element xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:type="RenderPoint" render:x="0" render:y="0" />
+            <render:element xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:type="RenderPoint" render:x="75%" render:y="0" />
+            <render:element xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:type="RenderPoint" render:x="100%" render:y="50%" />
+            <render:element xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:type="RenderPoint" render:x="75%" render:y="100%" />
+            <render:element xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:type="RenderPoint" render:x="0" render:y="100%" />
+            <render:element xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:type="RenderPoint" render:x="0" render:y="0" />
+          </render:listOfElements>
+        </render:polygon>
+      </render:g>
+    </render:style>
+    <render:style render:roleList="Tag-right">
+      <render:g render:stroke="black" render:stroke-width="2" render:fill="EPNBackgroundGradient" render:fill-rule="nonzero" render:font-family="sans-serif" render:font-weight="normal" render:font-style="normal" render:text-anchor="start" render:vtext-anchor="top" render:font-size="0">
+        <render:polygon render:stroke="black" render:stroke-width="2" render:fill="EPNBackgroundGradient">
+          <render:listOfElements>
+            <render:element xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:type="RenderPoint" render:x="0" render:y="0" />
+            <render:element xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:type="RenderPoint" render:x="75%" render:y="0" />
+            <render:element xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:type="RenderPoint" render:x="100%" render:y="50%" />
+            <render:element xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:type="RenderPoint" render:x="75%" render:y="100%" />
+            <render:element xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:type="RenderPoint" render:x="0" render:y="100%" />
+            <render:element xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:type="RenderPoint" render:x="0" render:y="0" />
+          </render:listOfElements>
+        </render:polygon>
+      </render:g>
+    </render:style>
+    <render:style render:roleList="Tag-up">
+      <render:g render:stroke="black" render:stroke-width="2" render:fill="EPNBackgroundGradient" render:fill-rule="nonzero" render:font-family="sans-serif" render:font-weight="normal" render:font-style="normal" render:text-anchor="start" render:vtext-anchor="top" render:font-size="0">
+        <render:polygon render:stroke="black" render:stroke-width="2" render:fill="EPNBackgroundGradient">
+          <render:listOfElements>
+            <render:element xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:type="RenderPoint" render:x="0" render:y="25%" />
+            <render:element xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:type="RenderPoint" render:x="50%" render:y="0" />
+            <render:element xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:type="RenderPoint" render:x="100%" render:y="25%" />
+            <render:element xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:type="RenderPoint" render:x="100%" render:y="100%" />
+            <render:element xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:type="RenderPoint" render:x="0" render:y="100%" />
+            <render:element xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:type="RenderPoint" render:x="0" render:y="25%" />
+          </render:listOfElements>
+        </render:polygon>
+      </render:g>
+    </render:style>
+    <render:style render:roleList="Tag-down">
+      <render:g render:stroke="black" render:stroke-width="2" render:fill="EPNBackgroundGradient" render:fill-rule="nonzero" render:font-family="sans-serif" render:font-weight="normal" render:font-style="normal" render:text-anchor="start" render:vtext-anchor="top" render:font-size="0">
+        <render:polygon render:stroke="black" render:stroke-width="2" render:fill="EPNBackgroundGradient">
+          <render:listOfElements>
+            <render:element xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:type="RenderPoint" render:x="0" render:y="0" />
+            <render:element xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:type="RenderPoint" render:x="100%" render:y="0" />
+            <render:element xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:type="RenderPoint" render:x="100%" render:y="75%" />
+            <render:element xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:type="RenderPoint" render:x="50%" render:y="100%" />
+            <render:element xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:type="RenderPoint" render:x="0" render:y="75%" />
+            <render:element xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:type="RenderPoint" render:x="0" render:y="0" />
+          </render:listOfElements>
+        </render:polygon>
+      </render:g>
+    </render:style>
+    <render:style render:roleList="Tag-left">
+      <render:g render:stroke="black" render:stroke-width="2" render:fill="EPNBackgroundGradient" render:fill-rule="nonzero" render:font-family="sans-serif" render:font-weight="normal" render:font-style="normal" render:text-anchor="start" render:vtext-anchor="top" render:font-size="0">
+        <render:polygon render:stroke="black" render:stroke-width="2" render:fill="EPNBackgroundGradient">
+          <render:listOfElements>
+            <render:element xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:type="RenderPoint" render:x="25%" render:y="0" />
+            <render:element xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:type="RenderPoint" render:x="100%" render:y="0" />
+            <render:element xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:type="RenderPoint" render:x="100%" render:y="100%" />
+            <render:element xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:type="RenderPoint" render:x="25%" render:y="100%" />
+            <render:element xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:type="RenderPoint" render:x="0" render:y="50%" />
+            <render:element xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:type="RenderPoint" render:x="25%" render:y="0" />
+          </render:listOfElements>
+        </render:polygon>
+      </render:g>
+    </render:style>
+    <render:style render:roleList="SBO-0000358">
+      <render:g render:stroke="black" render:stroke-width="2" render:fill="EPNBackgroundGradient" render:fill-rule="nonzero" render:font-family="sans-serif" render:font-weight="normal" render:font-style="normal" render:text-anchor="start" render:vtext-anchor="top" render:font-size="0">
+        <render:polygon render:stroke="black" render:stroke-width="2" render:fill="EPNBackgroundGradient">
+          <render:listOfElements>
+            <render:element xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:type="RenderPoint" render:x="20%" render:y="0" />
+            <render:element xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:type="RenderPoint" render:x="80%" render:y="0" />
+            <render:element xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:type="RenderPoint" render:x="100%" render:y="50%" />
+            <render:element xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:type="RenderPoint" render:x="80%" render:y="100%" />
+            <render:element xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:type="RenderPoint" render:x="20%" render:y="100%" />
+            <render:element xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:type="RenderPoint" render:x="0" render:y="50%" />
+            <render:element xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:type="RenderPoint" render:x="20%" render:y="0" />
+          </render:listOfElements>
+        </render:polygon>
+      </render:g>
+    </render:style>
+    <render:style render:roleList="SBO-0000358-clone">
+      <render:g render:stroke="black" render:stroke-width="2" render:fill="EPNBackgroundGradient" render:fill-rule="nonzero" render:font-family="sans-serif" render:font-weight="normal" render:font-style="normal" render:text-anchor="start" render:vtext-anchor="top" render:font-size="0">
+        <render:polygon render:stroke="black" render:stroke-width="2" render:fill="EPNBackgroundGradient">
+          <render:listOfElements>
+            <render:element xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:type="RenderPoint" render:x="20%" render:y="0" />
+            <render:element xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:type="RenderPoint" render:x="80%" render:y="0" />
+            <render:element xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:type="RenderPoint" render:x="100%" render:y="50%" />
+            <render:element xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:type="RenderPoint" render:x="80%" render:y="100%" />
+            <render:element xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:type="RenderPoint" render:x="20%" render:y="100%" />
+            <render:element xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:type="RenderPoint" render:x="0" render:y="50%" />
+            <render:element xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:type="RenderPoint" render:x="20%" render:y="0" />
+          </render:listOfElements>
+        </render:polygon>
+        <render:polygon render:fill="cloneMarker">
+          <render:listOfElements>
+            <render:element xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:type="RenderPoint" render:x="20%" render:y="0" />
+            <render:element xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:type="RenderPoint" render:x="80%" render:y="0" />
+            <render:element xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:type="RenderPoint" render:x="100%" render:y="50%" />
+            <render:element xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:type="RenderPoint" render:x="80%" render:y="100%" />
+            <render:element xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:type="RenderPoint" render:x="20%" render:y="100%" />
+            <render:element xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:type="RenderPoint" render:x="0" render:y="50%" />
+            <render:element xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:type="RenderPoint" render:x="20%" render:y="0" />
+          </render:listOfElements>
+        </render:polygon>
+      </render:g>
+    </render:style>
+    <render:style render:roleList="SBO-0000395">
+      <render:g render:stroke="black" render:stroke-width="2" render:fill="EPNBackgroundGradient" render:fill-rule="nonzero" render:font-family="sans-serif" render:font-weight="normal" render:font-style="normal" render:text-anchor="start" render:vtext-anchor="top" render:font-size="0">
+        <render:rectangle render:x="0" render:y="0" render:width="100%" render:height="100%" />
+      </render:g>
+    </render:style>
+    <render:style render:roleList="SBO-0000289">
+      <render:g render:stroke="CompartmentBorder" render:stroke-width="7" render:fill="CompartmentGradient" render:fill-rule="nonzero" render:font-family="sans-serif" render:font-weight="normal" render:font-style="normal" render:text-anchor="start" render:vtext-anchor="top" render:font-size="0">
+        <render:rectangle render:x="0" render:y="0" render:width="100%" render:height="100%" render:rx="10%" render:ry="10%" />
+      </render:g>
+    </render:style>
+  </render:listOfStyles>
+</render:renderInformation>
