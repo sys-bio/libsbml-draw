@@ -25,8 +25,8 @@ GlyphObject = namedtuple("GlyphObject", ["glyph_id", "x", "y"])
 
 LINE_ENDINGS_STYLE_SHEET = "render-stylesheet_global.xml"
 
-LOCAL_RENDER_INFO_STYLE_SHEET = str(Path(pkg_resources.resource_filename(
-        "libsbml_draw", "model/data/" + "SBGNstyles.xml")))
+CURRENT_SPEC_STYLE_SHEET = str(Path(pkg_resources.resource_filename(
+        "libsbml_draw", "model/data/" + "SBGNstyles_31.xml")))
 
 FONT_STYLES = ["none", "normal", "italic"]
 
@@ -1404,26 +1404,28 @@ class Render:
         local_render_info.setName("Render Information")
 
         if network.libsbml_color_definitions:
-
+            
             for color_defn in network.libsbml_color_definitions:
 
                 result = local_render_info.addColorDefinition(color_defn)
 
-                if result != libsbml.LIBSBML_OPERATION_SUCCESS:
-                    raise RuntimeWarning("libsbml could not add color definition",  # noqa
-                                         result)
+#                if result != libsbml.LIBSBML_OPERATION_SUCCESS:
+#                    raise RuntimeWarning("libsbml could not add color definition",  # noqa
+#                                         result)
 
         if network.libsbml_line_endings:
 
+            print("adding line_endings")
+            
             for line_ending in network.libsbml_line_endings:
 
                 result = local_render_info.addLineEnding(line_ending)
 
-                if result != libsbml.LIBSBML_OPERATION_SUCCESS:
-                    raise RuntimeWarning("libsbml could not add line ending",
-                                         result)
+#                if result != libsbml.LIBSBML_OPERATION_SUCCESS:
+#                    raise RuntimeWarning("libsbml could not add line ending",
+#                                         result)
 
-        elif network.stylesheet_line_endings:
+        elif network.stylesheet_line_endings:            
             pass
 #           for line_ending in network.stylesheet_libsbml_line_endings:
 
@@ -1594,15 +1596,15 @@ class Render:
             self.doc.setPackageRequired("render", False)
 
             rPlugin = self.layout.getPlugin("render")
-            local_render_info = rPlugin.createLocalRenderInformation()
+#            local_render_info = rPlugin.createLocalRenderInformation()
 
-#            local_render_info = libsbml.LocalRenderInformation()
-#            stream = libsbml.XMLInputStream(LOCAL_RENDER_INFO_STYLE_SHEET)
-#            local_render_info.read(stream)
+            local_render_info = libsbml.LocalRenderInformation()
+            stream = libsbml.XMLInputStream(CURRENT_SPEC_STYLE_SHEET)
+            local_render_info.read(stream)
 
             self._addLocalStylesRenderInformation(local_render_info, network)
 
-#            rPlugin.addLocalRenderInformation(local_render_info)
+            rPlugin.addLocalRenderInformation(local_render_info)
 
     def _readLineEndingsStyleSheet(self, network):
         """Read in a default line endings style sheet, and assign it to the
@@ -1655,4 +1657,4 @@ class Render:
         """
         self._applyGlobalRenderInformation(network)
         self._applyLocalRenderInformation(network)
-        self._readLineEndingsStyleSheet(network)
+#        self._readLineEndingsStyleSheet(network)
