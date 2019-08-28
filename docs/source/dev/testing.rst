@@ -3,8 +3,14 @@
 Testing
 =======
 
-Running Unit Tests
-------------------
+Running Test Files
+-------------------
 
-Unit tests can run from either the root directory or ``tests`` subdirectory
-using ``pytest``.
+Python files for testing can be found in the tests subdirectory of the project.
+
+These files begin with "test" and end in the python extension .py.
+
+Each file can be run so that the user can view the network drawn, and check that
+all the assert statements in the file pass.
+
+
