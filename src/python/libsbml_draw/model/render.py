@@ -788,7 +788,7 @@ class Render:
 
             if glyph_id == "":
                 glyph_id = speciesGlyphs[0].glyph_id
-                
+
         else:
             pass
 
@@ -830,10 +830,10 @@ class Render:
 
                 else:
                     pass
-                
+
             if glyph_id == "":
-                glyph_id = textGlyphs[0].glyph_id    
-                
+                glyph_id = textGlyphs[0].glyph_id
+
         else:
             pass
 
@@ -1404,28 +1404,26 @@ class Render:
         local_render_info.setName("Render Information")
 
         if network.libsbml_color_definitions:
-            
+
             for color_defn in network.libsbml_color_definitions:
 
                 result = local_render_info.addColorDefinition(color_defn)
 
-#                if result != libsbml.LIBSBML_OPERATION_SUCCESS:
-#                    raise RuntimeWarning("libsbml could not add color definition",  # noqa
-#                                         result)
+                if result != libsbml.LIBSBML_OPERATION_SUCCESS:
+                    raise RuntimeWarning("libsbml could not add color definition",  # noqa
+                                         result)
 
         if network.libsbml_line_endings:
 
-            print("adding line_endings")
-            
             for line_ending in network.libsbml_line_endings:
 
                 result = local_render_info.addLineEnding(line_ending)
 
-#                if result != libsbml.LIBSBML_OPERATION_SUCCESS:
-#                    raise RuntimeWarning("libsbml could not add line ending",
-#                                         result)
+                if result != libsbml.LIBSBML_OPERATION_SUCCESS:
+                    raise RuntimeWarning("libsbml could not add line ending",
+                                         result)
 
-        elif network.stylesheet_line_endings:            
+        elif network.stylesheet_line_endings:
             pass
 #           for line_ending in network.stylesheet_libsbml_line_endings:
 
@@ -1480,7 +1478,7 @@ class Render:
                 if result != libsbml.LIBSBML_OPERATION_SUCCESS:
                     raise RuntimeWarning(
                         "Could not add polygon to local style for node: ",
-                        node.id)
+                        node.id, result)
             else:
                 raise ValueError("invalid node shape: ", node.shape)
 
@@ -1596,11 +1594,17 @@ class Render:
             self.doc.setPackageRequired("render", False)
 
             rPlugin = self.layout.getPlugin("render")
-#            local_render_info = rPlugin.createLocalRenderInformation()
 
-            local_render_info = libsbml.LocalRenderInformation()
-            stream = libsbml.XMLInputStream(CURRENT_SPEC_STYLE_SHEET)
-            local_render_info.read(stream)
+            if (self.render_plugin and
+                    self.render_plugin.getNumGlobalRenderInformationObjects() > 0):  # noqa
+
+                local_render_info = rPlugin.createLocalRenderInformation()
+
+            else:
+
+                local_render_info = libsbml.LocalRenderInformation()
+                stream = libsbml.XMLInputStream(CURRENT_SPEC_STYLE_SHEET)
+                local_render_info.read(stream)
 
             self._addLocalStylesRenderInformation(local_render_info, network)
 

@@ -86,4 +86,4 @@ else:
 assert slr.getNodeEdgeColor("A") == "#0000ff"
 assert slr.getNodeFillColor("A") == "#c9e0fb"
 
-sl.writeSBMLFile("test_no_layout_read_back_in.xml")
+slr.writeSBMLFile("test_no_layout_read_back_in.xml")

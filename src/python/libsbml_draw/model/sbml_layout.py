@@ -2243,7 +2243,6 @@ class SBMLlayout:
 
         Returns: matplotlib.figure.Figure
         """
-
         fig = createNetworkFigure(self, self.__arrowhead_scale, show, dpi,
                                   width_shift, height_shift, scaling_factor)
         if(save_file_name):
