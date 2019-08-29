@@ -1084,9 +1084,6 @@ class Render:
         else:
             node_ry = 0
 
-#        rectangle_rounding = (max(node_rx, node_ry) /
-#                              max(nw_element.width, nw_element.height))
-
         radius_of_curvature = max(node_rx, node_ry)*2
 
         rectangle_rounding = 1/radius_of_curvature if (
@@ -1551,13 +1548,11 @@ class Render:
                 rectangle.setFill(compartment.fill_color)
                 rectangle.setStroke(compartment.edge_color)
                 rectangle.setStrokeWidth(compartment.line_width)
-#                rectangle.setRX(compartment.rectangle_rounding)
-#                rectangle.setRY(compartment.rectangle_rounding)
-
-        # create product style
-#        style = local_render_info.createStyle("")
-#        style.addRole("product")
-#        style.getGroup().setEndHead("product")
+                radius_of_curvature = self._computeRadiusOfCurvature(
+                        compartment.rectangle_rounding)
+                if radius_of_curvature:
+                    rectangle.setRX(libsbml.RelAbsVector(radius_of_curvature))
+                    rectangle.setRY(libsbml.RelAbsVector(radius_of_curvature))
 
     def addRenderInformation(self, network):
         """Add render information to the model as Local Style render
@@ -1626,11 +1621,6 @@ class Render:
         doc = libsbml.readSBMLFromFile(str(LINE_ENDINGS_FILE))
         model = doc.getModel()
         layout_plugin = model.getPlugin("layout")
-        # layout = layout_plugin.getLayout(0) if (
-        #    layout_plugin and layout_plugin.getNumLayouts() > 0) else None
-        # SBasePlugin, RenderLayoutPlugin
-        # rPlugin = layout.getPlugin("render") if layout else None
-        # SBasePlugin, RenderListOfLayoutsPlugin
         render_plugin = layout_plugin.getListOfLayouts(
             ).getPlugin("render") if layout_plugin else None
 
