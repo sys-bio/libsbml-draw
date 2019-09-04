@@ -14,6 +14,26 @@ sl = SBMLlayout(str(model_file), applyRender=applyRender)
 
 sl._describeModel()
 
+sl.setReactionCurveWidth("all", 5)
+
+assert sl.getReactionCurveWidth("_J0")[0] == ('X0', 'SUBSTRATE', 5)
+assert sl.getReactionCurveWidth("_J0")[1] == ('A', 'PRODUCT', 5)
+
+assert sl.getReactionCurveWidth("_J1")[0] == ("A", "SUBSTRATE", 5)
+assert sl.getReactionCurveWidth("_J1")[1] == ("B", "PRODUCT", 5)
+
+assert sl.getReactionCurveWidth("_J2")[0] == ('B', 'SUBSTRATE', 5)
+assert sl.getReactionCurveWidth("_J2")[1] == ('D', 'PRODUCT', 5)
+                              
+assert sl.getReactionCurveWidth("_J5")[0] == ('D', 'SUBSTRATE', 5)
+assert sl.getReactionCurveWidth("_J5")[1] == ('X1', 'PRODUCT', 5)
+
+assert sl.getReactionCurveWidth("_J3")[0] == ('A', 'SUBSTRATE', 5)
+assert sl.getReactionCurveWidth("_J3")[1] == ('C', 'PRODUCT', 5)
+
+assert sl.getReactionCurveWidth("_J4")[0] == ('C', 'SUBSTRATE', 5)
+assert sl.getReactionCurveWidth("_J4")[1] == ('D', 'PRODUCT', 5)
+
 sl.drawNetwork(scaling_factor=0.75)
 
 assert sl.getNumberOfNodes() == 6
@@ -59,9 +79,12 @@ assert sl.getReactionEdgeColor("_J3")[1] == ('C', 'PRODUCT', '#ffff00ff')
 assert sl.getReactionEdgeColor("_J4")[0] == ('C', 'SUBSTRATE', '#00ffffff')
 assert sl.getReactionEdgeColor("_J4")[1] == ('D', 'PRODUCT', '#00ffffff')
                         
+sl.setReactionCurveWidth("_J0", 7, role_name="product")
+
+assert sl.getReactionCurveWidth("_J0")[0] == ('X0', 'SUBSTRATE', 5)
+assert sl.getReactionCurveWidth("_J0")[1] == ('A', 'PRODUCT', 7)
                               
 sl.drawNetwork("model_simple_curve_colors.pdf")
-
 
 sl.writeSBMLFile("test_no_layout.xml")
 

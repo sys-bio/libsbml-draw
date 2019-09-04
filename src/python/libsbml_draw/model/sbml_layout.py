@@ -81,18 +81,13 @@ class SBMLlayout:
                         self.__getSBMLWithLayoutString())
 
                 self.__network = self.__createNetwork()
-#                if self.__applyRender:
-#                    self.__applyRenderInformation()
 
                 # compute and set width and height for node boxes
                 for node in self.__network.nodes.values():
                     # pad the width (default, 2 additional chars) and
                     # pad the height (default, 1 additional char)
-                    width = (len(node.name) +
-                             SBMLlayout.WIDTH_PADDING)*node.font_size
-                    node_name_height = 1
-                    height = (node_name_height +
-                              SBMLlayout.HEIGHT_PADDING)*node.font_size
+                    width = self.__computeNodeWidth(node)
+                    height = self.__computeNodeHeight(node)
                     self.__setNodeWidth(node.id, width)
                     self.__setNodeHeight(node.id, height)
 
@@ -122,6 +117,31 @@ class SBMLlayout:
 
         else:  # User can separately load a file
             pass
+
+    def __computeNodeWidth(self, node):
+        """Computes the node width needed for the text to fit inside.
+
+        Args:
+            node (libsbml_draw.network.Node): the node of interest
+
+        Returns: float
+        """
+        width = (len(node.name) + SBMLlayout.WIDTH_PADDING)*node.font_size
+
+        return width
+
+    def __computeNodeHeight(self, node):
+        """Computes the node height needed for the text to fit inside.
+
+        Args:
+            node (libsbml_draw.network.Node): the node of interest
+
+        Returns: float
+        """
+        node_name_height = 1
+        height = (node_name_height + SBMLlayout.HEIGHT_PADDING)*node.font_size
+
+        return height
 
     def loadSBMLFile(self, sbml_file):
         """Loads the SBML model into SBMLlayout.
@@ -427,7 +447,7 @@ class SBMLlayout:
         self.__updateNetworkLayout()
 
     def __randomizeLayout(self,):
-        """Give the layout a starting point
+        """Give the layout a starting point.
 
         Args: None
         Returns: None
@@ -435,7 +455,7 @@ class SBMLlayout:
         sbnw.randomizeLayout(self.__h_layout_info)
 
     def __doLayoutAlgorithm(self,):
-        """Run the Fruchterman-Reingold Layout Algorithm
+        """Run the Fruchterman-Reingold Layout Algorithm.
 
         Args: None
         Returns: None
@@ -1166,7 +1186,7 @@ class SBMLlayout:
         Args:
             node_id (str or list of str): id of the node to change,
                 or keyword 'all', 'boundary', or 'floating' to change the color
-                of all the nodes of that type,
+                of all the nodes of that type, or a list of node ids to change.
             property_value (str or float): value for the property to be set,
             eg. "#0000ff"
             property_type (str): identifier for the property, eg. "fill"
@@ -1386,7 +1406,9 @@ class SBMLlayout:
         """Set the font size for the node.
 
         Args:
-            node_id (str): id for the node
+            node_id (str): id of the node to change,
+                or keyword 'all', 'boundary', or 'floating' to change the color
+                of all the nodes of that type, or a list of node ids to change.
             font_size (int or str): matplotlib acceptable values, which are:
                 {size in points, 'xx-small', 'x-small', 'small', 'medium',
                 'large', 'x-large', 'xx-large'}
@@ -1396,6 +1418,27 @@ class SBMLlayout:
         property_type = "font_size"
 
         self.__setNodeBasedOnId(node_id, font_size, property_type)
+
+        if node_id == "all":
+            node_ids = self.getNodeIds()
+        elif node_id == "floating":
+            node_ids = self.getFloatingSpeciesIds()
+        elif node_id == "boundary":
+            node_ids = self.getBoundarySpeciesIds()
+        elif node_id in self.__network.nodes:
+            node_ids = [node_id]
+        else:
+            raise ValueError(f"{node_id} not found in network, or is not one",
+                             " of the valid id keywords {NODE_KEYWORDS}")
+
+        for this_node_id in node_ids:
+            node = self.__network.nodes[this_node_id]
+            width = self.__computeNodeWidth(node)
+            self.__setNodeWidth(this_node_id, width)
+            height = self.__computeNodeHeight(node)
+            self.__setNodeHeight(this_node_id, height)
+
+        self.regenerateLayout()
 
     def getNodeFontName(self, node_id):
         """Returns the font family value, which can be the font family or
@@ -1416,7 +1459,9 @@ class SBMLlayout:
         family or name of the font.
 
         Args:
-            node_id (str): id for the node
+            node_id (str): id of the node to change,
+                or keyword 'all', 'boundary', or 'floating' to change the color
+                of all the nodes of that type, or a list of node ids to change.
             font_name (str): value for font family (eg. 'serif')
             or font name (eg. 'Arial')
 
@@ -1441,7 +1486,9 @@ class SBMLlayout:
         the family or name of the font.
 
         Args:
-            node_id (str): id for the node
+            node_id (str): id of the node to change,
+                or keyword 'all', 'boundary', or 'floating' to change the color
+                of all the nodes of that type, or a list of node ids to change.
             font_family (str): value for font family (eg. 'serif')
             or font name (eg. 'Arial')
 
@@ -1712,9 +1759,9 @@ class SBMLlayout:
             curve.curve_width = value
 
     def __setCurveProperty(self, curve, value, value_type, role_name, species):
-        """Generic function which sets a property on a curve.  If role_name and/or
-        species are given, the curve values for these properties must match in
-        order for the property to be set.
+        """Generic function which sets a property on a curve.  If role_name
+        and/or species are given, the curve values for these properties must
+        match in order for the property to be set.
 
         Args:
             curve (libsbml_draw.network.Curve): the curve on which to set a
