@@ -12,7 +12,7 @@ import matplotlib.path as mplp
 
 import pkg_resources
 
-import libsbml
+import tesbml as libsbml
 
 PlotColor = namedtuple("PlotColor", ["is_valid_color", "color"])
 FontProperty = namedtuple("FontProperty", ["is_valid_value", "value"])

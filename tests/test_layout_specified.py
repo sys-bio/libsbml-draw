@@ -24,6 +24,10 @@ assert sl.getNodeFillColor("E") == "#a0e0a030"
 
 sl.drawNetwork("larger_pathway.png")
 
+# sl.setReactionCurveWidth("all", 12)
+
+sl.drawNetwork()
+
 
 sl.writeSBMLFile("test_larger_pathway.xml")
 

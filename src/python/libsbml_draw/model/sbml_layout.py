@@ -6,7 +6,7 @@ import os
 
 from matplotlib.colors import is_color_like, to_hex
 
-import libsbml
+import tesbml as libsbml
 
 import libsbml_draw.c_api.sbnw_c_api as sbnw
 from libsbml_draw.draw.draw_network import createNetworkFigure
