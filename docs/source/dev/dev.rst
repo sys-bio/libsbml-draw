@@ -6,4 +6,3 @@ Developer Manual
    :maxdepth: 2
 
    testing
-   readthedocs
