@@ -14,13 +14,59 @@ a C/C++ library.
 
 ## Documentation
 
-Python and C: https://libsbml-draw.readthedocs.io/en/latest/index.html
+Python and C/C++: https://libsbml-draw.readthedocs.io/en/latest/index.html
+
+## How to create a distribution package for libsbml-draw; i.e. archives that can be uploaded to the Package Index and installed by pip
+
+0. Increment the version number, which can be found in the libsbml-draw\src\python\libsbml_draw\version.py file in the libsbml-draw repo.
+
+1. Make sure you have the latest versions of setuptools and wheel installed:
+   python3 -m pip install --user --upgrade setuptools wheel
+
+2. Run this command from the same directory where setup.py is located in the libsbml-draw repo:
+   python3 setup.py sdist bdist_wheel
+
+3. This command should output a lot of text and once completed should generate two files in the dist directory of the libsbml-draw repo:
+   dist/
+       libsbml-draw-0.0.x.tar.gz       
+       libsbml_draw-0.0.x-py3-none-any.whl
+
+The tar.gz file is a source archive whereas the .whl file is a built distribution.  Newer pip versions preferentially install built
+distributions, but will fall back to source archives if needed.  
+
+## How to upload distribution archives to Test PyPI
+
+1. Register an account on Test PyPI, https://test.pypi.org/account/register 
+   Test PyPI is a separate instance of the package index intended for testing and experimentation.
+
+2. You can use twine to upload the distribution packages.  You will need to install twine:
+   python3 -m pip install --user --upgrade twine
+
+3. Once installed, run twine to upload all of the archives under dist:
+   python3 -m twine upload --repository-url https://test.pypi.org/legacy/ dist/*
+
+   You will be prompted for the username and password you registered with Test PyPI.  
+
+4. Once uploaded the package should be viewable on TestPyPI, for example, 
+   https://test.pypi.org/project/libsbml-draw/
+
+## Installing the newly uploaded package
+
+1. Pip can be used to install the package and verify that it works.
+   python3 -m pip install --index-url https://test.pypi.org/simple/ --no-deps libsbml-draw
+
+   pip should install the package from Test PyPI.
+
+   The command above specifies --no-deps.  Since TestPyPI doesn't have the same pacakges as
+   the live PyPI, it's possible that attempting to install dependencies may fail or install 
+   something unexpected.  It's a good practice to avoid installing dependencies when using
+   TestPyPI.
 
 ## How to build the Python documentation
 
-The ReadTheDocs documentation is in the docs directory, and the configuration is specified in the docs/source/conf.py file.
+The ReadTheDocs documentation is in the docs directory of the libsbml-draw repo, and the configuration is specified in the docs/source/conf.py file.
 
-The ReadTheDocs documentation is automatically updated each time a push is made to the libsbml_draw repo.
+The ReadTheDocs documentation is automatically updated each time a push is made to the libsbml-draw repo.
 
 A link to the C/C++ documentation is located in the docs\source\refmanual\c_api.rst file.
 
@@ -40,16 +86,16 @@ To update the documentation available online via GitHub Pages:
 
 1. In the libsbml-draw repo, checkout the remote gh-pages branch:
 
-    libsbml-draw> git fetch
-    libsbml-draw> git checkout gh-pages
+    *libsbml-draw> git fetch origin
+    *libsbml-draw> git checkout -b gh-pages origin/gh-pages
 
 2. verify that you are on the gh-pages branch (the asterisk should be next to gh-pages):
-   libsbml-draw> git branch 
+   *libsbml-draw> git branch -a
 
 3. copy the files in the doxy\build directory to the libsbml-draw directory of the gh-pages branch
 
-4. push the new files
-   libsbml-draw> git push
+4. push the new files:
+   *libsbml-draw> git push
 
 ## How to compile the C/C++ SBNW library
 
@@ -106,3 +152,23 @@ To update the documentation available online via GitHub Pages:
 ## License
 
 This project is licensed under the MIT License:
+
+Copyright (c) 2019 Sauro Lab, UW Bioengineering
+
+Permission is hereby granted, free of charge, to any person obtaining a copy
+of this software and associated documentation files (the "Software"), to deal
+in the Software without restriction, including without limitation the rights
+to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+copies of the Software, and to permit persons to whom the Software is
+furnished to do so, subject to the following conditions:
+
+The above copyright notice and this permission notice shall be included in all
+copies or substantial portions of the Software.
+
+THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+SOFTWARE.
