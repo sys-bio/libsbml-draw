@@ -1,4 +1,6 @@
-# libsbml-draw: ## SBML viewer, layout generator, render style editor
+# libsbml-draw: 
+
+### SBML viewer, layout generator, render style editor
 
 ## Introduction
 
