@@ -32,9 +32,9 @@ Python and C/C++: https://libsbml-draw.readthedocs.io/en/latest/index.html
 
 3. This command should output a lot of text and once completed should generate two files in the `dist` directory of the `libsbml-draw` repo:
 
-   `dist/'    
-       `libsbml-draw-0.0.x.tar.gz`  
-       `libsbml_draw-0.0.x-py3-none-any.whl`  
+	dist/  
+	    libsbml-draw-0.0.x.tar.gz  
+	    libsbml_draw-0.0.x-py3-none-any.whl  
 
 The `tar.gz` file is a source archive whereas the `.whl` file is a built distribution.  Newer pip versions preferentially install built
 distributions, but will fall back to source archives if needed.  `libsbml-draw` is compatible with Python on any platform so only one
@@ -76,7 +76,9 @@ built distribution is needed.
 ## How to build the Python documentation
 
 The ReadTheDocs documentation is in the `docs` directory of the `libsbml-draw` repo, and the configuration 
-is specified in the `docs/source/conf.py` file.
+is specified in the `docs/source/conf.py` file.  The `conf.py` file is configured such that documentation from 
+the project's  `.py` files is automatically generated.  `.rst` files specify the structure of the documentation
+displayed on ReadTheDocs.
 
 The ReadTheDocs documentation is automatically updated each time a push is made to the `libsbml-draw` repo.
 
@@ -108,7 +110,7 @@ To update the documentation available online:
 
 	`libsbml-draw> git branch -a`
 
-3. Copy the files in the `doxy\build` directory to the libsbml-draw directory of the `gh-pages branch`
+3. Copy the files in the `doxy\build` directory to the `libsbml-draw` directory of the `gh-pages branch`
 
 4. push the new files:
 
