@@ -1,4 +1,5 @@
-# libsbml-draw: SBML viewer, layout generator, render style editor
+# libsbml-draw: 
+## SBML viewer, layout generator, render style editor
 
 ## Introduction
 
@@ -18,21 +19,21 @@ Python and C/C++: https://libsbml-draw.readthedocs.io/en/latest/index.html
 
 ## How to create a distribution package for libsbml-draw; i.e. archives that can be uploaded to the Package Index and installed by pip
 
-0. Increment the version number, which can be found in the libsbml-draw\src\python\libsbml_draw\version.py file in the libsbml-draw repo.
+0. Increment the version number, which can be found in the `libsbml-draw\src\python\libsbml_draw\version.py` file in the libsbml-draw repo.
 
 1. Make sure you have the latest versions of setuptools and wheel installed:
 
-	python3 -m pip install --user --upgrade setuptools wheel
+	`python3 -m pip install --user --upgrade setuptools wheel`
 
 2. Run this command from the same directory where setup.py is located in the libsbml-draw repo:
 
-	python3 setup.py sdist bdist_wheel
+	`python3 setup.py sdist bdist_wheel`
 
-3. This command should output a lot of text and once completed should generate two files in the dist directory of the libsbml-draw repo:
+3. This command should output a lot of text and once completed should generate two files in the `dist` directory of the libsbml-draw repo:
 
-   dist/  
+   `dist/  
        libsbml-draw-0.0.x.tar.gz  
-       libsbml_draw-0.0.x-py3-none-any.whl  
+       libsbml_draw-0.0.x-py3-none-any.whl`  
 
 The tar.gz file is a source archive whereas the .whl file is a built distribution.  Newer pip versions preferentially install built
 distributions, but will fall back to source archives if needed.
@@ -40,15 +41,16 @@ distributions, but will fall back to source archives if needed.
 ## How to upload distribution archives to Test PyPI
 
 1. Register an account on Test PyPI, https://test.pypi.org/account/register 
+
    Test PyPI is a separate instance of the package index intended for testing and experimentation.
 
 2. You can use twine to upload the distribution packages.  You will need to install twine:
 
-	python3 -m pip install --user --upgrade twine
+	`python3 -m pip install --user --upgrade twine`
 
 3. Once installed, run twine to upload all of the archives under dist:
 
-	python3 -m twine upload --repository-url https://test.pypi.org/legacy/ dist/*
+	`python3 -m twine upload --repository-url https://test.pypi.org/legacy/ dist/*`
 
    You will be prompted for the username and password you registered with Test PyPI.  
 
@@ -58,9 +60,9 @@ distributions, but will fall back to source archives if needed.
 
 ## Installing the newly uploaded package
 
-1. Pip can be used to install the package and verify that it works.
+1. Pip can be used to install the package
 
-	python3 -m pip install --index-url https://test.pypi.org/simple/ --no-deps libsbml-draw
+	`python3 -m pip install --index-url https://test.pypi.org/simple/ --no-deps libsbml-draw`
 
    pip should install the package from Test PyPI.
 
@@ -71,48 +73,50 @@ distributions, but will fall back to source archives if needed.
 
 ## How to build the Python documentation
 
-The ReadTheDocs documentation is in the docs directory of the libsbml-draw repo, and the configuration 
-is specified in the docs/source/conf.py file.
+The ReadTheDocs documentation is in the `docs` directory of the libsbml-draw repo, and the configuration 
+is specified in the `docs/source/conf.py` file.
 
 The ReadTheDocs documentation is automatically updated each time a push is made to the libsbml-draw repo.
 
-A link to the C/C++ documentation is located in the docs\source\refmanual\c_api.rst file.
+A link to the C/C++ documentation is located in the `docs\source\refmanual\c_api.rst` file.
 
 ## How to build the C/C++ documentation
 
-The C/C++ documentation is located in the doxy dir of the libsbml-draw repo.  GitHub pages are used to make the
-documentation available online.  The ReadTheDocs documentation for libsbml-draw contains a link to this C/C++ documentation.
+The C/C++ documentation is located in the `doxy` dir of the libsbml-draw repo.  GitHub pages are used to make the
+documentation available online.  To make this work, a gh-pages branch of the libsbml-draw repo was created.  
+
+The ReadTheDocs documentation for libsbml-draw contains a link to this C/C++ documentation.
 
 To build the documentation:
 
-1. libsbml-draw> cd doxy
-2. libsbml-draw\doxy> doxygen doxy.cfg
+1. `libsbml-draw> cd doxy`
+2. `libsbml-draw\doxy> doxygen doxy.cfg`
 
   By executing the two commands above, the documentation will be generated.  The output directory of this build
-  is specified in the doxy.cfg file.  Currently, it is set to output to the doxy/build directory.
+  is specified in the `doxy.cfg` file.  Currently, it is set to output to the `doxy/build` directory.
 
 To update the documentation available online:
 
-1. In the libsbml-draw repo, checkout the remote gh-pages branch:
+1. In the libsbml-draw repo, checkout the `remote gh-pages branch`:
 
-	libsbml-draw> git fetch origin
-	libsbml-draw> git checkout -b gh-pages origin/gh-pages
+	`libsbml-draw> git fetch origin`
+	`libsbml-draw> git checkout -b gh-pages origin/gh-pages`
 
 2. Verify that you are on the gh-pages branch (the asterisk should be next to gh-pages):
 
-	libsbml-draw> git branch -a
+	`libsbml-draw> git branch -a`
 
-3. Copy the files in the doxy\build directory to the libsbml-draw directory of the gh-pages branch
+3. Copy the files in the `doxy\build` directory to the libsbml-draw directory of the `gh-pages branch`
 
 4. push the new files:
 
-	libsbml-draw> git push
+	`libsbml-draw> git push`
 
 ## How to compile the C/C++ SBNW library
 
  * Build the latest version of <a href="http://sourceforge.net/projects/sbml/files/libsbml/">libSBML</a> from source.
 
-   **VIDEO** showing steps to follow to build from source using CMAKE and Visual Studio: 
+   There is a **VIDEO** which shows the steps to follow to build from source using CMAKE and Visual Studio: 
 
     https://www.youtube.com/watch?v=e_Lydwzx-Hg, note that a few steps differ from what is shown in the video:
 
@@ -162,7 +166,7 @@ To update the documentation available online:
 
  * **Windows Specific:** In Visual Studio, right click on the INSTALL target and select build. libsbml-draw will be installed to the location stored in CMAKE_INSTALL_PREFIX.
 
- * Notes on the build process also exist in the libsbml-draw repo in the directory, libsbml-draw/install_notes
+ * Notes on the build process also exist in the libsbml-draw repo in the directory, `libsbml-draw/install_notes`
 
 ## License
 
