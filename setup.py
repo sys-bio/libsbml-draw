@@ -9,7 +9,7 @@ setup(
     package_dir={"": "src/python"},
     package_data={"libsbml_draw.c_api": ["data/sbml_draw.dll", "data/libsbml_draw.dylib", "data/libsbml_draw.so"],
                   "libsbml_draw.model": ["data/*.xml"]},
-    install_requires=["matplotlib", "numpy", "tesbml"],
+    install_requires=["matplotlib", "numpy", "tesbml>=5.18.0"],
     extras_require={
         "testing": ["pytest", "pytest-mock"],
         "documentation": ["sphinx", "sphinx_rtd_theme", "sphinx-autobuild", "sphinxcontrib-napoleon"],
