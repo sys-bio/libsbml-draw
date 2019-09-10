@@ -18,8 +18,9 @@ Code
 ^^^^^
 
 ``libsbml-draw`` provides one Python class, ``SBMLlayout``, for the user to access 
-all methods to use to work with SBML models.
+all methods available for working with SBML models.  This is the only entry point 
+into libsbml-draw for the user.
 
 Via methods provided by ``SBMLlayout``, the user can load a model file, 
-draw a model, change render attributes, and write out a model.
+draw a model, change render attributes, and write out a model as an SBML file.
 

@@ -1,6 +1,10 @@
 SBMLlayout script using antimony
 ---------------------------------
 
+This code example shows how to create an SBML model using antimony,
+load that model into libsbml-draw, describe the basic features of the
+model, and draw the model.
+
 .. code-block:: python
 
     import tellurium as te
