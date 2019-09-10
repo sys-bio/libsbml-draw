@@ -1,10 +1,18 @@
 Image Gallery
-============
+==============
+
+These images were drawn by libsbml-draw.
+
 
 Larger Pathway
 
 .. image:: images/larger_pathway.png
 
-TCA_ecoli_glucose
+Complicated Nodes
 
-.. image:: images/TCA_ecoli_glucose.pdf
+.. image:: images/complicated_nodes.png
+
+Randomly Generated Network
+
+.. image:: images/random_5s_2r.png
+
