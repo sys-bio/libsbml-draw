@@ -87,19 +87,10 @@ A link to the C/C++ documentation is located in the `docs\source\refmanual\c_api
 ## How to build the C/C++ documentation
 
 The C/C++ documentation is located in the `doxy` dir of the libsbml-draw repo.  GitHub pages are used to make the
-documentation available online.  To make this work, a `gh-pages branch` of the `libsbml-draw` repo was created.  
-
-The ReadTheDocs documentation for libsbml-draw contains a link to this C/C++ documentation.
+documentation available online (Note: The ReadTheDocs documentation for libsbml-draw contains a link to this C/C++ documentation.).  
+To make this work, a `gh-pages branch` of the `libsbml-draw` repo was created.  
 
 To build the documentation:
-
-1. `libsbml-draw> cd doxy`
-2. `libsbml-draw\doxy> doxygen doxy.cfg`
-
-  By executing the two commands above, the documentation will be generated.  The output directory of this build
-  is specified in the `doxy.cfg` file.  Currently, it is set to output to the `doxy/build` directory.
-
-To update the documentation available online:
 
 1. In the libsbml-draw repo, checkout the `remote gh-pages branch`:
 
@@ -110,9 +101,20 @@ To update the documentation available online:
 
 	`libsbml-draw> git branch -a`
 
-3. Copy the files in the `doxy\build` directory to the `libsbml-draw` directory of the `gh-pages branch`
+3. Generate a new version of the documentation by cd'ing into the directory containing the C/C++ documentation and executing the `doxygen` command:
 
-4. push the new files:
+	`libsbml-draw> cd doxy`
+   	`libsbml-draw\doxy> doxygen doxy.cfg`
+
+  By executing the two commands above, the documentation will be generated.  The output directory of this build
+  is specified in the `doxy.cfg` file.  Currently, it is set to output to the `doxy/build` directory.
+
+4. In order for these documentation files to appear online, they need to be copied to the root directory of gh-pages branch of the libsbml-draw repo:
+
+   'libsbml-draw\doxy> cd build'
+   'libsbml-draw\doxy\build> copy * ..\..\.`
+
+5. push the new files to the `gh-pages` branch of the `libsbml-draw` repo:
 
 	`libsbml-draw> git push`
 

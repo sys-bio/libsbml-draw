@@ -6,4 +6,5 @@ User Manual
    :maxdepth: 2
 
    install
-   user_manual
+   user_guide
+   image_gallery
