@@ -1,4 +1,4 @@
 Image Gallery
 ============
 
-.. image:: TCA_ecoli_glucose.pdf
+.. image:: source/user/TCA_ecoli_glucose.pdf
