@@ -728,54 +728,6 @@ class SBMLlayout:
         else:
             raise ValueError(f"species {node_id} is not in the network.")
 
-    def __setNodeCentroid(self, node_id, x, y):
-        """Sets the center point of the node.
-
-        Args:
-            node_id (str): id for the node
-            x (float): new x coordinate
-            y (float): new y coordinate
-
-        Returns: None
-        """
-        if node_id in self.getNodeIds():
-
-            node = self.__network.nodes[node_id]
-
-            centroid = node.center
-            centroid.x = x
-            centroid.y = y
-
-            # aliased nodes have the id of the original node
-            if node.id in self.__network.aliasedNodes:
-
-                alias_index = node_id.split("_")[1]
-                h_node_id = node.id.encode('utf-8')
-                h_node = sbnw.nw_getNodepFromId(self.__h_network, h_node_id)
-                h_alias_node = sbnw.nw_getAliasInstancep(
-                        self.__h_network,
-                        h_node,
-                        alias_index)
-                sbnw.node_setCentroid(h_alias_node, centroid)
-            # node is not an alias
-            else:
-                h_node_id = node_id.encode('utf-8')
-                h_node = sbnw.nw_getNodepFromId(self.__h_network, h_node_id)
-                sbnw.node_setCentroid(h_node, centroid)
-
-            for nr in range(sbnw.nw_getNumRxns(self.__h_network)):
-                # sbnw.nw_recenterJunctions(self.__h_network)
-                h_reaction = sbnw.nw_getReactionp(self.__h_network, nr)
-                if sbnw.reaction_hasSpec(h_reaction, h_node):
-                    sbnw.reaction_recenter(h_reaction)
-            sbnw.nw_rebuildCurves(self.__h_network)
-
-            self.__updateNetworkLayout()
-            self.__doc = libsbml.readSBMLFromString(
-                        self.__getSBMLWithLayoutString())
-        else:
-            raise ValueError(f"species {node_id} is not in the network.")
-
     # Reaction Information
 
     def getReactionCentroid(self, reaction_id):

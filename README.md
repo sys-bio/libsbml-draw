@@ -18,6 +18,43 @@ a C/C++ library.
 
 Python and C/C++: https://libsbml-draw.readthedocs.io/en/latest/index.html
 
+## Installation Instructions For Using libsbml-draw With "Tellurium For Windows"
+
+1. First, you will need a version of Tellurium >= Tellurium-2.1.8-Python-3.7
+
+   * If you already have an earlier version of Tellurium installed on Windows, uninstall it.  
+
+    This can be done by finding Tellurium on the Windows menu, 
+    clicking on the dropdown arrow, and choosing the "Uninstall Tellurium" option.
+
+   * You can find the necessary version of Tellurium at:    
+    https://sourceforge.net/projects/pytellurium/
+
+    Download the executable file (*setup.exe) and run it to install Tellurium.
+
+2. Next, install libsbml-draw using the Python provided by Tellurium:
+
+    The location of this Python depends on where you installed Tellurium.  
+    
+    It could be something like: `C:\Tellurium-Winpython-3.7\python-3.7.4.amd64\python.exe`
+
+    Open a Windows terminal, and install 'libsbml-draw':
+
+    `C:\Users\UserX> <path to your Tellurium python>\python.exe -m pip install libsbml-draw`  
+       
+## Installation Instructions for Using libsbml-draw outside of "Tellurium for Windows"
+
+1. You can install `libsbml-draw` using pip, either as part of your base system of site-packages, 
+   or within a Python environment, using:
+
+    `pip install libsbml-draw`
+
+2. If you want to use `tellurium` packages along with it, you can install tellurium:
+
+    `pip install tellurium`
+
+   Note: `libsbml-draw` depends on the `tesbml` package >= version 5.18.1 for `libsbml`. 
+
 ## How to create a distribution package for libsbml-draw; i.e. archives that can be uploaded to the Package Index and installed by pip
 
 0. Increment the version number, which can be found in the `libsbml-draw\src\python\libsbml_draw\version.py` file in the `libsbml-draw` repo.

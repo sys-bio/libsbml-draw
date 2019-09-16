@@ -15,7 +15,7 @@ sl._describeModel()
 assert sl.getNumberOfNodes() == 23
 assert sl.getNumberOfReactions() == 11
 
-sl.drawNetwork("GlycolysisOriginal.pdf")
+sl.drawNetwork("GlycolysisOriginal.png")
 
 
 assert sl.getNodeEdgeWidth("External_glucose") == 3

@@ -24,7 +24,7 @@ assert sl.getCompartmentEdgeColor("vol1") == "#0000ffff"
 assert sl.getCompartmentFillColor("vol1") == "#ff000010"
 assert sl.getCompartmentLineWidth("vol1") == 5
 
-sl.drawNetwork("simple_render_local.pdf")
+sl.drawNetwork("simple_render_local.png")
 
 sl.writeSBMLFile("simple_render_local_out.xml")
 
@@ -47,7 +47,7 @@ assert sl.getCompartmentEdgeColor("vol1") == "#ffa500"
 assert sl.getCompartmentFillColor("vol1") == "#ffeeee"
 assert sl.getCompartmentLineWidth("vol1") == 12
 
-sl.drawNetwork("simple_render_global.pdf")
+sl.drawNetwork("simple_render_global.png")
 
 sl.writeSBMLFile("simple_render_global_out.xml")
 
