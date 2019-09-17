@@ -16,13 +16,16 @@ There are two types of test files:
 
     These files can be run automatically by selecting ``Run unit tests`` from the Spyder ``Run`` menu.
 
+    (Note: you will need to install ``spyder-unittest`` for this to work; i.e. ``pip install spyder-unittest``)
+
+    The tests can also be run by typing ``pytest`` inside the ``tests`` directory of the libsbml-draw repository
+
 2. Files to be run by python
 
     These files begin with ``mtest`` and end with ``.py``.
 
     These files can be run from Spyder by opening the file and pressing the big green arrow.
 
-    ``mtest`` stands for manual tests.  These tests draw the models, so the user can view them.  
+    ``mtest`` stands for manual tests.  These tests draw the models, so that the user can view them.  
 
     They also write out SBML model files.  They contain ``assert`` statements which test values after being set.
-
