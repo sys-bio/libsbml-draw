@@ -18,7 +18,11 @@ There are two types of test files:
 
     (Note: you will need to install ``spyder-unittest`` for this to work; i.e. ``pip install spyder-unittest``)
 
-    The tests can also be run by typing ``pytest`` inside the ``tests`` directory of the libsbml-draw repository
+    The tests can also be run by typing ``pytest`` inside the ``tests`` directory of the libsbml-draw repository.
+
+    Note: If you are using "Tellurium for Windows", you will need to use the Python associated with that to run
+    the tests to make sure you're using the required libraries; for example, you might run:
+    ``C:\Tellurium-Winpython-3.7\python-3.7.4.amd64\python -m pytest``
 
 2. Files to be run by python
 

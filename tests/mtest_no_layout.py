@@ -86,13 +86,13 @@ assert sl.getReactionCurveWidth("_J0")[1] == ('A', 'PRODUCT', 7)
                               
 sl.drawNetwork("model_simple_curve_colors.pdf")
 
-sl.writeSBMLFile("test_no_layout.xml")
+sl.writeSBMLFile("ftest_no_layout.xml")
 
-slr = SBMLlayout("test_no_layout.xml", applyRender=applyRender)
+slr = SBMLlayout("ftest_no_layout.xml", applyRender=applyRender)
 
 slr._describeModel()
 
-slr.drawNetwork("model_simple_curve_colors_with_les.pdf")
+slr.drawNetwork("model_simple_curve_colors_with_les.png")
     
 if applyRender:
 
@@ -109,4 +109,4 @@ else:
 assert slr.getNodeEdgeColor("A") == "#0000ff"
 assert slr.getNodeFillColor("A") == "#c9e0fb"
 
-slr.writeSBMLFile("test_no_layout_read_back_in.xml")
+slr.writeSBMLFile("ftest_no_layout_read_back_in.xml")

@@ -1,7 +1,10 @@
 Image Gallery
 ==============
 
-These images were drawn by libsbml-draw.
+These images were drawn by libsbml-draw.  
+
+(Note: The scripts used can be found in the files starting with ``mtest`` in the ``tests`` directory of 
+the ``libsbml-draw`` repository.)
 
 
 Larger Pathway - applied render information from SBML file, including polygon line endings
@@ -27,3 +30,7 @@ Simple Render Global - applied render information from SBML file, including poly
 Simple Render Local - changed the render information using libsbml-draw
 
 .. image:: images/simple_render_local.png
+
+Simple Model - demonstrates that render can apply to the curve level, not just the reaction level
+
+.. image:: images/model_simple_curve_colors_with_les.png

@@ -27,15 +27,14 @@ sl.unlockNode("A")
 
 def test_node_locking():
     assert sl.getIsNodeLocked("D") == True
-    assert sl.getIsNodeLocked("B_1") == True
     assert sl.getIsNodeLocked("X0") == False
     assert sl.getIsNodeLocked("A") == False
     assert sl.getIsNodeLocked("C") == False
 
 
 def test_node_aliasing():
-    assert sl.getIsNodeAliased("B") == True
-    
+    assert sl.getIsNodeAliased("B_1") == True
+    assert sl.getIsNodeAliased("X1") == False    
 
 model_file_name = "test_no_layout_alias.xml" 
 
