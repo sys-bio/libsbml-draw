@@ -607,7 +607,7 @@ class SBMLlayout:
 
             # aliased nodes have the id of the original node
             if node.id in self.__network.aliasedNodes:
-                alias_index = node_id.split("_")[1]
+                alias_index = int(node_id.split("_")[1])
                 h_node_id = node.id.encode('utf-8')
                 h_node = sbnw.nw_getNodepFromId(self.__h_network, h_node_id)
                 h_alias_node = sbnw.nw_getAliasInstancep(

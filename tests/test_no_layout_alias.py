@@ -24,13 +24,12 @@ sl.lockNode("D")
 sl.unlockNode("X0")
 sl.unlockNode("A")
 
-
 def test_node_locking():
     assert sl.getIsNodeLocked("D") == True
+    assert sl.getIsNodeLocked("B_1") == True
     assert sl.getIsNodeLocked("X0") == False
     assert sl.getIsNodeLocked("A") == False
     assert sl.getIsNodeLocked("C") == False
-
 
 def test_node_aliasing():
     assert sl.getIsNodeAliased("B_1") == True

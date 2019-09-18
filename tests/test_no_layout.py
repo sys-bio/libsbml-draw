@@ -32,8 +32,13 @@ sl.setReactionEdgeColor("_J5", "#00ff00", species="D")
 sl.setReactionEdgeColor("_J3", "#ffff00", role_name="product")
 sl.setReactionEdgeColor("_J4", "#00ffff")
 
+model_file_name = "ftest_no_layout.xml"
 
-slr = SBMLlayout("mtest_no_layout.xml", applyRender=applyRender)
+model_file = Path(pkg_resources.resource_filename(
+        "libsbml_draw", "model/data/" + model_file_name))
+
+                        
+slr = SBMLlayout(str(model_file), applyRender=applyRender)
 
                         
 def test_reaction_curve_width():
