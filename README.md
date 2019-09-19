@@ -110,6 +110,26 @@ built distribution is needed.
    something unexpected.  It's a good practice to avoid installing dependencies when using
    TestPyPI.
 
+## How to upload distribution archives to PyPI
+
+1. Register an account PyPI, https://pypi.org/account/register 
+
+   PyPI is the real deal.
+
+2. You can use twine to upload the distribution packages.  You will need to install twine:
+
+	`python3 -m pip install --user --upgrade twine`
+
+3. Once installed, run twine to upload all of the archives under dist:
+
+	`python3 -m twine upload dist/*`
+
+   You will be prompted for the username and password you registered with PyPI.  
+
+4. Once uploaded the package should be viewable on PyPI, for example, 
+
+        https://pypi.org/project/libsbml-draw/
+
 ## How to build the Python documentation
 
 The ReadTheDocs documentation is in the `docs` directory of the `libsbml-draw` repo, and the configuration 
