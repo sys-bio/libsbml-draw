@@ -12,5 +12,5 @@ sl = SBMLlayout(str(model_file))
 
 sl._describeModel()
 
-sl.drawNetwork("test_line_endings.pdf")
+sl.drawNetwork("ftest_line_endings.pdf")
 

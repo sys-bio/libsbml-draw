@@ -19,7 +19,7 @@ sl.drawNetwork("boris_ejb_override.pdf")
 def test_write_file_raises():
 
     with pytest.raises(ValueError):
-        sl.writeSBMLFile("test_layout_override.xml")
+        sl.writeSBMLFile("ftest_layout_override.xml")
 
 # This will write if allowed, and when it is read back in, it displays as
 # a single blob of garbage because everything is plotted with the same centers

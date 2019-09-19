@@ -17,9 +17,9 @@ assert sl.getNumberOfReactions() == 10
 
 sl.drawNetwork("boris_ejb_override.png")
 
-sl.writeSBMLFile("test_layout_override.xml")
+sl.writeSBMLFile("ftest_layout_override.xml")
 
-slr = SBMLlayout("test_layout_override.xml", autoComputeLayout=False)
+slr = SBMLlayout("ftest_layout_override.xml", autoComputeLayout=False)
 
 slr._describeModel()
 

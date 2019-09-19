@@ -41,9 +41,9 @@ sl.regenerateLayout()
 sl.drawNetwork()
 
 
-sl.writeSBMLFile("test_no_layout_alias.xml")
+sl.writeSBMLFile("ftest_no_layout_alias.xml")
 
-sl2 = SBMLlayout("test_no_layout_alias.xml", applyRender=applyRender)
+sl2 = SBMLlayout("ftest_no_layout_alias.xml", applyRender=applyRender)
 
 sl2._describeModel()
 

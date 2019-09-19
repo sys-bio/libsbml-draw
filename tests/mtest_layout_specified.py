@@ -29,10 +29,10 @@ sl.drawNetwork("larger_pathway.png")
 sl.drawNetwork()
 
 
-sl.writeSBMLFile("test_larger_pathway.xml")
+sl.writeSBMLFile("ftest_larger_pathway.xml")
 
 
-slr =  SBMLlayout("test_larger_pathway.xml")
+slr =  SBMLlayout("ftest_larger_pathway.xml")
 
 slr.drawNetwork()
 
