@@ -487,13 +487,17 @@ class SBMLlayout:
         Args: None
         Returns: None
         """
-        print()
-        print("layout number: ", self.__layout_number)
-        print("layout is specified: ", self.__layoutSpecified)
-        print("autoComputeLayout: ", self.__autoComputeLayout)
-        print("number of Compartments: ", self.getNumberOfCompartments())
-        print("number of Nodes: ", self.getNumberOfNodes())
-        print("number of Reactions: ", self.getNumberOfReactions())
+        dct = {}
+        dct["layout number"] = self.__layout_number
+        dct["layout is specified"] = self.__layoutSpecified
+        dct["autoComputeLayout"] = self.__autoComputeLayout
+        dct["number of Compartments"] = self.getNumberOfCompartments()
+        dct["number of Nodes"] =self.getNumberOfNodes()
+        dct["number of Reactions"] = self.getNumberOfReactions()
+        for k, v in dct.items():
+            print(k+':', v)
+        return dct
+
 
     def getNumberOfCompartments(self,):
         """Returns the number of compartments in the model.
