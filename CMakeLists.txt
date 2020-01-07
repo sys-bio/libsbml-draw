@@ -12,11 +12,16 @@
 cmake_minimum_required(VERSION 2.8.12)
 project(sbml_draw)
 
+set(CMAKE_CXX_FLAGS "-std=c++98")
+
 set(SBNW_MAJOR_VER 1)
 set(SBNW_MINOR_VER 0)
 set(SBNW_PATCHLEVEL 0)
 set(SBNW_VER_STRING "${SBNW_MAJOR_VER}.${SBNW_MINOR_VER}.${SBNW_PATCHLEVEL}")
-
+set(PYTHON_INCLUDE_DIR C:/Miniconda/include)
+set(LIBSBML_PREFIX D:/libSBML-5.18.0-libxml2-x64/win64)
+set(LIBSBML_INCLUDE_DIR  ${LIBSBML_PREFIX}/include)
+set(LIBSBML_STATIC_LIBRARY ${LIBSBML_PREFIX}/lib/libsbml.lib)
 
 if(${CMAKE_SYSTEM_NAME} MATCHES "Linux")
     set(FPIC_FLAG "-fPIC")
@@ -27,7 +32,7 @@ endif()
 # <pulling in user config from previously external files>
 
 set(SBNW_CLIENT_BUILD 0)
-set(SBNW_DEBUG_LEVEL 2 CACHE INTEGER "Verbosity of debug checks, must be greater than zero")
+set(SBNW_DEBUG_LEVEL CACHE INTEGER "Verbosity of debug checks, must be greater than zero")
 
 if(${WIN32})
     set(SBNW_WINDOWS_BUILD ON)

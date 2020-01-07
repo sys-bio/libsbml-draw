@@ -7,11 +7,13 @@ Created on Tue Apr  9 10:53:59 2019
 Title: Test random network generator
 """
 import tellurium as te
-from randMANetGen import randMANetGen # imports the random network generator function
-#import tesbml # need this library to help read SBML models
+from .randMANetGen import randMANetGen  # imports the random network generator function
 
-#%% Generate random network
+# import tesbml # need this library to help read SBML models
+
+# %% Generate random network
 # specify number of species, number of reactions, number of floating and boundary species in randMANetGen function call
-sbmlMod = randMANetGen(numSpecies = 8, numReactions = 4) # assign SBML string to 'sbmlMod' 
-r = te.loadSBMLModel(sbmlMod) # load SBML model with tellurium to generate roadrunner instance, 'r'
-r.exportToSBML('random_network.xml', current = True) # exports SBML model (.xml) named 'examplenetwork' to current directory
+sbmlMod = randMANetGen(numSpecies=8, numReactions=4)  # assign SBML string to 'sbmlMod'
+r = te.loadSBMLModel(sbmlMod)  # load SBML model with tellurium to generate roadrunner instance, 'r'
+r.exportToSBML('random_network.xml',
+               current=True)  # exports SBML model (.xml) named 'examplenetwork' to current directory

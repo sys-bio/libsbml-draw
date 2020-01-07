@@ -1,3 +1,6 @@
+import site
+site.addsitedir('../src/python')
+
 from libsbml_draw.model.sbml_layout import SBMLlayout
 
 model_file_name = "BIOMD0000000013_url.xml"

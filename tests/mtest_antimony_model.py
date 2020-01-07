@@ -1,3 +1,6 @@
+import site
+site.addsitedir('../src/python')
+
 import tellurium as te
 
 r = te.loada('''
@@ -33,7 +36,6 @@ model *untitled()
   Node14 = 0;
 end
 ''')
-
 from libsbml_draw.model.sbml_layout import SBMLlayout
 
 sl = SBMLlayout(r.getSBML())

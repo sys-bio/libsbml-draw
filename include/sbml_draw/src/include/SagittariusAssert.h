@@ -31,7 +31,7 @@
     #define EXPAND(x) x //Workaround for MSVC bug
     #define GET_ASTM(A1, A2, A3, A4, ...) A4
     
-    #define SAGITTARIUS_ASSERT ( ... ) EXPAND (GET_ASTM(__VA_ARGS__, ***error*** "Too many arguments to assert; file: "__FILE__:__LINE__,\
+    #define SAGITTARIUS_ASSERT( ... ) EXPAND(GET_ASTM(__VA_ARGS__, ***error*** "Too many arguments to assert; file: "__FILE__:__LINE__,\
         SAGITTARIUS_ASSERT2, SAGITTARIUS_ASSERT1)( __VA_ARGS__ ))
     
     //Shorthand:

@@ -9,7 +9,7 @@
 //== INCLUDES ========================================================================
 
 #include "SagittariusCommon.h"
-#include "SagittariusException.hpp"
+#include "SagittariusException.h"
 #include "string_helpers.h"
 #include <exception>
 

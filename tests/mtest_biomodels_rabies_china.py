@@ -1,3 +1,6 @@
+import site
+site.addsitedir('../src/python')
+
 from libsbml_draw.model.sbml_layout import SBMLlayout
 
 model_file_name = "rabies.xml"
