@@ -7,6 +7,7 @@ Created on Tue Apr  9 10:53:59 2019
 Title: Test random network generator
 """
 import unittest
+import os, glob
 import tellurium as te
 from randMANetGen import randMANetGen  # imports the random network generator function
 from lxml import etree
@@ -38,6 +39,10 @@ class RandMANetGenTests(unittest.TestCase):
         expected = 4
         actual = len(self.xml.find_all('reaction'))
         self.assertEqual(expected, actual)
+
+    def tearDown(self) -> None:
+        network_file = os.path.join(os.path.dirname(__file__), 'random_network')
+        os.remove(network_file)
 
 
 if __name__ == '__main__':

@@ -488,14 +488,14 @@ class SBMLlayout:
         Returns: None
         """
         dct = {}
-        dct["layout number"] = self.__layout_number
-        dct["layout is specified"] = self.__layoutSpecified
-        dct["autoComputeLayout"] = self.__autoComputeLayout
-        dct["number of Compartments"] = self.getNumberOfCompartments()
-        dct["number of Nodes"] =self.getNumberOfNodes()
-        dct["number of Reactions"] = self.getNumberOfReactions()
+        dct["layout_number"] = self.__layout_number
+        dct["layout_is_specified"] = self.__layoutSpecified
+        dct["auto_compute_layout"] = self.__autoComputeLayout
+        dct["number_of_compartments"] = self.getNumberOfCompartments()
+        dct["number_of_nodes"] =self.getNumberOfNodes()
+        dct["number_of_reactions"] = self.getNumberOfReactions()
         for k, v in dct.items():
-            print(k+':', v)
+            print(k.replace('_', ' ')+':', v)
         return dct
 
 

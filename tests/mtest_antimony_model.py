@@ -1,9 +1,15 @@
 import site
+
 site.addsitedir('../src/python')
 import unittest
 
 import tellurium as te
 from libsbml_draw.model.sbml_layout import SBMLlayout
+import matplotlib
+import os, glob
+
+
+# matplotlib.use('TkAgg')
 
 
 class AntimonyModelTests(unittest.TestCase):
@@ -43,30 +49,66 @@ class AntimonyModelTests(unittest.TestCase):
         end
         ''')
         self.sl = SBMLlayout(self.r.getSBML())
+        self.fname = os.path.join(os.path.dirname(__file__), 'network.png')
 
     def test_sbml_layout(self):
         self.assertIsInstance(self.sl, SBMLlayout)
 
-    def test_describe_model(self):
-        print(self.sl._describeModel())
-    #
-    # sl.drawNetwork()
-    #
-    # assert sl.getNumberOfNodes() == 12
-    # assert sl.getNumberOfReactions() == 8
-    #
-    # slsl = SBMLlayout()
-    #
-    # slsl.loadSBMLString(r.getSBML())
-    #
-    # slsl._describeModel()
-    #
-    # slsl.drawNetwork()
-    #
-    #
-    # assert slsl.getNumberOfNodes() == 12
-    # assert slsl.getNumberOfReactions() == 8
+    def test_describe_model_layout_number(self):
+        description = self.sl._describeModel()
+        expected = 0
+        actual = description['layout_number']
+        self.assertEqual(expected, actual)
+
+    def test_describe_model_layout_layout_is_specified(self):
+        description = self.sl._describeModel()
+        expected = False
+        actual = description['layout_is_specified']
+        self.assertEqual(expected, actual)
+
+    def test_describe_model_layout_auto_compute_layout(self):
+        description = self.sl._describeModel()
+        expected = False
+        actual = description['auto_compute_layout']
+        self.assertEqual(expected, actual)
+
+    def test_describe_model_layout_number_of_compartments(self):
+        description = self.sl._describeModel()
+        expected = 0
+        actual = description['number_of_compartments']
+        self.assertEqual(expected, actual)
+
+    def test_describe_model_layout_number_of_nodes(self):
+        description = self.sl._describeModel()
+        expected = 12
+        actual = description['number_of_nodes']
+        self.assertEqual(expected, actual)
+
+    def test_describe_model_layout_number_of_reactions(self):
+        description = self.sl._describeModel()
+        expected = 8
+        actual = description['number_of_reactions']
+        self.assertEqual(expected, actual)
+
+    def test_draw_network(self):
+        fig = self.sl.drawNetwork()
+        fig.savefig(self.fname, bbox_inches='tight', dpi=300)
+        self.assertTrue(os.path.isfile(self.fname))
+
+    def test_load_from_string(self):
+        slsl = SBMLlayout()
+        slsl.loadSBMLString(self.r.getSBML())
+        self.assertIsInstance(slsl, SBMLlayout)
+
+    def test_draw_network_from_model_loaded_from_string(self):
+        slsl = SBMLlayout()
+        slsl.loadSBMLString(self.r.getSBML())
+        fig = slsl.drawNetwork()
+        fig.savefig(self.fname, bbox_inches='tight', dpi=300)
+        self.assertTrue(os.path.isfile(self.fname))
+
+    def tearDown(self) -> None:
+        os.remove(self.fname)
 
 if __name__ == '__main__':
     unittest.main()
-
