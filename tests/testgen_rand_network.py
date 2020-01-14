@@ -9,12 +9,13 @@ Title: Test random network generator
 import unittest
 import os, glob
 import tellurium as te
-from randMANetGen import randMANetGen  # imports the random network generator function
+from .randMANetGen import randMANetGen  # imports the random network generator function
 from lxml import etree
 from bs4 import BeautifulSoup
 
 
 class RandMANetGenTests(unittest.TestCase):
+    network_file = os.path.join(os.path.dirname(__file__), 'random_network')
 
     def setUp(self) -> None:
         """
@@ -24,7 +25,7 @@ class RandMANetGenTests(unittest.TestCase):
         # Specify number of species, number of reactions, number of floating and boundary species in randMANetGen function call
         sbmlMod = randMANetGen(numSpecies=8, numReactions=4)  # assign SBML string to 'sbmlMod'
         r = te.loadSBMLModel(sbmlMod)  # load SBML model with tellurium to generate roadrunner instance, 'r'
-        r.exportToSBML('random_network.xml',
+        r.exportToSBML(self.network_file,
                        current=True)  # exports SBML model (.xml) named 'examplenetwork' to current directory
         self.r = r
 
@@ -41,8 +42,8 @@ class RandMANetGenTests(unittest.TestCase):
         self.assertEqual(expected, actual)
 
     def tearDown(self) -> None:
-        network_file = os.path.join(os.path.dirname(__file__), 'random_network')
-        os.remove(network_file)
+        if os.path.isfile(self.network_file):
+            os.remove(self.network_file)
 
 
 if __name__ == '__main__':

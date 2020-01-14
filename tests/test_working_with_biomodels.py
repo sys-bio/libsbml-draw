@@ -31,10 +31,10 @@ class TestWorksWithBioModels(unittest.TestCase):
             f.write(sbml)
         return sbml
 
-    # def tearDown(self) -> None:
-    #     for i in [self.sbml_fname, self.image_fname]:
-    #         if os.path.isfile(i):
-    #             os.remove(i)
+    def tearDown(self) -> None:
+        for i in [self.sbml_fname, self.image_fname]:
+            if os.path.isfile(i):
+                os.remove(i)
 
     def setUp(self) -> None:
         self.sbml = self.get_model_from_url()
