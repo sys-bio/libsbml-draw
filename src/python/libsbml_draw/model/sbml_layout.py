@@ -587,7 +587,7 @@ class SBMLlayout:
         Returns: None
         """
         if node_id in self.getNodeIds():
-
+            print("node id: ", node_id)
             node = self.__network.nodes[node_id]
 
             if node.id in self.__network.aliasedNodes:

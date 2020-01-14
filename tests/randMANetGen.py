@@ -290,3 +290,9 @@ def hasSubnetworks(interactionCount):
     if numSubGraphs != 1:
         subnetworks = True
     return subnetworks 
+
+
+if __name__ == '__main__':
+    x = randMANetGen(numReactions=20, numSpecies=8, numBoundary=1, numFloating=7)
+    with open("random_model.xml", 'w') as f:
+        f.write(x)
