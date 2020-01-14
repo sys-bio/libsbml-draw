@@ -1,6 +1,6 @@
 matplotlib
 numpy
-tesbml>=5.18.0
+tesbml
 nose
 sphinx
 sphinx_rtd_theme
