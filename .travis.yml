@@ -5,7 +5,7 @@ python:
   - "3.6"
 install:
   - pip install .
-  - pip install -r $PWD/requirements.txt
+  - pip install -r $PWD/requirements.txt.txt
   - pip install nose codecov coverage
 script:
   - nosetests --with-coverage
