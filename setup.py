@@ -16,11 +16,12 @@ setup(
     package_dir={"": "src/python"},
     package_data={"libsbml_draw.c_api": ["data/sbml_draw.dll", "data/libsbml_draw.dylib", "data/libsbml_draw.so"],
                   "libsbml_draw.model": ["data/*.xml"]},
-    install_requires=["matplotlib", "numpy", "tesbml>=5.18.0"],
+    install_requires=["matplotlib", "numpy", "tesbml"],
     extras_require={
         "testing": ["nose"],
         "documentation": ["sphinx", "sphinx_rtd_theme", "sphinx-autobuild", "sphinxcontrib-napoleon"],
     },
+
     zip_safe=False,
     classifiers=[
         "Intended Audience :: Science/Research",
