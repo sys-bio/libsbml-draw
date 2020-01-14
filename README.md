@@ -1,4 +1,7 @@
 # libsbml-draw: 
+[![Build Status](https://travis-ci.org/CiaranWelsh/libsbml-draw.svg?branch=master)](https://travis-ci.org/CiaranWelsh/libsbml-draw)
+[![Docs](https://readthedocs.org/projects/libsbml-draw/badge/?version=latest)](https://libsbml-draw.readthedocs.io/en/latest/)
+[![codecov](https://codecov.io/gh/CiaranWelsh/libsbml-draw/branch/master/graph/badge.svg)](https://codecov.io/gh/CiaranWelsh/libsbml-draw)
 
 ### SBML viewer, layout generator, render style editor
 
