@@ -1,0 +1,8 @@
+matplotlib
+numpy
+tesbml>=5.18.0
+nose
+sphinx
+sphinx_rtd_theme
+sphinx-autobuild
+sphinxcontrib-napoleon
