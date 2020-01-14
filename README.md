@@ -19,7 +19,7 @@ a C/C++ library.
 
 ## Documentation
 
-Python and C/C++: https://libsbml-draw.readthedocs.io/en/latest/index.html
+[Python and C/C++](https://libsbml-draw.readthedocs.io/en/latest/index.html)
 
 ## Installation Instructions For Using libsbml-draw With "Tellurium For Windows"
 
