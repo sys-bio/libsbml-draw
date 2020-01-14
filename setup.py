@@ -16,7 +16,7 @@ setup(
     package_dir={"": "src/python"},
     package_data={"libsbml_draw.c_api": ["data/sbml_draw.dll", "data/libsbml_draw.dylib", "data/libsbml_draw.so"],
                   "libsbml_draw.model": ["data/*.xml"]},
-    install_requires=["matplotlib", "numpy", "tesbml", 'tellurium'],
+    install_requires=open('requirements.txt').readlines(),
     extras_require={
         "testing": ["nose"],
         "documentation": ["sphinx", "sphinx_rtd_theme", "sphinx-autobuild", "sphinxcontrib-napoleon"],
