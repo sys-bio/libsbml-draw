@@ -13,7 +13,7 @@ r = te.loada("""
 
 s = SBMLlayout.SBMLlayout(r.getSBML())
 
-s._describeModel()
+s.describeModel()
 
 s.drawNetwork()
 

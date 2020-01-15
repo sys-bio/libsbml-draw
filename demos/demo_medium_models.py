@@ -16,7 +16,7 @@ for model_file_name in medium_models:
 
     sl = SBMLlayout(str(model_file))
 
-    sl._describeModel()
+    sl.describeModel()
 
     sl.drawNetwork()
 

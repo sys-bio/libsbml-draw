@@ -9,7 +9,7 @@ model_file = Path(pkg_resources.resource_filename("libsbml_draw", "model/data/" 
 
 sl = SBMLlayout(str(model_file))
 
-sl._describeModel()
+sl.describeModel()
 
 print()
 print("node ids: ", sl.getNodeIds())

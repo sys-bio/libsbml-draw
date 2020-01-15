@@ -17,7 +17,7 @@ for model_file_name in small_models:
 
     sl = SBMLlayout(str(model_file))
 
-    sl._describeModel()
+    sl.describeModel()
 
     sl.drawNetwork()
     

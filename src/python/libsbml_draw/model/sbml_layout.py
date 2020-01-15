@@ -481,19 +481,21 @@ class SBMLlayout:
         network = self.__network
         network.updateNetwork()
 
-    def _describeModel(self,):
+    def describeModel(self, ):
         """Provides a summary of the model built from the SBML file.
 
         Args: None
         Returns: None
         """
-        print()
-        print("layout number: ", self.__layout_number)
-        print("layout is specified: ", self.__layoutSpecified)
-        print("autoComputeLayout: ", self.__autoComputeLayout)
-        print("number of Compartments: ", self.getNumberOfCompartments())
-        print("number of Nodes: ", self.getNumberOfNodes())
-        print("number of Reactions: ", self.getNumberOfReactions())
+        dct = {}
+        dct["layout_number"] = self.__layout_number
+        dct["layout_is_specified"] = self.__layoutSpecified
+        dct["auto_compute_layout"] = self.__autoComputeLayout
+        dct["number_of_compartments"] = self.getNumberOfCompartments()
+        dct["number_of_nodes"] =self.getNumberOfNodes()
+        dct["number_of_reactions"] = self.getNumberOfReactions()
+        return dct
+
 
     def getNumberOfCompartments(self,):
         """Returns the number of compartments in the model.
@@ -583,7 +585,7 @@ class SBMLlayout:
         Returns: None
         """
         if node_id in self.getNodeIds():
-
+            print("node id: ", node_id)
             node = self.__network.nodes[node_id]
 
             if node.id in self.__network.aliasedNodes:

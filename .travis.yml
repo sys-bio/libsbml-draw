@@ -1,0 +1,13 @@
+language: python
+env:
+  - CODECOV_TOKEN="4762bec3-452b-4e1d-bef3-a55b76460b97"
+python:
+  - "3.6"
+install:
+  - pip install .
+  - pip install -r $PWD/requirements.txt
+  - pip install nose codecov coverage
+script:
+  - nosetests --with-coverage
+after_success:
+  - codecov -t $CODECOV_TOKEN

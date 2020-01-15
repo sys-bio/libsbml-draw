@@ -26,7 +26,7 @@ for model_file_name in bio_models:
 
     sl = SBMLlayout(str(model_file))
 
-    sl._describeModel()
+    sl.describeModel()
 
     sl.drawNetwork(scaling_factor=.5)
 

@@ -19,7 +19,7 @@ model_file = Path(pkg_resources.resource_filename(
 sl = SBMLlayout(str(model_file))
 
 
-sl._describeModel()
+sl.describeModel()
 
 #sl.drawNetwork("complicated_nodes.png", figsize=(6,6))
 #sl.drawNetwork("complicated_nodes.png", figsize=(8,8))

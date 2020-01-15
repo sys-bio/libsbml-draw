@@ -1,19 +1,27 @@
-from setuptools import setup, PEP420PackageFinder
+from distutils.core import setup
+from setuptools import PEP420PackageFinder
 
 exec(open("src/python/libsbml_draw/version.py").read())
 
+MAJOR = 0
+MINOR = 0
+MICRO = 0
+
+version = f'{MAJOR}.{MINOR}.{MICRO}'
+
 setup(
     name="libsbml-draw",
-    version=__version__,
+    version=version,
     packages=PEP420PackageFinder.find("src/python"),
     package_dir={"": "src/python"},
     package_data={"libsbml_draw.c_api": ["data/sbml_draw.dll", "data/libsbml_draw.dylib", "data/libsbml_draw.so"],
                   "libsbml_draw.model": ["data/*.xml"]},
-    install_requires=["matplotlib", "numpy", "tesbml>=5.18.0"],
+    install_requires=open('requirements.txt').readlines(),
     extras_require={
-        "testing": ["pytest", "pytest-mock"],
+        "testing": ["nose"],
         "documentation": ["sphinx", "sphinx_rtd_theme", "sphinx-autobuild", "sphinxcontrib-napoleon"],
     },
+
     zip_safe=False,
     classifiers=[
         "Intended Audience :: Science/Research",

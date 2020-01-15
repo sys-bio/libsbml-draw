@@ -9,7 +9,7 @@
 #include <sstream>
 
 //- SPECIFIC -//
-#include "SagittariusException.hpp"
+#include "SagittariusException.h"
 
 namespace LibsbmlDraw
 {
