@@ -1,8 +1,13 @@
 import site
-
-site.addsitedir('../src/python')
-import unittest
 import os
+# add the library to path
+site.addsitedir(os.path.join(os.path.dirname(os.path.dirname(__file__)), "src/python"))
+# print(p)
+import sys
+import unittest
+for i in os.environ['PYTHONPATH'].split(';'):
+    print(i)
+# remove all the layers of submodules
 from libsbml_draw.model.sbml_layout import SBMLlayout
 from .model_strings import model_xml
 import numpy

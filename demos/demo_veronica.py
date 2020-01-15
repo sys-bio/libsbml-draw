@@ -19,7 +19,7 @@ print("model file: \n", model_file)
 
 sl = SBMLlayout(model_file)
 
-sl._describeModel()
+sl.describeModel()
 
 my_fig = sl.drawNetwork()
 

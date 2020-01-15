@@ -1,12 +1,12 @@
 import site
-
-site.addsitedir('../src/python')
+import os
+site.addsitedir(os.path.join(os.path.dirname(os.path.dirname(__file__)), "src/python"))
 import unittest
 
 import tellurium as te
 from libsbml_draw.model.sbml_layout import SBMLlayout
 import matplotlib
-import os, glob
+import glob
 
 
 # matplotlib.use('TkAgg')
@@ -55,37 +55,37 @@ class AntimonyModelTests(unittest.TestCase):
         self.assertIsInstance(self.sl, SBMLlayout)
 
     def test_describe_model_layout_number(self):
-        description = self.sl._describeModel()
+        description = self.sl.describeModel()
         expected = 0
         actual = description['layout_number']
         self.assertEqual(expected, actual)
 
     def test_describe_model_layout_layout_is_specified(self):
-        description = self.sl._describeModel()
+        description = self.sl.describeModel()
         expected = False
         actual = description['layout_is_specified']
         self.assertEqual(expected, actual)
 
     def test_describe_model_layout_auto_compute_layout(self):
-        description = self.sl._describeModel()
+        description = self.sl.describeModel()
         expected = False
         actual = description['auto_compute_layout']
         self.assertEqual(expected, actual)
 
     def test_describe_model_layout_number_of_compartments(self):
-        description = self.sl._describeModel()
+        description = self.sl.describeModel()
         expected = 0
         actual = description['number_of_compartments']
         self.assertEqual(expected, actual)
 
     def test_describe_model_layout_number_of_nodes(self):
-        description = self.sl._describeModel()
+        description = self.sl.describeModel()
         expected = 12
         actual = description['number_of_nodes']
         self.assertEqual(expected, actual)
 
     def test_describe_model_layout_number_of_reactions(self):
-        description = self.sl._describeModel()
+        description = self.sl.describeModel()
         expected = 8
         actual = description['number_of_reactions']
         self.assertEqual(expected, actual)
@@ -108,7 +108,8 @@ class AntimonyModelTests(unittest.TestCase):
         self.assertTrue(os.path.isfile(self.fname))
 
     def tearDown(self) -> None:
-        os.remove(self.fname)
+        if os.path.isfile(self.fname):
+            os.remove(self.fname)
 
 if __name__ == '__main__':
     unittest.main()

@@ -8,6 +8,8 @@ Title: Test random network generator
 """
 import unittest
 import os, glob
+import site
+site.addsitedir(os.path.join(os.path.dirname(os.path.dirname(__file__)), "src/python"))
 import tellurium as te
 from .randMANetGen import randMANetGen  # imports the random network generator function
 from lxml import etree

@@ -1,7 +1,7 @@
 import site
-
-site.addsitedir('../src/python')
 import unittest, os, glob
+import os
+site.addsitedir(os.path.join(os.path.dirname(os.path.dirname(__file__)), "src/python"))
 import tellurium as te
 from libsbml_draw.model.sbml_layout import SBMLlayout
 import requests
@@ -50,7 +50,7 @@ class TestWorksWithBioModels(unittest.TestCase):
 
     def do_describe(self):
         sl = SBMLlayout(self.sbml_fname, applyRender=False)
-        desc = sl._describeModel()
+        desc = sl.describeModel()
         return desc
 
     def test_number_of_nodes(self):

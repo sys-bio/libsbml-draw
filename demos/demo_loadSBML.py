@@ -13,7 +13,7 @@ sl = SBMLlayout()
 
 sl.loadSBMLFile(str(model_file))
 
-sl._describeModel()
+sl.describeModel()
 
 sl.drawNetwork()
 
@@ -25,7 +25,7 @@ ss = SBMLlayout()
 
 ss.loadSBMLString(sl_str)
 
-ss._describeModel()
+ss.describeModel()
 
 ss.drawNetwork()
 

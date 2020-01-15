@@ -38,7 +38,7 @@ from libsbml_draw.model.sbml_layout import SBMLlayout
 
 sl = SBMLlayout(r.getSBML())
 
-sl._describeModel()
+sl.describeModel()
 
 sl.drawNetwork()
 

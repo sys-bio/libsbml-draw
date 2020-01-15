@@ -19,6 +19,6 @@
 //#define SAGITTARIUS_BIN_PATH 
 
 #define SBNW_USE_MAGICK     
-#define SBNW_DEBUG_LEVEL    2
+#define SBNW_DEBUG_LEVEL    
 
 #endif //#ifndef __SAGITTARIUS_CONFIGURE_HEADER__

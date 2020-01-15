@@ -17,7 +17,7 @@ model_file = "C:\\tmp\\largerpathway.xml"
 
 sl = SBMLlayout(model_file)
 
-sl._describeModel()
+sl.describeModel()
 
 sl.drawNetwork()
 #r = Render(model_file, sl.layout_number)

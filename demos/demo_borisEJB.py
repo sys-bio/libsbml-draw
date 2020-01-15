@@ -10,7 +10,7 @@ model_file = Path(pkg_resources.resource_filename("libsbml_draw", "model/data/" 
 
 sl = SBMLlayout(str(model_file), autoComputeLayout=True)
 
-sl._describeModel()
+sl.describeModel()
 
 sl.drawNetwork("Boris_EJB.png")
 sl.drawNetwork("Boris_EJB.pdf")
@@ -18,6 +18,6 @@ sl.drawNetwork("Boris_EJB.pdf")
 
 sl2 = SBMLlayout(str(model_file))
 
-sl2._describeModel()
+sl2.describeModel()
 
 sl2.drawNetwork()

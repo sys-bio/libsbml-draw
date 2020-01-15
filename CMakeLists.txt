@@ -12,12 +12,14 @@
 cmake_minimum_required(VERSION 2.8.12)
 project(sbml_draw)
 
-set(CMAKE_CXX_FLAGS "-std=c++98")
+set(CMAKE_CXX_FLAGS "-std=c++11")
 
 set(SBNW_MAJOR_VER 1)
 set(SBNW_MINOR_VER 0)
 set(SBNW_PATCHLEVEL 0)
 set(SBNW_VER_STRING "${SBNW_MAJOR_VER}.${SBNW_MINOR_VER}.${SBNW_PATCHLEVEL}")
+
+message(These are the new variables that were not in the original cmake)
 set(PYTHON_INCLUDE_DIR C:/Miniconda/include)
 set(LIBSBML_PREFIX D:/libSBML-5.18.0-libxml2-x64/win64)
 set(LIBSBML_INCLUDE_DIR  ${LIBSBML_PREFIX}/include)

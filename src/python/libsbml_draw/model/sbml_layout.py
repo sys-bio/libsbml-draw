@@ -481,7 +481,7 @@ class SBMLlayout:
         network = self.__network
         network.updateNetwork()
 
-    def _describeModel(self,):
+    def describeModel(self, ):
         """Provides a summary of the model built from the SBML file.
 
         Args: None
@@ -494,8 +494,6 @@ class SBMLlayout:
         dct["number_of_compartments"] = self.getNumberOfCompartments()
         dct["number_of_nodes"] =self.getNumberOfNodes()
         dct["number_of_reactions"] = self.getNumberOfReactions()
-        for k, v in dct.items():
-            print(k.replace('_', ' ')+':', v)
         return dct
 
 

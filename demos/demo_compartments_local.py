@@ -13,7 +13,7 @@ model_file = Path(pkg_resources.resource_filename("libsbml_draw", "model/data/" 
 
 sll = SBMLlayout(str(model_file))
 
-sll._describeModel()
+sll.describeModel()
 
 sll.drawNetwork()
 
