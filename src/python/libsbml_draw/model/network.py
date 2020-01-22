@@ -1,8 +1,7 @@
 """Represent the network as a collection of nodes and reactions.
 """
-from enum import IntEnum
-
 import ctypes
+from enum import IntEnum
 
 from matplotlib.patches import ArrowStyle
 
@@ -23,14 +22,13 @@ class Compartment():
     """Represents a compartment in the SBML model."""
 
     def __init__(self, h_compartment):
-
         self.width = sbnw.compartment_getWidth(h_compartment)
         self.height = sbnw.compartment_getHeight(h_compartment)
         self.min_corner = sbnw.compartment_getMinCorner(h_compartment)
         self.max_corner = sbnw.compartment_getMaxCorner(h_compartment)
         self.lower_left_point = [self.min_corner.x, self.min_corner.y]
-        self.center_x = self.min_corner.x + self.width/2
-        self.center_y = self.min_corner.y + self.height/2
+        self.center_x = self.min_corner.x + self.width / 2
+        self.center_y = self.min_corner.y + self.height / 2
         self.id = sbnw.compartment_getID(h_compartment)
         self.edge_color = "#0000ff30"  # 30% blue
         self.fill_color = "#0000ff05"  # 5% blue
@@ -46,12 +44,11 @@ class Node():
     """Represents a node in the SBMl model."""
 
     def __init__(self, h_node):
-
         self.width = sbnw.node_getWidth(h_node)
         self.height = sbnw.node_getHeight(h_node)
         self.center = sbnw.node_getCentroid(h_node)
-        self.lower_left_point = [self.center.x - self.width/2,
-                                 self.center.y - self.height/2]
+        self.lower_left_point = [self.center.x - self.width / 2,
+                                 self.center.y - self.height / 2]
         self.name = sbnw.node_getName(h_node)
         self.id = sbnw.node_getID(h_node)
         self.edge_width = 1
@@ -77,19 +74,18 @@ class Curve():
     has no arrowhead (i.e. has arrowstyle '-') and the second has an arrowhead
     pointing to the product."""
 
-    role_arrowstyles = ["-",                                  # SUBSTRATE
-                        "-|>",                                # PRODUCT
-                        "-",                                  # SIDESUBSTRATE
-                        "-|>",                                # SIDEPRODUCT
-                        "-|>",                                # MODIFIER
-                        "-|>",                                # ACTIVATOR
+    role_arrowstyles = ["-",  # SUBSTRATE
+                        "-|>",  # PRODUCT
+                        "-",  # SIDESUBSTRATE
+                        "-|>",  # SIDEPRODUCT
+                        "-|>",  # MODIFIER
+                        "-|>",  # ACTIVATOR
                         ArrowStyle("|-|",
                                    widthA=0, angleA=None,
-                                   widthB=1.0, angleB=None)   # INHIBITOR
+                                   widthB=1.0, angleB=None)  # INHIBITOR
                         ]
 
     def __init__(self, h_curve):
-
         self.curveCPs = sbnw.getCurveCPs(h_curve)
         self.start_point = self.curveCPs.start
         self.end_point = self.curveCPs.end
@@ -107,6 +103,7 @@ class Curve():
 
 class Reaction():
     """Represents a reaction in the SBML model."""
+
     def __init__(self, h_reaction):
         self.curves = []
         for curve_index in range(sbnw.reaction_getNumCurves(h_reaction)):
@@ -122,14 +119,15 @@ class Reaction():
 class Network():
     """Represents a network in the SBML model, and consists of nodes and
     reactions."""
+
     def __init__(self, h_network):
         self.h_network = h_network
         self.compartments = {}
         self.nodes = {}
         self.reactions = {}
+        self._add_compartments()
         self._add_nodes()
         self._add_reactions()
-        self._add_compartments()
         self.aliasedNodes = {}
         self.bg_color = "#ffffff"
         self.libsbml_color_definitions = []
@@ -139,7 +137,8 @@ class Network():
         self.stylesheet_libsbml_line_endings = []
         self._assign_species_to_curves()
 
-    def _assign_species_to_curves(self,):
+
+    def _assign_species_to_curves(self, ):
         """Each curve has a species connected to it, either at the start of the
         curve or at the end of the curve.  This function identifies that
         species and assigns it to a curve's species attribute.
@@ -195,7 +194,7 @@ class Network():
                                                          h_node, alias_index)
 
                 alias_node_id = sbnw.node_getID(
-                        h_alias_node) + "_" + str(alias_index)
+                    h_alias_node) + "_" + str(alias_index)
 
                 self.nodes[alias_node_id] = Node(h_alias_node)
 
@@ -213,13 +212,17 @@ class Network():
         else:
             raise ValueError(f"species {node_id} is not in the network.")
 
-    def _add_compartments(self,):
+    def getNumCompartmentsWithLibsbml(self):
+        pass
+
+    def _add_compartments(self, ):
         """Populates the collection of compartments.
 
         Args: None
 
         Returns: None
         """
+
         for compartment_index in range(
                 sbnw.nw_getNumCompartments(self.h_network)):
             h_compartment = sbnw.nw_getCompartmentp(self.h_network,
@@ -227,7 +230,7 @@ class Network():
             compartment_id = sbnw.compartment_getID(h_compartment)
             self.compartments[compartment_id] = Compartment(h_compartment)
 
-    def _add_nodes(self,):
+    def _add_nodes(self, ):
         """Populates the collection of nodes.
 
         Args: None
@@ -248,7 +251,7 @@ class Network():
             else:
                 self.nodes[node_id] = Node(h_node)
 
-    def _add_reactions_after_node_alias(self,):
+    def _add_reactions_after_node_alias(self, ):
         """Updates the reactions in the network after a node has been aliased.
 
         Args: None
@@ -266,7 +269,7 @@ class Network():
             self.reactions[reaction.id].fill_color = reaction.fill_color
             self.reactions[reaction.id].curve_width = reaction.curve_width
 
-    def _add_reactions(self,):
+    def _add_reactions(self, ):
         """Populates the collection of reactions.
 
         Args: None
@@ -278,7 +281,7 @@ class Network():
             reaction_id = sbnw.reaction_getID(h_reaction)
             self.reactions[reaction_id] = Reaction(h_reaction)
 
-    def _update_compartments_layout(self,):
+    def _update_compartments_layout(self, ):
         """Updates the layout information for the compartments.
 
         Args: None
@@ -296,13 +299,13 @@ class Network():
             compartment.height = sbnw.compartment_getHeight(h_compartment)
 
             compartment.min_corner = sbnw.compartment_getMinCorner(
-                    h_compartment)
+                h_compartment)
             compartment.max_corner = sbnw.compartment_getMaxCorner(
-                    h_compartment)
+                h_compartment)
             compartment.lower_left_point = [compartment.min_corner.x,
                                             compartment.min_corner.y]
 
-    def _update_nodes_layout(self,):
+    def _update_nodes_layout(self, ):
         """Updates the layout information for the nodes.
 
         Args: None
@@ -319,24 +322,23 @@ class Network():
                                                            h_node)
 
                 for alias_index in range(num_aliases):
-
                     h_alias_node = sbnw.nw_getAliasInstancep(
-                            self.h_network,
-                            h_node,
-                            alias_index)
+                        self.h_network,
+                        h_node,
+                        alias_index)
 
                     alias_node_id = self.aliasedNodes[node_id][alias_index]
                     node = self.nodes[alias_node_id]
                     node.center = sbnw.node_getCentroid(h_alias_node)
-                    node.lower_left_point = [node.center.x - node.width/2,
-                                             node.center.y - node.height/2]
+                    node.lower_left_point = [node.center.x - node.width / 2,
+                                             node.center.y - node.height / 2]
             else:
                 node = self.nodes[node_id]
                 node.center = sbnw.node_getCentroid(h_node)
-                node.lower_left_point = [node.center.x - node.width/2,
-                                         node.center.y - node.height/2]
+                node.lower_left_point = [node.center.x - node.width / 2,
+                                         node.center.y - node.height / 2]
 
-    def _update_reactions_layout(self,):
+    def _update_reactions_layout(self, ):
         """Updates the layout information for the reactions.
 
         Args: None
@@ -355,7 +357,7 @@ class Network():
                 h_curve = sbnw.reaction_getCurvep(h_reaction, curve_index)
                 reaction.curves.append(Curve(h_curve))
 
-    def updateNetwork(self,):
+    def updateNetwork(self, ):
         """Updates the layout position values for the compartments, nodes,
         reactions (and the curves making up each reaction).
 
@@ -392,18 +394,18 @@ class Network():
         Returns: boolean
         """
         if (
-            self._floats_equal(curveCP1.start.x, curveCP2.start.x) and
-            self._floats_equal(curveCP1.start.y, curveCP2.start.y) and
-            self._floats_equal(curveCP1.control_point_1.x,
-                               curveCP2.control_point_1.x) and
-            self._floats_equal(curveCP1.control_point_1.y,
-                               curveCP2.control_point_1.y) and
-            self._floats_equal(curveCP1.control_point_2.x,
-                               curveCP2.control_point_2.x) and
-            self._floats_equal(curveCP1.control_point_2.y,
-                               curveCP2.control_point_2.y) and
-            self._floats_equal(curveCP1.end.x, curveCP2.end.x) and
-            self._floats_equal(curveCP1.end.y, curveCP2.end.y)
+                self._floats_equal(curveCP1.start.x, curveCP2.start.x) and
+                self._floats_equal(curveCP1.start.y, curveCP2.start.y) and
+                self._floats_equal(curveCP1.control_point_1.x,
+                                   curveCP2.control_point_1.x) and
+                self._floats_equal(curveCP1.control_point_1.y,
+                                   curveCP2.control_point_1.y) and
+                self._floats_equal(curveCP1.control_point_2.x,
+                                   curveCP2.control_point_2.x) and
+                self._floats_equal(curveCP1.control_point_2.y,
+                                   curveCP2.control_point_2.y) and
+                self._floats_equal(curveCP1.end.x, curveCP2.end.x) and
+                self._floats_equal(curveCP1.end.y, curveCP2.end.y)
         ):
 
             return True
