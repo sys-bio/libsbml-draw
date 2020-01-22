@@ -1,0 +1,424 @@
+
+
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>Draw the SBML Model &mdash; libsbml_draw  documentation</title>
+  
+
+  
+  
+  
+  
+
+  
+  <script type="text/javascript" src="../_static/js/modernizr.min.js"></script>
+  
+    
+      <script type="text/javascript" id="documentation_options" data-url_root="../" src="../_static/documentation_options.js"></script>
+        <script type="text/javascript" src="../_static/jquery.js"></script>
+        <script type="text/javascript" src="../_static/underscore.js"></script>
+        <script type="text/javascript" src="../_static/doctools.js"></script>
+        <script type="text/javascript" src="../_static/language_data.js"></script>
+    
+    <script type="text/javascript" src="../_static/js/theme.js"></script>
+
+    
+
+  
+  <link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="Python Bindings for C API" href="python_api.html" />
+    <link rel="prev" title="C API" href="c_api.html" /> 
+</head>
+
+<body class="wy-body-for-nav">
+
+   
+  <div class="wy-grid-for-nav">
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+          
+
+          
+            <a href="../index.html" class="icon icon-home"> libsbml_draw
+          
+
+          
+          </a>
+
+          
+            
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <p class="caption"><span class="caption-text">Contents:</span></p>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../user/user.html">User Manual</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="refmanual.html">Reference Manual</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="model.html">SBML Model Representation</a></li>
+<li class="toctree-l2"><a class="reference internal" href="c_api.html">C API</a></li>
+<li class="toctree-l2 current"><a class="current reference internal" href="#">Draw the SBML Model</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#module-libsbml_draw.draw.draw_network">Draw the network</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="python_api.html">Python Bindings for C API</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../dev/dev.html">Developer Manual</a></li>
+</ul>
+
+            
+          
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../index.html">libsbml_draw</a>
+        
+      </nav>
+
+
+      <div class="wy-nav-content">
+        
+        <div class="rst-content">
+        
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="../index.html">Docs</a> &raquo;</li>
+        
+          <li><a href="refmanual.html">Reference Manual</a> &raquo;</li>
+        
+      <li>Draw the SBML Model</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+            
+            <a href="../_sources/refmanual/draw.rst.txt" rel="nofollow"> View page source</a>
+          
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <div class="section" id="draw-the-sbml-model">
+<span id="draw"></span><h1>Draw the SBML Model<a class="headerlink" href="#draw-the-sbml-model" title="Permalink to this headline">¶</a></h1>
+<div class="section" id="module-libsbml_draw.draw.draw_network">
+<span id="draw-the-network"></span><h2>Draw the network<a class="headerlink" href="#module-libsbml_draw.draw.draw_network" title="Permalink to this headline">¶</a></h2>
+<p>Draw the SBML model’s network which consists of compartments, nodes and
+reactions.</p>
+<dl class="function">
+<dt id="libsbml_draw.draw.draw_network.draw_compartments">
+<code class="sig-prename descclassname">libsbml_draw.draw.draw_network.</code><code class="sig-name descname">draw_compartments</code><span class="sig-paren">(</span><em class="sig-param">compartments</em>, <em class="sig-param">fig</em>, <em class="sig-param">scaling_factor</em>, <em class="sig-param">nw_height_inches</em><span class="sig-paren">)</span><a class="headerlink" href="#libsbml_draw.draw.draw_network.draw_compartments" title="Permalink to this definition">¶</a></dt>
+<dd><p>Create a list of FancyBbox Patches, one for each compartment.</p>
+<dl>
+<dt>Args:</dt><dd><dl class="simple">
+<dt>compartments (iterable collection of Compartment): collection of</dt><dd><p>compartments</p>
+</dd>
+</dl>
+<p>fig (matplotlib.figure.Figure): the figure of the network
+scaling_factor (float): scaling_factor to decrease or increase the</p>
+<blockquote>
+<div><p>figure size</p>
+</div></blockquote>
+<p>nw_height_inches (float): height of the network in inches</p>
+</dd>
+</dl>
+<p>Returns: list of matplotlib.patches - FancyBboxPatch, Ellipse, or Polygon</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="libsbml_draw.draw.draw_network.draw_nodes">
+<code class="sig-prename descclassname">libsbml_draw.draw.draw_network.</code><code class="sig-name descname">draw_nodes</code><span class="sig-paren">(</span><em class="sig-param">nodes</em>, <em class="sig-param">fig</em>, <em class="sig-param">scaling_factor</em>, <em class="sig-param">nw_height_inches</em><span class="sig-paren">)</span><a class="headerlink" href="#libsbml_draw.draw.draw_network.draw_nodes" title="Permalink to this definition">¶</a></dt>
+<dd><p>Create a list of FancyBbox Patches, one for each node.</p>
+<dl>
+<dt>Args:</dt><dd><p>nodes (iterable collection of Node): collection of nodes
+fig (matplotlib.figure.Figure): the figure of the network
+scaling_factor (float): scaling_factor to decrease or increase the</p>
+<blockquote>
+<div><p>figure size</p>
+</div></blockquote>
+<p>nw_height_inches (float): height of the network in inches</p>
+</dd>
+</dl>
+<p>Returns: list of matplotlib.patches - FancyBboxPatch, Ellipse, or Polygon</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="libsbml_draw.draw.draw_network.rotate_point">
+<code class="sig-prename descclassname">libsbml_draw.draw.draw_network.</code><code class="sig-name descname">rotate_point</code><span class="sig-paren">(</span><em class="sig-param">point</em>, <em class="sig-param">angle_deg</em>, <em class="sig-param">center_point=(0</em>, <em class="sig-param">0)</em><span class="sig-paren">)</span><a class="headerlink" href="#libsbml_draw.draw.draw_network.rotate_point" title="Permalink to this definition">¶</a></dt>
+<dd><p>Rotate an (x, y) point counter-clockwise, after centering the point
+around (0,0).</p>
+<dl>
+<dt>Args:</dt><dd><p>point (2-tuple (x, y)): point in a polygon to rotate
+angle_deg (float): rotate the point by this amount of degrees
+center_point (2-tuple (x, y)): center point of the polygon that the</p>
+<blockquote>
+<div><p>point belongs to</p>
+</div></blockquote>
+</dd>
+</dl>
+<p>Return: 2-tuple (x, y)</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="libsbml_draw.draw.draw_network.draw_reactions">
+<code class="sig-prename descclassname">libsbml_draw.draw.draw_network.</code><code class="sig-name descname">draw_reactions</code><span class="sig-paren">(</span><em class="sig-param">reactions</em>, <em class="sig-param">mutation_scale</em>, <em class="sig-param">fig</em>, <em class="sig-param">scaling_factor</em>, <em class="sig-param">nw_height_inches</em>, <em class="sig-param">line_endings</em><span class="sig-paren">)</span><a class="headerlink" href="#libsbml_draw.draw.draw_network.draw_reactions" title="Permalink to this definition">¶</a></dt>
+<dd><p>Create a list of FancyArrow Patches, one for each curve in a reaction.</p>
+<dl>
+<dt>Args:</dt><dd><p>reactions (iterable collection of Reaction): collection of reactions
+fig (matplotlib.figure.Figure): the figure of the network
+scaling_factor (float): scaling_factor to decrease or increase the</p>
+<blockquote>
+<div><p>figure size</p>
+</div></blockquote>
+</dd>
+</dl>
+<p>Returns: list of matplotlib.patches.FancyArrowPatch</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="libsbml_draw.draw.draw_network.create_rectangle_line_ending_patch">
+<code class="sig-prename descclassname">libsbml_draw.draw.draw_network.</code><code class="sig-name descname">create_rectangle_line_ending_patch</code><span class="sig-paren">(</span><em class="sig-param">curve</em>, <em class="sig-param">line_ending</em>, <em class="sig-param">scaling_factor</em>, <em class="sig-param">nw_height_inches</em>, <em class="sig-param">fig</em><span class="sig-paren">)</span><a class="headerlink" href="#libsbml_draw.draw.draw_network.create_rectangle_line_ending_patch" title="Permalink to this definition">¶</a></dt>
+<dd><p>Creates a patch for a line ending which has the shape of a rectangle</p>
+<dl>
+<dt>Args:</dt><dd><p>curve (libsbml_draw.network.Curve): curve needing a line ending
+line_ending (3-tuple containing (line ending type, data for drawing,</p>
+<blockquote>
+<div><p>bounding box data)): the line ending data for the curve</p>
+</div></blockquote>
+<dl class="simple">
+<dt>scaling_factor (float): scaling_factor to decrease or increase the</dt><dd><p>figure size</p>
+</dd>
+</dl>
+<p>nw_height_inches (float): height of the network in inches
+fig (matplotlib.figure.Figure): the figure of the network</p>
+</dd>
+</dl>
+<p>Returns: matplotlib.patches.Rectangle</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="libsbml_draw.draw.draw_network.create_ellipse_line_ending_patch">
+<code class="sig-prename descclassname">libsbml_draw.draw.draw_network.</code><code class="sig-name descname">create_ellipse_line_ending_patch</code><span class="sig-paren">(</span><em class="sig-param">curve</em>, <em class="sig-param">line_ending</em>, <em class="sig-param">scaling_factor</em>, <em class="sig-param">nw_height_inches</em>, <em class="sig-param">fig</em><span class="sig-paren">)</span><a class="headerlink" href="#libsbml_draw.draw.draw_network.create_ellipse_line_ending_patch" title="Permalink to this definition">¶</a></dt>
+<dd><p>Creates a patch for a line ending which has the shape of an ellipse</p>
+<dl>
+<dt>Args:</dt><dd><p>curve (libsbml_draw.network.Curve): curve needing a line ending
+line_ending (3-tuple containing (line ending type, data for drawing,</p>
+<blockquote>
+<div><p>bounding box data)): the line ending data for the curve</p>
+</div></blockquote>
+<dl class="simple">
+<dt>scaling_factor (float): scaling_factor to decrease or increase the</dt><dd><p>figure size</p>
+</dd>
+</dl>
+<p>nw_height_inches (float): height of the network in inches
+fig (matplotlib.figure.Figure): the figure of the network</p>
+</dd>
+</dl>
+<p>Returns: matplotlib.patches.Ellipse</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="libsbml_draw.draw.draw_network.create_polygon_line_ending_patch">
+<code class="sig-prename descclassname">libsbml_draw.draw.draw_network.</code><code class="sig-name descname">create_polygon_line_ending_patch</code><span class="sig-paren">(</span><em class="sig-param">curve</em>, <em class="sig-param">line_ending</em>, <em class="sig-param">scaling_factor</em>, <em class="sig-param">nw_height_inches</em>, <em class="sig-param">fig</em><span class="sig-paren">)</span><a class="headerlink" href="#libsbml_draw.draw.draw_network.create_polygon_line_ending_patch" title="Permalink to this definition">¶</a></dt>
+<dd><p>Creates a polygon patch for the line ending.</p>
+<dl>
+<dt>Args:</dt><dd><p>curve (libsbml_draw.network.Curve): curve needing a line ending
+line_ending (3-tuple containing (line ending type, data for drawing,</p>
+<blockquote>
+<div><p>bounding box data)): the line ending data for the curve</p>
+</div></blockquote>
+<dl class="simple">
+<dt>scaling_factor (float): scaling_factor to decrease or increase the</dt><dd><p>figure size</p>
+</dd>
+</dl>
+<p>nw_height_inches (float): height of the network in inches
+fig (matplotlib.figure.Figure): the figure of the network</p>
+</dd>
+</dl>
+<p>Returns: matplotlib.patches.Polygon</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="libsbml_draw.draw.draw_network.compute_line_ending_rotation_angle">
+<code class="sig-prename descclassname">libsbml_draw.draw.draw_network.</code><code class="sig-name descname">compute_line_ending_rotation_angle</code><span class="sig-paren">(</span><em class="sig-param">curve</em><span class="sig-paren">)</span><a class="headerlink" href="#libsbml_draw.draw.draw_network.compute_line_ending_rotation_angle" title="Permalink to this definition">¶</a></dt>
+<dd><p>Computes the angle in degrees that a line ending would need to be
+rotated in order to align with the slope of the cubic Bezier curve and
+point in the correct direction.</p>
+<dl class="simple">
+<dt>Args:</dt><dd><p>curve (libsbml_draw.network.Curve):</p>
+</dd>
+</dl>
+<p>Returns: float</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="libsbml_draw.draw.draw_network.add_labels">
+<code class="sig-prename descclassname">libsbml_draw.draw.draw_network.</code><code class="sig-name descname">add_labels</code><span class="sig-paren">(</span><em class="sig-param">nodes</em>, <em class="sig-param">fig</em>, <em class="sig-param">scaling_factor</em>, <em class="sig-param">nw_height_inches</em><span class="sig-paren">)</span><a class="headerlink" href="#libsbml_draw.draw.draw_network.add_labels" title="Permalink to this definition">¶</a></dt>
+<dd><p>Add text to the nodes.</p>
+<dl>
+<dt>Args:</dt><dd><p>nodes (iterable collection of Node): collection of nodes
+fig (matplotlib.figure.Figure): the figure of the network
+scaling_factor (float): scaling_factor to decrease or increase the</p>
+<blockquote>
+<div><p>figure size</p>
+</div></blockquote>
+</dd>
+</dl>
+<p>Returns: None</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="libsbml_draw.draw.draw_network.get_network_dimensions">
+<code class="sig-prename descclassname">libsbml_draw.draw.draw_network.</code><code class="sig-name descname">get_network_dimensions</code><span class="sig-paren">(</span><em class="sig-param">sbml_layout</em><span class="sig-paren">)</span><a class="headerlink" href="#libsbml_draw.draw.draw_network.get_network_dimensions" title="Permalink to this definition">¶</a></dt>
+<dd><dl class="simple">
+<dt>Compute the plotting width and height in inches needed for the given</dt><dd><p>network.</p>
+</dd>
+<dt>Args:</dt><dd><p>sbml_layout (libsbml_draw.model.SBMLlayout): the SBML model</p>
+</dd>
+</dl>
+<p>Returns: tuple (float, float) of the (width, height)</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="libsbml_draw.draw.draw_network.createNetworkFigure">
+<code class="sig-prename descclassname">libsbml_draw.draw.draw_network.</code><code class="sig-name descname">createNetworkFigure</code><span class="sig-paren">(</span><em class="sig-param">sbml_layout</em>, <em class="sig-param">arrowhead_mutation_scale</em>, <em class="sig-param">show=True</em>, <em class="sig-param">dpi=72</em>, <em class="sig-param">width_shift=0.25</em>, <em class="sig-param">height_shift=0.25</em>, <em class="sig-param">scaling_factor=1</em><span class="sig-paren">)</span><a class="headerlink" href="#libsbml_draw.draw.draw_network.createNetworkFigure" title="Permalink to this definition">¶</a></dt>
+<dd><p>Creates the figure, draws any compartments, draws the nodes,
+draws the reactions, adds text to the nodes.</p>
+<dl>
+<dt>Args:</dt><dd><p>sbml_layout (libsbml_draw.model.SBMLlayout): the SBML model
+arrowhead_mutation_scale (dict): keys are roles (int), values are for</p>
+<blockquote>
+<div><p>matplotlib’s FancyArrowPatch mutation_scale parameter</p>
+</div></blockquote>
+<p>show (optional, bool): displays the figure if True
+dpi (int): dots-per-inch setting for the figure
+width_shift (optional, float): size in inches of the left and right</p>
+<blockquote>
+<div><p>borders</p>
+</div></blockquote>
+<dl class="simple">
+<dt>height_shift (optional, float): size in inches of the bottom and</dt><dd><p>top borders</p>
+</dd>
+<dt>scaling_factor (option, float): decrease or increase the size of the</dt><dd><p>figure using this factor; example, 0.5 results in reducing the
+figure size by one-half</p>
+</dd>
+</dl>
+</dd>
+</dl>
+<p>Returns: matplotlib.figure.Figure</p>
+</dd></dl>
+
+</div>
+</div>
+
+
+           </div>
+           
+          </div>
+          <footer>
+  
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+      
+        <a href="python_api.html" class="btn btn-neutral float-right" title="Python Bindings for C API" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
+      
+      
+        <a href="c_api.html" class="btn btn-neutral float-left" title="C API" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+      
+    </div>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &copy; Copyright 2019, Sauro Lab
+
+    </p>
+  </div>
+  Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/rtfd/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script>
+
+  
+  
+    
+   
+
+</body>
+</html>

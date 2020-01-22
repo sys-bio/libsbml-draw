@@ -1,0 +1,674 @@
+
+
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>Python Bindings for C API &mdash; libsbml_draw  documentation</title>
+  
+
+  
+  
+  
+  
+
+  
+  <script type="text/javascript" src="../_static/js/modernizr.min.js"></script>
+  
+    
+      <script type="text/javascript" id="documentation_options" data-url_root="../" src="../_static/documentation_options.js"></script>
+        <script type="text/javascript" src="../_static/jquery.js"></script>
+        <script type="text/javascript" src="../_static/underscore.js"></script>
+        <script type="text/javascript" src="../_static/doctools.js"></script>
+        <script type="text/javascript" src="../_static/language_data.js"></script>
+    
+    <script type="text/javascript" src="../_static/js/theme.js"></script>
+
+    
+
+  
+  <link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="Developer Manual" href="../dev/dev.html" />
+    <link rel="prev" title="Draw the SBML Model" href="draw.html" /> 
+</head>
+
+<body class="wy-body-for-nav">
+
+   
+  <div class="wy-grid-for-nav">
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+          
+
+          
+            <a href="../index.html" class="icon icon-home"> libsbml_draw
+          
+
+          
+          </a>
+
+          
+            
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <p class="caption"><span class="caption-text">Contents:</span></p>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../user/user.html">User Manual</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="refmanual.html">Reference Manual</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="model.html">SBML Model Representation</a></li>
+<li class="toctree-l2"><a class="reference internal" href="c_api.html">C API</a></li>
+<li class="toctree-l2"><a class="reference internal" href="draw.html">Draw the SBML Model</a></li>
+<li class="toctree-l2 current"><a class="current reference internal" href="#">Python Bindings for C API</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#module-libsbml_draw.c_api.sbnw_c_api">Python bindings for the C API</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../dev/dev.html">Developer Manual</a></li>
+</ul>
+
+            
+          
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../index.html">libsbml_draw</a>
+        
+      </nav>
+
+
+      <div class="wy-nav-content">
+        
+        <div class="rst-content">
+        
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="../index.html">Docs</a> &raquo;</li>
+        
+          <li><a href="refmanual.html">Reference Manual</a> &raquo;</li>
+        
+      <li>Python Bindings for C API</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+            
+            <a href="../_sources/refmanual/python_api.rst.txt" rel="nofollow"> View page source</a>
+          
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <div class="section" id="python-bindings-for-c-api">
+<span id="python-api"></span><h1>Python Bindings for C API<a class="headerlink" href="#python-bindings-for-c-api" title="Permalink to this headline">¶</a></h1>
+<div class="section" id="module-libsbml_draw.c_api.sbnw_c_api">
+<span id="python-bindings-for-the-c-api"></span><h2>Python bindings for the C API<a class="headerlink" href="#module-libsbml_draw.c_api.sbnw_c_api" title="Permalink to this headline">¶</a></h2>
+<p>Sets up the python bindings to the c api.</p>
+<dl class="class">
+<dt id="libsbml_draw.c_api.sbnw_c_api.fr_alg_options">
+<em class="property">class </em><code class="sig-prename descclassname">libsbml_draw.c_api.sbnw_c_api.</code><code class="sig-name descname">fr_alg_options</code><a class="headerlink" href="#libsbml_draw.c_api.sbnw_c_api.fr_alg_options" title="Permalink to this definition">¶</a></dt>
+<dd><dl class="attribute">
+<dt id="libsbml_draw.c_api.sbnw_c_api.fr_alg_options.autobary">
+<code class="sig-name descname">autobary</code><a class="headerlink" href="#libsbml_draw.c_api.sbnw_c_api.fr_alg_options.autobary" title="Permalink to this definition">¶</a></dt>
+<dd><p>Structure/Union member</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="libsbml_draw.c_api.sbnw_c_api.fr_alg_options.baryx">
+<code class="sig-name descname">baryx</code><a class="headerlink" href="#libsbml_draw.c_api.sbnw_c_api.fr_alg_options.baryx" title="Permalink to this definition">¶</a></dt>
+<dd><p>Structure/Union member</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="libsbml_draw.c_api.sbnw_c_api.fr_alg_options.baryy">
+<code class="sig-name descname">baryy</code><a class="headerlink" href="#libsbml_draw.c_api.sbnw_c_api.fr_alg_options.baryy" title="Permalink to this definition">¶</a></dt>
+<dd><p>Structure/Union member</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="libsbml_draw.c_api.sbnw_c_api.fr_alg_options.gravity">
+<code class="sig-name descname">gravity</code><a class="headerlink" href="#libsbml_draw.c_api.sbnw_c_api.fr_alg_options.gravity" title="Permalink to this definition">¶</a></dt>
+<dd><p>Structure/Union member</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="libsbml_draw.c_api.sbnw_c_api.fr_alg_options.k">
+<code class="sig-name descname">k</code><a class="headerlink" href="#libsbml_draw.c_api.sbnw_c_api.fr_alg_options.k" title="Permalink to this definition">¶</a></dt>
+<dd><p>Structure/Union member</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="libsbml_draw.c_api.sbnw_c_api.fr_alg_options.padding">
+<code class="sig-name descname">padding</code><a class="headerlink" href="#libsbml_draw.c_api.sbnw_c_api.fr_alg_options.padding" title="Permalink to this definition">¶</a></dt>
+<dd><p>Structure/Union member</p>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="class">
+<dt id="libsbml_draw.c_api.sbnw_c_api.point">
+<em class="property">class </em><code class="sig-prename descclassname">libsbml_draw.c_api.sbnw_c_api.</code><code class="sig-name descname">point</code><a class="headerlink" href="#libsbml_draw.c_api.sbnw_c_api.point" title="Permalink to this definition">¶</a></dt>
+<dd><dl class="attribute">
+<dt id="libsbml_draw.c_api.sbnw_c_api.point.x">
+<code class="sig-name descname">x</code><a class="headerlink" href="#libsbml_draw.c_api.sbnw_c_api.point.x" title="Permalink to this definition">¶</a></dt>
+<dd><p>Structure/Union member</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="libsbml_draw.c_api.sbnw_c_api.point.y">
+<code class="sig-name descname">y</code><a class="headerlink" href="#libsbml_draw.c_api.sbnw_c_api.point.y" title="Permalink to this definition">¶</a></dt>
+<dd><p>Structure/Union member</p>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="class">
+<dt id="libsbml_draw.c_api.sbnw_c_api.curveCP">
+<em class="property">class </em><code class="sig-prename descclassname">libsbml_draw.c_api.sbnw_c_api.</code><code class="sig-name descname">curveCP</code><a class="headerlink" href="#libsbml_draw.c_api.sbnw_c_api.curveCP" title="Permalink to this definition">¶</a></dt>
+<dd><dl class="attribute">
+<dt id="libsbml_draw.c_api.sbnw_c_api.curveCP.control_point_1">
+<code class="sig-name descname">control_point_1</code><a class="headerlink" href="#libsbml_draw.c_api.sbnw_c_api.curveCP.control_point_1" title="Permalink to this definition">¶</a></dt>
+<dd><p>Structure/Union member</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="libsbml_draw.c_api.sbnw_c_api.curveCP.control_point_2">
+<code class="sig-name descname">control_point_2</code><a class="headerlink" href="#libsbml_draw.c_api.sbnw_c_api.curveCP.control_point_2" title="Permalink to this definition">¶</a></dt>
+<dd><p>Structure/Union member</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="libsbml_draw.c_api.sbnw_c_api.curveCP.end">
+<code class="sig-name descname">end</code><a class="headerlink" href="#libsbml_draw.c_api.sbnw_c_api.curveCP.end" title="Permalink to this definition">¶</a></dt>
+<dd><p>Structure/Union member</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="libsbml_draw.c_api.sbnw_c_api.curveCP.start">
+<code class="sig-name descname">start</code><a class="headerlink" href="#libsbml_draw.c_api.sbnw_c_api.curveCP.start" title="Permalink to this definition">¶</a></dt>
+<dd><p>Structure/Union member</p>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="class">
+<dt id="libsbml_draw.c_api.sbnw_c_api.gf_curve">
+<em class="property">class </em><code class="sig-prename descclassname">libsbml_draw.c_api.sbnw_c_api.</code><code class="sig-name descname">gf_curve</code><a class="headerlink" href="#libsbml_draw.c_api.sbnw_c_api.gf_curve" title="Permalink to this definition">¶</a></dt>
+<dd><dl class="attribute">
+<dt id="libsbml_draw.c_api.sbnw_c_api.gf_curve.c">
+<code class="sig-name descname">c</code><a class="headerlink" href="#libsbml_draw.c_api.sbnw_c_api.gf_curve.c" title="Permalink to this definition">¶</a></dt>
+<dd><p>Structure/Union member</p>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="class">
+<dt id="libsbml_draw.c_api.sbnw_c_api.layout_info">
+<em class="property">class </em><code class="sig-prename descclassname">libsbml_draw.c_api.sbnw_c_api.</code><code class="sig-name descname">layout_info</code><a class="headerlink" href="#libsbml_draw.c_api.sbnw_c_api.layout_info" title="Permalink to this definition">¶</a></dt>
+<dd><dl class="attribute">
+<dt id="libsbml_draw.c_api.sbnw_c_api.layout_info.canv">
+<code class="sig-name descname">canv</code><a class="headerlink" href="#libsbml_draw.c_api.sbnw_c_api.layout_info.canv" title="Permalink to this definition">¶</a></dt>
+<dd><p>Structure/Union member</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="libsbml_draw.c_api.sbnw_c_api.layout_info.cont">
+<code class="sig-name descname">cont</code><a class="headerlink" href="#libsbml_draw.c_api.sbnw_c_api.layout_info.cont" title="Permalink to this definition">¶</a></dt>
+<dd><p>Structure/Union member</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="libsbml_draw.c_api.sbnw_c_api.layout_info.level">
+<code class="sig-name descname">level</code><a class="headerlink" href="#libsbml_draw.c_api.sbnw_c_api.layout_info.level" title="Permalink to this definition">¶</a></dt>
+<dd><p>Structure/Union member</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="libsbml_draw.c_api.sbnw_c_api.layout_info.net">
+<code class="sig-name descname">net</code><a class="headerlink" href="#libsbml_draw.c_api.sbnw_c_api.layout_info.net" title="Permalink to this definition">¶</a></dt>
+<dd><p>Structure/Union member</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="libsbml_draw.c_api.sbnw_c_api.layout_info.version">
+<code class="sig-name descname">version</code><a class="headerlink" href="#libsbml_draw.c_api.sbnw_c_api.layout_info.version" title="Permalink to this definition">¶</a></dt>
+<dd><p>Structure/Union member</p>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="class">
+<dt id="libsbml_draw.c_api.sbnw_c_api.canvas">
+<em class="property">class </em><code class="sig-prename descclassname">libsbml_draw.c_api.sbnw_c_api.</code><code class="sig-name descname">canvas</code><a class="headerlink" href="#libsbml_draw.c_api.sbnw_c_api.canvas" title="Permalink to this definition">¶</a></dt>
+<dd><dl class="attribute">
+<dt id="libsbml_draw.c_api.sbnw_c_api.canvas.canv">
+<code class="sig-name descname">canv</code><a class="headerlink" href="#libsbml_draw.c_api.sbnw_c_api.canvas.canv" title="Permalink to this definition">¶</a></dt>
+<dd><p>Structure/Union member</p>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="function">
+<dt id="libsbml_draw.c_api.sbnw_c_api.getCurrentLibraryVersion">
+<code class="sig-prename descclassname">libsbml_draw.c_api.sbnw_c_api.</code><code class="sig-name descname">getCurrentLibraryVersion</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#libsbml_draw.c_api.sbnw_c_api.getCurrentLibraryVersion" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="function">
+<dt id="libsbml_draw.c_api.sbnw_c_api.getCanvasp">
+<code class="sig-prename descclassname">libsbml_draw.c_api.sbnw_c_api.</code><code class="sig-name descname">getCanvasp</code><span class="sig-paren">(</span><em class="sig-param">h_layout_info</em><span class="sig-paren">)</span><a class="headerlink" href="#libsbml_draw.c_api.sbnw_c_api.getCanvasp" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="function">
+<dt id="libsbml_draw.c_api.sbnw_c_api.canvas_getWidth">
+<code class="sig-prename descclassname">libsbml_draw.c_api.sbnw_c_api.</code><code class="sig-name descname">canvas_getWidth</code><span class="sig-paren">(</span><em class="sig-param">h_canvas</em><span class="sig-paren">)</span><a class="headerlink" href="#libsbml_draw.c_api.sbnw_c_api.canvas_getWidth" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="function">
+<dt id="libsbml_draw.c_api.sbnw_c_api.canvas_getHeight">
+<code class="sig-prename descclassname">libsbml_draw.c_api.sbnw_c_api.</code><code class="sig-name descname">canvas_getHeight</code><span class="sig-paren">(</span><em class="sig-param">h_canvas</em><span class="sig-paren">)</span><a class="headerlink" href="#libsbml_draw.c_api.sbnw_c_api.canvas_getHeight" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="function">
+<dt id="libsbml_draw.c_api.sbnw_c_api.layout_alignToOrigin">
+<code class="sig-prename descclassname">libsbml_draw.c_api.sbnw_c_api.</code><code class="sig-name descname">layout_alignToOrigin</code><span class="sig-paren">(</span><em class="sig-param">h_layoutInfo</em>, <em class="sig-param">pad_x</em>, <em class="sig-param">pad_y</em><span class="sig-paren">)</span><a class="headerlink" href="#libsbml_draw.c_api.sbnw_c_api.layout_alignToOrigin" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="function">
+<dt id="libsbml_draw.c_api.sbnw_c_api.getSBMLwithLayoutStr">
+<code class="sig-prename descclassname">libsbml_draw.c_api.sbnw_c_api.</code><code class="sig-name descname">getSBMLwithLayoutStr</code><span class="sig-paren">(</span><em class="sig-param">h_sbml_model</em>, <em class="sig-param">h_layout_info</em>, <em class="sig-param">useLastTransformedCoordinates</em><span class="sig-paren">)</span><a class="headerlink" href="#libsbml_draw.c_api.sbnw_c_api.getSBMLwithLayoutStr" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="function">
+<dt id="libsbml_draw.c_api.sbnw_c_api.loadSBMLFile">
+<code class="sig-prename descclassname">libsbml_draw.c_api.sbnw_c_api.</code><code class="sig-name descname">loadSBMLFile</code><span class="sig-paren">(</span><em class="sig-param">h_fileName</em><span class="sig-paren">)</span><a class="headerlink" href="#libsbml_draw.c_api.sbnw_c_api.loadSBMLFile" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="function">
+<dt id="libsbml_draw.c_api.sbnw_c_api.loadSBMLString">
+<code class="sig-prename descclassname">libsbml_draw.c_api.sbnw_c_api.</code><code class="sig-name descname">loadSBMLString</code><span class="sig-paren">(</span><em class="sig-param">h_stringName</em><span class="sig-paren">)</span><a class="headerlink" href="#libsbml_draw.c_api.sbnw_c_api.loadSBMLString" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="function">
+<dt id="libsbml_draw.c_api.sbnw_c_api.getLastError">
+<code class="sig-prename descclassname">libsbml_draw.c_api.sbnw_c_api.</code><code class="sig-name descname">getLastError</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#libsbml_draw.c_api.sbnw_c_api.getLastError" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="function">
+<dt id="libsbml_draw.c_api.sbnw_c_api.isLayoutSpecified">
+<code class="sig-prename descclassname">libsbml_draw.c_api.sbnw_c_api.</code><code class="sig-name descname">isLayoutSpecified</code><span class="sig-paren">(</span><em class="sig-param">h_network</em><span class="sig-paren">)</span><a class="headerlink" href="#libsbml_draw.c_api.sbnw_c_api.isLayoutSpecified" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="function">
+<dt id="libsbml_draw.c_api.sbnw_c_api.processLayout">
+<code class="sig-prename descclassname">libsbml_draw.c_api.sbnw_c_api.</code><code class="sig-name descname">processLayout</code><span class="sig-paren">(</span><em class="sig-param">h_model</em><span class="sig-paren">)</span><a class="headerlink" href="#libsbml_draw.c_api.sbnw_c_api.processLayout" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="function">
+<dt id="libsbml_draw.c_api.sbnw_c_api.randomizeLayout">
+<code class="sig-prename descclassname">libsbml_draw.c_api.sbnw_c_api.</code><code class="sig-name descname">randomizeLayout</code><span class="sig-paren">(</span><em class="sig-param">h_layout_info</em><span class="sig-paren">)</span><a class="headerlink" href="#libsbml_draw.c_api.sbnw_c_api.randomizeLayout" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="function">
+<dt id="libsbml_draw.c_api.sbnw_c_api.doLayoutAlgorithm">
+<code class="sig-prename descclassname">libsbml_draw.c_api.sbnw_c_api.</code><code class="sig-name descname">doLayoutAlgorithm</code><span class="sig-paren">(</span><em class="sig-param">layout_options</em>, <em class="sig-param">h_layout_info</em><span class="sig-paren">)</span><a class="headerlink" href="#libsbml_draw.c_api.sbnw_c_api.doLayoutAlgorithm" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="function">
+<dt id="libsbml_draw.c_api.sbnw_c_api.SBMLModel_newp">
+<code class="sig-prename descclassname">libsbml_draw.c_api.sbnw_c_api.</code><code class="sig-name descname">SBMLModel_newp</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#libsbml_draw.c_api.sbnw_c_api.SBMLModel_newp" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="function">
+<dt id="libsbml_draw.c_api.sbnw_c_api.setModelNamespace">
+<code class="sig-prename descclassname">libsbml_draw.c_api.sbnw_c_api.</code><code class="sig-name descname">setModelNamespace</code><span class="sig-paren">(</span><em class="sig-param">h_layout_info</em>, <em class="sig-param">level</em>, <em class="sig-param">version</em><span class="sig-paren">)</span><a class="headerlink" href="#libsbml_draw.c_api.sbnw_c_api.setModelNamespace" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="function">
+<dt id="libsbml_draw.c_api.sbnw_c_api.getNetworkp">
+<code class="sig-prename descclassname">libsbml_draw.c_api.sbnw_c_api.</code><code class="sig-name descname">getNetworkp</code><span class="sig-paren">(</span><em class="sig-param">h_layout_info</em><span class="sig-paren">)</span><a class="headerlink" href="#libsbml_draw.c_api.sbnw_c_api.getNetworkp" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="function">
+<dt id="libsbml_draw.c_api.sbnw_c_api.nw_getNodep">
+<code class="sig-prename descclassname">libsbml_draw.c_api.sbnw_c_api.</code><code class="sig-name descname">nw_getNodep</code><span class="sig-paren">(</span><em class="sig-param">h_network</em>, <em class="sig-param">node_index</em><span class="sig-paren">)</span><a class="headerlink" href="#libsbml_draw.c_api.sbnw_c_api.nw_getNodep" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="function">
+<dt id="libsbml_draw.c_api.sbnw_c_api.nw_getNodepFromId">
+<code class="sig-prename descclassname">libsbml_draw.c_api.sbnw_c_api.</code><code class="sig-name descname">nw_getNodepFromId</code><span class="sig-paren">(</span><em class="sig-param">h_network</em>, <em class="sig-param">h_id</em><span class="sig-paren">)</span><a class="headerlink" href="#libsbml_draw.c_api.sbnw_c_api.nw_getNodepFromId" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="function">
+<dt id="libsbml_draw.c_api.sbnw_c_api.nw_getNumCompartments">
+<code class="sig-prename descclassname">libsbml_draw.c_api.sbnw_c_api.</code><code class="sig-name descname">nw_getNumCompartments</code><span class="sig-paren">(</span><em class="sig-param">h_network</em><span class="sig-paren">)</span><a class="headerlink" href="#libsbml_draw.c_api.sbnw_c_api.nw_getNumCompartments" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="function">
+<dt id="libsbml_draw.c_api.sbnw_c_api.nw_getNumNodes">
+<code class="sig-prename descclassname">libsbml_draw.c_api.sbnw_c_api.</code><code class="sig-name descname">nw_getNumNodes</code><span class="sig-paren">(</span><em class="sig-param">h_network</em><span class="sig-paren">)</span><a class="headerlink" href="#libsbml_draw.c_api.sbnw_c_api.nw_getNumNodes" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="function">
+<dt id="libsbml_draw.c_api.sbnw_c_api.nw_getNumRxns">
+<code class="sig-prename descclassname">libsbml_draw.c_api.sbnw_c_api.</code><code class="sig-name descname">nw_getNumRxns</code><span class="sig-paren">(</span><em class="sig-param">h_network</em><span class="sig-paren">)</span><a class="headerlink" href="#libsbml_draw.c_api.sbnw_c_api.nw_getNumRxns" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="function">
+<dt id="libsbml_draw.c_api.sbnw_c_api.nw_getReactionp">
+<code class="sig-prename descclassname">libsbml_draw.c_api.sbnw_c_api.</code><code class="sig-name descname">nw_getReactionp</code><span class="sig-paren">(</span><em class="sig-param">h_network</em>, <em class="sig-param">reaction_index</em><span class="sig-paren">)</span><a class="headerlink" href="#libsbml_draw.c_api.sbnw_c_api.nw_getReactionp" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="function">
+<dt id="libsbml_draw.c_api.sbnw_c_api.nw_newAliasNodep">
+<code class="sig-prename descclassname">libsbml_draw.c_api.sbnw_c_api.</code><code class="sig-name descname">nw_newAliasNodep</code><span class="sig-paren">(</span><em class="sig-param">h_network</em>, <em class="sig-param">h_node</em><span class="sig-paren">)</span><a class="headerlink" href="#libsbml_draw.c_api.sbnw_c_api.nw_newAliasNodep" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="function">
+<dt id="libsbml_draw.c_api.sbnw_c_api.nw_getAliasInstancep">
+<code class="sig-prename descclassname">libsbml_draw.c_api.sbnw_c_api.</code><code class="sig-name descname">nw_getAliasInstancep</code><span class="sig-paren">(</span><em class="sig-param">h_network</em>, <em class="sig-param">h_node</em>, <em class="sig-param">alias_index</em><span class="sig-paren">)</span><a class="headerlink" href="#libsbml_draw.c_api.sbnw_c_api.nw_getAliasInstancep" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="function">
+<dt id="libsbml_draw.c_api.sbnw_c_api.nw_getNumAliasInstances">
+<code class="sig-prename descclassname">libsbml_draw.c_api.sbnw_c_api.</code><code class="sig-name descname">nw_getNumAliasInstances</code><span class="sig-paren">(</span><em class="sig-param">h_network</em>, <em class="sig-param">h_node</em><span class="sig-paren">)</span><a class="headerlink" href="#libsbml_draw.c_api.sbnw_c_api.nw_getNumAliasInstances" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="function">
+<dt id="libsbml_draw.c_api.sbnw_c_api.nw_recenterJunctions">
+<code class="sig-prename descclassname">libsbml_draw.c_api.sbnw_c_api.</code><code class="sig-name descname">nw_recenterJunctions</code><span class="sig-paren">(</span><em class="sig-param">h_network</em><span class="sig-paren">)</span><a class="headerlink" href="#libsbml_draw.c_api.sbnw_c_api.nw_recenterJunctions" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="function">
+<dt id="libsbml_draw.c_api.sbnw_c_api.nw_rebuildCurves">
+<code class="sig-prename descclassname">libsbml_draw.c_api.sbnw_c_api.</code><code class="sig-name descname">nw_rebuildCurves</code><span class="sig-paren">(</span><em class="sig-param">h_network</em><span class="sig-paren">)</span><a class="headerlink" href="#libsbml_draw.c_api.sbnw_c_api.nw_rebuildCurves" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="function">
+<dt id="libsbml_draw.c_api.sbnw_c_api.node_getAttachedCurves">
+<code class="sig-prename descclassname">libsbml_draw.c_api.sbnw_c_api.</code><code class="sig-name descname">node_getAttachedCurves</code><span class="sig-paren">(</span><em class="sig-param">h_node</em>, <em class="sig-param">h_network</em><span class="sig-paren">)</span><a class="headerlink" href="#libsbml_draw.c_api.sbnw_c_api.node_getAttachedCurves" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="function">
+<dt id="libsbml_draw.c_api.sbnw_c_api.node_getCentroid">
+<code class="sig-prename descclassname">libsbml_draw.c_api.sbnw_c_api.</code><code class="sig-name descname">node_getCentroid</code><span class="sig-paren">(</span><em class="sig-param">h_node</em><span class="sig-paren">)</span><a class="headerlink" href="#libsbml_draw.c_api.sbnw_c_api.node_getCentroid" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="function">
+<dt id="libsbml_draw.c_api.sbnw_c_api.node_setCentroid">
+<code class="sig-prename descclassname">libsbml_draw.c_api.sbnw_c_api.</code><code class="sig-name descname">node_setCentroid</code><span class="sig-paren">(</span><em class="sig-param">h_node</em>, <em class="sig-param">point</em><span class="sig-paren">)</span><a class="headerlink" href="#libsbml_draw.c_api.sbnw_c_api.node_setCentroid" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="function">
+<dt id="libsbml_draw.c_api.sbnw_c_api.node_getHeight">
+<code class="sig-prename descclassname">libsbml_draw.c_api.sbnw_c_api.</code><code class="sig-name descname">node_getHeight</code><span class="sig-paren">(</span><em class="sig-param">h_node</em><span class="sig-paren">)</span><a class="headerlink" href="#libsbml_draw.c_api.sbnw_c_api.node_getHeight" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="function">
+<dt id="libsbml_draw.c_api.sbnw_c_api.node_setHeight">
+<code class="sig-prename descclassname">libsbml_draw.c_api.sbnw_c_api.</code><code class="sig-name descname">node_setHeight</code><span class="sig-paren">(</span><em class="sig-param">h_node</em>, <em class="sig-param">height</em><span class="sig-paren">)</span><a class="headerlink" href="#libsbml_draw.c_api.sbnw_c_api.node_setHeight" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="function">
+<dt id="libsbml_draw.c_api.sbnw_c_api.node_getWidth">
+<code class="sig-prename descclassname">libsbml_draw.c_api.sbnw_c_api.</code><code class="sig-name descname">node_getWidth</code><span class="sig-paren">(</span><em class="sig-param">h_node</em><span class="sig-paren">)</span><a class="headerlink" href="#libsbml_draw.c_api.sbnw_c_api.node_getWidth" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="function">
+<dt id="libsbml_draw.c_api.sbnw_c_api.node_setWidth">
+<code class="sig-prename descclassname">libsbml_draw.c_api.sbnw_c_api.</code><code class="sig-name descname">node_setWidth</code><span class="sig-paren">(</span><em class="sig-param">h_node</em>, <em class="sig-param">width</em><span class="sig-paren">)</span><a class="headerlink" href="#libsbml_draw.c_api.sbnw_c_api.node_setWidth" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="function">
+<dt id="libsbml_draw.c_api.sbnw_c_api.node_getName">
+<code class="sig-prename descclassname">libsbml_draw.c_api.sbnw_c_api.</code><code class="sig-name descname">node_getName</code><span class="sig-paren">(</span><em class="sig-param">h_node</em><span class="sig-paren">)</span><a class="headerlink" href="#libsbml_draw.c_api.sbnw_c_api.node_getName" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="function">
+<dt id="libsbml_draw.c_api.sbnw_c_api.node_getID">
+<code class="sig-prename descclassname">libsbml_draw.c_api.sbnw_c_api.</code><code class="sig-name descname">node_getID</code><span class="sig-paren">(</span><em class="sig-param">h_node</em><span class="sig-paren">)</span><a class="headerlink" href="#libsbml_draw.c_api.sbnw_c_api.node_getID" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="function">
+<dt id="libsbml_draw.c_api.sbnw_c_api.node_isLocked">
+<code class="sig-prename descclassname">libsbml_draw.c_api.sbnw_c_api.</code><code class="sig-name descname">node_isLocked</code><span class="sig-paren">(</span><em class="sig-param">h_node</em><span class="sig-paren">)</span><a class="headerlink" href="#libsbml_draw.c_api.sbnw_c_api.node_isLocked" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="function">
+<dt id="libsbml_draw.c_api.sbnw_c_api.node_lock">
+<code class="sig-prename descclassname">libsbml_draw.c_api.sbnw_c_api.</code><code class="sig-name descname">node_lock</code><span class="sig-paren">(</span><em class="sig-param">h_node</em><span class="sig-paren">)</span><a class="headerlink" href="#libsbml_draw.c_api.sbnw_c_api.node_lock" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="function">
+<dt id="libsbml_draw.c_api.sbnw_c_api.node_unlock">
+<code class="sig-prename descclassname">libsbml_draw.c_api.sbnw_c_api.</code><code class="sig-name descname">node_unlock</code><span class="sig-paren">(</span><em class="sig-param">h_node</em><span class="sig-paren">)</span><a class="headerlink" href="#libsbml_draw.c_api.sbnw_c_api.node_unlock" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="function">
+<dt id="libsbml_draw.c_api.sbnw_c_api.node_make_alias">
+<code class="sig-prename descclassname">libsbml_draw.c_api.sbnw_c_api.</code><code class="sig-name descname">node_make_alias</code><span class="sig-paren">(</span><em class="sig-param">h_node</em>, <em class="sig-param">h_network</em><span class="sig-paren">)</span><a class="headerlink" href="#libsbml_draw.c_api.sbnw_c_api.node_make_alias" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="function">
+<dt id="libsbml_draw.c_api.sbnw_c_api.node_isAliased">
+<code class="sig-prename descclassname">libsbml_draw.c_api.sbnw_c_api.</code><code class="sig-name descname">node_isAliased</code><span class="sig-paren">(</span><em class="sig-param">h_node</em><span class="sig-paren">)</span><a class="headerlink" href="#libsbml_draw.c_api.sbnw_c_api.node_isAliased" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="function">
+<dt id="libsbml_draw.c_api.sbnw_c_api.reaction_getNumCurves">
+<code class="sig-prename descclassname">libsbml_draw.c_api.sbnw_c_api.</code><code class="sig-name descname">reaction_getNumCurves</code><span class="sig-paren">(</span><em class="sig-param">h_reaction</em><span class="sig-paren">)</span><a class="headerlink" href="#libsbml_draw.c_api.sbnw_c_api.reaction_getNumCurves" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="function">
+<dt id="libsbml_draw.c_api.sbnw_c_api.reaction_getNumSpec">
+<code class="sig-prename descclassname">libsbml_draw.c_api.sbnw_c_api.</code><code class="sig-name descname">reaction_getNumSpec</code><span class="sig-paren">(</span><em class="sig-param">h_reaction</em><span class="sig-paren">)</span><a class="headerlink" href="#libsbml_draw.c_api.sbnw_c_api.reaction_getNumSpec" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="function">
+<dt id="libsbml_draw.c_api.sbnw_c_api.reaction_getID">
+<code class="sig-prename descclassname">libsbml_draw.c_api.sbnw_c_api.</code><code class="sig-name descname">reaction_getID</code><span class="sig-paren">(</span><em class="sig-param">h_reaction</em><span class="sig-paren">)</span><a class="headerlink" href="#libsbml_draw.c_api.sbnw_c_api.reaction_getID" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="function">
+<dt id="libsbml_draw.c_api.sbnw_c_api.reaction_getCentroid">
+<code class="sig-prename descclassname">libsbml_draw.c_api.sbnw_c_api.</code><code class="sig-name descname">reaction_getCentroid</code><span class="sig-paren">(</span><em class="sig-param">h_reaction</em><span class="sig-paren">)</span><a class="headerlink" href="#libsbml_draw.c_api.sbnw_c_api.reaction_getCentroid" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="function">
+<dt id="libsbml_draw.c_api.sbnw_c_api.reaction_getCurvep">
+<code class="sig-prename descclassname">libsbml_draw.c_api.sbnw_c_api.</code><code class="sig-name descname">reaction_getCurvep</code><span class="sig-paren">(</span><em class="sig-param">h_reaction</em>, <em class="sig-param">curve_index</em><span class="sig-paren">)</span><a class="headerlink" href="#libsbml_draw.c_api.sbnw_c_api.reaction_getCurvep" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="function">
+<dt id="libsbml_draw.c_api.sbnw_c_api.getCurveCPs">
+<code class="sig-prename descclassname">libsbml_draw.c_api.sbnw_c_api.</code><code class="sig-name descname">getCurveCPs</code><span class="sig-paren">(</span><em class="sig-param">h_curve</em><span class="sig-paren">)</span><a class="headerlink" href="#libsbml_draw.c_api.sbnw_c_api.getCurveCPs" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="function">
+<dt id="libsbml_draw.c_api.sbnw_c_api.curve_getRole">
+<code class="sig-prename descclassname">libsbml_draw.c_api.sbnw_c_api.</code><code class="sig-name descname">curve_getRole</code><span class="sig-paren">(</span><em class="sig-param">h_curve</em><span class="sig-paren">)</span><a class="headerlink" href="#libsbml_draw.c_api.sbnw_c_api.curve_getRole" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="function">
+<dt id="libsbml_draw.c_api.sbnw_c_api.fit_to_window">
+<code class="sig-prename descclassname">libsbml_draw.c_api.sbnw_c_api.</code><code class="sig-name descname">fit_to_window</code><span class="sig-paren">(</span><em class="sig-param">h_layout_info</em>, <em class="sig-param">left</em>, <em class="sig-param">top</em>, <em class="sig-param">right</em>, <em class="sig-param">bottom</em><span class="sig-paren">)</span><a class="headerlink" href="#libsbml_draw.c_api.sbnw_c_api.fit_to_window" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="function">
+<dt id="libsbml_draw.c_api.sbnw_c_api.arrowheadSetStyle">
+<code class="sig-prename descclassname">libsbml_draw.c_api.sbnw_c_api.</code><code class="sig-name descname">arrowheadSetStyle</code><span class="sig-paren">(</span><em class="sig-param">h_role</em>, <em class="sig-param">style</em><span class="sig-paren">)</span><a class="headerlink" href="#libsbml_draw.c_api.sbnw_c_api.arrowheadSetStyle" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="function">
+<dt id="libsbml_draw.c_api.sbnw_c_api.arrowheadGetStyle">
+<code class="sig-prename descclassname">libsbml_draw.c_api.sbnw_c_api.</code><code class="sig-name descname">arrowheadGetStyle</code><span class="sig-paren">(</span><em class="sig-param">h_role</em><span class="sig-paren">)</span><a class="headerlink" href="#libsbml_draw.c_api.sbnw_c_api.arrowheadGetStyle" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="function">
+<dt id="libsbml_draw.c_api.sbnw_c_api.arrowheadNumStyles">
+<code class="sig-prename descclassname">libsbml_draw.c_api.sbnw_c_api.</code><code class="sig-name descname">arrowheadNumStyles</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#libsbml_draw.c_api.sbnw_c_api.arrowheadNumStyles" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="function">
+<dt id="libsbml_draw.c_api.sbnw_c_api.arrowheadStyleGetNumVerts">
+<code class="sig-prename descclassname">libsbml_draw.c_api.sbnw_c_api.</code><code class="sig-name descname">arrowheadStyleGetNumVerts</code><span class="sig-paren">(</span><em class="sig-param">style</em><span class="sig-paren">)</span><a class="headerlink" href="#libsbml_draw.c_api.sbnw_c_api.arrowheadStyleGetNumVerts" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="function">
+<dt id="libsbml_draw.c_api.sbnw_c_api.arrowheadStyleGetVert">
+<code class="sig-prename descclassname">libsbml_draw.c_api.sbnw_c_api.</code><code class="sig-name descname">arrowheadStyleGetVert</code><span class="sig-paren">(</span><em class="sig-param">style</em>, <em class="sig-param">vertex_number</em><span class="sig-paren">)</span><a class="headerlink" href="#libsbml_draw.c_api.sbnw_c_api.arrowheadStyleGetVert" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="function">
+<dt id="libsbml_draw.c_api.sbnw_c_api.nw_getCompartmentp">
+<code class="sig-prename descclassname">libsbml_draw.c_api.sbnw_c_api.</code><code class="sig-name descname">nw_getCompartmentp</code><span class="sig-paren">(</span><em class="sig-param">h_network</em>, <em class="sig-param">compartment_index</em><span class="sig-paren">)</span><a class="headerlink" href="#libsbml_draw.c_api.sbnw_c_api.nw_getCompartmentp" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="function">
+<dt id="libsbml_draw.c_api.sbnw_c_api.compartment_getMinCorner">
+<code class="sig-prename descclassname">libsbml_draw.c_api.sbnw_c_api.</code><code class="sig-name descname">compartment_getMinCorner</code><span class="sig-paren">(</span><em class="sig-param">h_compartment</em><span class="sig-paren">)</span><a class="headerlink" href="#libsbml_draw.c_api.sbnw_c_api.compartment_getMinCorner" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="function">
+<dt id="libsbml_draw.c_api.sbnw_c_api.compartment_getMaxCorner">
+<code class="sig-prename descclassname">libsbml_draw.c_api.sbnw_c_api.</code><code class="sig-name descname">compartment_getMaxCorner</code><span class="sig-paren">(</span><em class="sig-param">h_compartment</em><span class="sig-paren">)</span><a class="headerlink" href="#libsbml_draw.c_api.sbnw_c_api.compartment_getMaxCorner" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="function">
+<dt id="libsbml_draw.c_api.sbnw_c_api.compartment_getHeight">
+<code class="sig-prename descclassname">libsbml_draw.c_api.sbnw_c_api.</code><code class="sig-name descname">compartment_getHeight</code><span class="sig-paren">(</span><em class="sig-param">h_compartment</em><span class="sig-paren">)</span><a class="headerlink" href="#libsbml_draw.c_api.sbnw_c_api.compartment_getHeight" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="function">
+<dt id="libsbml_draw.c_api.sbnw_c_api.compartment_getWidth">
+<code class="sig-prename descclassname">libsbml_draw.c_api.sbnw_c_api.</code><code class="sig-name descname">compartment_getWidth</code><span class="sig-paren">(</span><em class="sig-param">h_compartment</em><span class="sig-paren">)</span><a class="headerlink" href="#libsbml_draw.c_api.sbnw_c_api.compartment_getWidth" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="function">
+<dt id="libsbml_draw.c_api.sbnw_c_api.compartment_getID">
+<code class="sig-prename descclassname">libsbml_draw.c_api.sbnw_c_api.</code><code class="sig-name descname">compartment_getID</code><span class="sig-paren">(</span><em class="sig-param">h_compartment</em><span class="sig-paren">)</span><a class="headerlink" href="#libsbml_draw.c_api.sbnw_c_api.compartment_getID" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="function">
+<dt id="libsbml_draw.c_api.sbnw_c_api.reaction_hasSpec">
+<code class="sig-prename descclassname">libsbml_draw.c_api.sbnw_c_api.</code><code class="sig-name descname">reaction_hasSpec</code><span class="sig-paren">(</span><em class="sig-param">h_reaction</em>, <em class="sig-param">h_species</em><span class="sig-paren">)</span><a class="headerlink" href="#libsbml_draw.c_api.sbnw_c_api.reaction_hasSpec" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="function">
+<dt id="libsbml_draw.c_api.sbnw_c_api.reaction_recenter">
+<code class="sig-prename descclassname">libsbml_draw.c_api.sbnw_c_api.</code><code class="sig-name descname">reaction_recenter</code><span class="sig-paren">(</span><em class="sig-param">h_reaction</em><span class="sig-paren">)</span><a class="headerlink" href="#libsbml_draw.c_api.sbnw_c_api.reaction_recenter" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</div>
+</div>
+
+
+           </div>
+           
+          </div>
+          <footer>
+  
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+      
+        <a href="../dev/dev.html" class="btn btn-neutral float-right" title="Developer Manual" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
+      
+      
+        <a href="draw.html" class="btn btn-neutral float-left" title="Draw the SBML Model" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+      
+    </div>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &copy; Copyright 2019, Sauro Lab
+
+    </p>
+  </div>
+  Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/rtfd/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script>
+
+  
+  
+    
+   
+
+</body>
+</html>

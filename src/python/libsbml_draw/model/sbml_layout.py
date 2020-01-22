@@ -6,7 +6,7 @@ import os
 
 from matplotlib.colors import is_color_like, to_hex
 
-import tesbml as libsbml
+import tesbml
 
 import libsbml_draw.c_api.sbnw_c_api as sbnw
 from libsbml_draw.draw.draw_network import createNetworkFigure
@@ -77,7 +77,7 @@ class SBMLlayout:
                 self.__doLayoutAlgorithm()
 
                 # no render info here because auto-generating the layout
-                self.__doc = libsbml.readSBMLFromString(
+                self.__doc = tesbml.readSBMLFromString(
                         self.__getSBMLWithLayoutString())
 
                 self.__network = self.__createNetwork()
@@ -95,9 +95,9 @@ class SBMLlayout:
 
             else:
                 if self.__validate_sbml_filename(sbml_source):
-                    self.__doc = libsbml.readSBMLFromFile(sbml_source)
+                    self.__doc = tesbml.readSBMLFromFile(sbml_source)
                 else:
-                    self.__doc = libsbml.readSBMLFromString(sbml_source)
+                    self.__doc = tesbml.readSBMLFromString(sbml_source)
 
             if len(self.__fitWindow) == 4:
                 self.__fitToWindow(self.__fitWindow[0], self.__fitWindow[1],
@@ -413,7 +413,7 @@ class SBMLlayout:
 
         sbnw.layout_alignToOrigin(self.__h_layout_info, 0, 0)
 
-        self.__doc = libsbml.readSBMLFromString(
+        self.__doc = tesbml.readSBMLFromString(
             self.__getSBMLWithLayoutString())
 
         self.__network = self.__createNetwork()
@@ -441,7 +441,7 @@ class SBMLlayout:
 
         sbnw.layout_alignToOrigin(self.__h_layout_info, 0, 0)
 
-        self.__doc = libsbml.readSBMLFromString(
+        self.__doc = tesbml.readSBMLFromString(
                 self.__getSBMLWithLayoutString())
 
         self.__updateNetworkLayout()
@@ -571,7 +571,7 @@ class SBMLlayout:
             self.__network._add_alias_nodes(node_id)
             self.__network._add_reactions_after_node_alias()
             self.__network._remove_node(node_id)
-            self.__doc = libsbml.readSBMLFromString(
+            self.__doc = tesbml.readSBMLFromString(
                         self.__getSBMLWithLayoutString())
         else:
             raise ValueError(f"species {node_id} is not in the network.")
@@ -800,7 +800,7 @@ class SBMLlayout:
 
         self.__addRenderInformation()
 
-        libsbml.writeSBMLToFile(self.__doc, out_file_name)
+        tesbml.writeSBMLToFile(self.__doc, out_file_name)
 
     # Compartment Methods
 
@@ -2268,7 +2268,7 @@ class SBMLlayout:
 
         Returns: str
         """
-        return libsbml.SBMLToString(self.__doc)
+        return tesbml.SBMLToString(self.__doc)
 
     def setArrowheadScale(self, role, arrowhead_scale):
         """Set a value for matplotlib's mutation_scale to change the

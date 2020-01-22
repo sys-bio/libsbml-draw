@@ -1,0 +1,242 @@
+
+
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>SBMLlayout script using antimony &mdash; libsbml_draw  documentation</title>
+  
+
+  
+  
+  
+  
+
+  
+  <script type="text/javascript" src="../../_static/js/modernizr.min.js"></script>
+  
+    
+      <script type="text/javascript" id="documentation_options" data-url_root="../../" src="../../_static/documentation_options.js"></script>
+        <script type="text/javascript" src="../../_static/jquery.js"></script>
+        <script type="text/javascript" src="../../_static/underscore.js"></script>
+        <script type="text/javascript" src="../../_static/doctools.js"></script>
+        <script type="text/javascript" src="../../_static/language_data.js"></script>
+    
+    <script type="text/javascript" src="../../_static/js/theme.js"></script>
+
+    
+
+  
+  <link rel="stylesheet" href="../../_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
+    <link rel="index" title="Index" href="../../genindex.html" />
+    <link rel="search" title="Search" href="../../search.html" /> 
+</head>
+
+<body class="wy-body-for-nav">
+
+   
+  <div class="wy-grid-for-nav">
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+          
+
+          
+            <a href="../../index.html" class="icon icon-home"> libsbml_draw
+          
+
+          
+          </a>
+
+          
+            
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <p class="caption"><span class="caption-text">Contents:</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../user.html">User Manual</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../refmanual/refmanual.html">Reference Manual</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../dev/dev.html">Developer Manual</a></li>
+</ul>
+
+            
+          
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../index.html">libsbml_draw</a>
+        
+      </nav>
+
+
+      <div class="wy-nav-content">
+        
+        <div class="rst-content">
+        
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="../../index.html">Docs</a> &raquo;</li>
+        
+      <li>SBMLlayout script using antimony</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+            
+            <a href="../../_sources/user/Examples/script_using_antimony.rst.txt" rel="nofollow"> View page source</a>
+          
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <div class="section" id="sbmllayout-script-using-antimony">
+<h1>SBMLlayout script using antimony<a class="headerlink" href="#sbmllayout-script-using-antimony" title="Permalink to this headline">¶</a></h1>
+<p>This code example shows how to create an SBML model using antimony,
+load that model into libsbml-draw, describe the basic features of the
+model, and draw the model.</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">tellurium</span> <span class="kn">as</span> <span class="nn">te</span>
+
+<span class="n">r</span> <span class="o">=</span> <span class="n">te</span><span class="o">.</span><span class="n">loada</span><span class="p">(</span><span class="s1">&#39;&#39;&#39;</span>
+<span class="s1">// Created by libAntimony v2.9.4</span>
+<span class="s1">model *untitled()</span>
+
+<span class="s1">// Compartments and Species:</span>
+<span class="s1">species Node0, Node3, Node5, Node6, Node7, Node8888888, Node9, Node10, Node11;</span>
+<span class="s1">species Node12, Node13, Node14;</span>
+
+<span class="s1">// Reactions:</span>
+<span class="s1">J0: Node8888888 + Node5 =&gt; Node9; 1;</span>
+<span class="s1">J1: Node11 + Node9 =&gt; Node14; 1;</span>
+<span class="s1">J2: Node0 + Node13 =&gt; Node7 + Node12; 1;</span>
+<span class="s1">J3: Node0 =&gt; Node13; 1;</span>
+<span class="s1">J4: Node8888888 + Node14 =&gt; Node6; 1;</span>
+<span class="s1">J5: Node12 + Node5 =&gt; Node13 + Node0; 1;</span>
+<span class="s1">J6: Node0 + Node3 =&gt; Node8888888; 1;</span>
+<span class="s1">J7: Node10 =&gt; Node8888888; 1;</span>
+
+<span class="s1">// Species initializations:</span>
+<span class="s1">Node0 = 0;</span>
+<span class="s1">Node3 = 0;</span>
+<span class="s1">Node5 = 0;</span>
+<span class="s1">Node6 = 0;</span>
+<span class="s1">Node7 = 0;</span>
+<span class="s1">Node8888888 = 0;</span>
+<span class="s1">Node9 = 0;</span>
+<span class="s1">Node10 = 0;</span>
+<span class="s1">Node11 = 0;</span>
+<span class="s1">Node12 = 0;</span>
+<span class="s1">Node13 = 0;</span>
+<span class="s1">Node14 = 0;</span>
+<span class="s1">end</span>
+<span class="s1">&#39;&#39;&#39;</span><span class="p">)</span>
+
+<span class="kn">from</span> <span class="nn">libsbml_draw.model.sbml_layout</span> <span class="kn">import</span> <span class="n">SBMLlayout</span>
+
+<span class="n">sl</span> <span class="o">=</span> <span class="n">SBMLlayout</span><span class="p">(</span><span class="n">r</span><span class="o">.</span><span class="n">getSBML</span><span class="p">())</span>
+
+<span class="n">sl</span><span class="o">.</span><span class="n">_describeModel</span><span class="p">()</span>
+
+<span class="n">sl</span><span class="o">.</span><span class="n">drawNetwork</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+
+
+           </div>
+           
+          </div>
+          <footer>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &copy; Copyright 2019, Sauro Lab
+
+    </p>
+  </div>
+  Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/rtfd/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script>
+
+  
+  
+    
+   
+
+</body>
+</html>

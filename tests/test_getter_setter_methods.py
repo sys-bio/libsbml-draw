@@ -5,11 +5,9 @@ site.addsitedir(os.path.join(os.path.dirname(os.path.dirname(__file__)), "src/py
 # print(p)
 import sys
 import unittest
-for i in os.environ['PYTHONPATH'].split(';'):
-    print(i)
 # remove all the layers of submodules
 from libsbml_draw.model.sbml_layout import SBMLlayout
-from .model_strings import model_xml
+from tests.model_strings import model_xml
 import numpy
 
 numpy.random.seed(1)
@@ -45,8 +43,10 @@ class TestAttributes(unittest.TestCase):
         Returns:
 
         """
-        print(self.sl.aliasNode("S0"))
-        assert True is False
+        self.sl.aliasNode("S0")
+        expected = ['S1', 'S2', 'S3', 'S4', 'S5', 'S6', 'S7', 'S0_0', 'S0_1', 'S0_2', 'S0_3', 'S0_4', 'S0_5', 'S0_6', 'S0_7', 'S0_8']
+        actual = self.sl.getNodeIds()
+        self.assertEqual(expected, actual)
 
     def test_getArrowheadNumStyles(self):
         expected = 8
@@ -485,3 +485,4 @@ class TestAttributes(unittest.TestCase):
 
     def test_getSBMLString(self):
         print(self.sl.getSBMLString())
+

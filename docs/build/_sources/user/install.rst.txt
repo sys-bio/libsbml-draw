@@ -1,0 +1,14 @@
+Installation
+============
+
+Installation of libsbml_draw
+-----------------------------
+
+Use:
+
+    ``pip install libsbml-draw``
+
+to use libsbml-draw as a library. Alternatively, to use with
+"Tellurium For Windows" see `here <https://github.com/sys-bio/libsbml-draw/>`_.
+
+
