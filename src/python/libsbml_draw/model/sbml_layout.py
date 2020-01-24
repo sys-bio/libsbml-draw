@@ -565,9 +565,7 @@ class SBMLlayout:
 
             h_node_id = node_id.encode('utf-8')
             h_node = sbnw.nw_getNodepFromId(self.__h_network, h_node_id)
-
             sbnw.node_make_alias(h_node, self.__h_network)
-
             self.__network._add_alias_nodes(node_id)
             self.__network._add_reactions_after_node_alias()
             self.__network._remove_node(node_id)
