@@ -1,5 +1,5 @@
-# model generated using randMANetGen
-model_xml = """<?xml version='1.0' encoding='UTF-8' standalone='no'?>
+<?xml version='1.0' encoding='UTF-8' standalone='no'?>
+
 <!-- This model was downloaded from BioModels Database -->
 <!-- http://www.ebi.ac.uk/biomodels-static/                   -->
 <!-- Fri Jan 24 06:18:39 GMT 2020                      -->
@@ -1757,4 +1757,3 @@ model_xml = """<?xml version='1.0' encoding='UTF-8' standalone='no'?>
         </listOfReactions>
     </model>
 </sbml>
-"""

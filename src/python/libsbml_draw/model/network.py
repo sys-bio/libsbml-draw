@@ -6,122 +6,16 @@ from enum import IntEnum
 from matplotlib.patches import ArrowStyle
 
 import libsbml_draw.c_api.sbnw_c_api as sbnw
+# import tesbml as libsbml
 
 
-class Role(IntEnum):
-    SUBSTRATE = 0
-    PRODUCT = 1
-    SIDESUBSTRATE = 2
-    SIDEPRODUCT = 3
-    MODIFIER = 4
-    ACTIVATOR = 5
-    INHIBITOR = 6
-
-
-class Compartment():
-    """Represents a compartment in the SBML model."""
-
-    def __init__(self, h_compartment):
-        self.width = sbnw.compartment_getWidth(h_compartment)
-        self.height = sbnw.compartment_getHeight(h_compartment)
-        self.min_corner = sbnw.compartment_getMinCorner(h_compartment)
-        self.max_corner = sbnw.compartment_getMaxCorner(h_compartment)
-        self.lower_left_point = [self.min_corner.x, self.min_corner.y]
-        self.center_x = self.min_corner.x + self.width / 2
-        self.center_y = self.min_corner.y + self.height / 2
-        self.id = sbnw.compartment_getID(h_compartment)
-        self.edge_color = "#0000ff30"  # 30% blue
-        self.fill_color = "#0000ff05"  # 5% blue
-        self.line_width = 3
-        self.shape = "round_box"
-        self.rectangle_rounding = 0.6
-        self.polygon_points = []
-        self.polygon_codes = []
-        self.polygon = None
-
-
-class Node():
-    """Represents a node in the SBMl model."""
-
-    def __init__(self, h_node):
-        self.width = sbnw.node_getWidth(h_node)
-        self.height = sbnw.node_getHeight(h_node)
-        self.center = sbnw.node_getCentroid(h_node)
-        self.lower_left_point = [self.center.x - self.width / 2,
-                                 self.center.y - self.height / 2]
-        self.name = sbnw.node_getName(h_node)
-        self.id = sbnw.node_getID(h_node)
-        self.edge_width = 1
-        self.edge_color = "#0000ff"
-        self.fill_color = "#c9e0fb"
-        self.font_size = 10
-        self.font_family = "Arial"
-        self.font_color = "#000000"
-        self.font_style = "normal"
-        self.text_anchor = "center"
-        self.vtext_anchor = "center"
-        self.font_weight = "normal"
-        self.shape = "round_box"
-        self.rectangle_rounding = 0.1
-        self.polygon_points = []
-        self.polygon_codes = []
-        self.polygon = None
-
-
-class Curve():
-    """Part of a complete reaction curve. As an example, a reaction between a
-    substrate and a product usually consists of two curves.  The first curve
-    has no arrowhead (i.e. has arrowstyle '-') and the second has an arrowhead
-    pointing to the product."""
-
-    role_arrowstyles = ["-",  # SUBSTRATE
-                        "-|>",  # PRODUCT
-                        "-",  # SIDESUBSTRATE
-                        "-|>",  # SIDEPRODUCT
-                        "-|>",  # MODIFIER
-                        "-|>",  # ACTIVATOR
-                        ArrowStyle("|-|",
-                                   widthA=0, angleA=None,
-                                   widthB=1.0, angleB=None)  # INHIBITOR
-                        ]
-
-    def __init__(self, h_curve):
-        self.curveCPs = sbnw.getCurveCPs(h_curve)
-        self.start_point = self.curveCPs.start
-        self.end_point = self.curveCPs.end
-        self.control_point_1 = self.curveCPs.control_point_1
-        self.control_point_2 = self.curveCPs.control_point_2
-        self.role = sbnw.curve_getRole(h_curve)
-        self.role_name = Role(self.role).name
-        self.curveArrowStyle = Curve.role_arrowstyles[self.role]
-        self.edge_color = "#0000ff"
-        self.fill_color = "#0000ff"
-        self.curve_width = 3
-        self.species = None
-        self.endHead = None
-
-
-class Reaction():
-    """Represents a reaction in the SBML model."""
-
-    def __init__(self, h_reaction):
-        self.curves = []
-        for curve_index in range(sbnw.reaction_getNumCurves(h_reaction)):
-            h_curve = sbnw.reaction_getCurvep(h_reaction, curve_index)
-            self.curves.append(Curve(h_curve))
-        self.id = sbnw.reaction_getID(h_reaction)
-        self.edge_color = "#0000ff"
-        self.fill_color = "#0000ff"
-        self.curve_width = 1
-        self.centroid = sbnw.reaction_getCentroid(h_reaction)
-
-
-class Network():
+class Network:
     """Represents a network in the SBML model, and consists of nodes and
     reactions."""
 
-    def __init__(self, h_network):
+    def __init__(self, h_network, doc):
         self.h_network = h_network
+        self.doc = doc
         self.compartments = {}
         self.nodes = {}
         self.reactions = {}
@@ -213,9 +107,9 @@ class Network():
             raise ValueError(f"species {node_id} is not in the network.")
 
     def getNumCompartmentsWithLibsbml(self):
-        pass
+        return self.doc.getModel().getNumCompartments()
 
-    def _add_compartments(self, ):
+    def _add_compartments(self):
         """Populates the collection of compartments.
 
         Args: None
@@ -413,3 +307,113 @@ class Network():
         else:
 
             return False
+
+
+
+class Role(IntEnum):
+    SUBSTRATE = 0
+    PRODUCT = 1
+    SIDESUBSTRATE = 2
+    SIDEPRODUCT = 3
+    MODIFIER = 4
+    ACTIVATOR = 5
+    INHIBITOR = 6
+
+
+class Compartment:
+    """Represents a compartment in the SBML model."""
+
+    def __init__(self, h_compartment):
+        self.width = sbnw.compartment_getWidth(h_compartment)
+        self.height = sbnw.compartment_getHeight(h_compartment)
+        self.min_corner = sbnw.compartment_getMinCorner(h_compartment)
+        self.max_corner = sbnw.compartment_getMaxCorner(h_compartment)
+        self.lower_left_point = [self.min_corner.x, self.min_corner.y]
+        self.center_x = self.min_corner.x + self.width / 2
+        self.center_y = self.min_corner.y + self.height / 2
+        self.id = sbnw.compartment_getID(h_compartment)
+        self.edge_color = "#0000ff30"  # 30% blue
+        self.fill_color = "#0000ff05"  # 5% blue
+        self.line_width = 3
+        self.shape = "round_box"
+        self.rectangle_rounding = 0.6
+        self.polygon_points = []
+        self.polygon_codes = []
+        self.polygon = None
+
+
+class Node:
+    """Represents a node in the SBMl model."""
+
+    def __init__(self, h_node):
+        self.width = sbnw.node_getWidth(h_node)
+        self.height = sbnw.node_getHeight(h_node)
+        self.center = sbnw.node_getCentroid(h_node)
+        self.lower_left_point = [self.center.x - self.width / 2,
+                                 self.center.y - self.height / 2]
+        self.name = sbnw.node_getName(h_node)
+        self.id = sbnw.node_getID(h_node)
+        self.edge_width = 1
+        self.edge_color = "#0000ff"
+        self.fill_color = "#c9e0fb"
+        self.font_size = 10
+        self.font_family = "Arial"
+        self.font_color = "#000000"
+        self.font_style = "normal"
+        self.text_anchor = "center"
+        self.vtext_anchor = "center"
+        self.font_weight = "normal"
+        self.shape = "round_box"
+        self.rectangle_rounding = 0.1
+        self.polygon_points = []
+        self.polygon_codes = []
+        self.polygon = None
+
+
+class Curve:
+    """Part of a complete reaction curve. As an example, a reaction between a
+    substrate and a product usually consists of two curves.  The first curve
+    has no arrowhead (i.e. has arrowstyle '-') and the second has an arrowhead
+    pointing to the product."""
+
+    role_arrowstyles = ["-",  # SUBSTRATE
+                        "-|>",  # PRODUCT
+                        "-",  # SIDESUBSTRATE
+                        "-|>",  # SIDEPRODUCT
+                        "-|>",  # MODIFIER
+                        "-|>",  # ACTIVATOR
+                        ArrowStyle("|-|",
+                                   widthA=0, angleA=None,
+                                   widthB=1.0, angleB=None)  # INHIBITOR
+                        ]
+
+    def __init__(self, h_curve):
+        self.curveCPs = sbnw.getCurveCPs(h_curve)
+        self.start_point = self.curveCPs.start
+        self.end_point = self.curveCPs.end
+        self.control_point_1 = self.curveCPs.control_point_1
+        self.control_point_2 = self.curveCPs.control_point_2
+        self.role = sbnw.curve_getRole(h_curve)
+        self.role_name = Role(self.role).name
+        self.curveArrowStyle = Curve.role_arrowstyles[self.role]
+        self.edge_color = "#0000ff"
+        self.fill_color = "#0000ff"
+        self.curve_width = 3
+        self.species = None
+        self.endHead = None
+
+
+class Reaction:
+    """Represents a reaction in the SBML model."""
+
+    def __init__(self, h_reaction):
+        self.curves = []
+        for curve_index in range(sbnw.reaction_getNumCurves(h_reaction)):
+            h_curve = sbnw.reaction_getCurvep(h_reaction, curve_index)
+            self.curves.append(Curve(h_curve))
+        self.id = sbnw.reaction_getID(h_reaction)
+        self.edge_color = "#0000ff"
+        self.fill_color = "#0000ff"
+        self.curve_width = 1
+        self.centroid = sbnw.reaction_getCentroid(h_reaction)
+
