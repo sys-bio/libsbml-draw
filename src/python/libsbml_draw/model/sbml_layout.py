@@ -18,6 +18,78 @@ BezierPoints = namedtuple("BezierPoints", ["start", "end",
                                            "control1", "control2"])
 
 
+class ValidatedDict(dict):
+    """
+    Base class for validating keys in a dict.
+
+    This class will behave exactly like a dictionary. Subclasses
+    that define attributes however, will only be allowed to store
+    those attributes. For instance:
+
+
+    These validated dictionaries are good for keyword arguments
+
+    """
+
+    def __init__(self, **kwargs):
+        self.kwargs = kwargs
+        super().__init__(**kwargs)
+        # self._validate()
+
+    def _error_message(self, k):
+        return f'Key "{k}" is not a valid key ' \
+            f'for {self.__class__.__name__}. These are ' \
+            f'valid keys: "{self.kwargs}"'
+
+    def _validate(self):
+        print(self.__dict__)
+        for k in self.__dict__.keys():
+            if k not in list(self.__dict__.keys()) + ['valid_keys']:
+                raise TypeError(self._error_message(k))
+
+    def __setitem__(self, key, value):
+        print(self.__dict__)
+        if key not in self.__dict__.keys():
+            raise TypeError(self._error_message(key))
+
+    def __getitem__(self, item):
+        return super().__getitem__(item)
+
+    def __delitem__(self, key):
+        NotImplemented("Cannot add or remove entries from a ValidatedDict")
+
+
+
+font_dict = ValidatedDict(
+    fontsize=18,
+    fontstyle='Arial',
+    NodeFontColor=0,
+    NodeFontFamily=0,
+    NodeFontName=0,
+    NodeFontSize=0,
+    NodeFontStyle=0,
+    NodeFontWeight=0
+)
+
+shape_dict = ValidatedDict(
+            aliasNodes=[],
+            NodeCentroid=0,
+            NodeColor=0,
+            NodeEdgeColor=0,
+            NodeEdgeWidth=0,
+            NodeFillColor=0,
+            NodeHeight=0,
+            NodeWidth=0,
+            NodeLowerLeftPoint=0
+        )
+
+position = ValidatedDict(
+    NodeTextAnchor=0,
+    VNodeTextAnchor=0
+)
+
+
+
 class SBMLlayout:
     """SBMLlayout represents the model in an SBML file."""
 
@@ -40,7 +112,7 @@ class SBMLlayout:
         if self._validate_layout_alg_options(layout_alg_options):
             self._layout_alg_options = layout_alg_options
         else:
-            #todo change layout to dict not list?
+            # todo change layout to dict not list?
             self._layout_alg_options = sbnw.fr_alg_options(
                 20.0,  # k
                 0,  # grav, has to be > 5 for effect
@@ -2252,9 +2324,9 @@ class SBMLlayout:
 
         Returns: matplotlib.figure.Figure
         """
-        fig = createNetworkFigure(self, self._arrowhead_scale, show, dpi,
+        fig = createNetworkFigure(self, save_file_name, show, dpi,
                                   width_shift, height_shift, scaling_factor)
-        if (save_file_name):
+        if save_file_name:
             bg_color = self._network.bg_color
             fig.savefig(save_file_name, facecolor=bg_color)
 

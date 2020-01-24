@@ -36,13 +36,7 @@ ArrowheadVert
 # create a validated dictionary type which behves like a dict
 # that can only have certain keys
 
-class ValidatedDict(dict):
 
-    def __init__(self, **kwargs):
-        super().__init__(**kwargs)
-
-    def validate(self):
-        print(self.kwargs)
 
 node_dict = dict(
         font=dict(
