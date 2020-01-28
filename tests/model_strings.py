@@ -2678,7 +2678,7 @@ kholodenko2000 = """<?xml version='1.0' encoding='UTF-8' standalone='no'?>
                             whether the terminal kinase stimulates or inhibits the activation of the initial level. Here
                             we demonstrate that a negative feedback loop combined with intrinsic ultrasensitivity of the
                             MAPK cascade can bring about sustained oscillations in MAPK phosphorylation. Based on recent
-                            kinetic data on the MAPK cascades, we predict that the period of oscillations can range from
+                            kinetic libs on the MAPK cascades, we predict that the period of oscillations can range from
                             minutes to hours. The phosphorylation level can vary between the base level and almost 100%
                             of the total protein. The oscillations of the phosphorylation cascades and slow protein
                             diffusion in the cytoplasm can lead to intracellular waves of phospho-proteins.

@@ -9,7 +9,7 @@ import libsbml
 stylesheet_file_name = "LineEnding_styles.xml"
 
 stylesheet_file = Path(pkg_resources.resource_filename("libsbml_draw", 
-        "model/data/" + stylesheet_file_name))
+        "model/libs/" + stylesheet_file_name))
 
 #doc = libsbml.readSBMLFromFile(str(stylesheet_file))
 #print("doc: ", type(doc))

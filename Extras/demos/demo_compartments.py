@@ -2,12 +2,12 @@
 from pathlib import Path
 import pkg_resources
 
-from libsbml_draw.model.sbml_layout import SBMLlayout
+from libsbml_draw.sbml_layout import SBMLlayout
 
 model_file_name = "simple-L2-render-global.xml"
 #model_file_name = "simple-L2-render-global-L3V1.xml"
 
-model_file = Path(pkg_resources.resource_filename("libsbml_draw", "model/data/" + model_file_name))
+model_file = Path(pkg_resources.resource_filename("libsbml_draw", "model/libs/" + model_file_name))
 #model_file = Path(model_file_name)
 
 sl = SBMLlayout(str(model_file))

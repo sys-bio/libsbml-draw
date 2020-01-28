@@ -11,7 +11,7 @@ import tempfile
 
 import libsbml
 
-import libsbml_draw.c_api.sbnw_c_api as sbnw
+import libsbml_draw.sbnw as sbnw
 
 SBNW_NODE_WIDTH = 40
 SBNW_NODE_HEIGHT = 20
@@ -53,7 +53,7 @@ def compute_node_dimensions(text_length_points, text_height_points, fig_dpi,
                             fig_width_pixels, fig_height_pixels,
                             network_width_data_coords,
                             network_height_data_coords):
-    """Returns the width and height needed in data coordinates for the text to
+    """Returns the width and height needed in libs coordinates for the text to
     fit inside the node given the figure dpi, figure size, and network size.
 
     Args:
@@ -62,14 +62,14 @@ def compute_node_dimensions(text_length_points, text_height_points, fig_dpi,
         fig_dpi (int): the dots-per-inch setting for the figure
         fig_width_pixels (int): width of the figure in pixels
         fig_height_pixels (int): height of the figure in pixels
-        network_width_data_coords (int): width of the network graph in data
+        network_width_data_coords (int): width of the network graph in libs
             coordinates
-        netowrk_height_data_coords (int): height of the network graph in data
+        netowrk_height_data_coords (int): height of the network graph in libs
             coordinates
 
     Returns: tuple (width, height)
-        width (float): width of the node box in data coordinates
-        height (float): height of node box in data coordinates
+        width (float): width of the node box in libs coordinates
+        height (float): height of node box in libs coordinates
     """
 
     text_length_pixels = fig_dpi*text_length_points/72  # 1/72 inches per point

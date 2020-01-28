@@ -1,7 +1,7 @@
 #from libsbml import readSBMLFromFile, read`SBMLFromString
 
 #import libsbml_draw.c_api.sbnw_c_api as sbnw
-from libsbml_draw.model.sbml_layout import SBMLlayout
+from libsbml_draw.sbml_layout import SBMLlayout
 
 #model_file = "C:\\tmp\\model.xml"
 #model_file = "C:\\tmp\\copasi.xml"

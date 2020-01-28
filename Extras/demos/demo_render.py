@@ -1,6 +1,6 @@
 #import libsbml
 
-from libsbml_draw.model.sbml_layout import SBMLlayout
+from libsbml_draw.sbml_layout import SBMLlayout
 #from libsbml_draw.model.render import Render
 
 

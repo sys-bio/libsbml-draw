@@ -9,7 +9,7 @@ fig, ax = plt.subplots(figsize=(6, 6))
 x, y = 10*np.random.rand(2, 1000)
 
 
-ax.plot(x, y*10., 'go', alpha=0.2)  # plot some data in data coordinates
+ax.plot(x, y*10., 'go', alpha=0.2)  # plot some libs in libs coordinates
 
 
 # add a circle in fixed-units

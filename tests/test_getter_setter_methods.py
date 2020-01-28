@@ -2,11 +2,9 @@ import site
 import os
 # add the library to path
 site.addsitedir(os.path.join(os.path.dirname(os.path.dirname(__file__)), "src/python"))
-import sys
 import unittest
 # remove all the layers of submodules
-import libsbml_draw.c_api.sbnw_c_api as sbnw
-from libsbml_draw.model.sbml_layout import SBMLlayout
+from libsbml_draw.sbml_layout import SBMLlayout
 from tests.model_strings import schmierer2008
 import numpy
 

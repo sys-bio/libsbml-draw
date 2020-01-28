@@ -1,7 +1,7 @@
 from pathlib import Path
 import pkg_resources
 
-from libsbml_draw.model.sbml_layout import SBMLlayout
+from libsbml_draw.sbml_layout import SBMLlayout
 
 bio_models = ["BIOMD0000000042_url.xml",
               "BIOMD0000000061_url.xml",
@@ -22,7 +22,7 @@ bio_models = ["BIOMD0000000393_url.xml",
 for model_file_name in bio_models:
     
     model_file = Path(pkg_resources.resource_filename(
-            "libsbml_draw", "model/data/" + model_file_name))
+            "libsbml_draw", "model/libs/" + model_file_name))
 
     sl = SBMLlayout(str(model_file))
 

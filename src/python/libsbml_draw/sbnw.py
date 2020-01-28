@@ -2,23 +2,26 @@
 Sets up the python bindings to the c api.
 """
 import ctypes
-from ctypes import POINTER
-from pathlib import Path
-import pkg_resources
+import os
 import platform
+from ctypes import POINTER
 
-if platform.system() == "Windows":
-    DLL_FILE = Path(pkg_resources.resource_filename(
-            "libsbml_draw", "c_api/data/sbml_draw.dll"))
-    slib = ctypes.CDLL(str(DLL_FILE))
-elif platform.system() == "Linux":
-    SO_FILE = Path(pkg_resources.resource_filename(
-            "libsbml_draw", "c_api/data/libsbml_draw.so"))
-    slib = ctypes.CDLL(str(SO_FILE))
-else:
-    DYLIB_FILE = Path(pkg_resources.resource_filename(
-            "libsbml_draw", "c_api/data/libsbml_draw.dylib"))
-    slib = ctypes.CDLL(str(DYLIB_FILE))
+
+def load_sbnw():
+    site_packages_dir = os.path.dirname(__file__)
+    libs_dir = os.path.join(site_packages_dir, 'libs')
+    if not os.path.isdir(libs_dir):
+        raise FileNotFoundError('Did not find the libs dir')
+    if platform.system() == "Windows":
+        LIB = os.path.join(libs_dir, 'libsbml_draw.dll')
+    elif platform.system() == "Linux":
+        LIB = os.path.join(libs_dir, 'libsbml_draw.so')
+    else:
+        LIB = os.path.join(libs_dir, 'libsbml_draw.dylib')
+
+    return ctypes.CDLL(LIB)
+
+slib = load_sbnw()
 
 # Enumerations
 ROLES = (GF_ROLE_SUBSTRATE,
@@ -121,14 +124,15 @@ slib.gf_loadSBMLfile.restype = ctypes.c_uint64
 slib.gf_loadSBMLbuf.argtypes = [ctypes.c_char_p]
 slib.gf_loadSBMLbuf.restype = ctypes.c_uint64
 
+
 # IO Functions
 
 
 def getSBMLwithLayoutStr(h_sbml_model, h_layout_info,
                          useLastTransformedCoordinates):
     return slib.gf_getSBMLwithLayoutStr(
-            h_sbml_model, h_layout_info,
-            useLastTransformedCoordinates).decode('utf-8')
+        h_sbml_model, h_layout_info,
+        useLastTransformedCoordinates).decode('utf-8')
 
 
 def loadSBMLFile(h_fileName):
@@ -306,7 +310,6 @@ slib.gf_node_getAttachedCurves.restype = ctypes.c_int
 
 
 def node_getAttachedCurves(h_node, h_network):
-
     num_curves = ctypes.c_uint(0)
 
     h_curves = POINTER(gf_curve)()

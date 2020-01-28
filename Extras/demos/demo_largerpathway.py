@@ -1,13 +1,13 @@
 from pathlib import Path
 import pkg_resources
 
-from libsbml_draw.model.sbml_layout import SBMLlayout
+from libsbml_draw.sbml_layout import SBMLlayout
 
 MODEL_FILE_NAME = "largerpathway.xml"
 
 MODEL_FILE = Path(pkg_resources.resource_filename(
         "libsbml_draw",
-        "model/data/" + MODEL_FILE_NAME))
+        "model/libs/" + MODEL_FILE_NAME))
 
 print("model file: ", str(MODEL_FILE))
 

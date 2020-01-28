@@ -5,10 +5,10 @@ import pkg_resources
 
 model_file_name = "model.xml"
 
-model_file = Path(pkg_resources.resource_filename("libsbml_draw", "model/data/" + model_file_name))
+model_file = Path(pkg_resources.resource_filename("libsbml_draw", "model/libs/" + model_file_name))
 
 
-import libsbml_draw.c_api.sbnw_c_api as sbnw
+import libsbml_draw.sbnw as sbnw
 
 print(sbnw.getCurrentLibraryVersion())
 

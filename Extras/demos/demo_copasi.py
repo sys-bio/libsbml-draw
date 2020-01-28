@@ -2,7 +2,7 @@
 # import pkg_resources
 import platform
 
-from libsbml_draw.model.sbml_layout import SBMLlayout
+from libsbml_draw.sbml_layout import SBMLlayout
 
 if platform.system() == "Windows":
     model_dir = "C:\\Users\\nrhaw\\Documents\\repos\\libsbml-draw\\model_files\\"

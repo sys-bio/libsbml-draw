@@ -9,15 +9,15 @@ import platform
 
 if platform.system() == "Windows":
     DLL_FILE = Path(pkg_resources.resource_filename(
-            "libsbml_draw", "c_api/data/sbml_draw.dll"))
+            "libsbml_draw", "c_api/libs/libsbml_draw.dll"))
     slib = ctypes.CDLL(str(DLL_FILE))
 elif platform.system() == "Linux":
     SO_FILE = Path(pkg_resources.resource_filename(
-            "libsbml_draw", "c_api/data/libsbml_draw.so"))
+            "libsbml_draw", "c_api/libs/libsbml_draw.so"))
     slib = ctypes.CDLL(str(SO_FILE))
 else:
     DYLIB_FILE = Path(pkg_resources.resource_filename(
-            "libsbml_draw", "c_api/data/libsbml_draw.dylib"))
+            "libsbml_draw", "c_api/libs/libsbml_draw.dylib"))
     slib = ctypes.CDLL(str(DYLIB_FILE))
 
 # Enumerations

@@ -34,7 +34,7 @@ model *untitled()
 end
 ''')
 
-from libsbml_draw.model.sbml_layout import SBMLlayout
+from libsbml_draw.sbml_layout import SBMLlayout
 
 sl = SBMLlayout(r.getSBML())
 

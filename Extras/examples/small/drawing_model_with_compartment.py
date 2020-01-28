@@ -1,5 +1,4 @@
-import os, glob
-from libsbml_draw.model.sbml_layout import SBMLlayout
+from libsbml_draw.sbml_layout import SBMLlayout
 
 model_string = """<?xml version="1.0" encoding="UTF-8"?>
 <!-- Created by XMLPrettyPrinter on 1/24/2020 from pathwayDesigner version.dll -->

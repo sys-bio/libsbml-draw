@@ -4,9 +4,7 @@ site.addsitedir(os.path.join(os.path.dirname(os.path.dirname(__file__)), "src/py
 import unittest
 
 import tellurium as te
-from libsbml_draw.model.sbml_layout import SBMLlayout
-import matplotlib
-import glob
+from libsbml_draw.sbml_layout import SBMLlayout
 
 
 # matplotlib.use('TkAgg')

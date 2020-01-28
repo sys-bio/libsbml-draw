@@ -33,14 +33,14 @@ polB = patches.Polygon( xyB, **kwargsB )
 ax.add_patch(polA)
 ax.add_patch(polB)
 
-ax.annotate('arrow1', xy=target, xycoords='data',
-             xytext=orig, textcoords='data',
+ax.annotate('arrow1', xy=target, xycoords='libs',
+             xytext=orig, textcoords='libs',
              arrowprops=dict(arrowstyle='-', patchA=polA, patchB=polB,
                  lw=1., shrinkA=shrinkA, shrinkB=shrinkB, relpos=(0.,0.),
                  mutation_scale=1.))
 
-ax.annotate('arrow2', xy=target, xycoords='data',
-             xytext=orig, textcoords='data',
+ax.annotate('arrow2', xy=target, xycoords='libs',
+             xytext=orig, textcoords='libs',
              arrowprops=dict(arrowstyle='-', patchA=polA, patchB=polB,
                  lw=1., shrinkA=shrinkA, shrinkB=shrinkB, relpos=(0.,0.),
                  mutation_scale=1.))

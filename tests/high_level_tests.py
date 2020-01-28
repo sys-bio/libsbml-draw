@@ -1,9 +1,8 @@
 import unittest
-import os, glob
 
-from tests.model_strings import compartment_model, schmierer2008, kholodenko2000
-from libsbml_draw.model.sbml_layout import SBMLlayout
-from libsbml_draw.model.sbml_layout import _ValidatedDict, _ValidatedDict, _Font
+from libsbml_draw.sbml_layout import SBMLlayout
+from libsbml_draw.styles import _AttributeSet, Style
+from tests.model_strings import compartment_model
 
 
 # todo enable config of all node/edge attributes with a single command
@@ -13,7 +12,7 @@ from libsbml_draw.model.sbml_layout import _ValidatedDict, _ValidatedDict, _Font
 
 
 class ValidatedDictTests(unittest.TestCase):
-    class Items(_ValidatedDict):
+    class Items(_AttributeSet):
         chair = 'brown'
         length = 14
 
@@ -32,6 +31,22 @@ class ValidatedDictTests(unittest.TestCase):
     def test_access_by_dot_notation(self):
         self.assertEqual(self.items.chair, 'brown')
 
+
+class SettingsTests(unittest.TestCase):
+
+    def setUp(self) -> None:
+        pass
+
+    def test(self):
+        s = SBMLlayout(compartment_model)
+        s = Style()
+        print(s.node)
+
+    def test2(self):
+        s = SBMLlayout(compartment_model)
+        print(s.implement_settings2())
+
+        # s.drawNetwork(show=True)
 
 
 class HighLevelTests(unittest.TestCase):
@@ -52,17 +67,14 @@ class HighLevelTests(unittest.TestCase):
         s.regenerateLayout()
         s.drawNetwork(show=True)
 
+    def test2(self):
+        pass
+        # s = SBMLlayout(compartment_model)
 
         # print(s.getCompartmentEdgeColor('vol1'))
         # print(s.getCompartmentFillColor('vol1'))
         # print(s.getCompartmentLineWidth('vol1'))
 
 
-
-
-
-
-
 if __name__ == '__main__':
     unittest.main()
-

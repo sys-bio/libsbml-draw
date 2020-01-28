@@ -26,7 +26,7 @@ GlyphObject = namedtuple("GlyphObject", ["glyph_id", "x", "y"])
 LINE_ENDINGS_STYLE_SHEET = "render-stylesheet_global.xml"
 
 CURRENT_SPEC_STYLE_SHEET = str(Path(pkg_resources.resource_filename(
-        "libsbml_draw", "model/data/" + "SBGNstyles_31.xml")))
+        "libsbml_draw", "model/libs/" + "SBGNstyles_31.xml")))
 
 FONT_STYLES = ["none", "normal", "italic"]
 
@@ -46,9 +46,9 @@ REACTION_TYPES = ["REACTIONGLYPH", "ANY"]
 
 
 class Render:
-    """Holds the render data and provides methods to apply that data to a
+    """Holds the render libs and provides methods to apply that libs to a
     network and to add a user's changes to the network to be added to the
-    render data.
+    render libs.
     """
     def __init__(self, sbml_doc, layout_number):
 
@@ -1060,10 +1060,10 @@ class Render:
         corners.
 
         Args:
-            element (libsbml.Rectangle): rectangle data from the SBML file
+            element (libsbml.Rectangle): rectangle libs from the SBML file
             nw_element (libsbml_draw.network._Node or
                 libsbml_draw.network.Compartment): graphical element in the
-                network to which the SBML data will be applied.
+                network to which the SBML libs will be applied.
 
         Returns: float
         """
@@ -1142,14 +1142,14 @@ class Render:
         self._setShapeData(node_element, node, node_shape)
 
     def _setShapeData(self, libsbml_element, nw_element, nw_element_shape):
-        """Collects the data needed to draw the shape of a node or a
+        """Collects the libs needed to draw the shape of a node or a
         compartment, and stores it on the node or compartment representation.
 
         Args:
             libsbml_elemnet (libsbml.Element): a libsbml Rectangle, Polygon,
                 or Ellipse
             nw_element (libsbml_draw.model.network._Node or
-                libsbml_draw.model.network.Compartment: set the shape data on
+                libsbml_draw.model.network.Compartment: set the shape libs on
                     this element
             nw_element_shape (str): "rectangle", "polygon" or "ellipse"
 
@@ -1616,7 +1616,7 @@ class Render:
         """
         LINE_ENDINGS_FILE = Path(pkg_resources.resource_filename(
                                  "libsbml_draw",
-                                 "model/data/" + LINE_ENDINGS_STYLE_SHEET))
+                                 "model/libs/" + LINE_ENDINGS_STYLE_SHEET))
 
         doc = libsbml.readSBMLFromFile(str(LINE_ENDINGS_FILE))
         model = doc.getModel()

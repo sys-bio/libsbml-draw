@@ -395,8 +395,8 @@ def create_rectangle_line_ending_patch(curve, line_ending, scaling_factor,
 
     Args:
         curve (libsbml_draw.network.Curve): curve needing a line ending
-        line_ending (3-tuple containing (line ending type, data for drawing,
-            bounding box data)): the line ending data for the curve
+        line_ending (3-tuple containing (line ending type, libs for drawing,
+            bounding box libs)): the line ending libs for the curve
         scaling_factor (float): scaling_factor to decrease or increase the
             figure size
         nw_height_inches (float): height of the network in inches
@@ -441,8 +441,8 @@ def create_ellipse_line_ending_patch(curve, line_ending, scaling_factor,
 
     Args:
         curve (libsbml_draw.network.Curve): curve needing a line ending
-        line_ending (3-tuple containing (line ending type, data for drawing,
-            bounding box data)): the line ending data for the curve
+        line_ending (3-tuple containing (line ending type, libs for drawing,
+            bounding box libs)): the line ending libs for the curve
         scaling_factor (float): scaling_factor to decrease or increase the
             figure size
         nw_height_inches (float): height of the network in inches
@@ -486,8 +486,8 @@ def create_polygon_line_ending_patch(curve, line_ending, scaling_factor,
 
     Args:
         curve (libsbml_draw.network.Curve): curve needing a line ending
-        line_ending (3-tuple containing (line ending type, data for drawing,
-            bounding box data)): the line ending data for the curve
+        line_ending (3-tuple containing (line ending type, libs for drawing,
+            bounding box libs)): the line ending libs for the curve
         scaling_factor (float): scaling_factor to decrease or increase the
             figure size
         nw_height_inches (float): height of the network in inches

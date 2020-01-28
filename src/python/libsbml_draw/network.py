@@ -5,7 +5,7 @@ from enum import IntEnum
 
 from matplotlib.patches import ArrowStyle
 
-import libsbml_draw.c_api.sbnw_c_api as sbnw
+import libsbml_draw.sbnw as sbnw
 # import tesbml as libsbml
 
 
@@ -154,10 +154,10 @@ class Network:
         """
         existing_reactions = [reaction for reaction in self.reactions.values()]
 
-        # Acquire new curve layout data for the reactions
+        # Acquire new curve layout libs for the reactions
         self._add_reactions()
 
-        # Restore the current render data for the reactions
+        # Restore the current render libs for the reactions
         for reaction in existing_reactions:
             self.reactions[reaction.id].edge_color = reaction.edge_color
             self.reactions[reaction.id].fill_color = reaction.fill_color
@@ -282,8 +282,8 @@ class Network:
         four points - the start, end, and two control points.
 
         Args:
-            curveCP1 (libsbml_draw.sbnw_c_api.curveCP): curve to compare
-            curveCP2 (libsbml_draw.sbnw_c_api.curveCP): curve to compare
+            curveCP1 (libsbml_draw.sbnw.curveCP): curve to compare
+            curveCP2 (libsbml_draw.sbnw.curveCP): curve to compare
 
         Returns: boolean
         """

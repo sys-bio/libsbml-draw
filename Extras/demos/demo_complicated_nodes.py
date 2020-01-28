@@ -3,13 +3,13 @@
 from pathlib import Path
 import pkg_resources
 
-from libsbml_draw.model.sbml_layout import SBMLlayout
+from libsbml_draw.sbml_layout import SBMLlayout
 
 #model_file_name = "complicated_nodes-L3V1.xml"
 model_file_name = "complicated_nodes.xml"
 
 model_file = Path(pkg_resources.resource_filename(
-        "libsbml_draw", "model/data/" + model_file_name))
+        "libsbml_draw", "model/libs/" + model_file_name))
 
 # https://stackoverflow.com/questions/33635439/matplotlib-patch-size-in-points
 

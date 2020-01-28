@@ -25,14 +25,14 @@ dy = 12/72
 tmp = ax.transData.transform([(0,0), (1,1)])
 print("pixels tmp: ", tmp)
 tx = tmp[1,0] - tmp[0,0]  # 1 unit in display coords
-print("pixels per data coord x: ", tx)
+print("pixels per libs coord x: ", tx)
 ty = tmp[1,1] - tmp[0,1]  # 1 unit in display coords
-print("pixels per data coord y: ", ty)
+print("pixels per libs coord y: ", ty)
 tmp = 1/ty  # 1 pixel in display coords
-print("data coord/pixel", tmp)
+print("libs coord/pixel", tmp)
 tmp = tmp*dy*ax.get_figure().get_dpi()  # shift pixels in display coords
 
-print("data coord/pixel * inch * pixel/inch: ", tmp)
+print("libs coord/pixel * inch * pixel/inch: ", tmp)
 
 
 ax.plot(x, y)

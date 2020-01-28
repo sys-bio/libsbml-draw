@@ -1,7 +1,7 @@
 from pathlib import Path
 import pkg_resources
 
-from libsbml_draw.model.sbml_layout import SBMLlayout
+from libsbml_draw.sbml_layout import SBMLlayout
 
 small_models = ["model.xml", 
                 "largerpathway.xml",
@@ -13,7 +13,7 @@ small_models = ["model.xml",
 for model_file_name in small_models:
     
     model_file = Path(pkg_resources.resource_filename(
-            "libsbml_draw", "model/data/" + model_file_name))
+            "libsbml_draw", "model/libs/" + model_file_name))
 
     sl = SBMLlayout(str(model_file))
 

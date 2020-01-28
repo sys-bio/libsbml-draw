@@ -9,18 +9,18 @@ def get_length(pts_needed):
     tmp_x = ax.transData.transform([(0,0), (1,1)])
     print("pixels tmp: ", tmp_x)
     tx = (tmp_x[1,0] - tmp_x[0,0])/540  # 1 unit in display coords
-    print("pixels per data coord x: ", tx)
+    print("pixels per libs coord x: ", tx)
         
     tmp_y = ax.transData.transform([(0,0), (1,1)])
     ty = (tmp_y[1,1] - tmp_y[0,1])/520  # 1 unit in display coords
-    print("pixels per data coord y: ", ty)
+    print("pixels per libs coord y: ", ty)
 
     tmp = 1/ty  # 1 pixel in display coords
-    print("data coord/pixel", tmp)
+    print("libs coord/pixel", tmp)
 
     length_data_coords = tmp*dxy*ax.get_figure().get_dpi()  # shift pixels in display coords
-    #print("data coord/pixel * inch * pixel/inch: ", tmp)
-    print(f"length data coords for {pts_needed}", length_data_coords)
+    #print("libs coord/pixel * inch * pixel/inch: ", tmp)
+    print(f"length libs coords for {pts_needed}", length_data_coords)
     print()
 
     return length_data_coords

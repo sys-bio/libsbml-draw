@@ -9,7 +9,7 @@ from libsbml import SBMLReader
 
 model_file_name = "example-network.xml"
 
-model_file = Path(pkg_resources.resource_filename("libsbml_draw", "model/data/" + model_file_name))
+model_file = Path(pkg_resources.resource_filename("libsbml_draw", "model/libs/" + model_file_name))
 
 print("model file: ", model_file)
     

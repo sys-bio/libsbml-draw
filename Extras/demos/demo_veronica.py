@@ -1,6 +1,6 @@
 import platform
 
-from libsbml_draw.model.sbml_layout import SBMLlayout
+from libsbml_draw.sbml_layout import SBMLlayout
 
 file_name = "veronica-network.xml"
 

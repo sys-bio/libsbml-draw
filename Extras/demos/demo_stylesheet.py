@@ -8,7 +8,7 @@ STYLESHEET_FILE_NAME = "render-stylesheet_global.xml"
 
 SS_FILE = Path(pkg_resources.resource_filename(
         "libsbml_draw",
-        "model/data/" + STYLESHEET_FILE_NAME))
+        "model/libs/" + STYLESHEET_FILE_NAME))
 
 doc = libsbml.readSBMLFromFile(str(SS_FILE))
 

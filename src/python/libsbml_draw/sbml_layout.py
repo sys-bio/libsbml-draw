@@ -9,10 +9,11 @@ from collections import namedtuple
 import tesbml as libsbml
 from matplotlib.colors import is_color_like, to_hex
 
-import libsbml_draw.c_api.sbnw_c_api as sbnw
-from libsbml_draw.draw.draw_network import createNetworkFigure
-from libsbml_draw.model.network import Network
-from libsbml_draw.model.render import Render
+import libsbml_draw.sbnw as sbnw
+from libsbml_draw.draw_network import createNetworkFigure
+from libsbml_draw.network import Network
+from libsbml_draw.render import Render
+from .styles import Style, _AttributeSet
 
 BezierPoints = namedtuple("BezierPoints", ["start", "end",
                                            "control1", "control2"])
@@ -1582,7 +1583,7 @@ class SBMLlayout:
 
         Args:
             node_id (str): id for the node
-            width (float): width in data coordinates for the node
+            width (float): width in libs coordinates for the node
 
         Returns: None
         """
@@ -1602,7 +1603,7 @@ class SBMLlayout:
 
         Args:
             node_id (str): id for the node
-            height (float): height in data coordinates for the node
+            height (float): height in libs coordinates for the node
 
         Returns: None
         """

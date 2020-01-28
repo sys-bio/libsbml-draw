@@ -4,7 +4,7 @@ from matplotlib.path import Path
 
 import numpy as np
 
-# Set-up the node data
+# Set-up the node libs
 
 node_width_ABCDEFG = 116/72  # inches
 node_height_ABCDEFG = 28/72  # inches
