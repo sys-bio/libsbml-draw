@@ -241,7 +241,7 @@ The Calvin-Benson cycle (CBC) provides the precursors for biomass synthesis nece
               <ci> substrate </ci>
             </bvar>
             <bvar>
-              <ci> Inhibitor </ci>
+              <ci> _Inhibitor </ci>
             </bvar>
             <bvar>
               <ci> Km </ci>
@@ -268,7 +268,7 @@ The Calvin-Benson cycle (CBC) provides the precursors for biomass synthesis nece
                   <apply>
                     <times/>
                     <ci> Km </ci>
-                    <ci> Inhibitor </ci>
+                    <ci> _Inhibitor </ci>
                   </apply>
                   <ci> Ki </ci>
                 </apply>

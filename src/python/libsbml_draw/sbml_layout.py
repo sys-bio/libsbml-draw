@@ -18,133 +18,6 @@ BezierPoints = namedtuple("BezierPoints", ["start", "end",
                                            "control1", "control2"])
 
 
-class _ValidatedDict(dict):
-    """
-    A base class for an immutable dictionary. Subclasses
-    are intended to be used as dictionaries to hold keyword
-    arguments.
-
-    Only attributes that are present as class attributes
-    may be accessed either by dot notation `'.' or get
-    notation `dct['x']`. Attempts to add new items will cause
-    errors, with information about which attributes the dictionary
-    is allowed to take.
-
-    .. code-block
-
-        class Items(_ValidatedDict):
-            pen='blue'
-            size=20
-
-        >>> items = Items()
-        >>> items['size']
-        20
-        >>> items.size
-        20
-        >>> items['pencil'] # oops
-
-    """
-
-    def __init__(self):
-        self.dct = {k: v for k, v in self.__class__.__dict__.items() if not k.startswith('__') or callable(v)}
-        super().__init__(**self.dct)
-
-    def _error_message(self, k):
-        return f'Key "{k}" is not a valid key ' \
-            f'for {self.__class__.__name__}. These are ' \
-            f'valid keys: "{list(self.dct.keys())}"'
-
-    def __setitem__(self, key, value):
-        if key not in self.dct.keys():
-            raise TypeError(self._error_message(key))
-        self.dct[key] = value
-
-    def __getitem__(self, item):
-        return self.dct[item]
-
-    def __delitem__(self, key):
-        NotImplemented("Cannot add or remove entries from a _ValidatedDict")
-
-    def __str__(self):
-        return self.dct.__str__()
-
-
-class _Font(_ValidatedDict):
-    NodeFontColor = '#000000'
-    NodeFontFamily = 'Arial'
-    NodeFontName = 'Arial'
-    NodeFontSize = 20
-    NodeFontStyle = 'normal'
-    NodeFontWeight = 'normal'  # todo find out what the options are ?
-
-
-class _Shape(_ValidatedDict):
-    NodeColor = '#c9e0fb'
-    NodeEdgeColor = '#0000ff'
-    NodeEdgeWidth = 3
-    NodeFillColor = '#c9e0fb'
-    NodeHeight = 20.0
-    NodeWidth = 70.0
-
-
-class _Node(_ValidatedDict):
-    shape = _Shape()
-    font = _Font()
-
-
-class _EdgeAttr(_ValidatedDict):
-    curve_width = 3
-    edge_color = '#0000ff'
-    fill_color = '#0000ff'
-
-
-class Substrate(_EdgeAttr):
-    pass
-
-
-class Product(_EdgeAttr):
-    pass
-
-
-class SideSubstrate(_EdgeAttr):
-    pass
-
-
-class SideProduct(_EdgeAttr):
-    pass
-
-
-class Modifier(_EdgeAttr):
-    pass
-
-
-class Activator(_EdgeAttr):
-    pass
-
-
-class Inhibitor(_EdgeAttr):
-    pass
-
-
-class _Edge(_ValidatedDict):
-    pass
-
-
-
-class _Compartments(_ValidatedDict):
-    CompartmentEdgeColor = '#0000ff30'
-    CompartmentFillColor = '#0000ff05'
-    CompartmentLineWidth = 10
-
-
-class _Settings(_ValidatedDict):
-    node = _Node()
-    edge = _Edge()
-    compartments = _Compartments()
-    scaling_factor = 1.0
-    NetworkBackgroundColor = 0
-
-
 class SBMLlayout:
     """SBMLlayout represents the model in an SBML file."""
 
@@ -157,11 +30,13 @@ class SBMLlayout:
 
     def __init__(self, sbml_source, layout_alg_options=None,
                  layout_number=0, fitToWindow=tuple(),
-                 autoComputeLayout=False, applyRender=True):
+                 autoComputeLayout=False, applyRender=True,
+                 settings=None):
         self._sbml_source = sbml_source
         self._layout_number = layout_number
         self._fitWindow = fitToWindow
         self._applyRender = applyRender
+        self.settings = Style() if settings is None else settings
 
         if self._validate_layout_alg_options(layout_alg_options):
             self._layout_alg_options = layout_alg_options
@@ -2378,7 +2253,7 @@ class SBMLlayout:
         """
         fig = createNetworkFigure(self, self._arrowhead_scale, show, dpi,
                                   width_shift, height_shift, scaling_factor)
-        if(save_file_name):
+        if (save_file_name):
             bg_color = self._network.bg_color
             fig.savefig(save_file_name, facecolor=bg_color)
 
@@ -2477,3 +2352,28 @@ class SBMLlayout:
 
         """
         return self._doc.getModel().getNumCompartments()
+
+    def implement_settings(self, setting):
+        if not isinstance(setting, _AttributeSet):
+            raise TypeError('The "setting" argument should be of type '
+                            '"_AttributeSet" but got {} instead'.format(type(setting)))
+        for k, v in setting.items():
+            if isinstance(v, _AttributeSet):
+                v.set_values(self)
+                # self.implement_settings(v)
+            # print(k, v)
+
+    def implement_settings2(self):
+        for k, v in self.settings.items():
+            v.set_values(self)
+                # self.implement_settings(v)
+            # print(k, v)
+
+
+
+
+
+
+
+
+
