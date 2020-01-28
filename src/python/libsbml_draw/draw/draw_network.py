@@ -95,9 +95,6 @@ def draw_compartments(compartments, fig, scaling_factor, nw_height_inches):
                 transform=fig.dpi_scale_trans
             )
 
-        else:
-            pass
-
         compartment_patches.append(compartment_patch)
 
     return compartment_patches
@@ -107,7 +104,7 @@ def draw_nodes(nodes, fig, scaling_factor, nw_height_inches):
     """Create a list of FancyBbox Patches, one for each node.
 
     Args:
-        nodes (iterable collection of Node): collection of nodes
+        nodes (iterable collection of _Node): collection of nodes
         fig (matplotlib.figure.Figure): the figure of the network
         scaling_factor (float): scaling_factor to decrease or increase the
             figure size
@@ -551,7 +548,7 @@ def add_labels(nodes, fig, scaling_factor, nw_height_inches):
     """Add text to the nodes.
 
     Args:
-        nodes (iterable collection of Node): collection of nodes
+        nodes (iterable collection of _Node): collection of nodes
         fig (matplotlib.figure.Figure): the figure of the network
         scaling_factor (float): scaling_factor to decrease or increase the
             figure size

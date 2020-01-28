@@ -19,7 +19,7 @@ class AntimonyModelTests(unittest.TestCase):
         // Created by libAntimony v2.9.4
         model *untitled()
         
-          // Compartments and Species:
+          // _Compartments and Species:
           species Node0, Node3, Node5, Node6, Node7, Node8888888, Node9, Node10, Node11;
           species Node12, Node13, Node14;
         
@@ -96,12 +96,12 @@ class AntimonyModelTests(unittest.TestCase):
         self.assertTrue(os.path.isfile(self.fname))
 
     def test_load_from_string(self):
-        slsl = SBMLlayout()
+        slsl = SBMLlayout(self.r.getSBML())
         slsl.loadSBMLString(self.r.getSBML())
         self.assertIsInstance(slsl, SBMLlayout)
 
     def test_draw_network_from_model_loaded_from_string(self):
-        slsl = SBMLlayout()
+        slsl = SBMLlayout(self.r.getSBML())
         slsl.loadSBMLString(self.r.getSBML())
         fig = slsl.drawNetwork()
         fig.savefig(self.fname, bbox_inches='tight', dpi=300)

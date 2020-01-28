@@ -18,76 +18,131 @@ BezierPoints = namedtuple("BezierPoints", ["start", "end",
                                            "control1", "control2"])
 
 
-class ValidatedDict(dict):
+class _ValidatedDict(dict):
     """
-    Base class for validating keys in a dict.
+    A base class for an immutable dictionary. Subclasses
+    are intended to be used as dictionaries to hold keyword
+    arguments.
 
-    This class will behave exactly like a dictionary. Subclasses
-    that define attributes however, will only be allowed to store
-    those attributes. For instance:
+    Only attributes that are present as class attributes
+    may be accessed either by dot notation `'.' or get
+    notation `dct['x']`. Attempts to add new items will cause
+    errors, with information about which attributes the dictionary
+    is allowed to take.
 
+    .. code-block
 
-    These validated dictionaries are good for keyword arguments
+        class Items(_ValidatedDict):
+            pen='blue'
+            size=20
+
+        >>> items = Items()
+        >>> items['size']
+        20
+        >>> items.size
+        20
+        >>> items['pencil'] # oops
 
     """
 
-    def __init__(self, **kwargs):
-        self.kwargs = kwargs
-        super().__init__(**kwargs)
-        # self._validate()
+    def __init__(self):
+        self.dct = {k: v for k, v in self.__class__.__dict__.items() if not k.startswith('__') or callable(v)}
+        super().__init__(**self.dct)
 
     def _error_message(self, k):
         return f'Key "{k}" is not a valid key ' \
             f'for {self.__class__.__name__}. These are ' \
-            f'valid keys: "{self.kwargs}"'
-
-    def _validate(self):
-        print(self.__dict__)
-        for k in self.__dict__.keys():
-            if k not in list(self.__dict__.keys()) + ['valid_keys']:
-                raise TypeError(self._error_message(k))
+            f'valid keys: "{list(self.dct.keys())}"'
 
     def __setitem__(self, key, value):
-        print(self.__dict__)
-        if key not in self.__dict__.keys():
+        if key not in self.dct.keys():
             raise TypeError(self._error_message(key))
+        self.dct[key] = value
 
     def __getitem__(self, item):
-        return super().__getitem__(item)
+        return self.dct[item]
 
     def __delitem__(self, key):
-        NotImplemented("Cannot add or remove entries from a ValidatedDict")
+        NotImplemented("Cannot add or remove entries from a _ValidatedDict")
+
+    def __str__(self):
+        return self.dct.__str__()
+
+
+class _Font(_ValidatedDict):
+    NodeFontColor = '#000000'
+    NodeFontFamily = 'Arial'
+    NodeFontName = 'Arial'
+    NodeFontSize = 20
+    NodeFontStyle = 'normal'
+    NodeFontWeight = 'normal'  # todo find out what the options are ?
+
+
+class _Shape(_ValidatedDict):
+    NodeColor = '#c9e0fb'
+    NodeEdgeColor = '#0000ff'
+    NodeEdgeWidth = 3
+    NodeFillColor = '#c9e0fb'
+    NodeHeight = 20.0
+    NodeWidth = 70.0
+
+
+class _Node(_ValidatedDict):
+    shape = _Shape()
+    font = _Font()
+
+
+class _EdgeAttr(_ValidatedDict):
+    curve_width = 3
+    edge_color = '#0000ff'
+    fill_color = '#0000ff'
+
+
+class Substrate(_EdgeAttr):
+    pass
+
+
+class Product(_EdgeAttr):
+    pass
+
+
+class SideSubstrate(_EdgeAttr):
+    pass
+
+
+class SideProduct(_EdgeAttr):
+    pass
+
+
+class Modifier(_EdgeAttr):
+    pass
+
+
+class Activator(_EdgeAttr):
+    pass
+
+
+class Inhibitor(_EdgeAttr):
+    pass
+
+
+class _Edge(_ValidatedDict):
+    pass
 
 
 
-font_dict = ValidatedDict(
-    fontsize=18,
-    fontstyle='Arial',
-    NodeFontColor=0,
-    NodeFontFamily=0,
-    NodeFontName=0,
-    NodeFontSize=0,
-    NodeFontStyle=0,
-    NodeFontWeight=0
-)
+class _Compartments(_ValidatedDict):
+    CompartmentEdgeColor = '#0000ff30'
+    CompartmentFillColor = '#0000ff05'
+    CompartmentLineWidth = 10
 
-shape_dict = ValidatedDict(
-            aliasNodes=[],
-            NodeCentroid=0,
-            NodeColor=0,
-            NodeEdgeColor=0,
-            NodeEdgeWidth=0,
-            NodeFillColor=0,
-            NodeHeight=0,
-            NodeWidth=0,
-            NodeLowerLeftPoint=0
-        )
 
-position = ValidatedDict(
-    NodeTextAnchor=0,
-    VNodeTextAnchor=0
-)
-
+class _Settings(_ValidatedDict):
+    node = _Node()
+    edge = _Edge()
+    compartments = _Compartments()
+    scaling_factor = 1.0
+    NetworkBackgroundColor = 0
 
 
 class SBMLlayout:
@@ -100,10 +155,9 @@ class SBMLlayout:
     WIDTH_PADDING = 2  # number of additional characters in length node name
     HEIGHT_PADDING = 1  # number of additional characters in node name height
 
-    def __init__(self, sbml_source=None, layout_alg_options=None,
+    def __init__(self, sbml_source, layout_alg_options=None,
                  layout_number=0, fitToWindow=tuple(),
                  autoComputeLayout=False, applyRender=True):
-
         self._sbml_source = sbml_source
         self._layout_number = layout_number
         self._fitWindow = fitToWindow
@@ -112,7 +166,7 @@ class SBMLlayout:
         if self._validate_layout_alg_options(layout_alg_options):
             self._layout_alg_options = layout_alg_options
         else:
-            # todo change layout to dict not list?
+            # todo change layoutalg_optionsto dict not list?
             self._layout_alg_options = sbnw.fr_alg_options(
                 20.0,  # k
                 0,  # grav, has to be > 5 for effect
@@ -193,7 +247,7 @@ class SBMLlayout:
         """Computes the node width needed for the text to fit inside.
 
         Args:
-            node (libsbml_draw.network.Node): the node of interest
+            node (libsbml_draw.network._Node): the node of interest
 
         Returns: float
         """
@@ -205,7 +259,7 @@ class SBMLlayout:
         """Computes the node height needed for the text to fit inside.
 
         Args:
-            node (libsbml_draw.network.Node): the node of interest
+            node (libsbml_draw.network._Node): the node of interest
 
         Returns: float
         """
@@ -413,7 +467,7 @@ class SBMLlayout:
         if font_style in valid_font_styles:
             return True
         else:
-            raise ValueError(f"Font Style, {font_style} is not valid, "
+            raise ValueError(f"_Font Style, {font_style} is not valid, "
                              f"must be one of: {valid_font_styles}.")
 
     def _validateFontWeight(self, font_weight):
@@ -431,7 +485,7 @@ class SBMLlayout:
         if font_weight in valid_font_weights:
             return True
         else:
-            raise ValueError(f"Font Weight, {font_weight} is not valid, "
+            raise ValueError(f"_Font Weight, {font_weight} is not valid, "
                              f"must be one of: {valid_font_weights}.")
 
     def _validateTextAnchor(self, text_anchor, anchor_type):
@@ -487,7 +541,6 @@ class SBMLlayout:
 
         self._doc = libsbml.readSBMLFromString(
             self._getSBMLWithLayoutString())
-
         self._network = self._createNetwork()
 
         # apply render information, if any
@@ -621,7 +674,7 @@ class SBMLlayout:
         """
         sbnw.setModelNamespace(self._h_layout_info, level, version)
 
-    # Node Information
+    # _Node Information
 
     def aliasNode(self, node_id):
         """Creates an alias of this node for each incoming and outgoing
@@ -656,9 +709,7 @@ class SBMLlayout:
         Returns: None
         """
         if node_id in self.getNodeIds():
-            print("node id: ", node_id)
             node = self._network.nodes[node_id]
-
             if node.id in self._network.aliasedNodes:
                 return True
             else:
@@ -916,7 +967,8 @@ class SBMLlayout:
         if compartment_id in self._network.compartments:
             return self._network.compartments[compartment_id].edge_color
         else:
-            raise ValueError(f"Compartment {compartment_id} not in network.")
+            raise ValueError(f"Compartment {compartment_id} not in network. These"
+                             f"compartments are in your network: \"{self.getCompartmentIds()}\"")
 
     def _setCompartmentProperty(self, compartment_id, property_value,
                                 property_type):
@@ -1061,9 +1113,9 @@ class SBMLlayout:
             line_width,
             property_type)
 
-    # Node Methods
+    # _Node Methods
 
-    def getNodeIds(self, ):
+    def getNodeIds(self):
         """Returns a list of node ids.
 
         Args: None
@@ -1238,7 +1290,7 @@ class SBMLlayout:
                 property_type)
 
         else:
-            raise ValueError(f"Invalid input for node_id: {node_id}. Node id"
+            raise ValueError(f"Invalid input for node_id: {node_id}. _Node id"
                              f"must be a Species id, a list of Species ids, or"
                              f"a node keyword ({SBMLlayout.NODE_KEYWORDS}).")
 
@@ -2324,9 +2376,9 @@ class SBMLlayout:
 
         Returns: matplotlib.figure.Figure
         """
-        fig = createNetworkFigure(self, save_file_name, show, dpi,
+        fig = createNetworkFigure(self, self._arrowhead_scale, show, dpi,
                                   width_shift, height_shift, scaling_factor)
-        if save_file_name:
+        if(save_file_name):
             bg_color = self._network.bg_color
             fig.savefig(save_file_name, facecolor=bg_color)
 

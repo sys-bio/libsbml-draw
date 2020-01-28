@@ -84,7 +84,7 @@ class Render:
         self.glyphsDirectory = self._createGlyphsDirectory()
         self.findSpeciesReferenceGlyphId = self._createSpeciesReferenceGlyphDirectory()  # noqa
 
-    def _createSpeciesReferenceGlyphDirectory(self,):
+    def _createSpeciesReferenceGlyphDirectory(self):
         """Create a directory to find the glyph id of a curve, which is a
         "species_reference_glyph_id", based on ("reaction_id", "curve role",
         "species_id").
@@ -367,7 +367,7 @@ class Render:
         return plot_color
 
     def _set_font_property(self, font_property, property_value):
-        """Determines if the font property of is valid.  Font properties which
+        """Determines if the font property of is valid.  _Font properties which
         can be validated are 'style', 'family', and 'size'.
 
         Args:
@@ -948,7 +948,7 @@ class Render:
                                                      nodes_type[node_type])
                                 break
 
-                # Compartments - assign a style
+                # _Compartments - assign a style
                 for compartment in network.compartments.values():
 
                     compartments_type = dict()
@@ -1061,7 +1061,7 @@ class Render:
 
         Args:
             element (libsbml.Rectangle): rectangle data from the SBML file
-            nw_element (libsbml_draw.network.Node or
+            nw_element (libsbml_draw.network._Node or
                 libsbml_draw.network.Compartment): graphical element in the
                 network to which the SBML data will be applied.
 
@@ -1096,7 +1096,7 @@ class Render:
         the input SBML file.
 
         Args:
-            node (libsbml_draw.network.Node): the node to update
+            node (libsbml_draw.network._Node): the node to update
             render_style (libsbml.LocalStyle or libsbml.GlobalStyle): the style
                 to apply.
 
@@ -1148,7 +1148,7 @@ class Render:
         Args:
             libsbml_elemnet (libsbml.Element): a libsbml Rectangle, Polygon,
                 or Ellipse
-            nw_element (libsbml_draw.model.network.Node or
+            nw_element (libsbml_draw.model.network._Node or
                 libsbml_draw.model.network.Compartment: set the shape data on
                     this element
             nw_element_shape (str): "rectangle", "polygon" or "ellipse"
@@ -1239,7 +1239,7 @@ class Render:
         in the input SBML file.
 
         Args:
-            node (libsbml_draw.network.Node): the node to update
+            node (libsbml_draw.network._Node): the node to update
             render_style (libsbml.LocalStyle or libsbml.GlobalStyle): the style
                 to apply.
 

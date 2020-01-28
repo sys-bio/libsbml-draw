@@ -13,7 +13,7 @@ model, and draw the model.
     // Created by libAntimony v2.9.4
     model *untitled()
     
-    // Compartments and Species:
+    // _Compartments and Species:
     species Node0, Node3, Node5, Node6, Node7, Node8888888, Node9, Node10, Node11;
     species Node12, Node13, Node14;
 

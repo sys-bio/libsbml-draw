@@ -1,5 +1,5 @@
 # model generated using randMANetGen
-model_xml = """<?xml version='1.0' encoding='UTF-8' standalone='no'?>
+schmierer2008 = """<?xml version='1.0' encoding='UTF-8' standalone='no'?>
 <!-- This model was downloaded from BioModels Database -->
 <!-- http://www.ebi.ac.uk/biomodels-static/                   -->
 <!-- Fri Jan 24 06:18:39 GMT 2020                      -->
@@ -1752,6 +1752,1667 @@ model_xml = """<?xml version='1.0' encoding='UTF-8' standalone='no'?>
                             <ci>G4_c</ci>
                         </apply>
                     </math>
+                </kineticLaw>
+            </reaction>
+        </listOfReactions>
+    </model>
+</sbml>
+"""
+
+compartment_model = """<?xml version="1.0" encoding="UTF-8"?>
+<!-- Created by XMLPrettyPrinter on 1/24/2020 from pathwayDesigner version.dll -->
+<sbml xmlns = "http://www.sbml.org/sbml/level2" level = "2" version = "1" xmlns:jd2 = "http://www.sys-bio.org/sbml/jd2">
+   <!--                     -->
+   <!--  Model Starts Here  -->
+   <!--                     -->
+   <model id = "untitled">
+      <notes>
+         <body xmlns = "http://www.w3.org/1999/xhtml">
+            <p/>
+         </body>
+      </notes>
+      <annotation>
+         <jd2:PathwayDesignerLayout version = "2.0" MajorVersion = "4" MinorVersion = "3" BuildVersion = "54"
+                                    xmlns:jd2 = "http://www.sys-bio.org/sbml/jd2">
+            <jd2:header>
+               <jd2:VersionHeader PathwayVersion = "2.0"/>
+               <jd2:ModelHeader Author = "" ModelVersion = "0.0" ModelTitle = "untitled"/>
+               <jd2:TimeCourseDetails timeStart = "0" timeEnd = "10" numberOfPoints = "100" selectionList = ""/>
+               <jd2:SteadyStateDetails selectionList = ""/>
+               <jd2:ModifierOptions enableModifierDecorations = "false" enableAutoAddModifiers = "true"/>
+               <jd2:TimeCourseNumerics deprecated = "True" BDFOrder = "5" AdamsOrder = "12" rtol = "1E-6"
+                                       atol = "1E-12" maxsteps = "10000" initstep = "0" maxstep = "0"
+                                       minstep = "0"/>
+               <jd2:SteadyStateNumerics deprecated = "True" MaxIterations = "100" relativeTolerance = "0.0001"/>
+               <jd2:TimeCourseSolverSettings>
+                  <jd2:listOfSettings solver = "cvode">
+                     <jd2:setting name = "relative_tolerance" value = "1E-5"/>
+                     <jd2:setting name = "absolute_tolerance" value = "1E-10"/>
+                     <jd2:setting name = "stiff" value = "true"/>
+                     <jd2:setting name = "maximum_bdf_order" value = "5"/>
+                     <jd2:setting name = "maximum_adams_order" value = "12"/>
+                     <jd2:setting name = "maximum_num_steps" value = "20000"/>
+                     <jd2:setting name = "maximum_time_step" value = "0"/>
+                     <jd2:setting name = "minimum_time_step" value = "0"/>
+                     <jd2:setting name = "initial_time_step" value = "0"/>
+                     <jd2:setting name = "multiple_steps" value = "false"/>
+                     <jd2:setting name = "variable_step_size" value = "false"/>
+                  </jd2:listOfSettings>
+               </jd2:TimeCourseSolverSettings>
+               <jd2:SteadyStateSolverSettings>
+                  <jd2:listOfSettings solver = "nleq">
+                     <jd2:setting name = "maximum_iterations" value = "100"/>
+                     <jd2:setting name = "minimum_damping" value = "1E-16"/>
+                     <jd2:setting name = "relative_tolerance" value = "0.0001"/>
+                  </jd2:listOfSettings>
+               </jd2:SteadyStateSolverSettings>
+            </jd2:header>
+            <jd2:JDGraphicsHeader BackGroundColor = "FFFFFFEF" NodeEdgeGapDistance = "20"/>
+            <jd2:listOfCompartments>
+               <jd2:compartment id = "compartment" size = "1" visible = "false">
+                  <jd2:boundingBox x = "0" y = "0" w = "64" h = "64"/>
+                  <jd2:membraneStyle thickness = "12" color = "FF00A5FF"/>
+                  <jd2:interiorStyle color = "FFEEEEFF"/>
+                  <jd2:text value = "compartment" visible = "true">
+                     <jd2:position rx = "32" ry = "57.6"/>
+                     <jd2:font fontName = "Arial" fontSize = "12" fontStyle = "" fontColor = "FF000000"/>
+                  </jd2:text>
+               </jd2:compartment>
+               <jd2:compartment id = "vol1" size = "1" visible = "true">
+                  <jd2:boundingBox x = "152" y = "70" w = "340" h = "190"/>
+                  <jd2:membraneStyle thickness = "12" color = "FF00A5FF"/>
+                  <jd2:interiorStyle color = "FFEEEEFF"/>
+                  <jd2:text value = "vol1" visible = "true">
+                     <jd2:position rx = "160" ry = "174"/>
+                     <jd2:font fontName = "Arial" fontSize = "12" fontStyle = "" fontColor = "FF000000"/>
+                  </jd2:text>
+               </jd2:compartment>
+               <jd2:compartment id = "vol2" size = "1" visible = "true">
+                  <jd2:boundingBox x = "161" y = "317" w = "340" h = "190"/>
+                  <jd2:membraneStyle thickness = "12" color = "FF00A5FF"/>
+                  <jd2:interiorStyle color = "FFEEEEFF"/>
+                  <jd2:text value = "vol2" visible = "true">
+                     <jd2:position rx = "160" ry = "174"/>
+                     <jd2:font fontName = "Arial" fontSize = "12" fontStyle = "" fontColor = "FF000000"/>
+                  </jd2:text>
+               </jd2:compartment>
+            </jd2:listOfCompartments>
+            <jd2:listOfSpecies>
+               <jd2:species id = "Node0" boundaryCondition = "false" compartment = "vol1" initialConcentration = "0">
+                  <jd2:visible value = "true"/>
+                  <jd2:positionLocked value = "false"/>
+                  <jd2:sizeLocked value = "false"/>
+                  <jd2:boundingBox x = "255" y = "89"/>
+                  <jd2:displayNameVisible value = "" visible = "false"/>
+                  <jd2:displayValue visible = "false">
+                     <jd2:position rx = "0" ry = "0"/>
+                     <jd2:displayStatus value = "dvInitialValue"/>
+                     <jd2:font fontName = "Arial" fontSize = "8" fontColor = "FF000000" fontStyle = ""/>
+                  </jd2:displayValue>
+                  <jd2:text value = "Node0" visible = "true">
+                     <jd2:position rx = "9.108" ry = "11.926"/>
+                     <jd2:font fontName = "Arial" fontSize = "10" fontStyle = "" fontColor = "FF000000"/>
+                  </jd2:text>
+                  <jd2:complex id = "C2592840" displayName = "untitled" w = "62" h = "40"
+                               boundarySpeciesStyle = "bsShadow" boundaryStyleColor = "FF0000FF" captionPosition = "npCenter" captionVisible = "true"
+                               aliasBoundaryStyle = "abRectangle" aliasBoundaryColor = "FFFF0000" aliasBoundaryThickness = "3">
+                     <jd2:subunit shape = "suOvalSquare">
+                        <jd2:boundingBox rx = "0" ry = "0" w = "62" h = "40"/>
+                        <jd2:text value = "S13" visible = "false">
+                           <jd2:position rx = "19.5" ry = "12"/>
+                           <jd2:font fontName = "Arial" fontSize = "8" fontColor = "FF000000" fontStyle = ""/>
+                        </jd2:text>
+                        <jd2:color scheme = "gtVertLinear" startColor = "FFFFCC99" endColor = "FFFFFFFF"/>
+                        <jd2:edgeStyle color = "FFFF6600" thickness = "2" stroke = "dsSolid"/>
+                     </jd2:subunit>
+                  </jd2:complex>
+               </jd2:species>
+               <jd2:species id = "Node1" boundaryCondition = "false" compartment = "vol1" initialConcentration = "0">
+                  <jd2:visible value = "true"/>
+                  <jd2:positionLocked value = "false"/>
+                  <jd2:sizeLocked value = "false"/>
+                  <jd2:boundingBox x = "390" y = "180"/>
+                  <jd2:displayNameVisible value = "" visible = "false"/>
+                  <jd2:displayValue visible = "false">
+                     <jd2:position rx = "0" ry = "0"/>
+                     <jd2:displayStatus value = "dvInitialValue"/>
+                     <jd2:font fontName = "Arial" fontSize = "8" fontColor = "FF000000" fontStyle = ""/>
+                  </jd2:displayValue>
+                  <jd2:text value = "Node1" visible = "true">
+                     <jd2:position rx = "9.108" ry = "11.926"/>
+                     <jd2:font fontName = "Arial" fontSize = "10" fontStyle = "" fontColor = "FF000000"/>
+                  </jd2:text>
+                  <jd2:complex id = "C2592840" displayName = "untitled" w = "62" h = "40"
+                               boundarySpeciesStyle = "bsShadow" boundaryStyleColor = "FF0000FF" captionPosition = "npCenter" captionVisible = "true"
+                               aliasBoundaryStyle = "abRectangle" aliasBoundaryColor = "FFFF0000" aliasBoundaryThickness = "3">
+                     <jd2:subunit shape = "suOvalSquare">
+                        <jd2:boundingBox rx = "0" ry = "0" w = "62" h = "40"/>
+                        <jd2:text value = "S13" visible = "false">
+                           <jd2:position rx = "19.5" ry = "12"/>
+                           <jd2:font fontName = "Arial" fontSize = "8" fontColor = "FF000000" fontStyle = ""/>
+                        </jd2:text>
+                        <jd2:color scheme = "gtVertLinear" startColor = "FFFFCC99" endColor = "FFFFFFFF"/>
+                        <jd2:edgeStyle color = "FFFF6600" thickness = "2" stroke = "dsSolid"/>
+                     </jd2:subunit>
+                  </jd2:complex>
+               </jd2:species>
+               <jd2:species id = "Node2" boundaryCondition = "false" compartment = "vol2" initialConcentration = "0">
+                  <jd2:visible value = "true"/>
+                  <jd2:positionLocked value = "false"/>
+                  <jd2:sizeLocked value = "false"/>
+                  <jd2:boundingBox x = "191" y = "372"/>
+                  <jd2:displayNameVisible value = "" visible = "false"/>
+                  <jd2:displayValue visible = "false">
+                     <jd2:position rx = "0" ry = "0"/>
+                     <jd2:displayStatus value = "dvInitialValue"/>
+                     <jd2:font fontName = "Arial" fontSize = "8" fontColor = "FF000000" fontStyle = ""/>
+                  </jd2:displayValue>
+                  <jd2:text value = "Node2" visible = "true">
+                     <jd2:position rx = "9.108" ry = "11.926"/>
+                     <jd2:font fontName = "Arial" fontSize = "10" fontStyle = "" fontColor = "FF000000"/>
+                  </jd2:text>
+                  <jd2:complex id = "C2592840" displayName = "untitled" w = "62" h = "40"
+                               boundarySpeciesStyle = "bsShadow" boundaryStyleColor = "FF0000FF" captionPosition = "npCenter" captionVisible = "true"
+                               aliasBoundaryStyle = "abRectangle" aliasBoundaryColor = "FFFF0000" aliasBoundaryThickness = "3">
+                     <jd2:subunit shape = "suOvalSquare">
+                        <jd2:boundingBox rx = "0" ry = "0" w = "62" h = "40"/>
+                        <jd2:text value = "S13" visible = "false">
+                           <jd2:position rx = "19.5" ry = "12"/>
+                           <jd2:font fontName = "Arial" fontSize = "8" fontColor = "FF000000" fontStyle = ""/>
+                        </jd2:text>
+                        <jd2:color scheme = "gtVertLinear" startColor = "FFFFCC99" endColor = "FFFFFFFF"/>
+                        <jd2:edgeStyle color = "FFFF6600" thickness = "2" stroke = "dsSolid"/>
+                     </jd2:subunit>
+                  </jd2:complex>
+               </jd2:species>
+               <jd2:species id = "Node3" boundaryCondition = "false" compartment = "vol2" initialConcentration = "0">
+                  <jd2:visible value = "true"/>
+                  <jd2:positionLocked value = "false"/>
+                  <jd2:sizeLocked value = "false"/>
+                  <jd2:boundingBox x = "415" y = "402"/>
+                  <jd2:displayNameVisible value = "" visible = "false"/>
+                  <jd2:displayValue visible = "false">
+                     <jd2:position rx = "0" ry = "0"/>
+                     <jd2:displayStatus value = "dvInitialValue"/>
+                     <jd2:font fontName = "Arial" fontSize = "8" fontColor = "FF000000" fontStyle = ""/>
+                  </jd2:displayValue>
+                  <jd2:text value = "Node3" visible = "true">
+                     <jd2:position rx = "9.108" ry = "11.926"/>
+                     <jd2:font fontName = "Arial" fontSize = "10" fontStyle = "" fontColor = "FF000000"/>
+                  </jd2:text>
+                  <jd2:complex id = "C2592840" displayName = "untitled" w = "62" h = "40"
+                               boundarySpeciesStyle = "bsShadow" boundaryStyleColor = "FF0000FF" captionPosition = "npCenter" captionVisible = "true"
+                               aliasBoundaryStyle = "abRectangle" aliasBoundaryColor = "FFFF0000" aliasBoundaryThickness = "3">
+                     <jd2:subunit shape = "suOvalSquare">
+                        <jd2:boundingBox rx = "0" ry = "0" w = "62" h = "40"/>
+                        <jd2:text value = "S13" visible = "false">
+                           <jd2:position rx = "19.5" ry = "12"/>
+                           <jd2:font fontName = "Arial" fontSize = "8" fontColor = "FF000000" fontStyle = ""/>
+                        </jd2:text>
+                        <jd2:color scheme = "gtVertLinear" startColor = "FFFFCC99" endColor = "FFFFFFFF"/>
+                        <jd2:edgeStyle color = "FFFF6600" thickness = "2" stroke = "dsSolid"/>
+                     </jd2:subunit>
+                  </jd2:complex>
+               </jd2:species>
+               <jd2:species id = "Node4" boundaryCondition = "true" compartment = "compartment" initialConcentration = "0">
+                  <jd2:visible value = "true"/>
+                  <jd2:positionLocked value = "false"/>
+                  <jd2:sizeLocked value = "false"/>
+                  <jd2:boundingBox x = "40" y = "92"/>
+                  <jd2:displayNameVisible value = "" visible = "false"/>
+                  <jd2:displayValue visible = "false">
+                     <jd2:position rx = "0" ry = "0"/>
+                     <jd2:displayStatus value = "dvInitialValue"/>
+                     <jd2:font fontName = "Arial" fontSize = "8" fontColor = "FF000000" fontStyle = ""/>
+                  </jd2:displayValue>
+                  <jd2:text value = "Node4" visible = "true">
+                     <jd2:position rx = "9.108" ry = "11.926"/>
+                     <jd2:font fontName = "Arial" fontSize = "10" fontStyle = "" fontColor = "FF000000"/>
+                  </jd2:text>
+                  <jd2:complex id = "C2592840" displayName = "untitled" w = "62" h = "40"
+                               boundarySpeciesStyle = "bsShadow" boundaryStyleColor = "FF0000FF" captionPosition = "npCenter" captionVisible = "true"
+                               aliasBoundaryStyle = "abRectangle" aliasBoundaryColor = "FFFF0000" aliasBoundaryThickness = "3">
+                     <jd2:subunit shape = "suOvalSquare">
+                        <jd2:boundingBox rx = "0" ry = "0" w = "62" h = "40"/>
+                        <jd2:text value = "S13" visible = "false">
+                           <jd2:position rx = "19.5" ry = "12"/>
+                           <jd2:font fontName = "Arial" fontSize = "8" fontColor = "FF000000" fontStyle = ""/>
+                        </jd2:text>
+                        <jd2:color scheme = "gtVertLinear" startColor = "FFFFCC99" endColor = "FFFFFFFF"/>
+                        <jd2:edgeStyle color = "FFFF6600" thickness = "2" stroke = "dsSolid"/>
+                     </jd2:subunit>
+                  </jd2:complex>
+               </jd2:species>
+            </jd2:listOfSpecies>
+            <jd2:listOfReactions>
+               <jd2:reaction id = "J0" reversible = "false">
+                  <jd2:listOfReactants>
+                     <jd2:speciesReference species = "Node0" stoichiometry = "1"/>
+                  </jd2:listOfReactants>
+                  <jd2:listOfProducts>
+                     <jd2:speciesReference species = "Node1" stoichiometry = "1"/>
+                  </jd2:listOfProducts>
+                  <jd2:listOfModifierEdges>
+                     <jd2:modifierEdge visible = "true">
+                        <jd2:speciesReference species = "Node2"/>
+                        <jd2:destinationReaction name = "J0" regulatorType = "rtPositive" relativePosition = "0.5" destinationArcId = "0"
+                                                 destinationLineSegmentId = "0"/>
+                        <jd2:display lineThickness = "2" lineColor = "FF0000FF" lineDashStyle = "dsSolid" positiveMarkerStyle = "rmEmptyCircle">
+                           <jd2:lineType type = "ltLine">
+                              <jd2:pt x = "222" y = "392" type = "modifier" speciesRef = "Node2"/>
+                              <jd2:pt x = "330.77" y = "165.47"/>
+                           </jd2:lineType>
+                        </jd2:display>
+                     </jd2:modifierEdge>
+                  </jd2:listOfModifierEdges>
+                  <jd2:kineticLaw type = "explicit">
+                     <jd2:rateEquation value = "J0_k*Node0*Node2"/>
+                     <jd2:listOfSymbols>
+                        <jd2:parameter id = "J0_k" value = "0.1"/>
+                     </jd2:listOfSymbols>
+                  </jd2:kineticLaw>
+                  <jd2:display lineColor = "FF008000" lineThickness = "2">
+                     <jd2:arrowTip visible = "true" fillColor = "FFFFA500" outLineColor = "FFFFA500" outlineThickness = "2"
+                                   displacement = "6">
+                        <jd2:vertices>
+                           <jd2:pt x = "0" y = "14"/>
+                           <jd2:pt x = "3" y = "7"/>
+                           <jd2:pt x = "0" y = "0"/>
+                           <jd2:pt x = "14" y = "7"/>
+                        </jd2:vertices>
+                     </jd2:arrowTip>
+                     <jd2:lineType type = "ltBezier">
+                        <jd2:edge>
+                           <jd2:pt x = "286" y = "109" type = "substrate" speciesRef = "Node0"/>
+                           <jd2:pt x = "337" y = "159.24" type = "controlPoint"/>
+                           <jd2:pt x = "337" y = "159.24" type = "controlPoint"/>
+                           <jd2:pt x = "421" y = "200" type = "product" speciesRef = "Node1"/>
+                        </jd2:edge>
+                     </jd2:lineType>
+                     <jd2:displayValue visible = "false" showValue = "false" value = "0">
+                        <jd2:position rx = "0" ry = "0"/>
+                        <jd2:font fontName = "Arial" fontSize = "10" fontColor = "FF000000" fontStyle = ""/>
+                     </jd2:displayValue>
+                  </jd2:display>
+               </jd2:reaction>
+               <jd2:reaction id = "J1" reversible = "false">
+                  <jd2:listOfReactants>
+                     <jd2:speciesReference species = "Node1" stoichiometry = "1"/>
+                  </jd2:listOfReactants>
+                  <jd2:listOfProducts>
+                     <jd2:speciesReference species = "Node2" stoichiometry = "1"/>
+                  </jd2:listOfProducts>
+                  <jd2:listOfModifierEdges/>
+                  <jd2:kineticLaw type = "builtin">
+                     <jd2:rateEquation value = "imm"/>
+                     <jd2:listOfSymbols>
+                        <jd2:parameter id = "J1_k" value = "0.1"/>
+                     </jd2:listOfSymbols>
+                  </jd2:kineticLaw>
+                  <jd2:display lineColor = "FF008000" lineThickness = "2">
+                     <jd2:arrowTip visible = "true" fillColor = "FFFFA500" outLineColor = "FFFFA500" outlineThickness = "2"
+                                   displacement = "6">
+                        <jd2:vertices>
+                           <jd2:pt x = "0" y = "14"/>
+                           <jd2:pt x = "3" y = "7"/>
+                           <jd2:pt x = "0" y = "0"/>
+                           <jd2:pt x = "14" y = "7"/>
+                        </jd2:vertices>
+                     </jd2:arrowTip>
+                     <jd2:lineType type = "ltLine">
+                        <jd2:edge>
+                           <jd2:pt x = "421" y = "200" type = "substrate" speciesRef = "Node1"/>
+                           <jd2:pt x = "222" y = "392" type = "product" speciesRef = "Node2"/>
+                        </jd2:edge>
+                     </jd2:lineType>
+                     <jd2:displayValue visible = "false" showValue = "false" value = "0">
+                        <jd2:position rx = "0" ry = "0"/>
+                        <jd2:font fontName = "Arial" fontSize = "10" fontColor = "FF000000" fontStyle = ""/>
+                     </jd2:displayValue>
+                  </jd2:display>
+               </jd2:reaction>
+               <jd2:reaction id = "J2" reversible = "false">
+                  <jd2:listOfReactants>
+                     <jd2:speciesReference species = "Node2" stoichiometry = "1"/>
+                  </jd2:listOfReactants>
+                  <jd2:listOfProducts>
+                     <jd2:speciesReference species = "Node3" stoichiometry = "1"/>
+                  </jd2:listOfProducts>
+                  <jd2:listOfModifierEdges/>
+                  <jd2:kineticLaw type = "builtin">
+                     <jd2:rateEquation value = "imm"/>
+                     <jd2:listOfSymbols>
+                        <jd2:parameter id = "J2_k" value = "0.1"/>
+                     </jd2:listOfSymbols>
+                  </jd2:kineticLaw>
+                  <jd2:display lineColor = "FF008000" lineThickness = "2">
+                     <jd2:arrowTip visible = "true" fillColor = "FFFFA500" outLineColor = "FFFFA500" outlineThickness = "2"
+                                   displacement = "6">
+                        <jd2:vertices>
+                           <jd2:pt x = "0" y = "14"/>
+                           <jd2:pt x = "3" y = "7"/>
+                           <jd2:pt x = "0" y = "0"/>
+                           <jd2:pt x = "14" y = "7"/>
+                        </jd2:vertices>
+                     </jd2:arrowTip>
+                     <jd2:lineType type = "ltBezier">
+                        <jd2:edge>
+                           <jd2:pt x = "222" y = "392" type = "substrate" speciesRef = "Node2"/>
+                           <jd2:pt x = "349.5" y = "405.3" type = "controlPoint"/>
+                           <jd2:pt x = "349.5" y = "405.3" type = "controlPoint"/>
+                           <jd2:pt x = "446" y = "422" type = "product" speciesRef = "Node3"/>
+                        </jd2:edge>
+                     </jd2:lineType>
+                     <jd2:displayValue visible = "false" showValue = "false" value = "0">
+                        <jd2:position rx = "0" ry = "0"/>
+                        <jd2:font fontName = "Arial" fontSize = "10" fontColor = "FF000000" fontStyle = ""/>
+                     </jd2:displayValue>
+                  </jd2:display>
+               </jd2:reaction>
+               <jd2:reaction id = "J3" reversible = "false">
+                  <jd2:listOfReactants>
+                     <jd2:speciesReference species = "Node4" stoichiometry = "1"/>
+                  </jd2:listOfReactants>
+                  <jd2:listOfProducts>
+                     <jd2:speciesReference species = "Node0" stoichiometry = "1"/>
+                  </jd2:listOfProducts>
+                  <jd2:listOfModifierEdges/>
+                  <jd2:kineticLaw type = "builtin">
+                     <jd2:rateEquation value = "imm"/>
+                     <jd2:listOfSymbols>
+                        <jd2:parameter id = "J3_k" value = "0.1"/>
+                     </jd2:listOfSymbols>
+                  </jd2:kineticLaw>
+                  <jd2:display lineColor = "FF008000" lineThickness = "2">
+                     <jd2:arrowTip visible = "true" fillColor = "FFFFA500" outLineColor = "FFFFA500" outlineThickness = "2"
+                                   displacement = "6">
+                        <jd2:vertices>
+                           <jd2:pt x = "0" y = "14"/>
+                           <jd2:pt x = "3" y = "7"/>
+                           <jd2:pt x = "0" y = "0"/>
+                           <jd2:pt x = "14" y = "7"/>
+                        </jd2:vertices>
+                     </jd2:arrowTip>
+                     <jd2:lineType type = "ltBezier">
+                        <jd2:edge>
+                           <jd2:pt x = "71" y = "112" type = "substrate" speciesRef = "Node4"/>
+                           <jd2:pt x = "165.5" y = "112.86" type = "controlPoint"/>
+                           <jd2:pt x = "165.5" y = "112.86" type = "controlPoint"/>
+                           <jd2:pt x = "286" y = "109" type = "product" speciesRef = "Node0"/>
+                        </jd2:edge>
+                     </jd2:lineType>
+                     <jd2:displayValue visible = "false" showValue = "false" value = "0">
+                        <jd2:position rx = "0" ry = "0"/>
+                        <jd2:font fontName = "Arial" fontSize = "10" fontColor = "FF000000" fontStyle = ""/>
+                     </jd2:displayValue>
+                  </jd2:display>
+               </jd2:reaction>
+            </jd2:listOfReactions>
+         </jd2:PathwayDesignerLayout>
+      </annotation>
+      <listOfFunctionDefinitions>
+         <functionDefinition id = "mod">
+            <math xmlns = "http://www.w3.org/1998/Math/MathML">
+               <lambda>
+                  <bvar>
+                     <ci>
+                           x
+                     </ci>
+                  </bvar>
+                  <bvar>
+                     <ci>
+                           y
+                     </ci>
+                  </bvar>
+                  <apply>
+                     <minus/>
+                     <ci>
+                           x
+                     </ci>
+                     <apply>
+                        <times/>
+                        <ci>
+                              y
+                        </ci>
+                        <apply>
+                           <floor/>
+                           <apply>
+                              <divide/>
+                              <ci>
+                                    x
+                              </ci>
+                              <ci>
+                                    y
+                              </ci>
+                           </apply>
+                        </apply>
+                     </apply>
+                  </apply>
+               </lambda>
+            </math>
+         </functionDefinition>
+         <functionDefinition id = "normal">
+            <annotation>
+               <distribution xmlns = "http://sbml.org/annotations/distribution" definition = "http://en.wikipedia.org/wiki/Normal_distribution"/>
+            </annotation>
+            <math xmlns = "http://www.w3.org/1998/Math/MathML">
+               <lambda>
+                  <bvar>
+                     <ci>
+                           m
+                     </ci>
+                  </bvar>
+                  <bvar>
+                     <ci>
+                           s
+                     </ci>
+                  </bvar>
+                  <ci>
+                        m
+                  </ci>
+               </lambda>
+            </math>
+         </functionDefinition>
+         <functionDefinition id = "uniform">
+            <annotation>
+               <distribution xmlns = "http://sbml.org/annotations/distribution" definition = "http://en.wikipedia.org/wiki/Uniform_distribution_(continuous)"/>
+            </annotation>
+            <math xmlns = "http://www.w3.org/1998/Math/MathML">
+               <lambda>
+                  <bvar>
+                     <ci>
+                           a
+                     </ci>
+                  </bvar>
+                  <bvar>
+                     <ci>
+                           b
+                     </ci>
+                  </bvar>
+                  <apply>
+                     <divide/>
+                     <apply>
+                        <plus/>
+                        <ci>
+                              a
+                        </ci>
+                        <ci>
+                              b
+                        </ci>
+                     </apply>
+                     <cn type = "integer">
+                           2
+                     </cn>
+                  </apply>
+               </lambda>
+            </math>
+         </functionDefinition>
+         <functionDefinition id = "sawTooth">
+            <math xmlns = "http://www.w3.org/1998/Math/MathML">
+               <lambda>
+                  <bvar>
+                     <csymbol encoding = "text" definitionURL = "http://www.sbml.org/sbml/symbols/time">
+                           time
+                     </csymbol>
+                  </bvar>
+                  <bvar>
+                     <ci>
+                           period
+                     </ci>
+                  </bvar>
+                  <bvar>
+                     <ci>
+                           center
+                     </ci>
+                  </bvar>
+                  <bvar>
+                     <ci>
+                           amplitude
+                     </ci>
+                  </bvar>
+                  <apply>
+                     <plus/>
+                     <ci>
+                           center
+                     </ci>
+                     <apply>
+                        <times/>
+                        <ci>
+                              amplitude
+                        </ci>
+                        <apply>
+                           <minus/>
+                           <apply>
+                              <divide/>
+                              <csymbol encoding = "text" definitionURL = "http://www.sbml.org/sbml/symbols/time">
+                                    time
+                              </csymbol>
+                              <ci>
+                                    period
+                              </ci>
+                           </apply>
+                           <apply>
+                              <floor/>
+                              <apply>
+                                 <plus/>
+                                 <apply>
+                                    <divide/>
+                                    <csymbol encoding = "text" definitionURL = "http://www.sbml.org/sbml/symbols/time">
+                                          time
+                                    </csymbol>
+                                    <ci>
+                                          period
+                                    </ci>
+                                 </apply>
+                                 <cn>
+                                       0.5
+                                 </cn>
+                              </apply>
+                           </apply>
+                        </apply>
+                     </apply>
+                  </apply>
+               </lambda>
+            </math>
+         </functionDefinition>
+         <functionDefinition id = "squareWave">
+            <math xmlns = "http://www.w3.org/1998/Math/MathML">
+               <lambda>
+                  <bvar>
+                     <csymbol encoding = "text" definitionURL = "http://www.sbml.org/sbml/symbols/time">
+                           time
+                     </csymbol>
+                  </bvar>
+                  <bvar>
+                     <ci>
+                           period
+                     </ci>
+                  </bvar>
+                  <bvar>
+                     <ci>
+                           center
+                     </ci>
+                  </bvar>
+                  <bvar>
+                     <ci>
+                           amplitude
+                     </ci>
+                  </bvar>
+                  <apply>
+                     <plus/>
+                     <apply>
+                        <times/>
+                        <ci>
+                              amplitude
+                        </ci>
+                        <apply>
+                           <gt/>
+                           <apply>
+                              <sin/>
+                              <apply>
+                                 <divide/>
+                                 <apply>
+                                    <times/>
+                                    <cn type = "integer">
+                                          2
+                                    </cn>
+                                    <cn>
+                                          3.1414926
+                                    </cn>
+                                    <csymbol encoding = "text" definitionURL = "http://www.sbml.org/sbml/symbols/time">
+                                          time
+                                    </csymbol>
+                                 </apply>
+                                 <ci>
+                                       period
+                                 </ci>
+                              </apply>
+                           </apply>
+                           <cn type = "integer">
+                                 0
+                           </cn>
+                        </apply>
+                     </apply>
+                     <ci>
+                           center
+                     </ci>
+                  </apply>
+               </lambda>
+            </math>
+         </functionDefinition>
+         <functionDefinition id = "triangleWave">
+            <math xmlns = "http://www.w3.org/1998/Math/MathML">
+               <lambda>
+                  <bvar>
+                     <csymbol encoding = "text" definitionURL = "http://www.sbml.org/sbml/symbols/time">
+                           time
+                     </csymbol>
+                  </bvar>
+                  <bvar>
+                     <ci>
+                           period
+                     </ci>
+                  </bvar>
+                  <bvar>
+                     <ci>
+                           center
+                     </ci>
+                  </bvar>
+                  <bvar>
+                     <ci>
+                           amplitude
+                     </ci>
+                  </bvar>
+                  <apply>
+                     <plus/>
+                     <ci>
+                           center
+                     </ci>
+                     <apply>
+                        <times/>
+                        <ci>
+                              amplitude
+                        </ci>
+                        <apply>
+                           <abs/>
+                           <apply>
+                              <minus/>
+                              <apply>
+                                 <divide/>
+                                 <csymbol encoding = "text" definitionURL = "http://www.sbml.org/sbml/symbols/time">
+                                       time
+                                 </csymbol>
+                                 <ci>
+                                       period
+                                 </ci>
+                              </apply>
+                              <apply>
+                                 <floor/>
+                                 <apply>
+                                    <plus/>
+                                    <apply>
+                                       <divide/>
+                                       <csymbol encoding = "text" definitionURL = "http://www.sbml.org/sbml/symbols/time">
+                                             time
+                                       </csymbol>
+                                       <ci>
+                                             period
+                                       </ci>
+                                    </apply>
+                                    <cn>
+                                          0.5
+                                    </cn>
+                                 </apply>
+                              </apply>
+                           </apply>
+                        </apply>
+                     </apply>
+                  </apply>
+               </lambda>
+            </math>
+         </functionDefinition>
+         <functionDefinition id = "max">
+            <math xmlns = "http://www.w3.org/1998/Math/MathML">
+               <lambda>
+                  <bvar>
+                     <ci>
+                           x
+                     </ci>
+                  </bvar>
+                  <bvar>
+                     <ci>
+                           y
+                     </ci>
+                  </bvar>
+                  <piecewise>
+                     <piece>
+                        <ci>
+                              x
+                        </ci>
+                        <apply>
+                           <gt/>
+                           <ci>
+                                 x
+                           </ci>
+                           <ci>
+                                 y
+                           </ci>
+                        </apply>
+                     </piece>
+                     <otherwise>
+                        <ci>
+                              y
+                        </ci>
+                     </otherwise>
+                  </piecewise>
+               </lambda>
+            </math>
+         </functionDefinition>
+         <functionDefinition id = "min">
+            <math xmlns = "http://www.w3.org/1998/Math/MathML">
+               <lambda>
+                  <bvar>
+                     <ci>
+                           x
+                     </ci>
+                  </bvar>
+                  <bvar>
+                     <ci>
+                           y
+                     </ci>
+                  </bvar>
+                  <piecewise>
+                     <piece>
+                        <ci>
+                              x
+                        </ci>
+                        <apply>
+                           <lt/>
+                           <ci>
+                                 x
+                           </ci>
+                           <ci>
+                                 y
+                           </ci>
+                        </apply>
+                     </piece>
+                     <otherwise>
+                        <ci>
+                              y
+                        </ci>
+                     </otherwise>
+                  </piecewise>
+               </lambda>
+            </math>
+         </functionDefinition>
+      </listOfFunctionDefinitions>
+      <listOfCompartments>
+         <compartment id = "compartment" size = "1"/>
+         <compartment id = "vol1" size = "1"/>
+         <compartment id = "vol2" size = "1"/>
+      </listOfCompartments>
+      <listOfSpecies>
+         <species id = "Node0" boundaryCondition = "false" initialConcentration = "0" compartment = "vol1"/>
+         <species id = "Node1" boundaryCondition = "false" initialConcentration = "0" compartment = "vol1"/>
+         <species id = "Node2" boundaryCondition = "false" initialConcentration = "0" compartment = "vol2"/>
+         <species id = "Node3" boundaryCondition = "false" initialConcentration = "0" compartment = "vol2"/>
+         <species id = "Node4" boundaryCondition = "true" initialConcentration = "0" compartment = "compartment"/>
+      </listOfSpecies>
+      <listOfParameters>
+         <parameter id = "J1_k" value = "0.1"/>
+         <parameter id = "J2_k" value = "0.1"/>
+         <parameter id = "J3_k" value = "0.1"/>
+         <parameter id = "J0_k" value = "0.1"/>
+      </listOfParameters>
+      <listOfReactions>
+         <reaction id = "J0" reversible = "false">
+            <listOfReactants>
+               <speciesReference species = "Node0" stoichiometry = "1"/>
+            </listOfReactants>
+            <listOfProducts>
+               <speciesReference species = "Node1" stoichiometry = "1"/>
+            </listOfProducts>
+            <listOfModifiers>
+               <modifierSpeciesReference species = "Node2"/>
+            </listOfModifiers>
+            <kineticLaw>
+               <math xmlns = "http://www.w3.org/1998/Math/MathML">
+                  <apply>
+                     <times/>
+                     <ci>
+                           J0_k
+                     </ci>
+                     <ci>
+                           Node0
+                     </ci>
+                     <ci>
+                           Node2
+                     </ci>
+                  </apply>
+               </math>
+            </kineticLaw>
+         </reaction>
+         <reaction id = "J1" reversible = "false">
+            <listOfReactants>
+               <speciesReference species = "Node1" stoichiometry = "1"/>
+            </listOfReactants>
+            <listOfProducts>
+               <speciesReference species = "Node2" stoichiometry = "1"/>
+            </listOfProducts>
+            <kineticLaw>
+               <math xmlns = "http://www.w3.org/1998/Math/MathML">
+                  <apply>
+                     <times/>
+                     <ci>
+                           J1_k
+                     </ci>
+                     <ci>
+                           Node1
+                     </ci>
+                  </apply>
+               </math>
+            </kineticLaw>
+         </reaction>
+         <reaction id = "J2" reversible = "false">
+            <listOfReactants>
+               <speciesReference species = "Node2" stoichiometry = "1"/>
+            </listOfReactants>
+            <listOfProducts>
+               <speciesReference species = "Node3" stoichiometry = "1"/>
+            </listOfProducts>
+            <kineticLaw>
+               <math xmlns = "http://www.w3.org/1998/Math/MathML">
+                  <apply>
+                     <times/>
+                     <ci>
+                           J2_k
+                     </ci>
+                     <ci>
+                           Node2
+                     </ci>
+                  </apply>
+               </math>
+            </kineticLaw>
+         </reaction>
+         <reaction id = "J3" reversible = "false">
+            <listOfReactants>
+               <speciesReference species = "Node4" stoichiometry = "1"/>
+            </listOfReactants>
+            <listOfProducts>
+               <speciesReference species = "Node0" stoichiometry = "1"/>
+            </listOfProducts>
+            <kineticLaw>
+               <math xmlns = "http://www.w3.org/1998/Math/MathML">
+                  <apply>
+                     <times/>
+                     <ci>
+                           J3_k
+                     </ci>
+                     <ci>
+                           Node4
+                     </ci>
+                  </apply>
+               </math>
+            </kineticLaw>
+         </reaction>
+      </listOfReactions>
+   </model>
+</sbml>
+"""
+
+kholodenko2000 = """<?xml version='1.0' encoding='UTF-8' standalone='no'?>
+<!-- This model was downloaded from BioModels Database -->
+<!-- http://www.ebi.ac.uk/biomodels-static/                   -->
+<!-- Fri Jan 24 19:16:57 GMT 2020                      -->
+<sbml xmlns="http://www.sbml.org/sbml/level2/version4" level="2" metaid="_492719" version="4">
+    <model id="BIOMD0000000010" metaid="_000001"
+           name="Kholodenko2000 - Ultrasensitivity and negative feedback bring oscillations in MAPK cascade">
+        <notes>
+            <body xmlns="http://www.w3.org/1999/xhtml">
+                <div class="dc:title">Kholodenko2000 - Ultrasensitivity and negative feedback bring oscillations in MAPK
+                    cascade
+                </div>
+                <div class="dc:description">
+                    <p>The combination of ultrasensitivity and negative feedback bring sustained oscillations in the
+                        mitogen-activated protein kinase cascades.
+                    </p>
+                </div>
+                <div class="dc:bibliographicCitation">
+                    <p>This model is described in the article:</p>
+                    <div class="bibo:title">
+                        <a href="http://identifiers.org/pubmed/10712587" title="Access to this publication">Negative
+                            feedback and ultrasensitivity can bring about oscillations in the mitogen-activated protein
+                            kinase cascades.
+                        </a>
+                    </div>
+                    <div class="bibo:authorList">Kholodenko BN</div>
+                    <div class="bibo:Journal">Eur. J. Biochem. 2000; 267(6):1583-8</div>
+                    <p>Abstract:</p>
+                    <div class="bibo:abstract">
+                        <p>Functional organization of signal transduction into protein phosphorylation cascades, such as
+                            the mitogen-activated protein kinase (MAPK) cascades, greatly enhances the sensitivity of
+                            cellular targets to external stimuli. The sensitivity increases multiplicatively with the
+                            number of cascade levels, so that a tiny change in a stimulus results in a large change in
+                            the response, the phenomenon referred to as ultrasensitivity. In a variety of cell types,
+                            the MAPK cascades are imbedded in long feedback loops, positive or negative, depending on
+                            whether the terminal kinase stimulates or inhibits the activation of the initial level. Here
+                            we demonstrate that a negative feedback loop combined with intrinsic ultrasensitivity of the
+                            MAPK cascade can bring about sustained oscillations in MAPK phosphorylation. Based on recent
+                            kinetic data on the MAPK cascades, we predict that the period of oscillations can range from
+                            minutes to hours. The phosphorylation level can vary between the base level and almost 100%
+                            of the total protein. The oscillations of the phosphorylation cascades and slow protein
+                            diffusion in the cytoplasm can lead to intracellular waves of phospho-proteins.
+                        </p>
+                    </div>
+                </div>
+                <div class="dc:publisher">
+                    <p>This model is hosted on        <a href="http://www.ebi.ac.uk/biomodels/">BioModels Database</a>            and
+                        identified by:        <a href="http://identifiers.org/biomodels.db/BIOMD0000000010">
+                            BIOMD0000000010
+                        </a>            .
+                    </p>
+                    <p>To cite BioModels Database, please use:        <a href="http://identifiers.org/pubmed/20587024"
+                                                                         title="Latest BioModels Database publication">
+                        BioModels Database: An enhanced, curated and annotated resource for published quantitative
+                        kinetic models
+                    </a>            .
+                    </p>
+                </div>
+                <div class="dc:license">
+                    <p>To the extent possible under law, all copyright and related or neighbouring rights to this
+                        encoded model have been dedicated to the public domain worldwide. Please refer to        <a
+                                href="http://creativecommons.org/publicdomain/zero/1.0/"
+                                title="Access to: CC0 1.0 Universal (CC0 1.0), Public Domain Dedication">CC0 Public
+                            Domain Dedication
+                        </a>            for more information.
+                    </p>
+                </div>
+            </body>
+        </notes>
+        <annotation>
+            <rdf:RDF xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#" xmlns:dc="http://purl.org/dc/elements/1.1/"
+                     xmlns:vCard="http://www.w3.org/2001/vcard-rdf/3.0#" xmlns:dcterms="http://purl.org/dc/terms/"
+                     xmlns:bqmodel="http://biomodels.net/model-qualifiers/"
+                     xmlns:bqbiol="http://biomodels.net/biology-qualifiers/">
+                <rdf:Description rdf:about="#_000001">
+                    <dc:creator>
+                        <rdf:Bag>
+                            <rdf:li rdf:parseType="Resource">
+                                <vCard:N rdf:parseType="Resource">
+                                    <vCard:Family>Sauro</vCard:Family>
+                                    <vCard:Given>Herbert</vCard:Given>
+                                </vCard:N>
+                                <vCard:EMAIL>Herbert_Sauro@kgi.edu</vCard:EMAIL>
+                                <vCard:ORG rdf:parseType="Resource">
+                                    <vCard:Orgname>Keck Graduate Institute</vCard:Orgname>
+                                </vCard:ORG>
+                            </rdf:li>
+                        </rdf:Bag>
+                    </dc:creator>
+                    <dcterms:created rdf:parseType="Resource">
+                        <dcterms:W3CDTF>2005-02-12T00:18:12Z</dcterms:W3CDTF>
+                    </dcterms:created>
+                    <dcterms:modified rdf:parseType="Resource">
+                        <dcterms:W3CDTF>2015-06-02T12:04:33Z</dcterms:W3CDTF>
+                    </dcterms:modified>
+                    <bqmodel:is>
+                        <rdf:Bag>
+                            <rdf:li rdf:resource="http://identifiers.org/biomodels.db/MODEL6615119181"/>
+                        </rdf:Bag>
+                    </bqmodel:is>
+                    <bqmodel:is>
+                        <rdf:Bag>
+                            <rdf:li rdf:resource="http://identifiers.org/biomodels.db/BIOMD0000000010"/>
+                        </rdf:Bag>
+                    </bqmodel:is>
+                    <bqmodel:isDescribedBy>
+                        <rdf:Bag>
+                            <rdf:li rdf:resource="http://identifiers.org/pubmed/10712587"/>
+                        </rdf:Bag>
+                    </bqmodel:isDescribedBy>
+                    <bqbiol:isVersionOf>
+                        <rdf:Bag>
+                            <rdf:li rdf:resource="http://identifiers.org/go/GO:0000165"/>
+                        </rdf:Bag>
+                    </bqbiol:isVersionOf>
+                    <bqbiol:isHomologTo>
+                        <rdf:Bag>
+                            <rdf:li rdf:resource="http://identifiers.org/reactome/REACT_634"/>
+                        </rdf:Bag>
+                    </bqbiol:isHomologTo>
+                    <bqbiol:hasTaxon>
+                        <rdf:Bag>
+                            <rdf:li rdf:resource="http://identifiers.org/taxonomy/8355"/>
+                        </rdf:Bag>
+                    </bqbiol:hasTaxon>
+                </rdf:Description>
+            </rdf:RDF>
+        </annotation>
+        <listOfUnitDefinitions>
+            <unitDefinition id="substance" metaid="metaid_0000022" name="nanomole">
+                <listOfUnits>
+                    <unit kind="mole" metaid="_653149" scale="-9"/>
+                </listOfUnits>
+            </unitDefinition>
+        </listOfUnitDefinitions>
+        <listOfCompartments>
+            <compartment id="uVol" metaid="_584463" size="1"/>
+        </listOfCompartments>
+        <listOfSpecies>
+            <species compartment="uVol" id="MKKK" initialConcentration="90" metaid="_584475" name="Mos">
+                <annotation>
+                    <rdf:RDF xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
+                             xmlns:bqmodel="http://biomodels.net/model-qualifiers/"
+                             xmlns:bqbiol="http://biomodels.net/biology-qualifiers/">
+                        <rdf:Description rdf:about="#_584475">
+                            <bqbiol:isVersionOf>
+                                <rdf:Bag>
+                                    <rdf:li rdf:resource="http://identifiers.org/uniprot/P09560"/>
+                                </rdf:Bag>
+                            </bqbiol:isVersionOf>
+                        </rdf:Description>
+                    </rdf:RDF>
+                </annotation>
+            </species>
+            <species compartment="uVol" id="MKKK_P" initialConcentration="10" metaid="_584495" name="Mos-P">
+                <annotation>
+                    <rdf:RDF xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
+                             xmlns:bqmodel="http://biomodels.net/model-qualifiers/"
+                             xmlns:bqbiol="http://biomodels.net/biology-qualifiers/">
+                        <rdf:Description rdf:about="#_584495">
+                            <bqbiol:isVersionOf>
+                                <rdf:Bag>
+                                    <rdf:li rdf:resource="http://identifiers.org/uniprot/P09560"/>
+                                </rdf:Bag>
+                            </bqbiol:isVersionOf>
+                        </rdf:Description>
+                    </rdf:RDF>
+                </annotation>
+            </species>
+            <species compartment="uVol" id="MKK" initialConcentration="280" metaid="_584515" name="Mek1">
+                <annotation>
+                    <rdf:RDF xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
+                             xmlns:bqmodel="http://biomodels.net/model-qualifiers/"
+                             xmlns:bqbiol="http://biomodels.net/biology-qualifiers/">
+                        <rdf:Description rdf:about="#_584515">
+                            <bqbiol:isVersionOf>
+                                <rdf:Bag>
+                                    <rdf:li rdf:resource="http://identifiers.org/uniprot/Q05116"/>
+                                </rdf:Bag>
+                            </bqbiol:isVersionOf>
+                        </rdf:Description>
+                    </rdf:RDF>
+                </annotation>
+            </species>
+            <species compartment="uVol" id="MKK_P" initialConcentration="10" metaid="_584535" name="Mek1-P">
+                <annotation>
+                    <rdf:RDF xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
+                             xmlns:bqmodel="http://biomodels.net/model-qualifiers/"
+                             xmlns:bqbiol="http://biomodels.net/biology-qualifiers/">
+                        <rdf:Description rdf:about="#_584535">
+                            <bqbiol:isVersionOf>
+                                <rdf:Bag>
+                                    <rdf:li rdf:resource="http://identifiers.org/uniprot/Q05116"/>
+                                </rdf:Bag>
+                            </bqbiol:isVersionOf>
+                        </rdf:Description>
+                    </rdf:RDF>
+                </annotation>
+            </species>
+            <species compartment="uVol" id="MKK_PP" initialConcentration="10" metaid="_584555" name="Mek1-PP">
+                <annotation>
+                    <rdf:RDF xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
+                             xmlns:bqmodel="http://biomodels.net/model-qualifiers/"
+                             xmlns:bqbiol="http://biomodels.net/biology-qualifiers/">
+                        <rdf:Description rdf:about="#_584555">
+                            <bqbiol:isVersionOf>
+                                <rdf:Bag>
+                                    <rdf:li rdf:resource="http://identifiers.org/uniprot/Q05116"/>
+                                </rdf:Bag>
+                            </bqbiol:isVersionOf>
+                        </rdf:Description>
+                    </rdf:RDF>
+                </annotation>
+            </species>
+            <species compartment="uVol" id="MAPK" initialConcentration="280" metaid="_584575" name="Erk2">
+                <annotation>
+                    <rdf:RDF xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
+                             xmlns:bqmodel="http://biomodels.net/model-qualifiers/"
+                             xmlns:bqbiol="http://biomodels.net/biology-qualifiers/">
+                        <rdf:Description rdf:about="#_584575">
+                            <bqbiol:isVersionOf>
+                                <rdf:Bag>
+                                    <rdf:li rdf:resource="http://identifiers.org/uniprot/P26696"/>
+                                </rdf:Bag>
+                            </bqbiol:isVersionOf>
+                        </rdf:Description>
+                    </rdf:RDF>
+                </annotation>
+            </species>
+            <species compartment="uVol" id="MAPK_P" initialConcentration="10" metaid="_584595" name="Erk2-P">
+                <annotation>
+                    <rdf:RDF xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
+                             xmlns:bqmodel="http://biomodels.net/model-qualifiers/"
+                             xmlns:bqbiol="http://biomodels.net/biology-qualifiers/">
+                        <rdf:Description rdf:about="#_584595">
+                            <bqbiol:isVersionOf>
+                                <rdf:Bag>
+                                    <rdf:li rdf:resource="http://identifiers.org/uniprot/P26696"/>
+                                </rdf:Bag>
+                            </bqbiol:isVersionOf>
+                        </rdf:Description>
+                    </rdf:RDF>
+                </annotation>
+            </species>
+            <species compartment="uVol" id="MAPK_PP" initialConcentration="10" metaid="_584615" name="Erk2-PP">
+                <annotation>
+                    <rdf:RDF xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
+                             xmlns:bqmodel="http://biomodels.net/model-qualifiers/"
+                             xmlns:bqbiol="http://biomodels.net/biology-qualifiers/">
+                        <rdf:Description rdf:about="#_584615">
+                            <bqbiol:isVersionOf>
+                                <rdf:Bag>
+                                    <rdf:li rdf:resource="http://identifiers.org/uniprot/P26696"/>
+                                </rdf:Bag>
+                            </bqbiol:isVersionOf>
+                        </rdf:Description>
+                    </rdf:RDF>
+                </annotation>
+            </species>
+        </listOfSpecies>
+        <listOfReactions>
+            <reaction id="J0" metaid="_584635" name="MAPKKK activation" reversible="false">
+                <annotation>
+                    <rdf:RDF xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
+                             xmlns:bqmodel="http://biomodels.net/model-qualifiers/"
+                             xmlns:bqbiol="http://biomodels.net/biology-qualifiers/">
+                        <rdf:Description rdf:about="#_584635">
+                            <bqbiol:isHomologTo>
+                                <rdf:Bag>
+                                    <rdf:li rdf:resource="http://identifiers.org/reactome/REACT_525"/>
+                                </rdf:Bag>
+                            </bqbiol:isHomologTo>
+                            <bqbiol:isVersionOf>
+                                <rdf:Bag>
+                                    <rdf:li rdf:resource="http://identifiers.org/ec-code/2.7.11.1"/>
+                                    <rdf:li rdf:resource="http://identifiers.org/go/GO:0000185"/>
+                                    <rdf:li rdf:resource="http://identifiers.org/go/GO:0008349"/>
+                                </rdf:Bag>
+                            </bqbiol:isVersionOf>
+                        </rdf:Description>
+                    </rdf:RDF>
+                </annotation>
+                <listOfReactants>
+                    <speciesReference metaid="_653161" species="MKKK"/>
+                </listOfReactants>
+                <listOfProducts>
+                    <speciesReference metaid="_653173" species="MKKK_P"/>
+                </listOfProducts>
+                <listOfModifiers>
+                    <modifierSpeciesReference metaid="_653185" species="MAPK_PP"/>
+                </listOfModifiers>
+                <kineticLaw metaid="_653197">
+                    <math xmlns="http://www.w3.org/1998/Math/MathML">
+                        <apply>
+                            <divide/>
+                            <apply>
+                                <times/>
+                                <ci>uVol</ci>
+                                <ci>V1</ci>
+                                <ci>MKKK</ci>
+                            </apply>
+                            <apply>
+                                <times/>
+                                <apply>
+                                    <plus/>
+                                    <cn type="integer">1</cn>
+                                    <apply>
+                                        <power/>
+                                        <apply>
+                                            <divide/>
+                                            <ci>MAPK_PP</ci>
+                                            <ci>Ki</ci>
+                                        </apply>
+                                        <ci>n</ci>
+                                    </apply>
+                                </apply>
+                                <apply>
+                                    <plus/>
+                                    <ci>K1</ci>
+                                    <ci>MKKK</ci>
+                                </apply>
+                            </apply>
+                        </apply>
+                    </math>
+                    <listOfParameters>
+                        <parameter id="V1" metaid="_001327" value="2.5"/>
+                        <parameter id="Ki" metaid="_001328" value="9"/>
+                        <parameter id="n" metaid="_001329" value="1"/>
+                        <parameter id="K1" metaid="_001331" value="10"/>
+                    </listOfParameters>
+                </kineticLaw>
+            </reaction>
+            <reaction id="J1" metaid="_584655" name="MAPKKK inactivation" reversible="false">
+                <annotation>
+                    <rdf:RDF xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
+                             xmlns:bqmodel="http://biomodels.net/model-qualifiers/"
+                             xmlns:bqbiol="http://biomodels.net/biology-qualifiers/">
+                        <rdf:Description rdf:about="#_584655">
+                            <bqbiol:isVersionOf>
+                                <rdf:Bag>
+                                    <rdf:li rdf:resource="http://identifiers.org/ec-code/3.1.3.16"/>
+                                    <rdf:li rdf:resource="http://identifiers.org/go/GO:0051390"/>
+                                    <rdf:li rdf:resource="http://identifiers.org/go/GO:0006470"/>
+                                </rdf:Bag>
+                            </bqbiol:isVersionOf>
+                        </rdf:Description>
+                    </rdf:RDF>
+                </annotation>
+                <listOfReactants>
+                    <speciesReference metaid="_653209" species="MKKK_P"/>
+                </listOfReactants>
+                <listOfProducts>
+                    <speciesReference metaid="_653221" species="MKKK"/>
+                </listOfProducts>
+                <kineticLaw metaid="_653233">
+                    <math xmlns="http://www.w3.org/1998/Math/MathML">
+                        <apply>
+                            <divide/>
+                            <apply>
+                                <times/>
+                                <ci>uVol</ci>
+                                <ci>V2</ci>
+                                <ci>MKKK_P</ci>
+                            </apply>
+                            <apply>
+                                <plus/>
+                                <ci>KK2</ci>
+                                <ci>MKKK_P</ci>
+                            </apply>
+                        </apply>
+                    </math>
+                    <listOfParameters>
+                        <parameter id="V2" metaid="_001333" value="0.25"/>
+                        <parameter id="KK2" metaid="_001335" value="8"/>
+                    </listOfParameters>
+                </kineticLaw>
+            </reaction>
+            <reaction id="J2" metaid="_584675" name="phosphorylation of MAPKK" reversible="false">
+                <annotation>
+                    <rdf:RDF xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
+                             xmlns:bqmodel="http://biomodels.net/model-qualifiers/"
+                             xmlns:bqbiol="http://biomodels.net/biology-qualifiers/">
+                        <rdf:Description rdf:about="#_584675">
+                            <bqbiol:isHomologTo>
+                                <rdf:Bag>
+                                    <rdf:li rdf:resource="http://identifiers.org/reactome/REACT_614"/>
+                                </rdf:Bag>
+                            </bqbiol:isHomologTo>
+                            <bqbiol:isVersionOf>
+                                <rdf:Bag>
+                                    <rdf:li rdf:resource="http://identifiers.org/ec-code/2.7.11.25"/>
+                                    <rdf:li rdf:resource="http://identifiers.org/go/GO:0004709"/>
+                                    <rdf:li rdf:resource="http://identifiers.org/go/GO:0006468"/>
+                                </rdf:Bag>
+                            </bqbiol:isVersionOf>
+                        </rdf:Description>
+                    </rdf:RDF>
+                </annotation>
+                <listOfReactants>
+                    <speciesReference metaid="_653245" species="MKK"/>
+                </listOfReactants>
+                <listOfProducts>
+                    <speciesReference metaid="_653257" species="MKK_P"/>
+                </listOfProducts>
+                <listOfModifiers>
+                    <modifierSpeciesReference metaid="_653269" species="MKKK_P"/>
+                </listOfModifiers>
+                <kineticLaw metaid="_653281">
+                    <math xmlns="http://www.w3.org/1998/Math/MathML">
+                        <apply>
+                            <divide/>
+                            <apply>
+                                <times/>
+                                <ci>uVol</ci>
+                                <ci>k3</ci>
+                                <ci>MKKK_P</ci>
+                                <ci>MKK</ci>
+                            </apply>
+                            <apply>
+                                <plus/>
+                                <ci>KK3</ci>
+                                <ci>MKK</ci>
+                            </apply>
+                        </apply>
+                    </math>
+                    <listOfParameters>
+                        <parameter id="k3" metaid="_001337" value="0.025"/>
+                        <parameter id="KK3" metaid="_001339" value="15"/>
+                    </listOfParameters>
+                </kineticLaw>
+            </reaction>
+            <reaction id="J3" metaid="_584695" name="phosphorylation of MAPKK-P" reversible="false">
+                <annotation>
+                    <rdf:RDF xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
+                             xmlns:bqmodel="http://biomodels.net/model-qualifiers/"
+                             xmlns:bqbiol="http://biomodels.net/biology-qualifiers/">
+                        <rdf:Description rdf:about="#_584695">
+                            <bqbiol:isHomologTo>
+                                <rdf:Bag>
+                                    <rdf:li rdf:resource="http://identifiers.org/reactome/REACT_614"/>
+                                </rdf:Bag>
+                            </bqbiol:isHomologTo>
+                            <bqbiol:isVersionOf>
+                                <rdf:Bag>
+                                    <rdf:li rdf:resource="http://identifiers.org/ec-code/2.7.11.25"/>
+                                    <rdf:li rdf:resource="http://identifiers.org/go/GO:0000186"/>
+                                    <rdf:li rdf:resource="http://identifiers.org/go/GO:0006468"/>
+                                    <rdf:li rdf:resource="http://identifiers.org/go/GO:0004709"/>
+                                </rdf:Bag>
+                            </bqbiol:isVersionOf>
+                        </rdf:Description>
+                    </rdf:RDF>
+                </annotation>
+                <listOfReactants>
+                    <speciesReference metaid="_653293" species="MKK_P"/>
+                </listOfReactants>
+                <listOfProducts>
+                    <speciesReference metaid="_653305" species="MKK_PP"/>
+                </listOfProducts>
+                <listOfModifiers>
+                    <modifierSpeciesReference metaid="_653317" species="MKKK_P"/>
+                </listOfModifiers>
+                <kineticLaw metaid="_653329">
+                    <math xmlns="http://www.w3.org/1998/Math/MathML">
+                        <apply>
+                            <divide/>
+                            <apply>
+                                <times/>
+                                <ci>uVol</ci>
+                                <ci>k4</ci>
+                                <ci>MKKK_P</ci>
+                                <ci>MKK_P</ci>
+                            </apply>
+                            <apply>
+                                <plus/>
+                                <ci>KK4</ci>
+                                <ci>MKK_P</ci>
+                            </apply>
+                        </apply>
+                    </math>
+                    <listOfParameters>
+                        <parameter id="k4" metaid="_001341" value="0.025"/>
+                        <parameter id="KK4" metaid="_001343" value="15"/>
+                    </listOfParameters>
+                </kineticLaw>
+            </reaction>
+            <reaction id="J4" metaid="_584715" name="dephosphorylation of MAPKK-PP" reversible="false">
+                <annotation>
+                    <rdf:RDF xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
+                             xmlns:bqmodel="http://biomodels.net/model-qualifiers/"
+                             xmlns:bqbiol="http://biomodels.net/biology-qualifiers/">
+                        <rdf:Description rdf:about="#_584715">
+                            <bqbiol:isVersionOf>
+                                <rdf:Bag>
+                                    <rdf:li rdf:resource="http://identifiers.org/ec-code/3.1.3.16"/>
+                                    <rdf:li rdf:resource="http://identifiers.org/go/GO:0006470"/>
+                                    <rdf:li rdf:resource="http://identifiers.org/go/GO:0051389"/>
+                                </rdf:Bag>
+                            </bqbiol:isVersionOf>
+                        </rdf:Description>
+                    </rdf:RDF>
+                </annotation>
+                <listOfReactants>
+                    <speciesReference metaid="_653341" species="MKK_PP"/>
+                </listOfReactants>
+                <listOfProducts>
+                    <speciesReference metaid="_653353" species="MKK_P"/>
+                </listOfProducts>
+                <kineticLaw metaid="_653365">
+                    <math xmlns="http://www.w3.org/1998/Math/MathML">
+                        <apply>
+                            <divide/>
+                            <apply>
+                                <times/>
+                                <ci>uVol</ci>
+                                <ci>V5</ci>
+                                <ci>MKK_PP</ci>
+                            </apply>
+                            <apply>
+                                <plus/>
+                                <ci>KK5</ci>
+                                <ci>MKK_PP</ci>
+                            </apply>
+                        </apply>
+                    </math>
+                    <listOfParameters>
+                        <parameter id="V5" metaid="_001345" value="0.75"/>
+                        <parameter id="KK5" metaid="_001347" value="15"/>
+                    </listOfParameters>
+                </kineticLaw>
+            </reaction>
+            <reaction id="J5" metaid="_584735" name="dephosphorylation of MAPKK-P" reversible="false">
+                <annotation>
+                    <rdf:RDF xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
+                             xmlns:bqmodel="http://biomodels.net/model-qualifiers/"
+                             xmlns:bqbiol="http://biomodels.net/biology-qualifiers/">
+                        <rdf:Description rdf:about="#_584735">
+                            <bqbiol:isVersionOf>
+                                <rdf:Bag>
+                                    <rdf:li rdf:resource="http://identifiers.org/ec-code/3.1.3.16"/>
+                                    <rdf:li rdf:resource="http://identifiers.org/go/GO:0006470"/>
+                                </rdf:Bag>
+                            </bqbiol:isVersionOf>
+                        </rdf:Description>
+                    </rdf:RDF>
+                </annotation>
+                <listOfReactants>
+                    <speciesReference metaid="_653377" species="MKK_P"/>
+                </listOfReactants>
+                <listOfProducts>
+                    <speciesReference metaid="_653389" species="MKK"/>
+                </listOfProducts>
+                <kineticLaw metaid="_653402">
+                    <math xmlns="http://www.w3.org/1998/Math/MathML">
+                        <apply>
+                            <divide/>
+                            <apply>
+                                <times/>
+                                <ci>uVol</ci>
+                                <ci>V6</ci>
+                                <ci>MKK_P</ci>
+                            </apply>
+                            <apply>
+                                <plus/>
+                                <ci>KK6</ci>
+                                <ci>MKK_P</ci>
+                            </apply>
+                        </apply>
+                    </math>
+                    <listOfParameters>
+                        <parameter id="V6" metaid="_001349" value="0.75"/>
+                        <parameter id="KK6" metaid="_001351" value="15"/>
+                    </listOfParameters>
+                </kineticLaw>
+            </reaction>
+            <reaction id="J6" metaid="_584755" name="phosphorylation of MAPK" reversible="false">
+                <annotation>
+                    <rdf:RDF xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
+                             xmlns:bqmodel="http://biomodels.net/model-qualifiers/"
+                             xmlns:bqbiol="http://biomodels.net/biology-qualifiers/">
+                        <rdf:Description rdf:about="#_584755">
+                            <bqbiol:hasVersion>
+                                <rdf:Bag>
+                                    <rdf:li rdf:resource="http://identifiers.org/reactome/REACT_136"/>
+                                    <rdf:li rdf:resource="http://identifiers.org/reactome/REACT_2247"/>
+                                </rdf:Bag>
+                            </bqbiol:hasVersion>
+                            <bqbiol:isVersionOf>
+                                <rdf:Bag>
+                                    <rdf:li rdf:resource="http://identifiers.org/ec-code/2.7.12.2"/>
+                                    <rdf:li rdf:resource="http://identifiers.org/go/GO:0004708"/>
+                                    <rdf:li rdf:resource="http://identifiers.org/go/GO:0006468"/>
+                                </rdf:Bag>
+                            </bqbiol:isVersionOf>
+                        </rdf:Description>
+                    </rdf:RDF>
+                </annotation>
+                <listOfReactants>
+                    <speciesReference metaid="_653414" species="MAPK"/>
+                </listOfReactants>
+                <listOfProducts>
+                    <speciesReference metaid="_653426" species="MAPK_P"/>
+                </listOfProducts>
+                <listOfModifiers>
+                    <modifierSpeciesReference metaid="_653438" species="MKK_PP"/>
+                </listOfModifiers>
+                <kineticLaw metaid="_653450">
+                    <math xmlns="http://www.w3.org/1998/Math/MathML">
+                        <apply>
+                            <divide/>
+                            <apply>
+                                <times/>
+                                <ci>uVol</ci>
+                                <ci>k7</ci>
+                                <ci>MKK_PP</ci>
+                                <ci>MAPK</ci>
+                            </apply>
+                            <apply>
+                                <plus/>
+                                <ci>KK7</ci>
+                                <ci>MAPK</ci>
+                            </apply>
+                        </apply>
+                    </math>
+                    <listOfParameters>
+                        <parameter id="k7" metaid="_001353" value="0.025"/>
+                        <parameter id="KK7" metaid="_001355" value="15"/>
+                    </listOfParameters>
+                </kineticLaw>
+            </reaction>
+            <reaction id="J7" metaid="_584775" name="phosphorylation of MAPK-P" reversible="false">
+                <annotation>
+                    <rdf:RDF xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
+                             xmlns:bqmodel="http://biomodels.net/model-qualifiers/"
+                             xmlns:bqbiol="http://biomodels.net/biology-qualifiers/">
+                        <rdf:Description rdf:about="#_584775">
+                            <bqbiol:hasVersion>
+                                <rdf:Bag>
+                                    <rdf:li rdf:resource="http://identifiers.org/reactome/REACT_136"/>
+                                    <rdf:li rdf:resource="http://identifiers.org/reactome/REACT_2247"/>
+                                </rdf:Bag>
+                            </bqbiol:hasVersion>
+                            <bqbiol:isVersionOf>
+                                <rdf:Bag>
+                                    <rdf:li rdf:resource="http://identifiers.org/ec-code/2.7.12.2"/>
+                                    <rdf:li rdf:resource="http://identifiers.org/go/GO:0006468"/>
+                                    <rdf:li rdf:resource="http://identifiers.org/go/GO:0004708"/>
+                                    <rdf:li rdf:resource="http://identifiers.org/go/GO:0000187"/>
+                                </rdf:Bag>
+                            </bqbiol:isVersionOf>
+                        </rdf:Description>
+                    </rdf:RDF>
+                </annotation>
+                <listOfReactants>
+                    <speciesReference metaid="_653463" species="MAPK_P"/>
+                </listOfReactants>
+                <listOfProducts>
+                    <speciesReference metaid="_653475" species="MAPK_PP"/>
+                </listOfProducts>
+                <listOfModifiers>
+                    <modifierSpeciesReference metaid="_653487" species="MKK_PP"/>
+                </listOfModifiers>
+                <kineticLaw metaid="_653499">
+                    <math xmlns="http://www.w3.org/1998/Math/MathML">
+                        <apply>
+                            <divide/>
+                            <apply>
+                                <times/>
+                                <ci>uVol</ci>
+                                <ci>k8</ci>
+                                <ci>MKK_PP</ci>
+                                <ci>MAPK_P</ci>
+                            </apply>
+                            <apply>
+                                <plus/>
+                                <ci>KK8</ci>
+                                <ci>MAPK_P</ci>
+                            </apply>
+                        </apply>
+                    </math>
+                    <listOfParameters>
+                        <parameter id="k8" metaid="_001357" value="0.025"/>
+                        <parameter id="KK8" metaid="_001359" value="15"/>
+                    </listOfParameters>
+                </kineticLaw>
+            </reaction>
+            <reaction id="J8" metaid="_584795" name="dephosphorylation of MAPK-PP" reversible="false">
+                <annotation>
+                    <rdf:RDF xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
+                             xmlns:bqmodel="http://biomodels.net/model-qualifiers/"
+                             xmlns:bqbiol="http://biomodels.net/biology-qualifiers/">
+                        <rdf:Description rdf:about="#_584795">
+                            <bqbiol:isVersionOf>
+                                <rdf:Bag>
+                                    <rdf:li rdf:resource="http://identifiers.org/ec-code/3.1.3.16"/>
+                                    <rdf:li rdf:resource="http://identifiers.org/go/GO:0000188"/>
+                                    <rdf:li rdf:resource="http://identifiers.org/go/GO:0006470"/>
+                                </rdf:Bag>
+                            </bqbiol:isVersionOf>
+                        </rdf:Description>
+                    </rdf:RDF>
+                </annotation>
+                <listOfReactants>
+                    <speciesReference metaid="_653511" species="MAPK_PP"/>
+                </listOfReactants>
+                <listOfProducts>
+                    <speciesReference metaid="_653523" species="MAPK_P"/>
+                </listOfProducts>
+                <kineticLaw metaid="_653535">
+                    <math xmlns="http://www.w3.org/1998/Math/MathML">
+                        <apply>
+                            <divide/>
+                            <apply>
+                                <times/>
+                                <ci>uVol</ci>
+                                <ci>V9</ci>
+                                <ci>MAPK_PP</ci>
+                            </apply>
+                            <apply>
+                                <plus/>
+                                <ci>KK9</ci>
+                                <ci>MAPK_PP</ci>
+                            </apply>
+                        </apply>
+                    </math>
+                    <listOfParameters>
+                        <parameter id="V9" metaid="_001361" value="0.5"/>
+                        <parameter id="KK9" metaid="_001363" value="15"/>
+                    </listOfParameters>
+                </kineticLaw>
+            </reaction>
+            <reaction id="J9" metaid="_584815" name="dephosphorylation of MAPK-P" reversible="false">
+                <annotation>
+                    <rdf:RDF xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
+                             xmlns:bqmodel="http://biomodels.net/model-qualifiers/"
+                             xmlns:bqbiol="http://biomodels.net/biology-qualifiers/">
+                        <rdf:Description rdf:about="#_584815">
+                            <bqbiol:isVersionOf>
+                                <rdf:Bag>
+                                    <rdf:li rdf:resource="http://identifiers.org/ec-code/3.1.3.16"/>
+                                    <rdf:li rdf:resource="http://identifiers.org/go/GO:0006470"/>
+                                </rdf:Bag>
+                            </bqbiol:isVersionOf>
+                        </rdf:Description>
+                    </rdf:RDF>
+                </annotation>
+                <listOfReactants>
+                    <speciesReference metaid="_653547" species="MAPK_P"/>
+                </listOfReactants>
+                <listOfProducts>
+                    <speciesReference metaid="_653559" species="MAPK"/>
+                </listOfProducts>
+                <kineticLaw metaid="_653571">
+                    <math xmlns="http://www.w3.org/1998/Math/MathML">
+                        <apply>
+                            <divide/>
+                            <apply>
+                                <times/>
+                                <ci>uVol</ci>
+                                <ci>V10</ci>
+                                <ci>MAPK_P</ci>
+                            </apply>
+                            <apply>
+                                <plus/>
+                                <ci>KK10</ci>
+                                <ci>MAPK_P</ci>
+                            </apply>
+                        </apply>
+                    </math>
+                    <listOfParameters>
+                        <parameter id="V10" metaid="_001365" value="0.5"/>
+                        <parameter id="KK10" metaid="_001367" value="15"/>
+                    </listOfParameters>
                 </kineticLaw>
             </reaction>
         </listOfReactions>
