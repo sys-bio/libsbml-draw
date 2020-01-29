@@ -32,12 +32,14 @@ class SBMLlayout:
     def __init__(self, sbml_source, layout_alg_options=None,
                  layout_number=0, fitToWindow=tuple(),
                  autoComputeLayout=False, applyRender=True,
-                 style=Style):
+                 style=None):
         self._sbml_source = sbml_source
         self._layout_number = layout_number
         self._fitWindow = fitToWindow
         self._applyRender = applyRender
-        self.style = style() if callable(style) else style
+        self.style = style
+        if self.style:
+            self.style = style() if callable(style) else style
 
         if self._validate_layout_alg_options(layout_alg_options):
             self._layout_alg_options = layout_alg_options
@@ -2337,19 +2339,21 @@ class SBMLlayout:
 
         return bezier_points
 
-    def getNumCompartments(self):
-        """
-        Patch over broken original code. Use libsbml to prevent the need to compile
-        uncompilable code.
-        Returns:
-
-        """
-        return self._doc.getModel().getNumCompartments()
-
     def apply_style(self):
+        """
+
+        Apply a :py:class:`styles.Style` to current layout.
+
+        return: None
+        """
+        # when style is None, return None
+        if not self.style:
+            return
+        # else apply the style
         for k, v in self.style.items():
             if not isinstance(v, _AttributeSet):
                 raise TypeError('The "style" argument should be of type '
                                 '"_AttributeSet" but got {} instead'.format(type(v)))
 
             v.set_values(self)
+        return

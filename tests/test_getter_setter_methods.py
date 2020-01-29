@@ -186,7 +186,7 @@ class TestAttributes(unittest.TestCase):
         # self.assertAlmostEqual(expectd[1], actual[1])
 
     def test_getNodeColor(self):
-        expected = '#c9e0fbff'
+        expected = '#c9e0fb'
         actual = self.sl.getNodeColor('PPase')
         self.assertEqual(expected, actual)
 
@@ -199,7 +199,7 @@ class TestAttributes(unittest.TestCase):
         self.assertEqual(expected, actual)
 
     def test_getNodeEdgeColor(self):
-        expected = '#0000ffff'
+        expected = '#0000ff'
         actual = self.sl.getNodeEdgeColor('PPase')
         self.assertEqual(expected, actual)
 
@@ -211,7 +211,7 @@ class TestAttributes(unittest.TestCase):
         self.assertEqual(expected, actual)
 
     def test_getNodeEdgeWidth(self):
-        expected = 3
+        expected = 1
         actual = self.sl.getNodeEdgeWidth('PPase')
         self.assertEqual(expected, actual)
 
@@ -223,24 +223,24 @@ class TestAttributes(unittest.TestCase):
         self.assertEqual(expected, actual)
 
     def test_getNodeFillColor(self):
-        expected = '#c9e0fbff'
+        expected = '#c9e0fb'
         actual = self.sl.getNodeFillColor('PPase')
         self.assertEqual(expected, actual)
 
     def test_setNodeFillColor(self):
-        expected = '#ff0000ff'
+        expected = '#ff0000'
         self.sl.setNodeFillColor('PPase', expected)
         actual = self.sl.getNodeFillColor('PPase')
         self.sl.drawNetwork()  # manually checked and is working correctly
         self.assertEqual(expected, actual)
 
     def test_getNodeFontColor(self):
-        expected = '#000000ff'
+        expected = '#000000'
         actual = self.sl.getNodeFontColor('PPase')
         self.assertEqual(expected, actual)
 
     def test_setNodeFillColor(self):
-        expected = '#ff0000ff'
+        expected = '#ff0000'
         self.sl.setNodeFontColor('PPase', expected)
         actual = self.sl.getNodeFontColor('PPase')
         # self.sl.drawNetwork() # manually checked and is working correctly
@@ -271,7 +271,7 @@ class TestAttributes(unittest.TestCase):
         self.assertEqual(expected, actual)
 
     def test_getNodeFontSize(self):
-        expected = 20
+        expected = 10
         actual = self.sl.getNodeFontSize('PPase')
         self.assertEqual(expected, actual)
 
@@ -313,7 +313,7 @@ class TestAttributes(unittest.TestCase):
         self.assertEqual(expected, actual)
 
     def test_getNodeHeight(self):
-        expected = 40.0
+        expected = 20
         actual = self.sl.getNodeHeight('PPase')
         self.assertAlmostEqual(expected, actual)
 
@@ -377,7 +377,7 @@ class TestAttributes(unittest.TestCase):
         self.assertEqual(expected, actual)
 
     def test_getNodeWidth(self):
-        expected = 140.0
+        expected = 70
         actual = self.sl.getNodeWidth('PPase')
         self.assertAlmostEqual(expected, actual)
 
@@ -435,7 +435,7 @@ class TestAttributes(unittest.TestCase):
         self.assertEqual(expected, actual)
 
     def test_getReactionEdgeColor(self):
-        expected = '#0000ffff'
+        expected = '#0000ff'
         reaction = self.sl.getReactionEdgeColor('reaction_1')
         actual = reaction[0][2]
         self.assertEqual(expected, actual)
