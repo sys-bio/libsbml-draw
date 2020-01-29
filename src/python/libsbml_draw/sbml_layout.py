@@ -32,12 +32,12 @@ class SBMLlayout:
     def __init__(self, sbml_source, layout_alg_options=None,
                  layout_number=0, fitToWindow=tuple(),
                  autoComputeLayout=False, applyRender=True,
-                 settings=None):
+                 style=Style):
         self._sbml_source = sbml_source
         self._layout_number = layout_number
         self._fitWindow = fitToWindow
         self._applyRender = applyRender
-        self.settings = Style() if settings is None else settings
+        self.style = style() if callable(style) else style
 
         if self._validate_layout_alg_options(layout_alg_options):
             self._layout_alg_options = layout_alg_options
@@ -51,73 +51,67 @@ class SBMLlayout:
                 1,  # autobary
                 20.0  # padding
             )
+        if not isinstance(self._sbml_source, str):
+            raise TypeError('SBML source should be a of type str. Got "{}"'.format(type(self._sbml_source)))
 
-        if isinstance(self._sbml_source, str):
-            if self._sbml_source.startswith("<?xml"):
-                self._h_model = sbnw.loadSBMLString(
-                    self._sbml_source)
-            elif os.path.isfile(self._sbml_source):
-                self._h_model = sbnw.loadSBMLFile(self._sbml_source)
-            else:
-                raise ValueError(f"File {self._sbml_source} "
-                                 f"does not exist, or the source string "
-                                 f"is not a valid SBML file.")
+        if self._sbml_source.startswith("<?xml"):
+            self._h_model = sbnw.loadSBMLString(
+                self._sbml_source)
+        elif os.path.isfile(self._sbml_source):
+            self._h_model = sbnw.loadSBMLFile(self._sbml_source)
+        else:
+            raise ValueError(f"File {self._sbml_source} "
+                             f"does not exist, or the source string "
+                             f"is not a valid SBML file.")
 
-            if self._h_model == 0:
-                raise ValueError("SBML source cannot be parsed by libsbml.")
+        if self._h_model == 0:
+            raise ValueError("SBML source cannot be parsed by libsbml.")
 
-            self._h_layout_info = sbnw.processLayout(self._h_model)
-            self._h_network = sbnw.getNetworkp(self._h_layout_info)
-            self._h_canvas = sbnw.getCanvasp(self._h_layout_info)
-            self._layoutSpecified = True if sbnw.isLayoutSpecified(self._h_network) else False
-            self._autoComputeLayout = autoComputeLayout
+        self._h_layout_info = sbnw.processLayout(self._h_model)
+        self._h_network = sbnw.getNetworkp(self._h_layout_info)
+        self._h_canvas = sbnw.getCanvasp(self._h_layout_info)
+        self._layoutSpecified = True if sbnw.isLayoutSpecified(self._h_network) else False
+        self._autoComputeLayout = autoComputeLayout
 
-            # create layout, if it doesn't already exist or user requests it
-            if not self._layoutSpecified or self._autoComputeLayout:
-                self._randomizeLayout()
-                self._doLayoutAlgorithm()
+        # create layout, if it doesn't already exist or user requests it
+        if not self._layoutSpecified or self._autoComputeLayout:
+            self._randomizeLayout()
+            self._doLayoutAlgorithm()
 
-                # no render info here because auto-generating the layout
-                self._doc = libsbml.readSBMLFromString(
-                    self._getSBMLWithLayoutString())
-
-                self._network = self._createNetwork()
-
-                # compute and set width and height for node boxes
-                for node in self._network.nodes.values():
-                    # pad the width (default, 2 additional chars) and
-                    # pad the height (default, 1 additional char)
-                    width = self._computeNodeWidth(node)
-                    height = self._computeNodeHeight(node)
-                    self._setNodeWidth(node.id, width)
-                    self._setNodeHeight(node.id, height)
-
-                self.regenerateLayout()
-
-            else:
-                if self._validate_sbml_filename(sbml_source):
-                    self._doc = libsbml.readSBMLFromFile(sbml_source)
-                else:
-                    self._doc = libsbml.readSBMLFromString(sbml_source)
-
-            if len(self._fitWindow) == 4:
-                self._fitToWindow(self._fitWindow[0], self._fitWindow[1],
-                                  self._fitWindow[2], self._fitWindow[3])
-            else:
-                pass
-
-            sbnw.layout_alignToOrigin(self._h_layout_info, 0, 0)
+            # no render info here because auto-generating the layout
+            self._doc = libsbml.readSBMLFromString(
+                self._getSBMLWithLayoutString())
 
             self._network = self._createNetwork()
 
-            if self._applyRender:
-                self._applyRenderInformation()
+            # compute and set width and height for node boxes
+            for node in self._network.nodes.values():
+                # pad the width (default, 2 additional chars) and
+                # pad the height (default, 1 additional char)
+                width = self._computeNodeWidth(node)
+                height = self._computeNodeHeight(node)
+                self.setNodeWidth(node.id, width)
+                self.setNodeHeight(node.id, height)
+            self.regenerateLayout()
 
-            self._arrowhead_scale = {key: 15 for key in
-                                     range(self.getNumberOfRoles())}
+        else:
+            if self._validate_sbml_filename(sbml_source):
+                self._doc = libsbml.readSBMLFromFile(sbml_source)
+            else:
+                self._doc = libsbml.readSBMLFromString(sbml_source)
 
-        else:  # User can separately load a file
-            pass
+        if len(self._fitWindow) == 4:
+            self._fitToWindow(self._fitWindow[0], self._fitWindow[1],
+                              self._fitWindow[2], self._fitWindow[3])
+        sbnw.layout_alignToOrigin(self._h_layout_info, 0, 0)
+        self._network = self._createNetwork()
+
+        if self._applyRender:
+            self._applyRenderInformation()
+
+        self._arrowhead_scale = {key: 15 for key in
+                                 range(self.getNumberOfRoles())}
+        self.apply_style()
 
     def _computeNodeWidth(self, node):
         """Computes the node width needed for the text to fit inside.
@@ -437,9 +431,6 @@ class SBMLlayout:
         if len(self._fitWindow) == 4:
             self._fitToWindow(self._fitWindow[0], self._fitWindow[1],
                               self._fitWindow[2], self._fitWindow[3])
-        else:
-            pass
-
         sbnw.layout_alignToOrigin(self._h_layout_info, 0, 0)
 
         self._doc = libsbml.readSBMLFromString(
@@ -1393,9 +1384,9 @@ class SBMLlayout:
         for this_node_id in node_ids:
             node = self._network.nodes[this_node_id]
             width = self._computeNodeWidth(node)
-            self._setNodeWidth(this_node_id, width)
+            self.setNodeWidth(this_node_id, width)
             height = self._computeNodeHeight(node)
-            self._setNodeHeight(this_node_id, height)
+            self.setNodeHeight(this_node_id, height)
 
         self.regenerateLayout()
 
@@ -1578,7 +1569,7 @@ class SBMLlayout:
         else:
             raise ValueError(f"Species {node_id} not found in network.")
 
-    def _setNodeWidth(self, node_id, width):
+    def setNodeWidth(self, node_id, width):
         """Sets the width of the node.
 
         Args:
@@ -1598,7 +1589,7 @@ class SBMLlayout:
         else:
             raise ValueError(f"Species {node_id} not found in network.")
 
-    def _setNodeHeight(self, node_id, height):
+    def setNodeHeight(self, node_id, height):
         """Sets the height of the node.
 
         Args:
@@ -2354,27 +2345,10 @@ class SBMLlayout:
         """
         return self._doc.getModel().getNumCompartments()
 
-    def implement_settings(self, setting):
-        if not isinstance(setting, _AttributeSet):
-            raise TypeError('The "setting" argument should be of type '
-                            '"_AttributeSet" but got {} instead'.format(type(setting)))
-        for k, v in setting.items():
-            if isinstance(v, _AttributeSet):
-                v.set_values(self)
-                # self.implement_settings(v)
-            # print(k, v)
+    def apply_style(self):
+        for k, v in self.style.items():
+            if not isinstance(v, _AttributeSet):
+                raise TypeError('The "style" argument should be of type '
+                                '"_AttributeSet" but got {} instead'.format(type(v)))
 
-    def implement_settings2(self):
-        for k, v in self.settings.items():
             v.set_values(self)
-                # self.implement_settings(v)
-            # print(k, v)
-
-
-
-
-
-
-
-
-

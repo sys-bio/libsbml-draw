@@ -1,5 +1,6 @@
-import site
 import os
+import site
+
 # add the library to path
 site.addsitedir(os.path.join(os.path.dirname(os.path.dirname(__file__)), "src/python"))
 import unittest
@@ -9,6 +10,7 @@ from tests.model_strings import schmierer2008
 import numpy
 
 numpy.random.seed(1)
+
 
 class TestAttributes(unittest.TestCase):
 
@@ -328,7 +330,6 @@ class TestAttributes(unittest.TestCase):
         # self.sl.drawNetwork() # manually checked and is working correctly
         # self.assertEqual(expected, actual)
 
-
     def test_getNodeLowerLeftPoint(self):
         """
         Lower left point is a stochastic entity it seems,
@@ -433,7 +434,6 @@ class TestAttributes(unittest.TestCase):
         actual = curve[0]
         self.assertEqual(expected, actual)
 
-
     def test_getReactionEdgeColor(self):
         expected = '#0000ff'
         reaction = self.sl.getReactionEdgeColor('reaction_1')
@@ -469,25 +469,8 @@ class TestAttributes(unittest.TestCase):
         actual = self.sl.getCompartmentIds()
         self.assertEqual(expected, actual)
 
-
     def test_get_num_compartments_with_libsbml(self):
         expected = 2
         sl = SBMLlayout(schmierer2008, applyRender=True)
         n = sl._network
         self.assertEqual(expected, n.getNumCompartmentsWithLibsbml())
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
