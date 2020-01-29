@@ -66,7 +66,6 @@ class StyleTests(unittest.TestCase):
 
     def setUp(self) -> None:
         self.style = Style()
-        print(self.style)
 
     def test_style_instantiation(self):
         self.assertIsInstance(self.style, Style)
