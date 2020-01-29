@@ -1,5 +1,5 @@
 __pycache__
-/doxy/build
+/docs/doxy/build
 /build
 *.egg-info
 /dist
@@ -7,3 +7,4 @@ __pycache__
 .idea
 cmake-build-debug
 auxil
+~*

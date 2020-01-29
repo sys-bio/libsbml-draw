@@ -1,12 +1,11 @@
 import site
-import unittest, os, glob
+import unittest
 import os
 site.addsitedir(os.path.join(os.path.dirname(os.path.dirname(__file__)), "src/python"))
-import tellurium as te
-from libsbml_draw.model.sbml_layout import SBMLlayout
+from libsbml_draw.sbml_layout import SBMLlayout
 import requests
 import codecs
-import matplotlib
+
 
 # matplotlib.use('TkAgg')
 

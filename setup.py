@@ -14,8 +14,8 @@ setup(
     version=version,
     packages=PEP420PackageFinder.find("src/python"),
     package_dir={"": "src/python"},
-    package_data={"libsbml_draw.c_api": ["data/sbml_draw.dll", "data/libsbml_draw.dylib", "data/libsbml_draw.so"],
-                  "libsbml_draw.model": ["data/*.xml"]},
+    package_data={"libsbml_draw.c_api": ["libs/libsbml_draw.dll", "libs/libsbml_draw.dylib", "libs/libsbml_draw.so"],
+                  "libsbml_draw.model": ["libs/*.xml"]},
     install_requires=open('requirements.txt').readlines(),
     extras_require={
         "testing": ["nose"],
