@@ -1,19 +1,22 @@
-from distutils.core import setup
-from setuptools import PEP420PackageFinder
+from setuptools import setup
+from setuptools import PEP420PackageFinder, find_packages
+
 
 MAJOR = 0
 MINOR = 0
-MICRO = 0
+MICRO = 17
 
 version = f'{MAJOR}.{MINOR}.{MICRO}'
 
 setup(
     name="libsbml-draw",
     version=version,
-    packages=PEP420PackageFinder.find("src/python"),
+    # include_package_data=True,
+    # instructions for these arguments is here:
+    #   https://setuptools.readthedocs.io/en/latest/setuptools.html#including-data-files
     package_dir={"": "src/python"},
-    package_data={"libsbml_draw.sbnw": ["libs/libsbml_draw.dll", "libs/libsbml_draw.dylib", "libs/libsbml_draw.so"],
-                  "libsbml_draw.model": ["libs/*.xml"]},
+    packages=['libsbml_draw'],
+    package_data={"libsbml_draw": ["*.dll", '*.so', '*.dylib']},
     install_requires=open('requirements.txt').readlines(),
     extras_require={
         "testing": ["nose"],
@@ -29,3 +32,4 @@ setup(
     ],
     test_suite="tests",
 )
+

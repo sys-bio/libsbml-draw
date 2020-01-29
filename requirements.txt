@@ -8,3 +8,4 @@ sphinx-autobuild
 sphinxcontrib-napoleon
 tellurium
 coverage
+networkx

@@ -8,18 +8,14 @@ from ctypes import POINTER
 
 
 def load_sbnw():
-    site_packages_dir = os.path.dirname(__file__)
-    libs_dir = os.path.join(site_packages_dir, 'libs')
-    if not os.path.isdir(libs_dir):
-        raise FileNotFoundError('Did not find the libs dir')
     if platform.system() == "Windows":
-        LIB = os.path.join(libs_dir, 'libsbml_draw.dll')
+        lib = 'libsbml_draw.dll'
     elif platform.system() == "Linux":
-        LIB = os.path.join(libs_dir, 'libsbml_draw.so')
+        lib = 'libsbml_draw.so'
     else:
-        LIB = os.path.join(libs_dir, 'libsbml_draw.dylib')
-
-    return ctypes.CDLL(LIB)
+        lib = 'libsbml_draw.dylib'
+    lib = os.path.join(os.path.dirname(__file__), lib)
+    return ctypes.CDLL(lib)
 
 slib = load_sbnw()
 
