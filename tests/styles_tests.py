@@ -11,13 +11,13 @@ from tests.model_strings import compartment_model
 # todo
 
 
-class ValidatedDictTests(unittest.TestCase):
+class AttributeSetTests(unittest.TestCase):
     class Items(_AttributeSet):
         chair = 'brown'
         length = 14
 
     def setUp(self) -> None:
-        self.items = ValidatedDictTests.Items()
+        self.items = AttributeSetTests.Items()
 
     def test_access_by_dot_notation(self):
         self.assertEqual(self.items.chair, 'brown')
@@ -62,68 +62,48 @@ class ValidatedDictTests(unittest.TestCase):
 
 
 
-class SettingsTests(unittest.TestCase):
+class StyleTests(unittest.TestCase):
 
     def setUp(self) -> None:
-        pass
+        self.style = Style()
+        print(self.style)
 
     def test_style_instantiation(self):
-        self.assertIsInstance(Style(), Style)
+        self.assertIsInstance(self.style, Style)
 
     def test_you_can_change_a_value(self):
-        s = Style()
-        s.node.edgecolor = 'red'
-        self.assertEqual('red', s.node.edgecolor)
+        self.style.node.edgecolor = 'red'
+        self.assertEqual('red', self.style.node.edgecolor)
 
     def test_dict_attr_has_updated(self):
-        s = Style()
-        s.node.edgecolor = 'red'
-        # self.assertEqual('red', s.node.edgecolor)
+        self.style .node.edgecolor = 'red'
         expected = 'red'
-        actual = s.node.edgecolor
+        actual = self.style .node.edgecolor
         self.assertEqual(expected, actual)
 
     def test_edgecolor_via_a_style(self):
-        s = Style()
-        s.edge.color = 'green'
-        s = SBMLlayout(compartment_model, style=s)
-        actual = [s.getReactionEdgeColor(i) for i in s.getReactionIds()]
+        self.style.edge.color = 'orange'
+        sl = SBMLlayout(compartment_model, style=self.style)
+        actual = [sl.getReactionEdgeColor(i) for i in sl.getReactionIds()]
         colours = []
         for i in actual:
             for j in i:
                 colours.append(j[2])
-        expected = '#008000ff'
+        expected = '#ffa500ff'
         actual = list(set(colours))[0]
         self.assertEqual(expected, actual)
 
-
-
-class HighLevelTests(unittest.TestCase):
-
-    def setUp(self) -> None:
-        pass
+    def testx(self):
+        self.style.node.color = 'black'
+        sl = SBMLlayout(compartment_model, style=self.style)
+        print(sl.getNodeColor('Node0'))
+        sl.drawNetwork('network2.png', show=False)
+        # expected = '#c9e0fb'
+        # actual = self.sl.getNodeColor('PPase')
+        # self.assertEqual(expected, actual)
 
     def tearDown(self) -> None:
-        pass
-
-    def test(self):
-        s = SBMLlayout(compartment_model)
-        s.drawNetwork(show=True)
-
-        s.setNodeFontSize('Node1', 30)
-        s.drawNetwork(show=True)
-
-        s.regenerateLayout()
-        s.drawNetwork(show=True)
-
-    def test2(self):
-        pass
-        # s = SBMLlayout(compartment_model)
-
-        # print(s.getCompartmentEdgeColor('vol1'))
-        # print(s.getCompartmentFillColor('vol1'))
-        # print(s.getCompartmentLineWidth('vol1'))
-
+        del self.style
 
 if __name__ == '__main__':
     unittest.main()

@@ -1002,7 +1002,8 @@ class SBMLlayout:
         if node_id in self._network.nodes:
             return self._network.nodes[node_id].fill_color
         else:
-            raise ValueError(f"Species {node_id} not found in network.")
+            raise ValueError(f"Species {node_id} not found in network. These species are in your "
+                             f"network: {self.getNodeIds()}")
 
     def getNodeKeywordIds(self, node_keyword):
         """Returns a list of node ids corresponding to the given keyword.
