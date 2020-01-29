@@ -103,14 +103,19 @@ class TestAttributes(unittest.TestCase):
         Returns:
 
         """
-        # print(self.sl.getCompartmentIds())
-        print(self.sl.getCompartmentEdgeColor('nucleus'))
+        expected = '#0000ff30'
+        actual = self.sl.getCompartmentEdgeColor('nucleus')
+        self.assertEqual(expected, actual)
 
     def test_getCompartmentFillColor(self):
-        print(self.sl.getCompartmentFillColor('nucleus'))
+        expected = '#0000ff05'
+        actual = self.sl.getCompartmentFillColor('nucleus')
+        self.assertEqual(expected, actual)
 
     def test_getCompartmentLineWidth(self):
-        print(self.sl.getCompartmentLineWidth('nucleus'))
+        expected = 3
+        actual = self.sl.getCompartmentLineWidth('nucleus')
+        self.assertEqual(expected, actual)
 
     def test_getFloatingSpeciesIds(self):
         expected = ['PPase', 'S2_n', 'pS2_n', 'G_n', 'pG_n',
@@ -228,10 +233,9 @@ class TestAttributes(unittest.TestCase):
         self.assertEqual(expected, actual)
 
     def test_setNodeFillColor(self):
-        expected = '#ff0000'
+        expected = '#ff0000ff'
         self.sl.setNodeFillColor('PPase', expected)
         actual = self.sl.getNodeFillColor('PPase')
-        self.sl.drawNetwork()  # manually checked and is working correctly
         self.assertEqual(expected, actual)
 
     def test_getNodeFontColor(self):
@@ -239,12 +243,6 @@ class TestAttributes(unittest.TestCase):
         actual = self.sl.getNodeFontColor('PPase')
         self.assertEqual(expected, actual)
 
-    def test_setNodeFillColor(self):
-        expected = '#ff0000'
-        self.sl.setNodeFontColor('PPase', expected)
-        actual = self.sl.getNodeFontColor('PPase')
-        # self.sl.drawNetwork() # manually checked and is working correctly
-        self.assertEqual(expected, actual)
 
     def test_getNodeFontFamily(self):
         expected = 'Arial'
