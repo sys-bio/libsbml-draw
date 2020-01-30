@@ -11,7 +11,6 @@ version = f'{MAJOR}.{MINOR}.{MICRO}'
 setup(
     name="libsbml-draw",
     version=version,
-    # include_package_data=True,
     # instructions for these arguments is here:
     #   https://setuptools.readthedocs.io/en/latest/setuptools.html#including-data-files
     package_dir={"": "src/python"},

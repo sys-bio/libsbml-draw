@@ -30,7 +30,7 @@ class TestWorksWithBioModels(unittest.TestCase):
         return sbml
 
     def tearDown(self) -> None:
-        for i in [self.sbml_fname]:#, self.image_fname]:
+        for i in []:#[self.sbml_fname]:#, self.image_fname]:
             if os.path.isfile(i):
                 os.remove(i)
 
@@ -65,7 +65,7 @@ class TestWorksWithBioModels(unittest.TestCase):
 
     def test_draw_network_and_save_to_pdf(self):
         self.sl = SBMLlayout(self.sbml_fname, applyRender=False)
-        self.sl.drawNetwork(self.image_fname, show=False)
+        self.sl.drawNetwork(self.image_fname, show=False, scaling_factor=1.0)
         self.assertTrue(os.path.isfile(self.image_fname))
 
 

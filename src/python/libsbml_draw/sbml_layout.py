@@ -2250,7 +2250,16 @@ class SBMLlayout:
                                   width_shift, height_shift, scaling_factor)
         if (save_file_name):
             bg_color = self._network.bg_color
-            fig.savefig(save_file_name, facecolor=bg_color)
+            try:
+                fig.savefig(save_file_name, facecolor=bg_color)
+            except ValueError:
+                # sometimes a network is too big for matplotlib to cope. In these
+                # situations, keep trying whilst reducing the scale factor.
+                print(f"Network is too large. "
+                      f"Retrying with a smaller "
+                      f"scaling_factor ({scaling_factor})")
+                scaling_factor *= 0.95
+                self.drawNetwork(save_file_name, show, dpi, width_shift, height_shift, scaling_factor)
 
         return fig
 

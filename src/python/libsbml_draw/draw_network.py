@@ -647,7 +647,6 @@ def createNetworkFigure(sbml_layout, arrowhead_mutation_scale,
     """
 
     (nw_width_inches, nw_height_inches) = get_network_dimensions(sbml_layout)
-
     fig_width_inches = nw_width_inches + 2 * WIDTH_SHIFT
     fig_height_inches = nw_height_inches + 2 * HEIGHT_SHIFT
 
