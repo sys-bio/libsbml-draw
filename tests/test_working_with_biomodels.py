@@ -1,7 +1,8 @@
 import site
 import unittest
 import os
-site.addsitedir(os.path.join(os.path.dirname(os.path.dirname(__file__)), "src/python"))
+from .add_to_path import add_to_path
+add_to_path()
 from libsbml_draw.sbml_layout import SBMLlayout
 import requests
 import codecs

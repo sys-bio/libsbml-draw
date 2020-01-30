@@ -5,10 +5,9 @@ python:
   - "3.7"
 install:
   - pip install .
-  - pip install -r $PWD/requirements.txt
-  - pip install nose codecov coverage
-  - pip install 'numpy==1.18.1' --force-reinstall
+  - pip install nose codecov
+  - pip install 'numpy==1.18.1' --force-reinstall --no-cache-dir
 script:
-  - nosetests --with-coverage
+  - pytest --cov=.
 after_success:
   - codecov -t $CODECOV_TOKEN
