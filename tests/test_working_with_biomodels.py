@@ -13,11 +13,9 @@ import codecs
 
 class TestWorksWithBioModels(unittest.TestCase):
     base_url = "https://www.ebi.ac.uk/biomodels-main/download?mid"
-    # model_ids = [f'BIOMD00000000{i}' for i in range(10, 15)]
     model_id = 'BIOMD0000000091'
-    # model_pdfs = [os.path.join(os.path.dirname(__file__), f'BIOMD00000000{i}.pdf') for i in range(10, 15)]
     sbml_fname = os.path.join(os.path.dirname(__file__), 'sbmlmodel.sbml')
-    image_fname = os.path.join(os.path.dirname(__file__), 'network.pdf')
+    image_fname = os.path.join(os.path.dirname(__file__), 'network.png')
     expected_number_of_compartments = 0
     expected_number_of_nodes = 16
     expected_number_of_reactions = 23
@@ -32,25 +30,25 @@ class TestWorksWithBioModels(unittest.TestCase):
         return sbml
 
     def tearDown(self) -> None:
-        for i in [self.sbml_fname, self.image_fname]:
+        for i in [self.sbml_fname]:#, self.image_fname]:
             if os.path.isfile(i):
                 os.remove(i)
 
     def setUp(self) -> None:
         self.sbml = self.get_model_from_url()
+        self.sl = SBMLlayout(self.sbml_fname, applyRender=False)
+
 
     def test_setup(self):
         self.get_model_from_url()
         self.assertTrue(os.path.isfile(self.sbml_fname))
 
     def test_load_from_biomodels(self):
-        print(self.sbml_fname)
-        sl = SBMLlayout(self.sbml_fname, applyRender=False)
-        self.assertIsInstance(sl, SBMLlayout)
+        self.assertIsInstance(self.sl, SBMLlayout)
 
     def do_describe(self):
-        sl = SBMLlayout(self.sbml_fname, applyRender=False)
-        desc = sl.describeModel()
+        self.sl = SBMLlayout(self.sbml_fname, applyRender=False)
+        desc = self.sl.describeModel()
         return desc
 
     def test_number_of_nodes(self):
@@ -66,8 +64,8 @@ class TestWorksWithBioModels(unittest.TestCase):
         self.assertEqual(self.expected_number_of_reactions, described['number_of_reactions'])
 
     def test_draw_network_and_save_to_pdf(self):
-        sl = SBMLlayout(self.sbml_fname, applyRender=False)
-        sl.drawNetwork(self.image_fname, show=False)
+        self.sl = SBMLlayout(self.sbml_fname, applyRender=False)
+        self.sl.drawNetwork(self.image_fname, show=False)
         self.assertTrue(os.path.isfile(self.image_fname))
 
 
@@ -83,6 +81,18 @@ class TestBioMD0000000364(TestWorksWithBioModels):
     expected_number_of_compartments = 0
     expected_number_of_nodes = 14
     expected_number_of_reactions = 16
+
+class TestBioMD0000000001(TestWorksWithBioModels):
+    model_id = 'BIOMD0000000001'
+    expected_number_of_compartments = 1
+    expected_number_of_nodes = 12
+    expected_number_of_reactions = 17
+
+class TestBioMD0000000002(TestWorksWithBioModels):
+    model_id = 'BIOMD0000000002'
+    expected_number_of_compartments = 1
+    expected_number_of_nodes = 13
+    expected_number_of_reactions = 17
 
 
 if __name__ == '__main__':
