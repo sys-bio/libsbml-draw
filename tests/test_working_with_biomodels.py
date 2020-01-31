@@ -1,9 +1,11 @@
-import site
 import os
+import site
+
 site.addsitedir(os.path.dirname(__file__))
 import unittest
 
 from add_to_path import add_to_path
+
 add_to_path()
 from libsbml_draw.sbml_layout import SBMLlayout
 import requests
@@ -39,7 +41,6 @@ class TestWorksWithBioModels(unittest.TestCase):
     def setUp(self) -> None:
         self.sbml = self.get_model_from_url()
         self.sl = SBMLlayout(self.sbml_fname, applyRender=False)
-
 
     def test_setup(self):
         self.get_model_from_url()
@@ -78,17 +79,12 @@ class TestBioMD0000000011(TestWorksWithBioModels):
     expected_number_of_reactions = 30
 
 
-class TestBioMD0000000364(TestWorksWithBioModels):
-    model_id = 'BIOMD0000000364'
-    expected_number_of_compartments = 0
-    expected_number_of_nodes = 14
-    expected_number_of_reactions = 16
-
 class TestBioMD0000000001(TestWorksWithBioModels):
     model_id = 'BIOMD0000000001'
     expected_number_of_compartments = 1
     expected_number_of_nodes = 12
     expected_number_of_reactions = 17
+
 
 class TestBioMD0000000002(TestWorksWithBioModels):
     model_id = 'BIOMD0000000002'
