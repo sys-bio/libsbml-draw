@@ -1,7 +1,9 @@
 import site
-import unittest
 import os
-from .add_to_path import add_to_path
+site.addpackage(os.path.dirname(__file__))
+import unittest
+
+from add_to_path import add_to_path
 add_to_path()
 from libsbml_draw.sbml_layout import SBMLlayout
 import requests

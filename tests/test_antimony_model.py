@@ -1,10 +1,11 @@
 import unittest
 import site
 import os
+site.addsitedir(os.path.dirname(__file__))
 
 import tellurium as te
 
-from .add_to_path import add_to_path
+from add_to_path import add_to_path
 add_to_path()
 from libsbml_draw.sbml_layout import SBMLlayout
 

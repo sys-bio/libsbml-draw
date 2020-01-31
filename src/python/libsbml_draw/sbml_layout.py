@@ -114,7 +114,8 @@ class SBMLlayout:
         if self.style is not None:
             self.style = style() if callable(style) else style
 
-        self.apply_style()
+        if self.style:
+            self.apply_style()
 
     def _computeNodeWidth(self, node):
         """Computes the node width needed for the text to fit inside.
