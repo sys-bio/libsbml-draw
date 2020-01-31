@@ -38,8 +38,6 @@ class SBMLlayout:
         self._fitWindow = fitToWindow
         self._applyRender = applyRender
         self.style = style
-        if self.style:
-            self.style = style() if callable(style) else style
 
         if self._validate_layout_alg_options(layout_alg_options):
             self._layout_alg_options = layout_alg_options
@@ -113,6 +111,9 @@ class SBMLlayout:
 
         self._arrowhead_scale = {key: 15 for key in
                                  range(self.getNumberOfRoles())}
+        if self.style is not None:
+            self.style = style() if callable(style) else style
+
         self.apply_style()
 
     def _computeNodeWidth(self, node):
@@ -2356,8 +2357,6 @@ class SBMLlayout:
         return: None
         """
         # when style is None, return None
-        if not self.style:
-            return
         # else apply the style
         for k, v in self.style.items():
             if not isinstance(v, _AttributeSet):

@@ -155,12 +155,59 @@ class _Compartments(_AttributeSet):
 
 
 class Style(_AttributeSet):
+    """
+    Store aesthetic preference options and pass
+    them to :py:class:`sbml_layout.SBMLlayout`
+
+    A Style has four main characteristics that
+    can be changed: edge, node, compartment and font. These
+    attributes themselves have the following attributes:
+
+    - font:
+        - color
+        - family
+        - name
+        - size
+        - style
+        - weight
+    - node
+        - color
+        - edgecolor
+        - edgewidth
+        - fillcolor
+    - edge
+        - edgecolor
+        - fillcolor
+        - linewidth
+    - compartment
+        - edgecolor
+        - fillcolor
+        - linewidth
+    """
     node = _Node()
     font = _Font()
     compartment = _Compartments()
     edge = _Edge()  # applied to all edges
-    # scaling_factor = 1.0
-    # NetworkBackgroundColor = 0
 
-    # def apply(self):
-    #     pass
+
+
+def black_and_white():
+    """
+    Preset black and white style
+    Returns:
+
+    """
+    s = Style()
+    s.compartment.edgecolor = '#c4c4c4ff'
+    s.edge.color = 'black'
+    s.node.edgecolor = 'black'
+    s.node.fillcolor = 'white'
+    s.compartment.fillcolor = 'white'
+    s.node.edgewidth = 10
+    s.font.size = 25
+    s.edge.width = 5
+    return s
+
+
+
+

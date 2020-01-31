@@ -30,7 +30,7 @@ class TestWorksWithBioModels(unittest.TestCase):
         return sbml
 
     def tearDown(self) -> None:
-        for i in []:#[self.sbml_fname]:#, self.image_fname]:
+        for i in [self.sbml_fname, self.image_fname]:
             if os.path.isfile(i):
                 os.remove(i)
 
