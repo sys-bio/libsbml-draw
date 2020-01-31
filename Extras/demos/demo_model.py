@@ -21,7 +21,7 @@ sl._describeReaction(0)
 sl.setNodeEdgeWidth("all", 2)
 
 out_file = "model_out.xml"        
-sl.writeSBMLFile("model_out.xml")
+sl.writeSBML("model_out.xml")
 
 sl2 = SBMLlayout(out_file)
 

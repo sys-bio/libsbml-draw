@@ -17,6 +17,7 @@ Example of using a preconfigured style:
     import os
     from libsbml_draw import SBMLlayout
     from libsbml_draw.styles import Style, black_and_white
+    from libsbml_draw.utils import biomodels_download
 
     model_id = 'BIOMD0000000096'
 
@@ -34,6 +35,8 @@ Example of using a preconfigured style:
     # write the newly generated layout and rendering information back to the
     # sbml model
     s.writeSBML(fname)
+
+
 
 An example of creating your own style:
 

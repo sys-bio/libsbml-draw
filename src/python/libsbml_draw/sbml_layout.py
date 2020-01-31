@@ -770,7 +770,7 @@ class SBMLlayout:
                                                 self._h_layout_info, 1)
         return sbml_string
 
-    def writeSBMLFile(self, out_file_name):
+    def writeSBML(self, out_file_name):
         """Writes the model as an SBML file.
 
         Args:
@@ -2364,5 +2364,5 @@ class SBMLlayout:
                 raise TypeError('The "style" argument should be of type '
                                 '"_AttributeSet" but got {} instead'.format(type(v)))
 
-            v.set_values(self)
+            v.set_attribute_values(self)
         return

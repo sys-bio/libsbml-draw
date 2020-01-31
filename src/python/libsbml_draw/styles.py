@@ -8,28 +8,51 @@ class _AttributeSet:
     arguments.
 
     Only attributes that are present as class attributes
-    may be accessed either by dot notation `'.' or get
+    may be accessed either by dot notation `'.'` or get
     notation `dct['x']`. Attempts to add new items will cause
     errors, with information about which attributes the dictionary
     is allowed to take.
 
+    Subclasses can also use the _func_map dictionary which is a mapping
+    between attributes in the _AttributeSet and callable functions/methods in
+    an object that you want to apply the Attributes to.
+
+    Examples
+    --------
+
+    This example is intended for use with an instance of SBMLLayout
+
     .. code-block
 
-        class Items(_AttributeSet):
-            pen='blue'
-            size=20
+        class _Font(_AttributeSet):
+            color = '#000000'
+            family = 'Arial'
+            name = 'Arial'
+            size = 20
+            style = 'normal'
+            weight = 'normal'
 
-    >>> items = Items()
-    >>> items['size']
-    20
-    >>> items.size
-    20
-    >>> items['pencil'] # oops
+            _func_map = dict(
+                color='setNodeFontColor',
+                family='setNodeFontFamily',
+                name='setNodeFontName',
+                size='setNodeFontSize',
+                style='setNodeFontStyle',
+                weight='setNodeFontWeight',
+                target='getNodeIds'
+            )
+
+    At the moment the _Font object only stores information. To apply these attributes we call the
+    :py:meth:`_AttributeSet.set_attribute_values` method.
+
+        >>> s = SBMLLayout('path_to_sbml.xml') # instantiate object which contains attributes you want to control
+        >>> font_attributes = _Font() # instantiate the _AttributeSet
+        >>> font_attributes.set_attribute_values(s) # apply the new values of the attributes
 
     """
     # subclasses must implement their own _func_map and target_list
-    _func_map = dict(
-        target=None)  # a map between uable pythonic names for attributes and method that will set the attribute
+    # a map between useable pythonic names for attributes and method that will set the attribute
+    _func_map = dict(target=None)
 
     def __init__(self):
         if not hasattr(self, '_func_map'):
@@ -74,12 +97,27 @@ class _AttributeSet:
     def items(self):
         return self.__dict__.items()
 
-    def set_values(self, sbml_layout):
+    def set_attribute_values(self, obj):
         """
-        generic method for setting attributes using the settings ValidatedDict.
+        Construct for setting the values held as attributes inside
+        the _AttributeSet.
+
+        The `obj` argument is an instantiated object
+        for the class that you want to set the attributes of.
+        Uses the `_func_map` keyword for a mapping between attributes in this
+        _AttributeSet and methods/functions in `cls`. The _func_map also has a 'target'
+        key. The value of 'target' is a function that returns a list of objects to
+        apply the attributes to.
+
+        .. warning:
+
+            Ensure you have implemented a _func_map dictionary in subclasses
+            and that keys are the attributes (str) you have in the _AttributeSet and
+            the values (str) map those attributes to a method/function in `obj` you
+            want to call to set that attribute.
+
         Args:
-            vdict: a validated dict,
-            attribute:
+            obj: an instance of an object that the attributes contained inside this _AttributeSet belong to.
 
         Returns:
 
@@ -87,10 +125,14 @@ class _AttributeSet:
         for k, v in self.items():
             # exclude _func_dict and target
             if not k.startswith('_') and k != 'target':
-                func = getattr(sbml_layout, self._func_map[k])
-                assert callable(func)
-                target_func = getattr(sbml_layout, self._func_map['target'])
-                assert callable(target_func)
+                func = getattr(obj, self._func_map[k])
+                if not callable(func):
+                    raise AttributeError(f'Object of type {type(obj)} does not have a '
+                                         f'a callable method called {self._func_map[k]}')
+                target_func = getattr(obj, self._func_map['target'])
+                if not callable(target_func):
+                    raise AttributeError(f'Object of type {type(obj)} does not have a '
+                                         f'a callable target method called {self._func_map["target"]}')
                 [func(i, v) for i in target_func()]
 
 
