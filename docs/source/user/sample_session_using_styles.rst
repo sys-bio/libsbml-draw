@@ -1,6 +1,6 @@
-#######################
-# Example using Styles#
-#######################
+####################
+Example using Styles
+####################
 
 :py:class:`styles.Style` provide a higher level mechanism for controlling
 figure aesthetics. You can use a preconfigured style or configure your own.
