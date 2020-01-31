@@ -68,8 +68,8 @@ class _AttributeSet:
 
     def _error_message(self, k):
         return f'Key "{k}" is not a valid key ' \
-            f'for {self.__class__.__name__}. These are ' \
-            f'valid keys: "{list(self.__dict__.keys())}"'
+               f'for {self.__class__.__name__}. These are ' \
+               f'valid keys: "{list(self.__dict__.keys())}"'
 
     def __setitem__(self, key, value):
         if key not in self.__dict__.keys():
@@ -122,17 +122,16 @@ class _AttributeSet:
         Returns:
 
         """
-        print('items', self.keys())
         for k, v in self.items():
             # exclude _func_dict and target
-            print("doing ", self.__class__.__name__, k, v)
             if not k.startswith('_') and k != 'target':
                 # get the necessary attribute from obj
                 try:
                     func = getattr(obj, self._func_map[k])
                 except KeyError:
                     raise AttributeError(f'Object of type {type(obj)} does not have a '
-                                         f'a callable method called {self._func_map[k]}')
+                                         f'a callable method called "{k}". '
+                                         f'These keys are valid: {[i for i in self.keys() if not i.startswith("_")]}')
 
                 # target_func can sometimes be None
                 if self._func_map['target'] is None:
@@ -144,7 +143,6 @@ class _AttributeSet:
                     except AttributeError:
                         raise AttributeError(f'Object of type {type(obj)} does not have a '
                                              f'a callable target method called {self._func_map["target"]}')
-
 
                     # now actually call the function on the targets
                     [func(i, v) for i in target_func()]
@@ -186,11 +184,13 @@ class _Node(_AttributeSet):
 
 class _Edge(_AttributeSet):
     width = 3
-    color = '#0000ff'
+    edgecolor = '#0000ff'
+    fillcolor = '#0000ff'
 
     _func_map = dict(
         width='setReactionCurveWidth',
-        color='setReactionEdgeColor',
+        edgecolor='setReactionEdgeColor',
+        fillcolor='setReactionFillColor',
         target='getReactionIds'
     )
 
@@ -207,14 +207,23 @@ class _Compartments(_AttributeSet):
         target='getCompartmentIds'
     )
 
+
 class _Background(_AttributeSet):
     color = '#ffffff'
 
     _func_map = dict(
         color='setNetworkBackgroundColor',
-        target=None # no target necessary for background color
+        target=None  # no target necessary for background color
     )
 
+
+class _ArrowHead(_AttributeSet):
+    scale = 10
+
+    _func_map = dict(
+        scale='setArrowheadScale',
+        target='getRoles'
+    )
 
 
 class Style(_AttributeSet):
@@ -222,8 +231,9 @@ class Style(_AttributeSet):
     Store aesthetic preference options and pass
     them to :py:class:`sbml_layout.SBMLlayout`
 
-    A Style has five main characteristics that
-    can be changed: edge, node, compartment, font and background. These
+    A Style a few main characteristics that
+    can be changed: edge, node, compartment,
+    font, background and arrow. These
     attributes themselves have the following attributes:
 
     - font:
@@ -247,13 +257,15 @@ class Style(_AttributeSet):
         - linewidth
     - background
         - color
+    - arrow
+        - scale
     """
     node = _Node()
     font = _Font()
     compartment = _Compartments()
     edge = _Edge()  # applied to all edges
     background = _Background()
-
+    arrow = _ArrowHead()
 
 
 def black_and_white():
@@ -275,5 +287,32 @@ def black_and_white():
     return s
 
 
+def blue():
+    s = Style()
 
+    # edge attributes
+    s.edge.edgecolor = 'black'
+    s.edge.fillcolor = 'black'
+    s.edge.width = 15
+
+    # font attributes
+    s.font.color = 'black'
+    s.font.size = 35
+    s.font.weight = 'bold'
+
+    # node attributes
+    s.node.fillcolor = '#1fd6ff'
+    s.node.edgewidth = 15
+
+    # compartment attributes
+    s.compartment.edgecolor = 'black'
+    s.compartment.linewidth = 20
+
+    # background attributes
+    s.background.color = '#def9ff'
+
+    # arrow attributes
+    s.arrow.scale = 100
+
+    return s
 

@@ -1372,8 +1372,6 @@ class SBMLlayout:
 
         Returns: None
         """
-        print('called setNodeFontSize')
-
         property_type = "font_size"
 
         self._setNodeBasedOnId(node_id, font_size, property_type)
@@ -2289,6 +2287,10 @@ class SBMLlayout:
         Returns: str
         """
         return libsbml.writeSBMLToString(self._doc)
+
+
+    def getRoles(self):
+        return [i for i in range(len(sbnw.ROLES))]
 
     def setArrowheadScale(self, role, arrowhead_scale):
         """Set a value for matplotlib's mutation_scale to change the
