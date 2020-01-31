@@ -125,12 +125,14 @@ class _AttributeSet:
         for k, v in self.items():
             # exclude _func_dict and target
             if not k.startswith('_') and k != 'target':
-                func = getattr(obj, self._func_map[k])
-                if not callable(func):
+                try:
+                    func = getattr(obj, self._func_map[k])
+                except KeyError:
                     raise AttributeError(f'Object of type {type(obj)} does not have a '
                                          f'a callable method called {self._func_map[k]}')
-                target_func = getattr(obj, self._func_map['target'])
-                if not callable(target_func):
+                try:
+                    target_func = getattr(obj, self._func_map['target'])
+                except AttributeError:
                     raise AttributeError(f'Object of type {type(obj)} does not have a '
                                          f'a callable target method called {self._func_map["target"]}')
                 [func(i, v) for i in target_func()]
@@ -156,13 +158,11 @@ class _Font(_AttributeSet):
 
 
 class _Node(_AttributeSet):
-    color = r'#c9e0fb'
     edgecolor = r'#0000ff'
     edgewidth = 3
     fillcolor = r'#c9e0fb'
 
     _func_map = dict(
-        color='setNodeColor',
         edgecolor='setNodeEdgeColor',
         edgewidth='setNodeEdgeWidth',
         fillcolor='setNodeFillColor',
@@ -213,7 +213,6 @@ class Style(_AttributeSet):
         - style
         - weight
     - node
-        - color
         - edgecolor
         - edgewidth
         - fillcolor

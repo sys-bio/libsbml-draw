@@ -853,6 +853,9 @@ class SBMLlayout:
 
         Returns: None
         """
+        if compartment_id not in self.getCompartmentIds():
+            raise AttributeError(f'Compartment id {compartment_id} does not exist. These '
+                                 f'are your compartment ids: {self.getCompartmentIds()}')
 
         if property_type == "fill":
             self._network.compartments[compartment_id].fill_color = to_hex(

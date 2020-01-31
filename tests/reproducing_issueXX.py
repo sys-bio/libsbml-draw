@@ -10,10 +10,10 @@ from libsbml_draw.utils import biomodels_download
 
 def my_style():
     s = Style()
-    s.node.edgewidth = 4
+    s.node.edgewidth = 15
     s.font.size = 25
     s.font.color = 'green'
-    s.node.color = 'red'
+    s.node.fillcolor = 'black'
     s.edge.color = 'black'
     s.compartment.edgecolor = 'black'
     return s
@@ -28,6 +28,13 @@ biomodels_download(model_id, fname)
 
 # Use a preconfigured style directly out of the box
 s = SBMLlayout(fname, style=my_style)
+
+# s.setNodeColor('all', 'black')
+# s.setNodeEdgeWidth('all', 10)
+# s.setNodeFontColor('all', 'green')
+# s.setNodeFontSize('all', 30)
+# s.setReactionEdgeColor('all', 'orange')
+# s.setCompartmentEdgeColor('cytoplasm', 'green')
 
 # draw the network
 s.drawNetwork(model_id + ".png")
