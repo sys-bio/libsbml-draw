@@ -1,6 +1,6 @@
 import site
 import os
-site.addpackage(os.path.dirname(__file__))
+site.addsitedir(os.path.dirname(__file__))
 import unittest
 
 from add_to_path import add_to_path
