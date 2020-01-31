@@ -10,12 +10,13 @@ from libsbml_draw.utils import biomodels_download
 
 def my_style():
     s = Style()
-    s.node.edgewidth = 15
-    s.font.size = 25
-    s.font.color = 'green'
-    s.node.fillcolor = 'black'
     s.edge.color = 'black'
+    s.font.color = 'green'
+    s.node.edgewidth = 15
+    s.font.size = 30
+    s.node.fillcolor = 'black'
     s.compartment.edgecolor = 'black'
+    s.background.color = 'red'
     return s
 
 
@@ -27,16 +28,12 @@ fname = model_id + '.xml'
 biomodels_download(model_id, fname)
 
 # Use a preconfigured style directly out of the box
-s = SBMLlayout(fname, style=my_style)
-
-# s.setNodeColor('all', 'black')
-# s.setNodeEdgeWidth('all', 10)
-# s.setNodeFontColor('all', 'green')
+s = SBMLlayout(fname, style=my_style())
+# s = SBMLlayout(fname, style=None)
 # s.setNodeFontSize('all', 30)
-# s.setReactionEdgeColor('all', 'orange')
-# s.setCompartmentEdgeColor('cytoplasm', 'green')
 
 # draw the network
+# s.setNodeFontSize('receptor', 15)
 s.drawNetwork(model_id + ".png")
 
 # write the newly generated layout and rendering information back to the
@@ -45,6 +42,13 @@ s.drawNetwork(model_id + ".png")
 
 
 
+
+# s.setNodeColor('all', 'black')
+# s.setNodeEdgeWidth('all', 10)
+# s.setNodeFontColor('all', 'green')
+# s.setNodeFontSize('all', 30)
+# s.setReactionEdgeColor('all', 'orange')
+# s.setCompartmentEdgeColor('cytoplasm', 'green')
 
 
 

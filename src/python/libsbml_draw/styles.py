@@ -122,20 +122,32 @@ class _AttributeSet:
         Returns:
 
         """
+        print('items', self.keys())
         for k, v in self.items():
             # exclude _func_dict and target
+            print("doing ", self.__class__.__name__, k, v)
             if not k.startswith('_') and k != 'target':
+                # get the necessary attribute from obj
                 try:
                     func = getattr(obj, self._func_map[k])
                 except KeyError:
                     raise AttributeError(f'Object of type {type(obj)} does not have a '
                                          f'a callable method called {self._func_map[k]}')
-                try:
-                    target_func = getattr(obj, self._func_map['target'])
-                except AttributeError:
-                    raise AttributeError(f'Object of type {type(obj)} does not have a '
-                                         f'a callable target method called {self._func_map["target"]}')
-                [func(i, v) for i in target_func()]
+
+                # target_func can sometimes be None
+                if self._func_map['target'] is None:
+                    func(v)
+                else:
+                    # get target function from obj
+                    try:
+                        target_func = getattr(obj, self._func_map['target'])
+                    except AttributeError:
+                        raise AttributeError(f'Object of type {type(obj)} does not have a '
+                                             f'a callable target method called {self._func_map["target"]}')
+
+
+                    # now actually call the function on the targets
+                    [func(i, v) for i in target_func()]
 
 
 class _Font(_AttributeSet):
@@ -195,14 +207,23 @@ class _Compartments(_AttributeSet):
         target='getCompartmentIds'
     )
 
+class _Background(_AttributeSet):
+    color = '#ffffff'
+
+    _func_map = dict(
+        color='setNetworkBackgroundColor',
+        target=None # no target necessary for background color
+    )
+
+
 
 class Style(_AttributeSet):
     """
     Store aesthetic preference options and pass
     them to :py:class:`sbml_layout.SBMLlayout`
 
-    A Style has four main characteristics that
-    can be changed: edge, node, compartment and font. These
+    A Style has five main characteristics that
+    can be changed: edge, node, compartment, font and background. These
     attributes themselves have the following attributes:
 
     - font:
@@ -224,11 +245,14 @@ class Style(_AttributeSet):
         - edgecolor
         - fillcolor
         - linewidth
+    - background
+        - color
     """
     node = _Node()
     font = _Font()
     compartment = _Compartments()
     edge = _Edge()  # applied to all edges
+    background = _Background()
 
 
 
@@ -247,6 +271,7 @@ def black_and_white():
     s.node.edgewidth = 10
     s.font.size = 25
     s.edge.width = 5
+    s.background.color = 'white'
     return s
 
 

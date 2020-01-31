@@ -1165,9 +1165,8 @@ class SBMLlayout:
                 property_type)
 
         else:
-            raise ValueError(f"Invalid input for node_id: {node_id}. _Node id"
-                             f"must be a Species id, a list of Species ids, or"
-                             f"a node keyword ({SBMLlayout.NODE_KEYWORDS}).")
+            raise ValueError(f"Invalid node id: '{node_id}'. Nodes must be a species Id : {self.getNodeIds()}, or a "
+                             f"node keyword: {SBMLlayout.NODE_KEYWORDS}")
 
     def setNodeColor(self, node_id, node_color):
         """
@@ -1373,6 +1372,8 @@ class SBMLlayout:
 
         Returns: None
         """
+        print('called setNodeFontSize')
+
         property_type = "font_size"
 
         self._setNodeBasedOnId(node_id, font_size, property_type)
@@ -1545,6 +1546,9 @@ class SBMLlayout:
 
         Returns: None
         """
+        if font_weight not in ['normal', 'bold']:
+            raise AttributeError(f'Font weight "{font_weight}" is invalid. Options '
+                                 f'are either "normal" or "bold"')
         self._validateFontWeight(font_weight)
 
         property_type = "font_weight"
