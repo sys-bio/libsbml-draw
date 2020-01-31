@@ -18,7 +18,8 @@ import codecs
 class TestWorksWithBioModels(unittest.TestCase):
     base_url = "https://www.ebi.ac.uk/biomodels-main/download?mid"
     model_id = 'BIOMD0000000091'
-    sbml_fname = os.path.join(os.path.dirname(__file__), 'sbmlmodel.sbml')
+    sbml_fname = os.path.join(os.path.dirname(__file__), 'sbmlmodel.xml')
+    sbml_layout_fname = os.path.join(os.path.dirname(__file__), 'sbmlmodel_with_layout.xml')
     image_fname = os.path.join(os.path.dirname(__file__), 'network.png')
     expected_number_of_compartments = 0
     expected_number_of_nodes = 16
@@ -34,7 +35,7 @@ class TestWorksWithBioModels(unittest.TestCase):
         return sbml
 
     def tearDown(self) -> None:
-        for i in [self.sbml_fname, self.image_fname]:
+        for i in [self.sbml_fname, self.image_fname, self.sbml_layout_fname]:
             if os.path.isfile(i):
                 os.remove(i)
 
@@ -67,9 +68,15 @@ class TestWorksWithBioModels(unittest.TestCase):
         self.assertEqual(self.expected_number_of_reactions, described['number_of_reactions'])
 
     def test_draw_network_and_save_to_pdf(self):
-        self.sl = SBMLlayout(self.sbml_fname, applyRender=False)
+        self.sl = SBMLlayout(self.sbml_fname)
         self.sl.drawNetwork(self.image_fname, show=False, scaling_factor=1.0)
         self.assertTrue(os.path.isfile(self.image_fname))
+
+    def test_save_sbml_to_file(self):
+        self.sl = SBMLlayout(self.sbml_fname)
+        self.sl.drawNetwork(self.image_fname, show=False, scaling_factor=1.0)
+        self.sl.writeSBMLFile(self.sbml_layout_fname)
+        self.assertTrue(os.path.isfile(self.sbml_layout_fname))
 
 
 class TestBioMD0000000011(TestWorksWithBioModels):

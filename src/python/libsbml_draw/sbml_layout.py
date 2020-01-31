@@ -770,7 +770,7 @@ class SBMLlayout:
                                                 self._h_layout_info, 1)
         return sbml_string
 
-    def writeSBML(self, out_file_name):
+    def writeSBMLFile(self, out_file_name):
         """Writes the model as an SBML file.
 
         Args:

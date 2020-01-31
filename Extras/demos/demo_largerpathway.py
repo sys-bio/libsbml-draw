@@ -34,7 +34,7 @@ for node in sl._SBMLlayout__network.nodes.values():
     print("node fs: ", node.font_size, node.font_family)
       
     
-sl.writeSBML("largerpathway_out.xml")
+sl.writeSBMLFile("largerpathway_out.xml")
     
 #sl.drawNetwork(scaling_factor=.5)
     

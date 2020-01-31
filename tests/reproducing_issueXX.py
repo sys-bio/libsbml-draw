@@ -41,7 +41,7 @@ def my_style():
     return s
 
 
-model_id = 'BIOMD0000000112'
+model_id = 'BIOMD0000000001'
 
 fname = model_id + '.xml'
 
@@ -49,25 +49,46 @@ fname = model_id + '.xml'
 biomodels_download(model_id, fname)
 
 # Use a preconfigured style directly out of the box
-s = SBMLlayout(fname, style=my_style())
-# s = SBMLlayout(fname, style=None)
-# s.setNodeFontSize('all', 30)
+s = SBMLlayout(fname, style=None, applyRender=False)
 
-# draw the network
-# s.setNodeFontSize('receptor', 15)
-# print(s.getRoles())
-# [s.setArrowheadScale(i, 25) for i in s.getRoles()]
-# [s.setArrowheadStyle(i, 4) for i in s.getRoles()]
 s.drawNetwork(model_id + ".png")
 
-# write the newly generated layout and rendering information back to the
-# sbml model
-# s.writeSBML(fname)
+
+# x = s.getBoundarySpeciesIds()
+# print(x)
+# '''
+# <species boundaryCondition="true" compartment="cell" hasOnlySubstanceUnits="true" id="R5P"
+#     initialAmount="18" metaid="metaid_0000020" name="ribose-5-phosphate">
+# '''
+# expected = ['ribose-5-phosphate']
+#
+# # # draw the network
+# s.drawNetwork(model_id + ".png")
+#
+# # write the newly generated layout and rendering information back to the
+# # sbml model
+# s.writeSBMLFile(fname)
 
 
-# s.setNodeColor('all', 'black')
-# s.setNodeEdgeWidth('all', 10)
-# s.setNodeFontColor('all', 'green')
-# s.setNodeFontSize('all', 30)
-# s.setReactionEdgeColor('all', 'orange')
-# s.setCompartmentEdgeColor('cytoplasm', 'green')
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

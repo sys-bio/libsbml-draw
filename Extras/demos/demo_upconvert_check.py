@@ -17,7 +17,7 @@ sl.describeModel()
 sl.drawNetwork()
 
 
-sl.writeSBML("fixed.xml")
+sl.writeSBMLFile("fixed.xml")
 
 
 

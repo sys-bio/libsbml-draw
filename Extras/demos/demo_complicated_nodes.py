@@ -49,7 +49,7 @@ sl.drawNetwork("complicated_nodes.png")
 
 out_file = "complicated_nodes_out.xml"    
     
-sl.writeSBML("complicated_nodes_out.xml")
+sl.writeSBMLFile("complicated_nodes_out.xml")
 
 
 #sl2 = SBMLlayout(out_file, fitToWindow=(0.,0.,500.,500.))

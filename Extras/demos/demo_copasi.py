@@ -47,7 +47,7 @@ print("new model file: ", new_model_file)
 
 sl.addRenderInformation()
 
-sl.writeSBML(new_model_file)
+sl.writeSBMLFile(new_model_file)
 
 sl_apply = SBMLlayout(new_model_file)
 
@@ -66,7 +66,7 @@ local_model_file = model_dir + "render_had_local_already.xml"
 
 sl_apply.addRenderInformation()
 
-sl_apply.writeSBML(local_model_file)
+sl_apply.writeSBMLFile(local_model_file)
 
 sl_local = SBMLlayout(local_model_file)
 

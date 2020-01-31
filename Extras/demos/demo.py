@@ -58,7 +58,7 @@ sl.drawNetwork()
 # draw network
 #sl.drawNetwork()
 render_sbml_file_name = "C:\\tmp\\render_sbml.xml"
-sl.writeSBML(render_sbml_file_name)
+sl.writeSBMLFile(render_sbml_file_name)
 
 print("apply render info")
 sl._applyRenderInformation()

@@ -89,7 +89,7 @@ print("A: text anchor: ", sl.getNodeTextAnchor("A"))
 print("B: vtext anchor: ", sl.getNodeVTextAnchor("B"))
 
 
-sl.writeSBML("model_simple_out.xml")
+sl.writeSBMLFile("model_simple_out.xml")
 
 
 
