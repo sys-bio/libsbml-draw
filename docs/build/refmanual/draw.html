@@ -35,8 +35,7 @@
   <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
     <link rel="index" title="Index" href="../genindex.html" />
     <link rel="search" title="Search" href="../search.html" />
-    <link rel="next" title="Python Bindings for C API" href="python_api.html" />
-    <link rel="prev" title="C API" href="c_api.html" /> 
+    <link rel="next" title="Python Bindings for C API" href="python_api.html" /> 
 </head>
 
 <body class="wy-body-for-nav">
@@ -85,9 +84,8 @@
 <li class="toctree-l1"><a class="reference internal" href="../user/user.html">User Manual</a></li>
 <li class="toctree-l1 current"><a class="reference internal" href="refmanual.html">Reference Manual</a><ul class="current">
 <li class="toctree-l2"><a class="reference internal" href="model.html">SBML Model Representation</a></li>
-<li class="toctree-l2"><a class="reference internal" href="c_api.html">C API</a></li>
 <li class="toctree-l2 current"><a class="current reference internal" href="#">Draw the SBML Model</a><ul>
-<li class="toctree-l3"><a class="reference internal" href="#module-libsbml_draw.draw.draw_network">Draw the network</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#module-libsbml_draw.draw_network">Draw the network</a></li>
 </ul>
 </li>
 <li class="toctree-l2"><a class="reference internal" href="python_api.html">Python Bindings for C API</a></li>
@@ -162,13 +160,13 @@
             
   <div class="section" id="draw-the-sbml-model">
 <span id="draw"></span><h1>Draw the SBML Model<a class="headerlink" href="#draw-the-sbml-model" title="Permalink to this headline">¶</a></h1>
-<div class="section" id="module-libsbml_draw.draw.draw_network">
-<span id="draw-the-network"></span><h2>Draw the network<a class="headerlink" href="#module-libsbml_draw.draw.draw_network" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="module-libsbml_draw.draw_network">
+<span id="draw-the-network"></span><h2>Draw the network<a class="headerlink" href="#module-libsbml_draw.draw_network" title="Permalink to this headline">¶</a></h2>
 <p>Draw the SBML model’s network which consists of compartments, nodes and
 reactions.</p>
 <dl class="function">
-<dt id="libsbml_draw.draw.draw_network.draw_compartments">
-<code class="sig-prename descclassname">libsbml_draw.draw.draw_network.</code><code class="sig-name descname">draw_compartments</code><span class="sig-paren">(</span><em class="sig-param">compartments</em>, <em class="sig-param">fig</em>, <em class="sig-param">scaling_factor</em>, <em class="sig-param">nw_height_inches</em><span class="sig-paren">)</span><a class="headerlink" href="#libsbml_draw.draw.draw_network.draw_compartments" title="Permalink to this definition">¶</a></dt>
+<dt id="libsbml_draw.draw_network.draw_compartments">
+<code class="sig-prename descclassname">libsbml_draw.draw_network.</code><code class="sig-name descname">draw_compartments</code><span class="sig-paren">(</span><em class="sig-param">compartments</em>, <em class="sig-param">fig</em>, <em class="sig-param">scaling_factor</em>, <em class="sig-param">nw_height_inches</em><span class="sig-paren">)</span><a class="headerlink" href="#libsbml_draw.draw_network.draw_compartments" title="Permalink to this definition">¶</a></dt>
 <dd><p>Create a list of FancyBbox Patches, one for each compartment.</p>
 <dl>
 <dt>Args:</dt><dd><dl class="simple">
@@ -187,8 +185,8 @@ scaling_factor (float): scaling_factor to decrease or increase the</p>
 </dd></dl>
 
 <dl class="function">
-<dt id="libsbml_draw.draw.draw_network.draw_nodes">
-<code class="sig-prename descclassname">libsbml_draw.draw.draw_network.</code><code class="sig-name descname">draw_nodes</code><span class="sig-paren">(</span><em class="sig-param">nodes</em>, <em class="sig-param">fig</em>, <em class="sig-param">scaling_factor</em>, <em class="sig-param">nw_height_inches</em><span class="sig-paren">)</span><a class="headerlink" href="#libsbml_draw.draw.draw_network.draw_nodes" title="Permalink to this definition">¶</a></dt>
+<dt id="libsbml_draw.draw_network.draw_nodes">
+<code class="sig-prename descclassname">libsbml_draw.draw_network.</code><code class="sig-name descname">draw_nodes</code><span class="sig-paren">(</span><em class="sig-param">nodes</em>, <em class="sig-param">fig</em>, <em class="sig-param">scaling_factor</em>, <em class="sig-param">nw_height_inches</em><span class="sig-paren">)</span><a class="headerlink" href="#libsbml_draw.draw_network.draw_nodes" title="Permalink to this definition">¶</a></dt>
 <dd><p>Create a list of FancyBbox Patches, one for each node.</p>
 <dl>
 <dt>Args:</dt><dd><p>nodes (iterable collection of _Node): collection of nodes
@@ -204,8 +202,8 @@ scaling_factor (float): scaling_factor to decrease or increase the</p>
 </dd></dl>
 
 <dl class="function">
-<dt id="libsbml_draw.draw.draw_network.rotate_point">
-<code class="sig-prename descclassname">libsbml_draw.draw.draw_network.</code><code class="sig-name descname">rotate_point</code><span class="sig-paren">(</span><em class="sig-param">point</em>, <em class="sig-param">angle_deg</em>, <em class="sig-param">center_point=(0</em>, <em class="sig-param">0)</em><span class="sig-paren">)</span><a class="headerlink" href="#libsbml_draw.draw.draw_network.rotate_point" title="Permalink to this definition">¶</a></dt>
+<dt id="libsbml_draw.draw_network.rotate_point">
+<code class="sig-prename descclassname">libsbml_draw.draw_network.</code><code class="sig-name descname">rotate_point</code><span class="sig-paren">(</span><em class="sig-param">point</em>, <em class="sig-param">angle_deg</em>, <em class="sig-param">center_point=(0</em>, <em class="sig-param">0)</em><span class="sig-paren">)</span><a class="headerlink" href="#libsbml_draw.draw_network.rotate_point" title="Permalink to this definition">¶</a></dt>
 <dd><p>Rotate an (x, y) point counter-clockwise, after centering the point
 around (0,0).</p>
 <dl>
@@ -221,8 +219,8 @@ center_point (2-tuple (x, y)): center point of the polygon that the</p>
 </dd></dl>
 
 <dl class="function">
-<dt id="libsbml_draw.draw.draw_network.draw_reactions">
-<code class="sig-prename descclassname">libsbml_draw.draw.draw_network.</code><code class="sig-name descname">draw_reactions</code><span class="sig-paren">(</span><em class="sig-param">reactions</em>, <em class="sig-param">mutation_scale</em>, <em class="sig-param">fig</em>, <em class="sig-param">scaling_factor</em>, <em class="sig-param">nw_height_inches</em>, <em class="sig-param">line_endings</em><span class="sig-paren">)</span><a class="headerlink" href="#libsbml_draw.draw.draw_network.draw_reactions" title="Permalink to this definition">¶</a></dt>
+<dt id="libsbml_draw.draw_network.draw_reactions">
+<code class="sig-prename descclassname">libsbml_draw.draw_network.</code><code class="sig-name descname">draw_reactions</code><span class="sig-paren">(</span><em class="sig-param">reactions</em>, <em class="sig-param">mutation_scale</em>, <em class="sig-param">fig</em>, <em class="sig-param">scaling_factor</em>, <em class="sig-param">nw_height_inches</em>, <em class="sig-param">line_endings</em><span class="sig-paren">)</span><a class="headerlink" href="#libsbml_draw.draw_network.draw_reactions" title="Permalink to this definition">¶</a></dt>
 <dd><p>Create a list of FancyArrow Patches, one for each curve in a reaction.</p>
 <dl>
 <dt>Args:</dt><dd><p>reactions (iterable collection of Reaction): collection of reactions
@@ -237,14 +235,14 @@ scaling_factor (float): scaling_factor to decrease or increase the</p>
 </dd></dl>
 
 <dl class="function">
-<dt id="libsbml_draw.draw.draw_network.create_rectangle_line_ending_patch">
-<code class="sig-prename descclassname">libsbml_draw.draw.draw_network.</code><code class="sig-name descname">create_rectangle_line_ending_patch</code><span class="sig-paren">(</span><em class="sig-param">curve</em>, <em class="sig-param">line_ending</em>, <em class="sig-param">scaling_factor</em>, <em class="sig-param">nw_height_inches</em>, <em class="sig-param">fig</em><span class="sig-paren">)</span><a class="headerlink" href="#libsbml_draw.draw.draw_network.create_rectangle_line_ending_patch" title="Permalink to this definition">¶</a></dt>
+<dt id="libsbml_draw.draw_network.create_rectangle_line_ending_patch">
+<code class="sig-prename descclassname">libsbml_draw.draw_network.</code><code class="sig-name descname">create_rectangle_line_ending_patch</code><span class="sig-paren">(</span><em class="sig-param">curve</em>, <em class="sig-param">line_ending</em>, <em class="sig-param">scaling_factor</em>, <em class="sig-param">nw_height_inches</em>, <em class="sig-param">fig</em><span class="sig-paren">)</span><a class="headerlink" href="#libsbml_draw.draw_network.create_rectangle_line_ending_patch" title="Permalink to this definition">¶</a></dt>
 <dd><p>Creates a patch for a line ending which has the shape of a rectangle</p>
 <dl>
 <dt>Args:</dt><dd><p>curve (libsbml_draw.network.Curve): curve needing a line ending
-line_ending (3-tuple containing (line ending type, data for drawing,</p>
+line_ending (3-tuple containing (line ending type, libs for drawing,</p>
 <blockquote>
-<div><p>bounding box data)): the line ending data for the curve</p>
+<div><p>bounding box libs)): the line ending libs for the curve</p>
 </div></blockquote>
 <dl class="simple">
 <dt>scaling_factor (float): scaling_factor to decrease or increase the</dt><dd><p>figure size</p>
@@ -258,14 +256,14 @@ fig (matplotlib.figure.Figure): the figure of the network</p>
 </dd></dl>
 
 <dl class="function">
-<dt id="libsbml_draw.draw.draw_network.create_ellipse_line_ending_patch">
-<code class="sig-prename descclassname">libsbml_draw.draw.draw_network.</code><code class="sig-name descname">create_ellipse_line_ending_patch</code><span class="sig-paren">(</span><em class="sig-param">curve</em>, <em class="sig-param">line_ending</em>, <em class="sig-param">scaling_factor</em>, <em class="sig-param">nw_height_inches</em>, <em class="sig-param">fig</em><span class="sig-paren">)</span><a class="headerlink" href="#libsbml_draw.draw.draw_network.create_ellipse_line_ending_patch" title="Permalink to this definition">¶</a></dt>
+<dt id="libsbml_draw.draw_network.create_ellipse_line_ending_patch">
+<code class="sig-prename descclassname">libsbml_draw.draw_network.</code><code class="sig-name descname">create_ellipse_line_ending_patch</code><span class="sig-paren">(</span><em class="sig-param">curve</em>, <em class="sig-param">line_ending</em>, <em class="sig-param">scaling_factor</em>, <em class="sig-param">nw_height_inches</em>, <em class="sig-param">fig</em><span class="sig-paren">)</span><a class="headerlink" href="#libsbml_draw.draw_network.create_ellipse_line_ending_patch" title="Permalink to this definition">¶</a></dt>
 <dd><p>Creates a patch for a line ending which has the shape of an ellipse</p>
 <dl>
 <dt>Args:</dt><dd><p>curve (libsbml_draw.network.Curve): curve needing a line ending
-line_ending (3-tuple containing (line ending type, data for drawing,</p>
+line_ending (3-tuple containing (line ending type, libs for drawing,</p>
 <blockquote>
-<div><p>bounding box data)): the line ending data for the curve</p>
+<div><p>bounding box libs)): the line ending libs for the curve</p>
 </div></blockquote>
 <dl class="simple">
 <dt>scaling_factor (float): scaling_factor to decrease or increase the</dt><dd><p>figure size</p>
@@ -279,14 +277,14 @@ fig (matplotlib.figure.Figure): the figure of the network</p>
 </dd></dl>
 
 <dl class="function">
-<dt id="libsbml_draw.draw.draw_network.create_polygon_line_ending_patch">
-<code class="sig-prename descclassname">libsbml_draw.draw.draw_network.</code><code class="sig-name descname">create_polygon_line_ending_patch</code><span class="sig-paren">(</span><em class="sig-param">curve</em>, <em class="sig-param">line_ending</em>, <em class="sig-param">scaling_factor</em>, <em class="sig-param">nw_height_inches</em>, <em class="sig-param">fig</em><span class="sig-paren">)</span><a class="headerlink" href="#libsbml_draw.draw.draw_network.create_polygon_line_ending_patch" title="Permalink to this definition">¶</a></dt>
+<dt id="libsbml_draw.draw_network.create_polygon_line_ending_patch">
+<code class="sig-prename descclassname">libsbml_draw.draw_network.</code><code class="sig-name descname">create_polygon_line_ending_patch</code><span class="sig-paren">(</span><em class="sig-param">curve</em>, <em class="sig-param">line_ending</em>, <em class="sig-param">scaling_factor</em>, <em class="sig-param">nw_height_inches</em>, <em class="sig-param">fig</em><span class="sig-paren">)</span><a class="headerlink" href="#libsbml_draw.draw_network.create_polygon_line_ending_patch" title="Permalink to this definition">¶</a></dt>
 <dd><p>Creates a polygon patch for the line ending.</p>
 <dl>
 <dt>Args:</dt><dd><p>curve (libsbml_draw.network.Curve): curve needing a line ending
-line_ending (3-tuple containing (line ending type, data for drawing,</p>
+line_ending (3-tuple containing (line ending type, libs for drawing,</p>
 <blockquote>
-<div><p>bounding box data)): the line ending data for the curve</p>
+<div><p>bounding box libs)): the line ending libs for the curve</p>
 </div></blockquote>
 <dl class="simple">
 <dt>scaling_factor (float): scaling_factor to decrease or increase the</dt><dd><p>figure size</p>
@@ -300,8 +298,8 @@ fig (matplotlib.figure.Figure): the figure of the network</p>
 </dd></dl>
 
 <dl class="function">
-<dt id="libsbml_draw.draw.draw_network.compute_line_ending_rotation_angle">
-<code class="sig-prename descclassname">libsbml_draw.draw.draw_network.</code><code class="sig-name descname">compute_line_ending_rotation_angle</code><span class="sig-paren">(</span><em class="sig-param">curve</em><span class="sig-paren">)</span><a class="headerlink" href="#libsbml_draw.draw.draw_network.compute_line_ending_rotation_angle" title="Permalink to this definition">¶</a></dt>
+<dt id="libsbml_draw.draw_network.compute_line_ending_rotation_angle">
+<code class="sig-prename descclassname">libsbml_draw.draw_network.</code><code class="sig-name descname">compute_line_ending_rotation_angle</code><span class="sig-paren">(</span><em class="sig-param">curve</em><span class="sig-paren">)</span><a class="headerlink" href="#libsbml_draw.draw_network.compute_line_ending_rotation_angle" title="Permalink to this definition">¶</a></dt>
 <dd><p>Computes the angle in degrees that a line ending would need to be
 rotated in order to align with the slope of the cubic Bezier curve and
 point in the correct direction.</p>
@@ -313,8 +311,8 @@ point in the correct direction.</p>
 </dd></dl>
 
 <dl class="function">
-<dt id="libsbml_draw.draw.draw_network.add_labels">
-<code class="sig-prename descclassname">libsbml_draw.draw.draw_network.</code><code class="sig-name descname">add_labels</code><span class="sig-paren">(</span><em class="sig-param">nodes</em>, <em class="sig-param">fig</em>, <em class="sig-param">scaling_factor</em>, <em class="sig-param">nw_height_inches</em><span class="sig-paren">)</span><a class="headerlink" href="#libsbml_draw.draw.draw_network.add_labels" title="Permalink to this definition">¶</a></dt>
+<dt id="libsbml_draw.draw_network.add_labels">
+<code class="sig-prename descclassname">libsbml_draw.draw_network.</code><code class="sig-name descname">add_labels</code><span class="sig-paren">(</span><em class="sig-param">nodes</em>, <em class="sig-param">fig</em>, <em class="sig-param">scaling_factor</em>, <em class="sig-param">nw_height_inches</em><span class="sig-paren">)</span><a class="headerlink" href="#libsbml_draw.draw_network.add_labels" title="Permalink to this definition">¶</a></dt>
 <dd><p>Add text to the nodes.</p>
 <dl>
 <dt>Args:</dt><dd><p>nodes (iterable collection of _Node): collection of nodes
@@ -329,8 +327,8 @@ scaling_factor (float): scaling_factor to decrease or increase the</p>
 </dd></dl>
 
 <dl class="function">
-<dt id="libsbml_draw.draw.draw_network.get_network_dimensions">
-<code class="sig-prename descclassname">libsbml_draw.draw.draw_network.</code><code class="sig-name descname">get_network_dimensions</code><span class="sig-paren">(</span><em class="sig-param">sbml_layout</em><span class="sig-paren">)</span><a class="headerlink" href="#libsbml_draw.draw.draw_network.get_network_dimensions" title="Permalink to this definition">¶</a></dt>
+<dt id="libsbml_draw.draw_network.get_network_dimensions">
+<code class="sig-prename descclassname">libsbml_draw.draw_network.</code><code class="sig-name descname">get_network_dimensions</code><span class="sig-paren">(</span><em class="sig-param">sbml_layout</em><span class="sig-paren">)</span><a class="headerlink" href="#libsbml_draw.draw_network.get_network_dimensions" title="Permalink to this definition">¶</a></dt>
 <dd><dl class="simple">
 <dt>Compute the plotting width and height in inches needed for the given</dt><dd><p>network.</p>
 </dd>
@@ -341,8 +339,8 @@ scaling_factor (float): scaling_factor to decrease or increase the</p>
 </dd></dl>
 
 <dl class="function">
-<dt id="libsbml_draw.draw.draw_network.createNetworkFigure">
-<code class="sig-prename descclassname">libsbml_draw.draw.draw_network.</code><code class="sig-name descname">createNetworkFigure</code><span class="sig-paren">(</span><em class="sig-param">sbml_layout</em>, <em class="sig-param">arrowhead_mutation_scale</em>, <em class="sig-param">show=True</em>, <em class="sig-param">dpi=72</em>, <em class="sig-param">width_shift=0.25</em>, <em class="sig-param">height_shift=0.25</em>, <em class="sig-param">scaling_factor=1</em><span class="sig-paren">)</span><a class="headerlink" href="#libsbml_draw.draw.draw_network.createNetworkFigure" title="Permalink to this definition">¶</a></dt>
+<dt id="libsbml_draw.draw_network.createNetworkFigure">
+<code class="sig-prename descclassname">libsbml_draw.draw_network.</code><code class="sig-name descname">createNetworkFigure</code><span class="sig-paren">(</span><em class="sig-param">sbml_layout</em>, <em class="sig-param">arrowhead_mutation_scale</em>, <em class="sig-param">show=True</em>, <em class="sig-param">dpi=72</em>, <em class="sig-param">width_shift=0.25</em>, <em class="sig-param">height_shift=0.25</em>, <em class="sig-param">scaling_factor=1</em><span class="sig-paren">)</span><a class="headerlink" href="#libsbml_draw.draw_network.createNetworkFigure" title="Permalink to this definition">¶</a></dt>
 <dd><p>Creates the figure, draws any compartments, draws the nodes,
 draws the reactions, adds text to the nodes.</p>
 <dl>
@@ -382,8 +380,6 @@ figure size by one-half</p>
       
         <a href="python_api.html" class="btn btn-neutral float-right" title="Python Bindings for C API" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
       
-      
-        <a href="c_api.html" class="btn btn-neutral float-left" title="C API" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
       
     </div>
   

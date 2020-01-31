@@ -8,4 +8,3 @@ User Manual
    install
    user_guide
    image_gallery
-   Examples/example

@@ -6,6 +6,6 @@ Reference Manual
    :maxdepth: 2
 
    model
-   c_api
+   sbnw_c_api
    draw
    python_api

@@ -43,11 +43,9 @@ model, and draw the model.
     end
     ''')
     
-    from libsbml_draw.model.sbml_layout import SBMLlayout
+    from libsbml_draw import SBMLlayout
     
     sl = SBMLlayout(r.getSBML())
-    
-    sl._describeModel()
-    
+
     sl.drawNetwork()
 

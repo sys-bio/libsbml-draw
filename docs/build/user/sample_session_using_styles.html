@@ -1,0 +1,260 @@
+
+
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title># Example using Styles# &mdash; libsbml_draw  documentation</title>
+  
+
+  
+  
+  
+  
+
+  
+  <script type="text/javascript" src="../_static/js/modernizr.min.js"></script>
+  
+    
+      <script type="text/javascript" id="documentation_options" data-url_root="../" src="../_static/documentation_options.js"></script>
+        <script type="text/javascript" src="../_static/jquery.js"></script>
+        <script type="text/javascript" src="../_static/underscore.js"></script>
+        <script type="text/javascript" src="../_static/doctools.js"></script>
+        <script type="text/javascript" src="../_static/language_data.js"></script>
+    
+    <script type="text/javascript" src="../_static/js/theme.js"></script>
+
+    
+
+  
+  <link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" /> 
+</head>
+
+<body class="wy-body-for-nav">
+
+   
+  <div class="wy-grid-for-nav">
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+          
+
+          
+            <a href="../index.html" class="icon icon-home"> libsbml_draw
+          
+
+          
+          </a>
+
+          
+            
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <p class="caption"><span class="caption-text">Contents:</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="user.html">User Manual</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../refmanual/refmanual.html">Reference Manual</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../dev/dev.html">Developer Manual</a></li>
+</ul>
+
+            
+          
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../index.html">libsbml_draw</a>
+        
+      </nav>
+
+
+      <div class="wy-nav-content">
+        
+        <div class="rst-content">
+        
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="../index.html">Docs</a> &raquo;</li>
+        
+      <li># Example using Styles#</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+            
+            <a href="../_sources/user/sample_session_using_styles.rst.txt" rel="nofollow"> View page source</a>
+          
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <div class="section" id="example-using-styles">
+<h1># Example using Styles#<a class="headerlink" href="#example-using-styles" title="Permalink to this headline">¶</a></h1>
+<p><code class="xref py py-class docutils literal notranslate"><span class="pre">styles.Style</span></code> provide a higher level mechanism for controlling
+figure aesthetics. You can use a preconfigured style or configure your own.</p>
+<div class="section" id="preconfigured-styles">
+<h2>Preconfigured styles<a class="headerlink" href="#preconfigured-styles" title="Permalink to this headline">¶</a></h2>
+<blockquote>
+<div><ul class="simple">
+<li><p>black_and_white</p></li>
+</ul>
+</div></blockquote>
+<p>Example of using a preconfigured style:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">os</span>
+<span class="kn">from</span> <span class="nn">libsbml_draw</span> <span class="kn">import</span> <span class="n">SBMLlayout</span>
+<span class="kn">from</span> <span class="nn">libsbml_draw.styles</span> <span class="kn">import</span> <span class="n">Style</span><span class="p">,</span> <span class="n">black_and_white</span>
+
+<span class="n">model_id</span> <span class="o">=</span> <span class="s1">&#39;BIOMD0000000096&#39;</span>
+
+<span class="n">fname</span> <span class="o">=</span> <span class="n">model_id</span> <span class="o">+</span> <span class="s1">&#39;.xml&#39;</span>
+
+<span class="c1"># download the model</span>
+<span class="n">biomodels_download</span><span class="p">(</span><span class="n">model_id</span><span class="p">,</span> <span class="n">fname</span><span class="p">)</span>
+
+<span class="c1"># Use a preconfigured style directly out of the box</span>
+<span class="n">s</span> <span class="o">=</span> <span class="n">SBMLlayout</span><span class="p">(</span><span class="n">fname</span><span class="p">,</span> <span class="n">style</span><span class="o">=</span><span class="n">black_and_white</span><span class="p">)</span>
+
+<span class="c1"># draw the network</span>
+<span class="n">s</span><span class="o">.</span><span class="n">drawNetwork</span><span class="p">(</span><span class="n">model_id</span> <span class="o">+</span> <span class="s2">&quot;.png&quot;</span><span class="p">)</span>
+
+<span class="c1"># write the newly generated layout and rendering information back to the</span>
+<span class="c1"># sbml model</span>
+<span class="n">s</span><span class="o">.</span><span class="n">writeSBML</span><span class="p">(</span><span class="n">fname</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>An example of creating your own style:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">os</span>
+<span class="kn">from</span> <span class="nn">libsbml_draw</span> <span class="kn">import</span> <span class="n">SBMLlayout</span>
+<span class="kn">from</span> <span class="nn">libsbml_draw.styles</span> <span class="kn">import</span> <span class="n">Style</span><span class="p">,</span> <span class="n">black_and_white</span>
+
+<span class="k">def</span> <span class="nf">my_style</span><span class="p">():</span>
+    <span class="n">s</span> <span class="o">=</span> <span class="n">Style</span><span class="p">()</span>
+    <span class="n">s</span><span class="o">.</span><span class="n">node</span><span class="o">.</span><span class="n">color</span> <span class="o">=</span> <span class="s1">&#39;green&#39;</span>
+    <span class="n">s</span><span class="o">.</span><span class="n">node</span><span class="o">.</span><span class="n">edgewidth</span> <span class="o">=</span> <span class="mi">4</span>
+    <span class="n">s</span><span class="o">.</span><span class="n">font</span><span class="o">.</span><span class="n">color</span> <span class="o">=</span> <span class="s1">&#39;red&#39;</span>
+    <span class="n">s</span><span class="o">.</span><span class="n">font</span><span class="o">.</span><span class="n">size</span> <span class="o">=</span> <span class="mi">25</span>
+    <span class="n">s</span><span class="o">.</span><span class="n">edge</span><span class="o">.</span><span class="n">color</span> <span class="o">=</span> <span class="s1">&#39;black&#39;</span>
+    <span class="n">s</span><span class="o">.</span><span class="n">compartment</span><span class="o">.</span><span class="n">edgecolor</span> <span class="o">=</span> <span class="s1">&#39;black</span>
+    <span class="k">return</span> <span class="n">s</span>
+
+<span class="n">model_id</span> <span class="o">=</span> <span class="s1">&#39;BIOMD0000000096&#39;</span>
+
+<span class="n">fname</span> <span class="o">=</span> <span class="n">model_id</span> <span class="o">+</span> <span class="s1">&#39;.xml&#39;</span>
+
+<span class="c1"># download the model</span>
+<span class="n">biomodels_download</span><span class="p">(</span><span class="n">model_id</span><span class="p">,</span> <span class="n">fname</span><span class="p">)</span>
+
+<span class="c1"># Use a preconfigured style directly out of the box</span>
+<span class="n">s</span> <span class="o">=</span> <span class="n">SBMLlayout</span><span class="p">(</span><span class="n">fname</span><span class="p">,</span> <span class="n">style</span><span class="o">=</span><span class="n">my_style</span><span class="p">)</span>
+
+<span class="c1"># draw the network</span>
+<span class="n">s</span><span class="o">.</span><span class="n">drawNetwork</span><span class="p">(</span><span class="n">model_id</span> <span class="o">+</span> <span class="s2">&quot;.png&quot;</span><span class="p">)</span>
+
+<span class="c1"># write the newly generated layout and rendering information back to the</span>
+<span class="c1"># sbml model</span>
+<span class="n">s</span><span class="o">.</span><span class="n">writeSBML</span><span class="p">(</span><span class="n">fname</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+
+
+           </div>
+           
+          </div>
+          <footer>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &copy; Copyright 2019, Sauro Lab
+
+    </p>
+  </div>
+  Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/rtfd/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script>
+
+  
+  
+    
+   
+
+</body>
+</html>

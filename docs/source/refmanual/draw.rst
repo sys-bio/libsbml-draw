@@ -6,5 +6,5 @@ Draw the SBML Model
 Draw the network
 ----------------------------
 
-.. automodule:: libsbml_draw.draw.draw_network
+.. automodule:: libsbml_draw.draw_network
     :members:

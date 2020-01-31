@@ -6,5 +6,5 @@ SBML Model Representation
 SBML Layout
 ------------
 
-.. automodule:: libsbml_draw.model.sbml_layout
+.. automodule:: libsbml_draw.sbml_layout
     :members:

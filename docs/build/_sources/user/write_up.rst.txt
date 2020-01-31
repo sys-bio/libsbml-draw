@@ -1,4 +1,4 @@
-Write-Up of libsbml_draw
+Publication  of libsbml_draw
 -------------------------
 
 For a write-up of libsbml_draw, 

@@ -35,7 +35,6 @@
   <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
     <link rel="index" title="Index" href="../genindex.html" />
     <link rel="search" title="Search" href="../search.html" />
-    <link rel="next" title="C API" href="c_api.html" />
     <link rel="prev" title="Reference Manual" href="refmanual.html" /> 
 </head>
 
@@ -85,10 +84,9 @@
 <li class="toctree-l1"><a class="reference internal" href="../user/user.html">User Manual</a></li>
 <li class="toctree-l1 current"><a class="reference internal" href="refmanual.html">Reference Manual</a><ul class="current">
 <li class="toctree-l2 current"><a class="current reference internal" href="#">SBML Model Representation</a><ul>
-<li class="toctree-l3"><a class="reference internal" href="#module-libsbml_draw.model.sbml_layout">SBML Layout</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#module-libsbml_draw.sbml_layout">SBML Layout</a></li>
 </ul>
 </li>
-<li class="toctree-l2"><a class="reference internal" href="c_api.html">C API</a></li>
 <li class="toctree-l2"><a class="reference internal" href="draw.html">Draw the SBML Model</a></li>
 <li class="toctree-l2"><a class="reference internal" href="python_api.html">Python Bindings for C API</a></li>
 </ul>
@@ -162,66 +160,66 @@
             
   <div class="section" id="sbml-model-representation">
 <span id="model"></span><h1>SBML Model Representation<a class="headerlink" href="#sbml-model-representation" title="Permalink to this headline">¶</a></h1>
-<div class="section" id="module-libsbml_draw.model.sbml_layout">
-<span id="sbml-layout"></span><h2>SBML Layout<a class="headerlink" href="#module-libsbml_draw.model.sbml_layout" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="module-libsbml_draw.sbml_layout">
+<span id="sbml-layout"></span><h2>SBML Layout<a class="headerlink" href="#module-libsbml_draw.sbml_layout" title="Permalink to this headline">¶</a></h2>
 <p>Creates a Python interface to load, display and manipulate
 models defined in an SBML file, making use of a c API and libsbml.</p>
 <dl class="class">
-<dt id="libsbml_draw.model.sbml_layout.BezierPoints">
-<em class="property">class </em><code class="sig-prename descclassname">libsbml_draw.model.sbml_layout.</code><code class="sig-name descname">BezierPoints</code><span class="sig-paren">(</span><em class="sig-param">start</em>, <em class="sig-param">end</em>, <em class="sig-param">control1</em>, <em class="sig-param">control2</em><span class="sig-paren">)</span><a class="headerlink" href="#libsbml_draw.model.sbml_layout.BezierPoints" title="Permalink to this definition">¶</a></dt>
+<dt id="libsbml_draw.sbml_layout.BezierPoints">
+<em class="property">class </em><code class="sig-prename descclassname">libsbml_draw.sbml_layout.</code><code class="sig-name descname">BezierPoints</code><span class="sig-paren">(</span><em class="sig-param">start</em>, <em class="sig-param">end</em>, <em class="sig-param">control1</em>, <em class="sig-param">control2</em><span class="sig-paren">)</span><a class="headerlink" href="#libsbml_draw.sbml_layout.BezierPoints" title="Permalink to this definition">¶</a></dt>
 <dd><dl class="method">
-<dt id="libsbml_draw.model.sbml_layout.BezierPoints.control1">
-<em class="property">property </em><code class="sig-name descname">control1</code><a class="headerlink" href="#libsbml_draw.model.sbml_layout.BezierPoints.control1" title="Permalink to this definition">¶</a></dt>
+<dt id="libsbml_draw.sbml_layout.BezierPoints.control1">
+<em class="property">property </em><code class="sig-name descname">control1</code><a class="headerlink" href="#libsbml_draw.sbml_layout.BezierPoints.control1" title="Permalink to this definition">¶</a></dt>
 <dd><p>Alias for field number 2</p>
 </dd></dl>
 
 <dl class="method">
-<dt id="libsbml_draw.model.sbml_layout.BezierPoints.control2">
-<em class="property">property </em><code class="sig-name descname">control2</code><a class="headerlink" href="#libsbml_draw.model.sbml_layout.BezierPoints.control2" title="Permalink to this definition">¶</a></dt>
+<dt id="libsbml_draw.sbml_layout.BezierPoints.control2">
+<em class="property">property </em><code class="sig-name descname">control2</code><a class="headerlink" href="#libsbml_draw.sbml_layout.BezierPoints.control2" title="Permalink to this definition">¶</a></dt>
 <dd><p>Alias for field number 3</p>
 </dd></dl>
 
 <dl class="method">
-<dt id="libsbml_draw.model.sbml_layout.BezierPoints.end">
-<em class="property">property </em><code class="sig-name descname">end</code><a class="headerlink" href="#libsbml_draw.model.sbml_layout.BezierPoints.end" title="Permalink to this definition">¶</a></dt>
+<dt id="libsbml_draw.sbml_layout.BezierPoints.end">
+<em class="property">property </em><code class="sig-name descname">end</code><a class="headerlink" href="#libsbml_draw.sbml_layout.BezierPoints.end" title="Permalink to this definition">¶</a></dt>
 <dd><p>Alias for field number 1</p>
 </dd></dl>
 
 <dl class="method">
-<dt id="libsbml_draw.model.sbml_layout.BezierPoints.start">
-<em class="property">property </em><code class="sig-name descname">start</code><a class="headerlink" href="#libsbml_draw.model.sbml_layout.BezierPoints.start" title="Permalink to this definition">¶</a></dt>
+<dt id="libsbml_draw.sbml_layout.BezierPoints.start">
+<em class="property">property </em><code class="sig-name descname">start</code><a class="headerlink" href="#libsbml_draw.sbml_layout.BezierPoints.start" title="Permalink to this definition">¶</a></dt>
 <dd><p>Alias for field number 0</p>
 </dd></dl>
 
 </dd></dl>
 
 <dl class="class">
-<dt id="libsbml_draw.model.sbml_layout.SBMLlayout">
-<em class="property">class </em><code class="sig-prename descclassname">libsbml_draw.model.sbml_layout.</code><code class="sig-name descname">SBMLlayout</code><span class="sig-paren">(</span><em class="sig-param">sbml_source=None</em>, <em class="sig-param">layout_alg_options=None</em>, <em class="sig-param">layout_number=0</em>, <em class="sig-param">fitToWindow=()</em>, <em class="sig-param">autoComputeLayout=False</em>, <em class="sig-param">applyRender=True</em><span class="sig-paren">)</span><a class="headerlink" href="#libsbml_draw.model.sbml_layout.SBMLlayout" title="Permalink to this definition">¶</a></dt>
+<dt id="libsbml_draw.sbml_layout.SBMLlayout">
+<em class="property">class </em><code class="sig-prename descclassname">libsbml_draw.sbml_layout.</code><code class="sig-name descname">SBMLlayout</code><span class="sig-paren">(</span><em class="sig-param">sbml_source</em>, <em class="sig-param">layout_alg_options=None</em>, <em class="sig-param">layout_number=0</em>, <em class="sig-param">fitToWindow=()</em>, <em class="sig-param">autoComputeLayout=False</em>, <em class="sig-param">applyRender=True</em>, <em class="sig-param">style=None</em><span class="sig-paren">)</span><a class="headerlink" href="#libsbml_draw.sbml_layout.SBMLlayout" title="Permalink to this definition">¶</a></dt>
 <dd><p>SBMLlayout represents the model in an SBML file.</p>
 <dl class="attribute">
-<dt id="libsbml_draw.model.sbml_layout.SBMLlayout.LIBSBML_DRAW_VERSION">
-<code class="sig-name descname">LIBSBML_DRAW_VERSION</code><em class="property"> = '1.0.0'</em><a class="headerlink" href="#libsbml_draw.model.sbml_layout.SBMLlayout.LIBSBML_DRAW_VERSION" title="Permalink to this definition">¶</a></dt>
+<dt id="libsbml_draw.sbml_layout.SBMLlayout.LIBSBML_DRAW_VERSION">
+<code class="sig-name descname">LIBSBML_DRAW_VERSION</code><em class="property"> = '1.0.0'</em><a class="headerlink" href="#libsbml_draw.sbml_layout.SBMLlayout.LIBSBML_DRAW_VERSION" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="attribute">
-<dt id="libsbml_draw.model.sbml_layout.SBMLlayout.NODE_KEYWORDS">
-<code class="sig-name descname">NODE_KEYWORDS</code><em class="property"> = {'all', 'boundary', 'floating'}</em><a class="headerlink" href="#libsbml_draw.model.sbml_layout.SBMLlayout.NODE_KEYWORDS" title="Permalink to this definition">¶</a></dt>
+<dt id="libsbml_draw.sbml_layout.SBMLlayout.NODE_KEYWORDS">
+<code class="sig-name descname">NODE_KEYWORDS</code><em class="property"> = {'all', 'boundary', 'floating'}</em><a class="headerlink" href="#libsbml_draw.sbml_layout.SBMLlayout.NODE_KEYWORDS" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="attribute">
-<dt id="libsbml_draw.model.sbml_layout.SBMLlayout.WIDTH_PADDING">
-<code class="sig-name descname">WIDTH_PADDING</code><em class="property"> = 2</em><a class="headerlink" href="#libsbml_draw.model.sbml_layout.SBMLlayout.WIDTH_PADDING" title="Permalink to this definition">¶</a></dt>
+<dt id="libsbml_draw.sbml_layout.SBMLlayout.WIDTH_PADDING">
+<code class="sig-name descname">WIDTH_PADDING</code><em class="property"> = 2</em><a class="headerlink" href="#libsbml_draw.sbml_layout.SBMLlayout.WIDTH_PADDING" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="attribute">
-<dt id="libsbml_draw.model.sbml_layout.SBMLlayout.HEIGHT_PADDING">
-<code class="sig-name descname">HEIGHT_PADDING</code><em class="property"> = 1</em><a class="headerlink" href="#libsbml_draw.model.sbml_layout.SBMLlayout.HEIGHT_PADDING" title="Permalink to this definition">¶</a></dt>
+<dt id="libsbml_draw.sbml_layout.SBMLlayout.HEIGHT_PADDING">
+<code class="sig-name descname">HEIGHT_PADDING</code><em class="property"> = 1</em><a class="headerlink" href="#libsbml_draw.sbml_layout.SBMLlayout.HEIGHT_PADDING" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="method">
-<dt id="libsbml_draw.model.sbml_layout.SBMLlayout.loadSBMLFile">
-<code class="sig-name descname">loadSBMLFile</code><span class="sig-paren">(</span><em class="sig-param">sbml_file</em><span class="sig-paren">)</span><a class="headerlink" href="#libsbml_draw.model.sbml_layout.SBMLlayout.loadSBMLFile" title="Permalink to this definition">¶</a></dt>
+<dt id="libsbml_draw.sbml_layout.SBMLlayout.loadSBMLFile">
+<code class="sig-name descname">loadSBMLFile</code><span class="sig-paren">(</span><em class="sig-param">sbml_file</em><span class="sig-paren">)</span><a class="headerlink" href="#libsbml_draw.sbml_layout.SBMLlayout.loadSBMLFile" title="Permalink to this definition">¶</a></dt>
 <dd><p>Loads the SBML model into SBMLlayout.</p>
 <dl class="simple">
 <dt>Args:</dt><dd><p>sbml_string(str): name of file containing an SBML model</p>
@@ -231,8 +229,8 @@ models defined in an SBML file, making use of a c API and libsbml.</p>
 </dd></dl>
 
 <dl class="method">
-<dt id="libsbml_draw.model.sbml_layout.SBMLlayout.loadSBMLString">
-<code class="sig-name descname">loadSBMLString</code><span class="sig-paren">(</span><em class="sig-param">sbml_string</em><span class="sig-paren">)</span><a class="headerlink" href="#libsbml_draw.model.sbml_layout.SBMLlayout.loadSBMLString" title="Permalink to this definition">¶</a></dt>
+<dt id="libsbml_draw.sbml_layout.SBMLlayout.loadSBMLString">
+<code class="sig-name descname">loadSBMLString</code><span class="sig-paren">(</span><em class="sig-param">sbml_string</em><span class="sig-paren">)</span><a class="headerlink" href="#libsbml_draw.sbml_layout.SBMLlayout.loadSBMLString" title="Permalink to this definition">¶</a></dt>
 <dd><p>Loads the SBML model into SBMLlayout.</p>
 <dl class="simple">
 <dt>Args:</dt><dd><p>sbml_string(str): SBML model in string format</p>
@@ -242,8 +240,8 @@ models defined in an SBML file, making use of a c API and libsbml.</p>
 </dd></dl>
 
 <dl class="method">
-<dt id="libsbml_draw.model.sbml_layout.SBMLlayout.setLayoutAlgorithmOptions">
-<code class="sig-name descname">setLayoutAlgorithmOptions</code><span class="sig-paren">(</span><em class="sig-param">k=None</em>, <em class="sig-param">gravity=None</em>, <em class="sig-param">baryx=None</em>, <em class="sig-param">baryy=None</em>, <em class="sig-param">autobary=None</em>, <em class="sig-param">padding=None</em><span class="sig-paren">)</span><a class="headerlink" href="#libsbml_draw.model.sbml_layout.SBMLlayout.setLayoutAlgorithmOptions" title="Permalink to this definition">¶</a></dt>
+<dt id="libsbml_draw.sbml_layout.SBMLlayout.setLayoutAlgorithmOptions">
+<code class="sig-name descname">setLayoutAlgorithmOptions</code><span class="sig-paren">(</span><em class="sig-param">k=None</em>, <em class="sig-param">gravity=None</em>, <em class="sig-param">baryx=None</em>, <em class="sig-param">baryy=None</em>, <em class="sig-param">autobary=None</em>, <em class="sig-param">padding=None</em><span class="sig-paren">)</span><a class="headerlink" href="#libsbml_draw.sbml_layout.SBMLlayout.setLayoutAlgorithmOptions" title="Permalink to this definition">¶</a></dt>
 <dd><p>Set values for the Fruchterman-Reingold layout algorithm parameters.</p>
 <dl class="simple">
 <dt>Args:</dt><dd><p>k (float):
@@ -258,8 +256,8 @@ padding (float):</p>
 </dd></dl>
 
 <dl class="method">
-<dt id="libsbml_draw.model.sbml_layout.SBMLlayout.setLayoutAlgorithm_k">
-<code class="sig-name descname">setLayoutAlgorithm_k</code><span class="sig-paren">(</span><em class="sig-param">k</em><span class="sig-paren">)</span><a class="headerlink" href="#libsbml_draw.model.sbml_layout.SBMLlayout.setLayoutAlgorithm_k" title="Permalink to this definition">¶</a></dt>
+<dt id="libsbml_draw.sbml_layout.SBMLlayout.setLayoutAlgorithm_k">
+<code class="sig-name descname">setLayoutAlgorithm_k</code><span class="sig-paren">(</span><em class="sig-param">k</em><span class="sig-paren">)</span><a class="headerlink" href="#libsbml_draw.sbml_layout.SBMLlayout.setLayoutAlgorithm_k" title="Permalink to this definition">¶</a></dt>
 <dd><p>Set the Fruchterman-Reingold layout algorithm parameter ‘k’.</p>
 <dl class="simple">
 <dt>Args:</dt><dd><p>k (float): stiffness parameter</p>
@@ -269,8 +267,8 @@ padding (float):</p>
 </dd></dl>
 
 <dl class="method">
-<dt id="libsbml_draw.model.sbml_layout.SBMLlayout.setLayoutAlgorithm_gravity">
-<code class="sig-name descname">setLayoutAlgorithm_gravity</code><span class="sig-paren">(</span><em class="sig-param">gravity</em><span class="sig-paren">)</span><a class="headerlink" href="#libsbml_draw.model.sbml_layout.SBMLlayout.setLayoutAlgorithm_gravity" title="Permalink to this definition">¶</a></dt>
+<dt id="libsbml_draw.sbml_layout.SBMLlayout.setLayoutAlgorithm_gravity">
+<code class="sig-name descname">setLayoutAlgorithm_gravity</code><span class="sig-paren">(</span><em class="sig-param">gravity</em><span class="sig-paren">)</span><a class="headerlink" href="#libsbml_draw.sbml_layout.SBMLlayout.setLayoutAlgorithm_gravity" title="Permalink to this definition">¶</a></dt>
 <dd><p>Set the Fruchterman-Reingold layout algorithm parameter ‘gravity’.</p>
 <dl class="simple">
 <dt>Args:</dt><dd><dl class="simple">
@@ -283,8 +281,8 @@ padding (float):</p>
 </dd></dl>
 
 <dl class="method">
-<dt id="libsbml_draw.model.sbml_layout.SBMLlayout.setLayoutAlgorithm_baryx">
-<code class="sig-name descname">setLayoutAlgorithm_baryx</code><span class="sig-paren">(</span><em class="sig-param">baryx</em><span class="sig-paren">)</span><a class="headerlink" href="#libsbml_draw.model.sbml_layout.SBMLlayout.setLayoutAlgorithm_baryx" title="Permalink to this definition">¶</a></dt>
+<dt id="libsbml_draw.sbml_layout.SBMLlayout.setLayoutAlgorithm_baryx">
+<code class="sig-name descname">setLayoutAlgorithm_baryx</code><span class="sig-paren">(</span><em class="sig-param">baryx</em><span class="sig-paren">)</span><a class="headerlink" href="#libsbml_draw.sbml_layout.SBMLlayout.setLayoutAlgorithm_baryx" title="Permalink to this definition">¶</a></dt>
 <dd><p>Set the Fruchterman-Reingold layout algorithm parameter ‘baryx’.</p>
 <dl class="simple">
 <dt>Args:</dt><dd><p>baryx (float): x value of the center of gravitational force</p>
@@ -294,8 +292,8 @@ padding (float):</p>
 </dd></dl>
 
 <dl class="method">
-<dt id="libsbml_draw.model.sbml_layout.SBMLlayout.setLayoutAlgorithm_baryy">
-<code class="sig-name descname">setLayoutAlgorithm_baryy</code><span class="sig-paren">(</span><em class="sig-param">baryy</em><span class="sig-paren">)</span><a class="headerlink" href="#libsbml_draw.model.sbml_layout.SBMLlayout.setLayoutAlgorithm_baryy" title="Permalink to this definition">¶</a></dt>
+<dt id="libsbml_draw.sbml_layout.SBMLlayout.setLayoutAlgorithm_baryy">
+<code class="sig-name descname">setLayoutAlgorithm_baryy</code><span class="sig-paren">(</span><em class="sig-param">baryy</em><span class="sig-paren">)</span><a class="headerlink" href="#libsbml_draw.sbml_layout.SBMLlayout.setLayoutAlgorithm_baryy" title="Permalink to this definition">¶</a></dt>
 <dd><p>Set the Fruchterman-Reingold layout algorithm parameter ‘baryy’.</p>
 <dl class="simple">
 <dt>Args:</dt><dd><p>baryy (float): y value of the center of gravitational force</p>
@@ -305,8 +303,8 @@ padding (float):</p>
 </dd></dl>
 
 <dl class="method">
-<dt id="libsbml_draw.model.sbml_layout.SBMLlayout.setLayoutAlgorithm_autobary">
-<code class="sig-name descname">setLayoutAlgorithm_autobary</code><span class="sig-paren">(</span><em class="sig-param">autobary</em><span class="sig-paren">)</span><a class="headerlink" href="#libsbml_draw.model.sbml_layout.SBMLlayout.setLayoutAlgorithm_autobary" title="Permalink to this definition">¶</a></dt>
+<dt id="libsbml_draw.sbml_layout.SBMLlayout.setLayoutAlgorithm_autobary">
+<code class="sig-name descname">setLayoutAlgorithm_autobary</code><span class="sig-paren">(</span><em class="sig-param">autobary</em><span class="sig-paren">)</span><a class="headerlink" href="#libsbml_draw.sbml_layout.SBMLlayout.setLayoutAlgorithm_autobary" title="Permalink to this definition">¶</a></dt>
 <dd><p>Set the Fruchterman-Reingold layout algorithm parameter ‘autobary’.
 This parameter determines if the barycenter is set automatically from
 layout info.</p>
@@ -321,8 +319,8 @@ layout info.</p>
 </dd></dl>
 
 <dl class="method">
-<dt id="libsbml_draw.model.sbml_layout.SBMLlayout.setLayoutAlgorithm_padding">
-<code class="sig-name descname">setLayoutAlgorithm_padding</code><span class="sig-paren">(</span><em class="sig-param">padding</em><span class="sig-paren">)</span><a class="headerlink" href="#libsbml_draw.model.sbml_layout.SBMLlayout.setLayoutAlgorithm_padding" title="Permalink to this definition">¶</a></dt>
+<dt id="libsbml_draw.sbml_layout.SBMLlayout.setLayoutAlgorithm_padding">
+<code class="sig-name descname">setLayoutAlgorithm_padding</code><span class="sig-paren">(</span><em class="sig-param">padding</em><span class="sig-paren">)</span><a class="headerlink" href="#libsbml_draw.sbml_layout.SBMLlayout.setLayoutAlgorithm_padding" title="Permalink to this definition">¶</a></dt>
 <dd><p>Set the Fruchterman-Reingold layout algorithm parameter ‘padding’.</p>
 <dl class="simple">
 <dt>Args:</dt><dd><p>padding (float): padding on compartments</p>
@@ -332,16 +330,16 @@ layout info.</p>
 </dd></dl>
 
 <dl class="method">
-<dt id="libsbml_draw.model.sbml_layout.SBMLlayout.getLayoutAlgorithmOptions">
-<code class="sig-name descname">getLayoutAlgorithmOptions</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#libsbml_draw.model.sbml_layout.SBMLlayout.getLayoutAlgorithmOptions" title="Permalink to this definition">¶</a></dt>
+<dt id="libsbml_draw.sbml_layout.SBMLlayout.getLayoutAlgorithmOptions">
+<code class="sig-name descname">getLayoutAlgorithmOptions</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#libsbml_draw.sbml_layout.SBMLlayout.getLayoutAlgorithmOptions" title="Permalink to this definition">¶</a></dt>
 <dd><p>Get the Fruchterman-Reingold layout algorithm parameter values.</p>
 <p>Args: None</p>
 <p>Returns: instance of the fr_alg_options class</p>
 </dd></dl>
 
 <dl class="method">
-<dt id="libsbml_draw.model.sbml_layout.SBMLlayout.showLayoutAlgorithmOptions">
-<code class="sig-name descname">showLayoutAlgorithmOptions</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#libsbml_draw.model.sbml_layout.SBMLlayout.showLayoutAlgorithmOptions" title="Permalink to this definition">¶</a></dt>
+<dt id="libsbml_draw.sbml_layout.SBMLlayout.showLayoutAlgorithmOptions">
+<code class="sig-name descname">showLayoutAlgorithmOptions</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#libsbml_draw.sbml_layout.SBMLlayout.showLayoutAlgorithmOptions" title="Permalink to this definition">¶</a></dt>
 <dd><p>Prints out the values of the Fruchterman-Reingold algorithm
 paramters, which are: k, grav, baryx, baryy, autobary, and padding.</p>
 <p>Args: None</p>
@@ -349,8 +347,8 @@ paramters, which are: k, grav, baryx, baryy, autobary, and padding.</p>
 </dd></dl>
 
 <dl class="method">
-<dt id="libsbml_draw.model.sbml_layout.SBMLlayout.regenerateLayoutAndResetRenderInfo">
-<code class="sig-name descname">regenerateLayoutAndResetRenderInfo</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#libsbml_draw.model.sbml_layout.SBMLlayout.regenerateLayoutAndResetRenderInfo" title="Permalink to this definition">¶</a></dt>
+<dt id="libsbml_draw.sbml_layout.SBMLlayout.regenerateLayoutAndResetRenderInfo">
+<code class="sig-name descname">regenerateLayoutAndResetRenderInfo</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#libsbml_draw.sbml_layout.SBMLlayout.regenerateLayoutAndResetRenderInfo" title="Permalink to this definition">¶</a></dt>
 <dd><p>Use this to generate a new layout, and reset the network’s node
 and reaction layout and render values.</p>
 <p>Args: None</p>
@@ -358,8 +356,8 @@ and reaction layout and render values.</p>
 </dd></dl>
 
 <dl class="method">
-<dt id="libsbml_draw.model.sbml_layout.SBMLlayout.regenerateLayout">
-<code class="sig-name descname">regenerateLayout</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#libsbml_draw.model.sbml_layout.SBMLlayout.regenerateLayout" title="Permalink to this definition">¶</a></dt>
+<dt id="libsbml_draw.sbml_layout.SBMLlayout.regenerateLayout">
+<code class="sig-name descname">regenerateLayout</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#libsbml_draw.sbml_layout.SBMLlayout.regenerateLayout" title="Permalink to this definition">¶</a></dt>
 <dd><p>Use this to generate a new layout, and update the network’s node
 reaction, and compartment layout values.</p>
 <p>Args: None</p>
@@ -367,40 +365,40 @@ reaction, and compartment layout values.</p>
 </dd></dl>
 
 <dl class="method">
-<dt id="libsbml_draw.model.sbml_layout.SBMLlayout.describeModel">
-<code class="sig-name descname">describeModel</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#libsbml_draw.model.sbml_layout.SBMLlayout.describeModel" title="Permalink to this definition">¶</a></dt>
+<dt id="libsbml_draw.sbml_layout.SBMLlayout.describeModel">
+<code class="sig-name descname">describeModel</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#libsbml_draw.sbml_layout.SBMLlayout.describeModel" title="Permalink to this definition">¶</a></dt>
 <dd><p>Provides a summary of the model built from the SBML file.</p>
 <p>Args: None
 Returns: None</p>
 </dd></dl>
 
 <dl class="method">
-<dt id="libsbml_draw.model.sbml_layout.SBMLlayout.getNumberOfCompartments">
-<code class="sig-name descname">getNumberOfCompartments</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#libsbml_draw.model.sbml_layout.SBMLlayout.getNumberOfCompartments" title="Permalink to this definition">¶</a></dt>
+<dt id="libsbml_draw.sbml_layout.SBMLlayout.getNumberOfCompartments">
+<code class="sig-name descname">getNumberOfCompartments</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#libsbml_draw.sbml_layout.SBMLlayout.getNumberOfCompartments" title="Permalink to this definition">¶</a></dt>
 <dd><p>Returns the number of compartments in the model.</p>
 <p>Args: None
 Returns: None</p>
 </dd></dl>
 
 <dl class="method">
-<dt id="libsbml_draw.model.sbml_layout.SBMLlayout.getNumberOfNodes">
-<code class="sig-name descname">getNumberOfNodes</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#libsbml_draw.model.sbml_layout.SBMLlayout.getNumberOfNodes" title="Permalink to this definition">¶</a></dt>
+<dt id="libsbml_draw.sbml_layout.SBMLlayout.getNumberOfNodes">
+<code class="sig-name descname">getNumberOfNodes</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#libsbml_draw.sbml_layout.SBMLlayout.getNumberOfNodes" title="Permalink to this definition">¶</a></dt>
 <dd><p>Returns the number of nodes in the model.</p>
 <p>Args: None
 Returns: None</p>
 </dd></dl>
 
 <dl class="method">
-<dt id="libsbml_draw.model.sbml_layout.SBMLlayout.getNumberOfReactions">
-<code class="sig-name descname">getNumberOfReactions</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#libsbml_draw.model.sbml_layout.SBMLlayout.getNumberOfReactions" title="Permalink to this definition">¶</a></dt>
+<dt id="libsbml_draw.sbml_layout.SBMLlayout.getNumberOfReactions">
+<code class="sig-name descname">getNumberOfReactions</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#libsbml_draw.sbml_layout.SBMLlayout.getNumberOfReactions" title="Permalink to this definition">¶</a></dt>
 <dd><p>Returns the number of reactions in the model.</p>
 <p>Args: None
 Returns: None</p>
 </dd></dl>
 
 <dl class="method">
-<dt id="libsbml_draw.model.sbml_layout.SBMLlayout.setModelNamespace">
-<code class="sig-name descname">setModelNamespace</code><span class="sig-paren">(</span><em class="sig-param">level</em>, <em class="sig-param">version</em><span class="sig-paren">)</span><a class="headerlink" href="#libsbml_draw.model.sbml_layout.SBMLlayout.setModelNamespace" title="Permalink to this definition">¶</a></dt>
+<dt id="libsbml_draw.sbml_layout.SBMLlayout.setModelNamespace">
+<code class="sig-name descname">setModelNamespace</code><span class="sig-paren">(</span><em class="sig-param">level</em>, <em class="sig-param">version</em><span class="sig-paren">)</span><a class="headerlink" href="#libsbml_draw.sbml_layout.SBMLlayout.setModelNamespace" title="Permalink to this definition">¶</a></dt>
 <dd><p>Specify the Model level and version.</p>
 <dl class="simple">
 <dt>Args:</dt><dd><p>level (int): model level
@@ -411,8 +409,8 @@ version (int): model version</p>
 </dd></dl>
 
 <dl class="method">
-<dt id="libsbml_draw.model.sbml_layout.SBMLlayout.aliasNode">
-<code class="sig-name descname">aliasNode</code><span class="sig-paren">(</span><em class="sig-param">node_id</em><span class="sig-paren">)</span><a class="headerlink" href="#libsbml_draw.model.sbml_layout.SBMLlayout.aliasNode" title="Permalink to this definition">¶</a></dt>
+<dt id="libsbml_draw.sbml_layout.SBMLlayout.aliasNode">
+<code class="sig-name descname">aliasNode</code><span class="sig-paren">(</span><em class="sig-param">node_id</em><span class="sig-paren">)</span><a class="headerlink" href="#libsbml_draw.sbml_layout.SBMLlayout.aliasNode" title="Permalink to this definition">¶</a></dt>
 <dd><p>Creates an alias of this node for each incoming and outgoing
 reaction.</p>
 <dl class="simple">
@@ -423,8 +421,8 @@ reaction.</p>
 </dd></dl>
 
 <dl class="method">
-<dt id="libsbml_draw.model.sbml_layout.SBMLlayout.getIsNodeAliased">
-<code class="sig-name descname">getIsNodeAliased</code><span class="sig-paren">(</span><em class="sig-param">node_id</em><span class="sig-paren">)</span><a class="headerlink" href="#libsbml_draw.model.sbml_layout.SBMLlayout.getIsNodeAliased" title="Permalink to this definition">¶</a></dt>
+<dt id="libsbml_draw.sbml_layout.SBMLlayout.getIsNodeAliased">
+<code class="sig-name descname">getIsNodeAliased</code><span class="sig-paren">(</span><em class="sig-param">node_id</em><span class="sig-paren">)</span><a class="headerlink" href="#libsbml_draw.sbml_layout.SBMLlayout.getIsNodeAliased" title="Permalink to this definition">¶</a></dt>
 <dd><p>Returns True if this node is an alias of earlier node.</p>
 <dl class="simple">
 <dt>Args:</dt><dd><p>node_id (str):</p>
@@ -434,8 +432,8 @@ reaction.</p>
 </dd></dl>
 
 <dl class="method">
-<dt id="libsbml_draw.model.sbml_layout.SBMLlayout.getIsNodeLocked">
-<code class="sig-name descname">getIsNodeLocked</code><span class="sig-paren">(</span><em class="sig-param">node_id</em><span class="sig-paren">)</span><a class="headerlink" href="#libsbml_draw.model.sbml_layout.SBMLlayout.getIsNodeLocked" title="Permalink to this definition">¶</a></dt>
+<dt id="libsbml_draw.sbml_layout.SBMLlayout.getIsNodeLocked">
+<code class="sig-name descname">getIsNodeLocked</code><span class="sig-paren">(</span><em class="sig-param">node_id</em><span class="sig-paren">)</span><a class="headerlink" href="#libsbml_draw.sbml_layout.SBMLlayout.getIsNodeLocked" title="Permalink to this definition">¶</a></dt>
 <dd><p>Returns True if this node is locked.</p>
 <dl class="simple">
 <dt>Args:</dt><dd><p>node_id(str): id for the node</p>
@@ -445,8 +443,8 @@ reaction.</p>
 </dd></dl>
 
 <dl class="method">
-<dt id="libsbml_draw.model.sbml_layout.SBMLlayout.lockNode">
-<code class="sig-name descname">lockNode</code><span class="sig-paren">(</span><em class="sig-param">node_id</em><span class="sig-paren">)</span><a class="headerlink" href="#libsbml_draw.model.sbml_layout.SBMLlayout.lockNode" title="Permalink to this definition">¶</a></dt>
+<dt id="libsbml_draw.sbml_layout.SBMLlayout.lockNode">
+<code class="sig-name descname">lockNode</code><span class="sig-paren">(</span><em class="sig-param">node_id</em><span class="sig-paren">)</span><a class="headerlink" href="#libsbml_draw.sbml_layout.SBMLlayout.lockNode" title="Permalink to this definition">¶</a></dt>
 <dd><p>Locks the node so that a new layout can be generated w/o moving
 this node.</p>
 <dl class="simple">
@@ -457,8 +455,8 @@ this node.</p>
 </dd></dl>
 
 <dl class="method">
-<dt id="libsbml_draw.model.sbml_layout.SBMLlayout.unlockNode">
-<code class="sig-name descname">unlockNode</code><span class="sig-paren">(</span><em class="sig-param">node_id</em><span class="sig-paren">)</span><a class="headerlink" href="#libsbml_draw.model.sbml_layout.SBMLlayout.unlockNode" title="Permalink to this definition">¶</a></dt>
+<dt id="libsbml_draw.sbml_layout.SBMLlayout.unlockNode">
+<code class="sig-name descname">unlockNode</code><span class="sig-paren">(</span><em class="sig-param">node_id</em><span class="sig-paren">)</span><a class="headerlink" href="#libsbml_draw.sbml_layout.SBMLlayout.unlockNode" title="Permalink to this definition">¶</a></dt>
 <dd><p>Unlocks a previously locked node.</p>
 <dl class="simple">
 <dt>Args:</dt><dd><p>node_id (str): id for the node</p>
@@ -468,8 +466,8 @@ this node.</p>
 </dd></dl>
 
 <dl class="method">
-<dt id="libsbml_draw.model.sbml_layout.SBMLlayout.setNetworkBackgroundColor">
-<code class="sig-name descname">setNetworkBackgroundColor</code><span class="sig-paren">(</span><em class="sig-param">bg_color</em><span class="sig-paren">)</span><a class="headerlink" href="#libsbml_draw.model.sbml_layout.SBMLlayout.setNetworkBackgroundColor" title="Permalink to this definition">¶</a></dt>
+<dt id="libsbml_draw.sbml_layout.SBMLlayout.setNetworkBackgroundColor">
+<code class="sig-name descname">setNetworkBackgroundColor</code><span class="sig-paren">(</span><em class="sig-param">bg_color</em><span class="sig-paren">)</span><a class="headerlink" href="#libsbml_draw.sbml_layout.SBMLlayout.setNetworkBackgroundColor" title="Permalink to this definition">¶</a></dt>
 <dd><p>Sets the background color of the network.</p>
 <dl class="simple">
 <dt>Args:</dt><dd><p>bg_color (str): id of the color for the background</p>
@@ -479,16 +477,16 @@ this node.</p>
 </dd></dl>
 
 <dl class="method">
-<dt id="libsbml_draw.model.sbml_layout.SBMLlayout.getNetworkBackgroundColor">
-<code class="sig-name descname">getNetworkBackgroundColor</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#libsbml_draw.model.sbml_layout.SBMLlayout.getNetworkBackgroundColor" title="Permalink to this definition">¶</a></dt>
+<dt id="libsbml_draw.sbml_layout.SBMLlayout.getNetworkBackgroundColor">
+<code class="sig-name descname">getNetworkBackgroundColor</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#libsbml_draw.sbml_layout.SBMLlayout.getNetworkBackgroundColor" title="Permalink to this definition">¶</a></dt>
 <dd><p>Returns the color id for the background color of the network.</p>
 <p>Args: None</p>
 <p>Returns: str</p>
 </dd></dl>
 
 <dl class="method">
-<dt id="libsbml_draw.model.sbml_layout.SBMLlayout.getNodeCentroid">
-<code class="sig-name descname">getNodeCentroid</code><span class="sig-paren">(</span><em class="sig-param">node_id</em><span class="sig-paren">)</span><a class="headerlink" href="#libsbml_draw.model.sbml_layout.SBMLlayout.getNodeCentroid" title="Permalink to this definition">¶</a></dt>
+<dt id="libsbml_draw.sbml_layout.SBMLlayout.getNodeCentroid">
+<code class="sig-name descname">getNodeCentroid</code><span class="sig-paren">(</span><em class="sig-param">node_id</em><span class="sig-paren">)</span><a class="headerlink" href="#libsbml_draw.sbml_layout.SBMLlayout.getNodeCentroid" title="Permalink to this definition">¶</a></dt>
 <dd><p>Returns the center point of the node.</p>
 <dl class="simple">
 <dt>Args:</dt><dd><p>node_id (str): id for the node</p>
@@ -498,8 +496,8 @@ this node.</p>
 </dd></dl>
 
 <dl class="method">
-<dt id="libsbml_draw.model.sbml_layout.SBMLlayout.getReactionCentroid">
-<code class="sig-name descname">getReactionCentroid</code><span class="sig-paren">(</span><em class="sig-param">reaction_id</em><span class="sig-paren">)</span><a class="headerlink" href="#libsbml_draw.model.sbml_layout.SBMLlayout.getReactionCentroid" title="Permalink to this definition">¶</a></dt>
+<dt id="libsbml_draw.sbml_layout.SBMLlayout.getReactionCentroid">
+<code class="sig-name descname">getReactionCentroid</code><span class="sig-paren">(</span><em class="sig-param">reaction_id</em><span class="sig-paren">)</span><a class="headerlink" href="#libsbml_draw.sbml_layout.SBMLlayout.getReactionCentroid" title="Permalink to this definition">¶</a></dt>
 <dd><p>Returns the centroid of the reaction.</p>
 <dl class="simple">
 <dt>Args:</dt><dd><p>reaction_id (str): id of the reaction</p>
@@ -509,8 +507,8 @@ this node.</p>
 </dd></dl>
 
 <dl class="method">
-<dt id="libsbml_draw.model.sbml_layout.SBMLlayout.writeSBMLFile">
-<code class="sig-name descname">writeSBMLFile</code><span class="sig-paren">(</span><em class="sig-param">out_file_name</em><span class="sig-paren">)</span><a class="headerlink" href="#libsbml_draw.model.sbml_layout.SBMLlayout.writeSBMLFile" title="Permalink to this definition">¶</a></dt>
+<dt id="libsbml_draw.sbml_layout.SBMLlayout.writeSBMLFile">
+<code class="sig-name descname">writeSBMLFile</code><span class="sig-paren">(</span><em class="sig-param">out_file_name</em><span class="sig-paren">)</span><a class="headerlink" href="#libsbml_draw.sbml_layout.SBMLlayout.writeSBMLFile" title="Permalink to this definition">¶</a></dt>
 <dd><p>Writes the model as an SBML file.</p>
 <dl class="simple">
 <dt>Args:</dt><dd><p>out_file_name (str): name of the file to write</p>
@@ -520,16 +518,16 @@ this node.</p>
 </dd></dl>
 
 <dl class="method">
-<dt id="libsbml_draw.model.sbml_layout.SBMLlayout.getCompartmentIds">
-<code class="sig-name descname">getCompartmentIds</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#libsbml_draw.model.sbml_layout.SBMLlayout.getCompartmentIds" title="Permalink to this definition">¶</a></dt>
+<dt id="libsbml_draw.sbml_layout.SBMLlayout.getCompartmentIds">
+<code class="sig-name descname">getCompartmentIds</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#libsbml_draw.sbml_layout.SBMLlayout.getCompartmentIds" title="Permalink to this definition">¶</a></dt>
 <dd><p>Returns a list of compartment ids.</p>
 <p>Args: None</p>
 <p>Returns: list of str</p>
 </dd></dl>
 
 <dl class="method">
-<dt id="libsbml_draw.model.sbml_layout.SBMLlayout.setCompartmentEdgeColor">
-<code class="sig-name descname">setCompartmentEdgeColor</code><span class="sig-paren">(</span><em class="sig-param">compartment_id</em>, <em class="sig-param">edge_color</em><span class="sig-paren">)</span><a class="headerlink" href="#libsbml_draw.model.sbml_layout.SBMLlayout.setCompartmentEdgeColor" title="Permalink to this definition">¶</a></dt>
+<dt id="libsbml_draw.sbml_layout.SBMLlayout.setCompartmentEdgeColor">
+<code class="sig-name descname">setCompartmentEdgeColor</code><span class="sig-paren">(</span><em class="sig-param">compartment_id</em>, <em class="sig-param">edge_color</em><span class="sig-paren">)</span><a class="headerlink" href="#libsbml_draw.sbml_layout.SBMLlayout.setCompartmentEdgeColor" title="Permalink to this definition">¶</a></dt>
 <dd><p>Sets the compartment edge color.</p>
 <dl>
 <dt>Args:</dt><dd><dl class="simple">
@@ -544,8 +542,8 @@ compartments</p>
 </dd></dl>
 
 <dl class="method">
-<dt id="libsbml_draw.model.sbml_layout.SBMLlayout.getCompartmentEdgeColor">
-<code class="sig-name descname">getCompartmentEdgeColor</code><span class="sig-paren">(</span><em class="sig-param">compartment_id</em><span class="sig-paren">)</span><a class="headerlink" href="#libsbml_draw.model.sbml_layout.SBMLlayout.getCompartmentEdgeColor" title="Permalink to this definition">¶</a></dt>
+<dt id="libsbml_draw.sbml_layout.SBMLlayout.getCompartmentEdgeColor">
+<code class="sig-name descname">getCompartmentEdgeColor</code><span class="sig-paren">(</span><em class="sig-param">compartment_id</em><span class="sig-paren">)</span><a class="headerlink" href="#libsbml_draw.sbml_layout.SBMLlayout.getCompartmentEdgeColor" title="Permalink to this definition">¶</a></dt>
 <dd><p>Returns the color id for the compartment edge color.</p>
 <dl class="simple">
 <dt>Args:</dt><dd><p>compartment_id(str): id for the compartment</p>
@@ -555,8 +553,8 @@ compartments</p>
 </dd></dl>
 
 <dl class="method">
-<dt id="libsbml_draw.model.sbml_layout.SBMLlayout.setCompartmentFillColor">
-<code class="sig-name descname">setCompartmentFillColor</code><span class="sig-paren">(</span><em class="sig-param">compartment_id</em>, <em class="sig-param">fill_color</em><span class="sig-paren">)</span><a class="headerlink" href="#libsbml_draw.model.sbml_layout.SBMLlayout.setCompartmentFillColor" title="Permalink to this definition">¶</a></dt>
+<dt id="libsbml_draw.sbml_layout.SBMLlayout.setCompartmentFillColor">
+<code class="sig-name descname">setCompartmentFillColor</code><span class="sig-paren">(</span><em class="sig-param">compartment_id</em>, <em class="sig-param">fill_color</em><span class="sig-paren">)</span><a class="headerlink" href="#libsbml_draw.sbml_layout.SBMLlayout.setCompartmentFillColor" title="Permalink to this definition">¶</a></dt>
 <dd><p>Sets the compartment fill color.</p>
 <dl>
 <dt>Args:</dt><dd><dl class="simple">
@@ -571,8 +569,8 @@ compartments</p>
 </dd></dl>
 
 <dl class="method">
-<dt id="libsbml_draw.model.sbml_layout.SBMLlayout.getCompartmentFillColor">
-<code class="sig-name descname">getCompartmentFillColor</code><span class="sig-paren">(</span><em class="sig-param">compartment_id</em><span class="sig-paren">)</span><a class="headerlink" href="#libsbml_draw.model.sbml_layout.SBMLlayout.getCompartmentFillColor" title="Permalink to this definition">¶</a></dt>
+<dt id="libsbml_draw.sbml_layout.SBMLlayout.getCompartmentFillColor">
+<code class="sig-name descname">getCompartmentFillColor</code><span class="sig-paren">(</span><em class="sig-param">compartment_id</em><span class="sig-paren">)</span><a class="headerlink" href="#libsbml_draw.sbml_layout.SBMLlayout.getCompartmentFillColor" title="Permalink to this definition">¶</a></dt>
 <dd><p>Returns the color id for the compartment fill color.</p>
 <dl class="simple">
 <dt>Args:</dt><dd><p>compartment_id(str): id for the compartment</p>
@@ -582,16 +580,16 @@ compartments</p>
 </dd></dl>
 
 <dl class="method">
-<dt id="libsbml_draw.model.sbml_layout.SBMLlayout.getCompartmentLineWidth">
-<code class="sig-name descname">getCompartmentLineWidth</code><span class="sig-paren">(</span><em class="sig-param">compartment_id</em><span class="sig-paren">)</span><a class="headerlink" href="#libsbml_draw.model.sbml_layout.SBMLlayout.getCompartmentLineWidth" title="Permalink to this definition">¶</a></dt>
+<dt id="libsbml_draw.sbml_layout.SBMLlayout.getCompartmentLineWidth">
+<code class="sig-name descname">getCompartmentLineWidth</code><span class="sig-paren">(</span><em class="sig-param">compartment_id</em><span class="sig-paren">)</span><a class="headerlink" href="#libsbml_draw.sbml_layout.SBMLlayout.getCompartmentLineWidth" title="Permalink to this definition">¶</a></dt>
 <dd><p>Returns the line width for the given compartment.</p>
 <p>Args: compartment_id (str): id for the compartment</p>
 <p>Returns: int</p>
 </dd></dl>
 
 <dl class="method">
-<dt id="libsbml_draw.model.sbml_layout.SBMLlayout.setCompartmentLineWidth">
-<code class="sig-name descname">setCompartmentLineWidth</code><span class="sig-paren">(</span><em class="sig-param">compartment_id</em>, <em class="sig-param">line_width</em><span class="sig-paren">)</span><a class="headerlink" href="#libsbml_draw.model.sbml_layout.SBMLlayout.setCompartmentLineWidth" title="Permalink to this definition">¶</a></dt>
+<dt id="libsbml_draw.sbml_layout.SBMLlayout.setCompartmentLineWidth">
+<code class="sig-name descname">setCompartmentLineWidth</code><span class="sig-paren">(</span><em class="sig-param">compartment_id</em>, <em class="sig-param">line_width</em><span class="sig-paren">)</span><a class="headerlink" href="#libsbml_draw.sbml_layout.SBMLlayout.setCompartmentLineWidth" title="Permalink to this definition">¶</a></dt>
 <dd><p>Sets the line width of the compartment.</p>
 <dl>
 <dt>Args:</dt><dd><dl class="simple">
@@ -606,16 +604,16 @@ compartments</p>
 </dd></dl>
 
 <dl class="method">
-<dt id="libsbml_draw.model.sbml_layout.SBMLlayout.getNodeIds">
-<code class="sig-name descname">getNodeIds</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#libsbml_draw.model.sbml_layout.SBMLlayout.getNodeIds" title="Permalink to this definition">¶</a></dt>
+<dt id="libsbml_draw.sbml_layout.SBMLlayout.getNodeIds">
+<code class="sig-name descname">getNodeIds</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#libsbml_draw.sbml_layout.SBMLlayout.getNodeIds" title="Permalink to this definition">¶</a></dt>
 <dd><p>Returns a list of node ids.</p>
 <p>Args: None</p>
 <p>Returns: list of str</p>
 </dd></dl>
 
 <dl class="method">
-<dt id="libsbml_draw.model.sbml_layout.SBMLlayout.getNodeColor">
-<code class="sig-name descname">getNodeColor</code><span class="sig-paren">(</span><em class="sig-param">node_id</em><span class="sig-paren">)</span><a class="headerlink" href="#libsbml_draw.model.sbml_layout.SBMLlayout.getNodeColor" title="Permalink to this definition">¶</a></dt>
+<dt id="libsbml_draw.sbml_layout.SBMLlayout.getNodeColor">
+<code class="sig-name descname">getNodeColor</code><span class="sig-paren">(</span><em class="sig-param">node_id</em><span class="sig-paren">)</span><a class="headerlink" href="#libsbml_draw.sbml_layout.SBMLlayout.getNodeColor" title="Permalink to this definition">¶</a></dt>
 <dd><p>Returns the id of the fill color for this node.</p>
 <dl class="simple">
 <dt>Args:</dt><dd><p>node_id (str): id for the node</p>
@@ -625,8 +623,8 @@ compartments</p>
 </dd></dl>
 
 <dl class="method">
-<dt id="libsbml_draw.model.sbml_layout.SBMLlayout.getNodeKeywordIds">
-<code class="sig-name descname">getNodeKeywordIds</code><span class="sig-paren">(</span><em class="sig-param">node_keyword</em><span class="sig-paren">)</span><a class="headerlink" href="#libsbml_draw.model.sbml_layout.SBMLlayout.getNodeKeywordIds" title="Permalink to this definition">¶</a></dt>
+<dt id="libsbml_draw.sbml_layout.SBMLlayout.getNodeKeywordIds">
+<code class="sig-name descname">getNodeKeywordIds</code><span class="sig-paren">(</span><em class="sig-param">node_keyword</em><span class="sig-paren">)</span><a class="headerlink" href="#libsbml_draw.sbml_layout.SBMLlayout.getNodeKeywordIds" title="Permalink to this definition">¶</a></dt>
 <dd><p>Returns a list of node ids corresponding to the given keyword.</p>
 <dl class="simple">
 <dt>Args:</dt><dd><p>node_keyword(str): ‘all’, ‘boundary’, or ‘floating’</p>
@@ -636,8 +634,8 @@ compartments</p>
 </dd></dl>
 
 <dl class="method">
-<dt id="libsbml_draw.model.sbml_layout.SBMLlayout.setNodeColor">
-<code class="sig-name descname">setNodeColor</code><span class="sig-paren">(</span><em class="sig-param">node_id</em>, <em class="sig-param">node_color</em><span class="sig-paren">)</span><a class="headerlink" href="#libsbml_draw.model.sbml_layout.SBMLlayout.setNodeColor" title="Permalink to this definition">¶</a></dt>
+<dt id="libsbml_draw.sbml_layout.SBMLlayout.setNodeColor">
+<code class="sig-name descname">setNodeColor</code><span class="sig-paren">(</span><em class="sig-param">node_id</em>, <em class="sig-param">node_color</em><span class="sig-paren">)</span><a class="headerlink" href="#libsbml_draw.sbml_layout.SBMLlayout.setNodeColor" title="Permalink to this definition">¶</a></dt>
 <dd><p>Sets the node edge color and fill color to the same value.</p>
 <dl>
 <dt>Args:</dt><dd><dl class="simple">
@@ -652,16 +650,16 @@ of all the nodes of that type, or a list of node ids to change.</p>
 </dd></dl>
 
 <dl class="method">
-<dt id="libsbml_draw.model.sbml_layout.SBMLlayout.getNodeFillColor">
-<code class="sig-name descname">getNodeFillColor</code><span class="sig-paren">(</span><em class="sig-param">node_id</em><span class="sig-paren">)</span><a class="headerlink" href="#libsbml_draw.model.sbml_layout.SBMLlayout.getNodeFillColor" title="Permalink to this definition">¶</a></dt>
+<dt id="libsbml_draw.sbml_layout.SBMLlayout.getNodeFillColor">
+<code class="sig-name descname">getNodeFillColor</code><span class="sig-paren">(</span><em class="sig-param">node_id</em><span class="sig-paren">)</span><a class="headerlink" href="#libsbml_draw.sbml_layout.SBMLlayout.getNodeFillColor" title="Permalink to this definition">¶</a></dt>
 <dd><p>Returns the color id for the node fill color.</p>
 <p>Args: node_id(str): id of the node</p>
 <p>Returns: str</p>
 </dd></dl>
 
 <dl class="method">
-<dt id="libsbml_draw.model.sbml_layout.SBMLlayout.setNodeFillColor">
-<code class="sig-name descname">setNodeFillColor</code><span class="sig-paren">(</span><em class="sig-param">node_id</em>, <em class="sig-param">fill_color</em><span class="sig-paren">)</span><a class="headerlink" href="#libsbml_draw.model.sbml_layout.SBMLlayout.setNodeFillColor" title="Permalink to this definition">¶</a></dt>
+<dt id="libsbml_draw.sbml_layout.SBMLlayout.setNodeFillColor">
+<code class="sig-name descname">setNodeFillColor</code><span class="sig-paren">(</span><em class="sig-param">node_id</em>, <em class="sig-param">fill_color</em><span class="sig-paren">)</span><a class="headerlink" href="#libsbml_draw.sbml_layout.SBMLlayout.setNodeFillColor" title="Permalink to this definition">¶</a></dt>
 <dd><p>Sets the node fill color.</p>
 <dl>
 <dt>Args:</dt><dd><dl class="simple">
@@ -676,8 +674,8 @@ of all the nodes of that type, or a list of node ids to change.</p>
 </dd></dl>
 
 <dl class="method">
-<dt id="libsbml_draw.model.sbml_layout.SBMLlayout.getNodeEdgeColor">
-<code class="sig-name descname">getNodeEdgeColor</code><span class="sig-paren">(</span><em class="sig-param">node_id</em><span class="sig-paren">)</span><a class="headerlink" href="#libsbml_draw.model.sbml_layout.SBMLlayout.getNodeEdgeColor" title="Permalink to this definition">¶</a></dt>
+<dt id="libsbml_draw.sbml_layout.SBMLlayout.getNodeEdgeColor">
+<code class="sig-name descname">getNodeEdgeColor</code><span class="sig-paren">(</span><em class="sig-param">node_id</em><span class="sig-paren">)</span><a class="headerlink" href="#libsbml_draw.sbml_layout.SBMLlayout.getNodeEdgeColor" title="Permalink to this definition">¶</a></dt>
 <dd><p>Returns the color id for the node edge color.</p>
 <dl class="simple">
 <dt>Args:</dt><dd><p>node_id(str): id for the node</p>
@@ -687,8 +685,8 @@ of all the nodes of that type, or a list of node ids to change.</p>
 </dd></dl>
 
 <dl class="method">
-<dt id="libsbml_draw.model.sbml_layout.SBMLlayout.setNodeEdgeColor">
-<code class="sig-name descname">setNodeEdgeColor</code><span class="sig-paren">(</span><em class="sig-param">node_id</em>, <em class="sig-param">edge_color</em><span class="sig-paren">)</span><a class="headerlink" href="#libsbml_draw.model.sbml_layout.SBMLlayout.setNodeEdgeColor" title="Permalink to this definition">¶</a></dt>
+<dt id="libsbml_draw.sbml_layout.SBMLlayout.setNodeEdgeColor">
+<code class="sig-name descname">setNodeEdgeColor</code><span class="sig-paren">(</span><em class="sig-param">node_id</em>, <em class="sig-param">edge_color</em><span class="sig-paren">)</span><a class="headerlink" href="#libsbml_draw.sbml_layout.SBMLlayout.setNodeEdgeColor" title="Permalink to this definition">¶</a></dt>
 <dd><p>Sets the node edge color.</p>
 <dl>
 <dt>Args:</dt><dd><dl class="simple">
@@ -703,8 +701,8 @@ of all the nodes of that type, or a list of node ids to change.</p>
 </dd></dl>
 
 <dl class="method">
-<dt id="libsbml_draw.model.sbml_layout.SBMLlayout.getNodeEdgeWidth">
-<code class="sig-name descname">getNodeEdgeWidth</code><span class="sig-paren">(</span><em class="sig-param">node_id</em><span class="sig-paren">)</span><a class="headerlink" href="#libsbml_draw.model.sbml_layout.SBMLlayout.getNodeEdgeWidth" title="Permalink to this definition">¶</a></dt>
+<dt id="libsbml_draw.sbml_layout.SBMLlayout.getNodeEdgeWidth">
+<code class="sig-name descname">getNodeEdgeWidth</code><span class="sig-paren">(</span><em class="sig-param">node_id</em><span class="sig-paren">)</span><a class="headerlink" href="#libsbml_draw.sbml_layout.SBMLlayout.getNodeEdgeWidth" title="Permalink to this definition">¶</a></dt>
 <dd><p>Returns the line width for the node edge.</p>
 <dl class="simple">
 <dt>Args:</dt><dd><p>node_id(str): id for the node</p>
@@ -714,8 +712,8 @@ of all the nodes of that type, or a list of node ids to change.</p>
 </dd></dl>
 
 <dl class="method">
-<dt id="libsbml_draw.model.sbml_layout.SBMLlayout.setNodeEdgeWidth">
-<code class="sig-name descname">setNodeEdgeWidth</code><span class="sig-paren">(</span><em class="sig-param">node_id</em>, <em class="sig-param">edge_width</em><span class="sig-paren">)</span><a class="headerlink" href="#libsbml_draw.model.sbml_layout.SBMLlayout.setNodeEdgeWidth" title="Permalink to this definition">¶</a></dt>
+<dt id="libsbml_draw.sbml_layout.SBMLlayout.setNodeEdgeWidth">
+<code class="sig-name descname">setNodeEdgeWidth</code><span class="sig-paren">(</span><em class="sig-param">node_id</em>, <em class="sig-param">edge_width</em><span class="sig-paren">)</span><a class="headerlink" href="#libsbml_draw.sbml_layout.SBMLlayout.setNodeEdgeWidth" title="Permalink to this definition">¶</a></dt>
 <dd><p>Sets the line width of the node edge.</p>
 <dl>
 <dt>Args:</dt><dd><dl class="simple">
@@ -730,8 +728,8 @@ of all the nodes of that type, or a list of node ids to change.</p>
 </dd></dl>
 
 <dl class="method">
-<dt id="libsbml_draw.model.sbml_layout.SBMLlayout.getNodeTextAnchor">
-<code class="sig-name descname">getNodeTextAnchor</code><span class="sig-paren">(</span><em class="sig-param">node_id</em><span class="sig-paren">)</span><a class="headerlink" href="#libsbml_draw.model.sbml_layout.SBMLlayout.getNodeTextAnchor" title="Permalink to this definition">¶</a></dt>
+<dt id="libsbml_draw.sbml_layout.SBMLlayout.getNodeTextAnchor">
+<code class="sig-name descname">getNodeTextAnchor</code><span class="sig-paren">(</span><em class="sig-param">node_id</em><span class="sig-paren">)</span><a class="headerlink" href="#libsbml_draw.sbml_layout.SBMLlayout.getNodeTextAnchor" title="Permalink to this definition">¶</a></dt>
 <dd><p>Returns the horizontal text anchor for the node.</p>
 <dl class="simple">
 <dt>Args:</dt><dd><p>node_id(str): id for the node</p>
@@ -741,8 +739,8 @@ of all the nodes of that type, or a list of node ids to change.</p>
 </dd></dl>
 
 <dl class="method">
-<dt id="libsbml_draw.model.sbml_layout.SBMLlayout.setNodeTextAnchor">
-<code class="sig-name descname">setNodeTextAnchor</code><span class="sig-paren">(</span><em class="sig-param">node_id</em>, <em class="sig-param">text_anchor</em><span class="sig-paren">)</span><a class="headerlink" href="#libsbml_draw.model.sbml_layout.SBMLlayout.setNodeTextAnchor" title="Permalink to this definition">¶</a></dt>
+<dt id="libsbml_draw.sbml_layout.SBMLlayout.setNodeTextAnchor">
+<code class="sig-name descname">setNodeTextAnchor</code><span class="sig-paren">(</span><em class="sig-param">node_id</em>, <em class="sig-param">text_anchor</em><span class="sig-paren">)</span><a class="headerlink" href="#libsbml_draw.sbml_layout.SBMLlayout.setNodeTextAnchor" title="Permalink to this definition">¶</a></dt>
 <dd><p>Sets the horizontal text anchor for the node.</p>
 <dl>
 <dt>Args:</dt><dd><dl class="simple">
@@ -757,8 +755,8 @@ of all the nodes of that type, or a list of node ids to change.</p>
 </dd></dl>
 
 <dl class="method">
-<dt id="libsbml_draw.model.sbml_layout.SBMLlayout.getNodeVTextAnchor">
-<code class="sig-name descname">getNodeVTextAnchor</code><span class="sig-paren">(</span><em class="sig-param">node_id</em><span class="sig-paren">)</span><a class="headerlink" href="#libsbml_draw.model.sbml_layout.SBMLlayout.getNodeVTextAnchor" title="Permalink to this definition">¶</a></dt>
+<dt id="libsbml_draw.sbml_layout.SBMLlayout.getNodeVTextAnchor">
+<code class="sig-name descname">getNodeVTextAnchor</code><span class="sig-paren">(</span><em class="sig-param">node_id</em><span class="sig-paren">)</span><a class="headerlink" href="#libsbml_draw.sbml_layout.SBMLlayout.getNodeVTextAnchor" title="Permalink to this definition">¶</a></dt>
 <dd><p>Returns the vertical text anchor for the node.</p>
 <dl class="simple">
 <dt>Args:</dt><dd><p>node_id(str): id for the node</p>
@@ -768,8 +766,8 @@ of all the nodes of that type, or a list of node ids to change.</p>
 </dd></dl>
 
 <dl class="method">
-<dt id="libsbml_draw.model.sbml_layout.SBMLlayout.setNodeVTextAnchor">
-<code class="sig-name descname">setNodeVTextAnchor</code><span class="sig-paren">(</span><em class="sig-param">node_id</em>, <em class="sig-param">vtext_anchor</em><span class="sig-paren">)</span><a class="headerlink" href="#libsbml_draw.model.sbml_layout.SBMLlayout.setNodeVTextAnchor" title="Permalink to this definition">¶</a></dt>
+<dt id="libsbml_draw.sbml_layout.SBMLlayout.setNodeVTextAnchor">
+<code class="sig-name descname">setNodeVTextAnchor</code><span class="sig-paren">(</span><em class="sig-param">node_id</em>, <em class="sig-param">vtext_anchor</em><span class="sig-paren">)</span><a class="headerlink" href="#libsbml_draw.sbml_layout.SBMLlayout.setNodeVTextAnchor" title="Permalink to this definition">¶</a></dt>
 <dd><p>Sets the vertical text anchor for the node.</p>
 <dl>
 <dt>Args:</dt><dd><dl class="simple">
@@ -784,8 +782,8 @@ of all the nodes of that type, or a list of node ids to change.</p>
 </dd></dl>
 
 <dl class="method">
-<dt id="libsbml_draw.model.sbml_layout.SBMLlayout.getNodeFontSize">
-<code class="sig-name descname">getNodeFontSize</code><span class="sig-paren">(</span><em class="sig-param">node_id</em><span class="sig-paren">)</span><a class="headerlink" href="#libsbml_draw.model.sbml_layout.SBMLlayout.getNodeFontSize" title="Permalink to this definition">¶</a></dt>
+<dt id="libsbml_draw.sbml_layout.SBMLlayout.getNodeFontSize">
+<code class="sig-name descname">getNodeFontSize</code><span class="sig-paren">(</span><em class="sig-param">node_id</em><span class="sig-paren">)</span><a class="headerlink" href="#libsbml_draw.sbml_layout.SBMLlayout.getNodeFontSize" title="Permalink to this definition">¶</a></dt>
 <dd><p>Returns the font size of the node text.</p>
 <dl class="simple">
 <dt>Args:</dt><dd><p>node_id (str): id for the node</p>
@@ -795,8 +793,18 @@ of all the nodes of that type, or a list of node ids to change.</p>
 </dd></dl>
 
 <dl class="method">
-<dt id="libsbml_draw.model.sbml_layout.SBMLlayout.setNodeFontSize">
-<code class="sig-name descname">setNodeFontSize</code><span class="sig-paren">(</span><em class="sig-param">node_id</em>, <em class="sig-param">font_size</em><span class="sig-paren">)</span><a class="headerlink" href="#libsbml_draw.model.sbml_layout.SBMLlayout.setNodeFontSize" title="Permalink to this definition">¶</a></dt>
+<dt id="libsbml_draw.sbml_layout.SBMLlayout.getNodeNames">
+<code class="sig-name descname">getNodeNames</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#libsbml_draw.sbml_layout.SBMLlayout.getNodeNames" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="libsbml_draw.sbml_layout.SBMLlayout.getNodeIDs">
+<code class="sig-name descname">getNodeIDs</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#libsbml_draw.sbml_layout.SBMLlayout.getNodeIDs" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="libsbml_draw.sbml_layout.SBMLlayout.setNodeFontSize">
+<code class="sig-name descname">setNodeFontSize</code><span class="sig-paren">(</span><em class="sig-param">node_id</em>, <em class="sig-param">font_size</em><span class="sig-paren">)</span><a class="headerlink" href="#libsbml_draw.sbml_layout.SBMLlayout.setNodeFontSize" title="Permalink to this definition">¶</a></dt>
 <dd><p>Set the font size for the node.</p>
 <dl class="simple">
 <dt>Args:</dt><dd><dl class="simple">
@@ -813,8 +821,8 @@ of all the nodes of that type, or a list of node ids to change.</p>
 </dd></dl>
 
 <dl class="method">
-<dt id="libsbml_draw.model.sbml_layout.SBMLlayout.getNodeFontName">
-<code class="sig-name descname">getNodeFontName</code><span class="sig-paren">(</span><em class="sig-param">node_id</em><span class="sig-paren">)</span><a class="headerlink" href="#libsbml_draw.model.sbml_layout.SBMLlayout.getNodeFontName" title="Permalink to this definition">¶</a></dt>
+<dt id="libsbml_draw.sbml_layout.SBMLlayout.getNodeFontName">
+<code class="sig-name descname">getNodeFontName</code><span class="sig-paren">(</span><em class="sig-param">node_id</em><span class="sig-paren">)</span><a class="headerlink" href="#libsbml_draw.sbml_layout.SBMLlayout.getNodeFontName" title="Permalink to this definition">¶</a></dt>
 <dd><p>Returns the font family value, which can be the font family or
 font name.</p>
 <dl class="simple">
@@ -825,8 +833,8 @@ font name.</p>
 </dd></dl>
 
 <dl class="method">
-<dt id="libsbml_draw.model.sbml_layout.SBMLlayout.setNodeFontName">
-<code class="sig-name descname">setNodeFontName</code><span class="sig-paren">(</span><em class="sig-param">node_id</em>, <em class="sig-param">font_name</em><span class="sig-paren">)</span><a class="headerlink" href="#libsbml_draw.model.sbml_layout.SBMLlayout.setNodeFontName" title="Permalink to this definition">¶</a></dt>
+<dt id="libsbml_draw.sbml_layout.SBMLlayout.setNodeFontName">
+<code class="sig-name descname">setNodeFontName</code><span class="sig-paren">(</span><em class="sig-param">node_id</em>, <em class="sig-param">font_name</em><span class="sig-paren">)</span><a class="headerlink" href="#libsbml_draw.sbml_layout.SBMLlayout.setNodeFontName" title="Permalink to this definition">¶</a></dt>
 <dd><p>Sets the font family for the node, which can be a value for the
 family or name of the font.</p>
 <dl>
@@ -843,15 +851,15 @@ or font name (eg. ‘Arial’)</p>
 </dd></dl>
 
 <dl class="method">
-<dt id="libsbml_draw.model.sbml_layout.SBMLlayout.getNodeFontFamily">
-<code class="sig-name descname">getNodeFontFamily</code><span class="sig-paren">(</span><em class="sig-param">node_id</em><span class="sig-paren">)</span><a class="headerlink" href="#libsbml_draw.model.sbml_layout.SBMLlayout.getNodeFontFamily" title="Permalink to this definition">¶</a></dt>
+<dt id="libsbml_draw.sbml_layout.SBMLlayout.getNodeFontFamily">
+<code class="sig-name descname">getNodeFontFamily</code><span class="sig-paren">(</span><em class="sig-param">node_id</em><span class="sig-paren">)</span><a class="headerlink" href="#libsbml_draw.sbml_layout.SBMLlayout.getNodeFontFamily" title="Permalink to this definition">¶</a></dt>
 <dd><p>Returns the font family value, which can be the font family or
 font name.</p>
 </dd></dl>
 
 <dl class="method">
-<dt id="libsbml_draw.model.sbml_layout.SBMLlayout.setNodeFontFamily">
-<code class="sig-name descname">setNodeFontFamily</code><span class="sig-paren">(</span><em class="sig-param">node_id</em>, <em class="sig-param">font_family</em><span class="sig-paren">)</span><a class="headerlink" href="#libsbml_draw.model.sbml_layout.SBMLlayout.setNodeFontFamily" title="Permalink to this definition">¶</a></dt>
+<dt id="libsbml_draw.sbml_layout.SBMLlayout.setNodeFontFamily">
+<code class="sig-name descname">setNodeFontFamily</code><span class="sig-paren">(</span><em class="sig-param">node_id</em>, <em class="sig-param">font_family</em><span class="sig-paren">)</span><a class="headerlink" href="#libsbml_draw.sbml_layout.SBMLlayout.setNodeFontFamily" title="Permalink to this definition">¶</a></dt>
 <dd><p>Sets the font family for the node, which can be a value for either
 the family or name of the font.</p>
 <dl>
@@ -868,8 +876,8 @@ or font name (eg. ‘Arial’)</p>
 </dd></dl>
 
 <dl class="method">
-<dt id="libsbml_draw.model.sbml_layout.SBMLlayout.getNodeFontColor">
-<code class="sig-name descname">getNodeFontColor</code><span class="sig-paren">(</span><em class="sig-param">node_id</em><span class="sig-paren">)</span><a class="headerlink" href="#libsbml_draw.model.sbml_layout.SBMLlayout.getNodeFontColor" title="Permalink to this definition">¶</a></dt>
+<dt id="libsbml_draw.sbml_layout.SBMLlayout.getNodeFontColor">
+<code class="sig-name descname">getNodeFontColor</code><span class="sig-paren">(</span><em class="sig-param">node_id</em><span class="sig-paren">)</span><a class="headerlink" href="#libsbml_draw.sbml_layout.SBMLlayout.getNodeFontColor" title="Permalink to this definition">¶</a></dt>
 <dd><p>Returns the color of the node’s text.</p>
 <dl class="simple">
 <dt>Args:</dt><dd><p>node_id (str): id for the node</p>
@@ -879,8 +887,8 @@ or font name (eg. ‘Arial’)</p>
 </dd></dl>
 
 <dl class="method">
-<dt id="libsbml_draw.model.sbml_layout.SBMLlayout.setNodeFontColor">
-<code class="sig-name descname">setNodeFontColor</code><span class="sig-paren">(</span><em class="sig-param">node_id</em>, <em class="sig-param">font_color</em><span class="sig-paren">)</span><a class="headerlink" href="#libsbml_draw.model.sbml_layout.SBMLlayout.setNodeFontColor" title="Permalink to this definition">¶</a></dt>
+<dt id="libsbml_draw.sbml_layout.SBMLlayout.setNodeFontColor">
+<code class="sig-name descname">setNodeFontColor</code><span class="sig-paren">(</span><em class="sig-param">node_id</em>, <em class="sig-param">font_color</em><span class="sig-paren">)</span><a class="headerlink" href="#libsbml_draw.sbml_layout.SBMLlayout.setNodeFontColor" title="Permalink to this definition">¶</a></dt>
 <dd><p>Sets the node font color.</p>
 <dl>
 <dt>Args:</dt><dd><dl class="simple">
@@ -895,8 +903,8 @@ of all the nodes of that type, or a list of node ids to change.</p>
 </dd></dl>
 
 <dl class="method">
-<dt id="libsbml_draw.model.sbml_layout.SBMLlayout.getNodeFontStyle">
-<code class="sig-name descname">getNodeFontStyle</code><span class="sig-paren">(</span><em class="sig-param">node_id</em><span class="sig-paren">)</span><a class="headerlink" href="#libsbml_draw.model.sbml_layout.SBMLlayout.getNodeFontStyle" title="Permalink to this definition">¶</a></dt>
+<dt id="libsbml_draw.sbml_layout.SBMLlayout.getNodeFontStyle">
+<code class="sig-name descname">getNodeFontStyle</code><span class="sig-paren">(</span><em class="sig-param">node_id</em><span class="sig-paren">)</span><a class="headerlink" href="#libsbml_draw.sbml_layout.SBMLlayout.getNodeFontStyle" title="Permalink to this definition">¶</a></dt>
 <dd><p>Returns the style of the font for the given node.</p>
 <dl class="simple">
 <dt>Args:</dt><dd><p>node_id (str): id for the node</p>
@@ -906,8 +914,8 @@ of all the nodes of that type, or a list of node ids to change.</p>
 </dd></dl>
 
 <dl class="method">
-<dt id="libsbml_draw.model.sbml_layout.SBMLlayout.setNodeFontStyle">
-<code class="sig-name descname">setNodeFontStyle</code><span class="sig-paren">(</span><em class="sig-param">node_id</em>, <em class="sig-param">font_style</em><span class="sig-paren">)</span><a class="headerlink" href="#libsbml_draw.model.sbml_layout.SBMLlayout.setNodeFontStyle" title="Permalink to this definition">¶</a></dt>
+<dt id="libsbml_draw.sbml_layout.SBMLlayout.setNodeFontStyle">
+<code class="sig-name descname">setNodeFontStyle</code><span class="sig-paren">(</span><em class="sig-param">node_id</em>, <em class="sig-param">font_style</em><span class="sig-paren">)</span><a class="headerlink" href="#libsbml_draw.sbml_layout.SBMLlayout.setNodeFontStyle" title="Permalink to this definition">¶</a></dt>
 <dd><p>Sets the node font style.</p>
 <dl class="simple">
 <dt>Args:</dt><dd><dl class="simple">
@@ -923,8 +931,8 @@ of all the nodes of that type, or a list of node ids to change.</p>
 </dd></dl>
 
 <dl class="method">
-<dt id="libsbml_draw.model.sbml_layout.SBMLlayout.getNodeFontWeight">
-<code class="sig-name descname">getNodeFontWeight</code><span class="sig-paren">(</span><em class="sig-param">node_id</em><span class="sig-paren">)</span><a class="headerlink" href="#libsbml_draw.model.sbml_layout.SBMLlayout.getNodeFontWeight" title="Permalink to this definition">¶</a></dt>
+<dt id="libsbml_draw.sbml_layout.SBMLlayout.getNodeFontWeight">
+<code class="sig-name descname">getNodeFontWeight</code><span class="sig-paren">(</span><em class="sig-param">node_id</em><span class="sig-paren">)</span><a class="headerlink" href="#libsbml_draw.sbml_layout.SBMLlayout.getNodeFontWeight" title="Permalink to this definition">¶</a></dt>
 <dd><p>Returns the weight of the font for the given node.</p>
 <dl class="simple">
 <dt>Args:</dt><dd><p>node_id (str): id for the node</p>
@@ -934,8 +942,8 @@ of all the nodes of that type, or a list of node ids to change.</p>
 </dd></dl>
 
 <dl class="method">
-<dt id="libsbml_draw.model.sbml_layout.SBMLlayout.setNodeFontWeight">
-<code class="sig-name descname">setNodeFontWeight</code><span class="sig-paren">(</span><em class="sig-param">node_id</em>, <em class="sig-param">font_weight</em><span class="sig-paren">)</span><a class="headerlink" href="#libsbml_draw.model.sbml_layout.SBMLlayout.setNodeFontWeight" title="Permalink to this definition">¶</a></dt>
+<dt id="libsbml_draw.sbml_layout.SBMLlayout.setNodeFontWeight">
+<code class="sig-name descname">setNodeFontWeight</code><span class="sig-paren">(</span><em class="sig-param">node_id</em>, <em class="sig-param">font_weight</em><span class="sig-paren">)</span><a class="headerlink" href="#libsbml_draw.sbml_layout.SBMLlayout.setNodeFontWeight" title="Permalink to this definition">¶</a></dt>
 <dd><p>Sets the node font weight.</p>
 <dl>
 <dt>Args:</dt><dd><dl class="simple">
@@ -950,8 +958,8 @@ of all the nodes of that type, or a list of node ids to change.</p>
 </dd></dl>
 
 <dl class="method">
-<dt id="libsbml_draw.model.sbml_layout.SBMLlayout.getNodeWidth">
-<code class="sig-name descname">getNodeWidth</code><span class="sig-paren">(</span><em class="sig-param">node_id</em><span class="sig-paren">)</span><a class="headerlink" href="#libsbml_draw.model.sbml_layout.SBMLlayout.getNodeWidth" title="Permalink to this definition">¶</a></dt>
+<dt id="libsbml_draw.sbml_layout.SBMLlayout.getNodeWidth">
+<code class="sig-name descname">getNodeWidth</code><span class="sig-paren">(</span><em class="sig-param">node_id</em><span class="sig-paren">)</span><a class="headerlink" href="#libsbml_draw.sbml_layout.SBMLlayout.getNodeWidth" title="Permalink to this definition">¶</a></dt>
 <dd><p>Returns the width of the node.</p>
 <dl class="simple">
 <dt>Args:</dt><dd><p>node_id (str): id for the node</p>
@@ -961,8 +969,8 @@ of all the nodes of that type, or a list of node ids to change.</p>
 </dd></dl>
 
 <dl class="method">
-<dt id="libsbml_draw.model.sbml_layout.SBMLlayout.getNodeHeight">
-<code class="sig-name descname">getNodeHeight</code><span class="sig-paren">(</span><em class="sig-param">node_id</em><span class="sig-paren">)</span><a class="headerlink" href="#libsbml_draw.model.sbml_layout.SBMLlayout.getNodeHeight" title="Permalink to this definition">¶</a></dt>
+<dt id="libsbml_draw.sbml_layout.SBMLlayout.getNodeHeight">
+<code class="sig-name descname">getNodeHeight</code><span class="sig-paren">(</span><em class="sig-param">node_id</em><span class="sig-paren">)</span><a class="headerlink" href="#libsbml_draw.sbml_layout.SBMLlayout.getNodeHeight" title="Permalink to this definition">¶</a></dt>
 <dd><p>Returns the height of the node.</p>
 <dl class="simple">
 <dt>Args:</dt><dd><p>node_id (str): id for the node</p>
@@ -972,8 +980,32 @@ of all the nodes of that type, or a list of node ids to change.</p>
 </dd></dl>
 
 <dl class="method">
-<dt id="libsbml_draw.model.sbml_layout.SBMLlayout.getNodeName">
-<code class="sig-name descname">getNodeName</code><span class="sig-paren">(</span><em class="sig-param">node_id</em><span class="sig-paren">)</span><a class="headerlink" href="#libsbml_draw.model.sbml_layout.SBMLlayout.getNodeName" title="Permalink to this definition">¶</a></dt>
+<dt id="libsbml_draw.sbml_layout.SBMLlayout.setNodeWidth">
+<code class="sig-name descname">setNodeWidth</code><span class="sig-paren">(</span><em class="sig-param">node_id</em>, <em class="sig-param">width</em><span class="sig-paren">)</span><a class="headerlink" href="#libsbml_draw.sbml_layout.SBMLlayout.setNodeWidth" title="Permalink to this definition">¶</a></dt>
+<dd><p>Sets the width of the node.</p>
+<dl class="simple">
+<dt>Args:</dt><dd><p>node_id (str): id for the node
+width (float): width in libs coordinates for the node</p>
+</dd>
+</dl>
+<p>Returns: None</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="libsbml_draw.sbml_layout.SBMLlayout.setNodeHeight">
+<code class="sig-name descname">setNodeHeight</code><span class="sig-paren">(</span><em class="sig-param">node_id</em>, <em class="sig-param">height</em><span class="sig-paren">)</span><a class="headerlink" href="#libsbml_draw.sbml_layout.SBMLlayout.setNodeHeight" title="Permalink to this definition">¶</a></dt>
+<dd><p>Sets the height of the node.</p>
+<dl class="simple">
+<dt>Args:</dt><dd><p>node_id (str): id for the node
+height (float): height in libs coordinates for the node</p>
+</dd>
+</dl>
+<p>Returns: None</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="libsbml_draw.sbml_layout.SBMLlayout.getNodeName">
+<code class="sig-name descname">getNodeName</code><span class="sig-paren">(</span><em class="sig-param">node_id</em><span class="sig-paren">)</span><a class="headerlink" href="#libsbml_draw.sbml_layout.SBMLlayout.getNodeName" title="Permalink to this definition">¶</a></dt>
 <dd><p>Returns the name of the node.</p>
 <dl class="simple">
 <dt>Args:</dt><dd><p>node_id (str): id for the node</p>
@@ -983,8 +1015,8 @@ of all the nodes of that type, or a list of node ids to change.</p>
 </dd></dl>
 
 <dl class="method">
-<dt id="libsbml_draw.model.sbml_layout.SBMLlayout.getNodeLowerLeftPoint">
-<code class="sig-name descname">getNodeLowerLeftPoint</code><span class="sig-paren">(</span><em class="sig-param">node_id</em><span class="sig-paren">)</span><a class="headerlink" href="#libsbml_draw.model.sbml_layout.SBMLlayout.getNodeLowerLeftPoint" title="Permalink to this definition">¶</a></dt>
+<dt id="libsbml_draw.sbml_layout.SBMLlayout.getNodeLowerLeftPoint">
+<code class="sig-name descname">getNodeLowerLeftPoint</code><span class="sig-paren">(</span><em class="sig-param">node_id</em><span class="sig-paren">)</span><a class="headerlink" href="#libsbml_draw.sbml_layout.SBMLlayout.getNodeLowerLeftPoint" title="Permalink to this definition">¶</a></dt>
 <dd><p>Returns the point for the node’s lower left corner.</p>
 <dl class="simple">
 <dt>Args:</dt><dd><p>node_id (str): id for the node</p>
@@ -994,8 +1026,8 @@ of all the nodes of that type, or a list of node ids to change.</p>
 </dd></dl>
 
 <dl class="method">
-<dt id="libsbml_draw.model.sbml_layout.SBMLlayout.getBoundarySpeciesIds">
-<code class="sig-name descname">getBoundarySpeciesIds</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#libsbml_draw.model.sbml_layout.SBMLlayout.getBoundarySpeciesIds" title="Permalink to this definition">¶</a></dt>
+<dt id="libsbml_draw.sbml_layout.SBMLlayout.getBoundarySpeciesIds">
+<code class="sig-name descname">getBoundarySpeciesIds</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#libsbml_draw.sbml_layout.SBMLlayout.getBoundarySpeciesIds" title="Permalink to this definition">¶</a></dt>
 <dd><p>Gets the id values of the Species who have boundaryCondition set to
 True.</p>
 <dl class="simple">
@@ -1006,8 +1038,8 @@ True.</p>
 </dd></dl>
 
 <dl class="method">
-<dt id="libsbml_draw.model.sbml_layout.SBMLlayout.getFloatingSpeciesIds">
-<code class="sig-name descname">getFloatingSpeciesIds</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#libsbml_draw.model.sbml_layout.SBMLlayout.getFloatingSpeciesIds" title="Permalink to this definition">¶</a></dt>
+<dt id="libsbml_draw.sbml_layout.SBMLlayout.getFloatingSpeciesIds">
+<code class="sig-name descname">getFloatingSpeciesIds</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#libsbml_draw.sbml_layout.SBMLlayout.getFloatingSpeciesIds" title="Permalink to this definition">¶</a></dt>
 <dd><p>Gets the id values of the Species who have boundaryCondition set to
 False.</p>
 <dl class="simple">
@@ -1018,16 +1050,8 @@ False.</p>
 </dd></dl>
 
 <dl class="method">
-<dt id="libsbml_draw.model.sbml_layout.SBMLlayout.getReactionIds">
-<code class="sig-name descname">getReactionIds</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#libsbml_draw.model.sbml_layout.SBMLlayout.getReactionIds" title="Permalink to this definition">¶</a></dt>
-<dd><p>Gets the ids of the reactions in the model.</p>
-<p>Args: None</p>
-<p>Returns: list of Reaction ids</p>
-</dd></dl>
-
-<dl class="method">
-<dt id="libsbml_draw.model.sbml_layout.SBMLlayout.setReactionColor">
-<code class="sig-name descname">setReactionColor</code><span class="sig-paren">(</span><em class="sig-param">reaction_id</em>, <em class="sig-param">reaction_color</em>, <em class="sig-param">role_name=None</em>, <em class="sig-param">species=None</em><span class="sig-paren">)</span><a class="headerlink" href="#libsbml_draw.model.sbml_layout.SBMLlayout.setReactionColor" title="Permalink to this definition">¶</a></dt>
+<dt id="libsbml_draw.sbml_layout.SBMLlayout.setReactionColor">
+<code class="sig-name descname">setReactionColor</code><span class="sig-paren">(</span><em class="sig-param">reaction_id</em>, <em class="sig-param">reaction_color</em>, <em class="sig-param">role_name=None</em>, <em class="sig-param">species=None</em><span class="sig-paren">)</span><a class="headerlink" href="#libsbml_draw.sbml_layout.SBMLlayout.setReactionColor" title="Permalink to this definition">¶</a></dt>
 <dd><p>Sets the reaction edge color and fill color to the same value.  If the
 role or species args are set, then the color is set only for curves in
 a reaction which have that role or are connected to that species.</p>
@@ -1051,8 +1075,8 @@ role_name (optional, str): role of the curve in the reaction,</p>
 </dd></dl>
 
 <dl class="method">
-<dt id="libsbml_draw.model.sbml_layout.SBMLlayout.getReactionEdgeColor">
-<code class="sig-name descname">getReactionEdgeColor</code><span class="sig-paren">(</span><em class="sig-param">reaction_id</em><span class="sig-paren">)</span><a class="headerlink" href="#libsbml_draw.model.sbml_layout.SBMLlayout.getReactionEdgeColor" title="Permalink to this definition">¶</a></dt>
+<dt id="libsbml_draw.sbml_layout.SBMLlayout.getReactionEdgeColor">
+<code class="sig-name descname">getReactionEdgeColor</code><span class="sig-paren">(</span><em class="sig-param">reaction_id</em><span class="sig-paren">)</span><a class="headerlink" href="#libsbml_draw.sbml_layout.SBMLlayout.getReactionEdgeColor" title="Permalink to this definition">¶</a></dt>
 <dd><p>Returns the color id for the edge color of the reaction.</p>
 <dl class="simple">
 <dt>Args:</dt><dd><p>reaction_id (str): id for the reaction</p>
@@ -1063,8 +1087,8 @@ role_name (optional, str): role of the curve in the reaction,</p>
 </dd></dl>
 
 <dl class="method">
-<dt id="libsbml_draw.model.sbml_layout.SBMLlayout.setReactionEdgeColor">
-<code class="sig-name descname">setReactionEdgeColor</code><span class="sig-paren">(</span><em class="sig-param">reaction_id</em>, <em class="sig-param">edge_color</em>, <em class="sig-param">role_name=None</em>, <em class="sig-param">species=None</em><span class="sig-paren">)</span><a class="headerlink" href="#libsbml_draw.model.sbml_layout.SBMLlayout.setReactionEdgeColor" title="Permalink to this definition">¶</a></dt>
+<dt id="libsbml_draw.sbml_layout.SBMLlayout.setReactionEdgeColor">
+<code class="sig-name descname">setReactionEdgeColor</code><span class="sig-paren">(</span><em class="sig-param">reaction_id</em>, <em class="sig-param">edge_color</em>, <em class="sig-param">role_name=None</em>, <em class="sig-param">species=None</em><span class="sig-paren">)</span><a class="headerlink" href="#libsbml_draw.sbml_layout.SBMLlayout.setReactionEdgeColor" title="Permalink to this definition">¶</a></dt>
 <dd><p>Sets the reaction edge color for all curves in the reaction.  If the
 role or species args are set, then the color is set only for curves in
 a reaction which have that role or are connected to that species.</p>
@@ -1088,8 +1112,13 @@ role_name (optional, str): role of the curve in the reaction,</p>
 </dd></dl>
 
 <dl class="method">
-<dt id="libsbml_draw.model.sbml_layout.SBMLlayout.getReactionFillColor">
-<code class="sig-name descname">getReactionFillColor</code><span class="sig-paren">(</span><em class="sig-param">reaction_id</em><span class="sig-paren">)</span><a class="headerlink" href="#libsbml_draw.model.sbml_layout.SBMLlayout.getReactionFillColor" title="Permalink to this definition">¶</a></dt>
+<dt id="libsbml_draw.sbml_layout.SBMLlayout.getReactionIds">
+<code class="sig-name descname">getReactionIds</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#libsbml_draw.sbml_layout.SBMLlayout.getReactionIds" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="libsbml_draw.sbml_layout.SBMLlayout.getReactionFillColor">
+<code class="sig-name descname">getReactionFillColor</code><span class="sig-paren">(</span><em class="sig-param">reaction_id</em><span class="sig-paren">)</span><a class="headerlink" href="#libsbml_draw.sbml_layout.SBMLlayout.getReactionFillColor" title="Permalink to this definition">¶</a></dt>
 <dd><p>Returns the color id for the fill color of the reaction.</p>
 <dl class="simple">
 <dt>Args:</dt><dd><p>reaction_id (str): id for the reaction</p>
@@ -1100,8 +1129,8 @@ role_name (optional, str): role of the curve in the reaction,</p>
 </dd></dl>
 
 <dl class="method">
-<dt id="libsbml_draw.model.sbml_layout.SBMLlayout.setReactionFillColor">
-<code class="sig-name descname">setReactionFillColor</code><span class="sig-paren">(</span><em class="sig-param">reaction_id</em>, <em class="sig-param">fill_color</em>, <em class="sig-param">role_name=None</em>, <em class="sig-param">species=None</em><span class="sig-paren">)</span><a class="headerlink" href="#libsbml_draw.model.sbml_layout.SBMLlayout.setReactionFillColor" title="Permalink to this definition">¶</a></dt>
+<dt id="libsbml_draw.sbml_layout.SBMLlayout.setReactionFillColor">
+<code class="sig-name descname">setReactionFillColor</code><span class="sig-paren">(</span><em class="sig-param">reaction_id</em>, <em class="sig-param">fill_color</em>, <em class="sig-param">role_name=None</em>, <em class="sig-param">species=None</em><span class="sig-paren">)</span><a class="headerlink" href="#libsbml_draw.sbml_layout.SBMLlayout.setReactionFillColor" title="Permalink to this definition">¶</a></dt>
 <dd><p>Sets the reaction fill color for all curves in the reaction.  If the
 role or species args are set, then the color is set only for curves in
 a reaction which have that role or are connected to that species.</p>
@@ -1125,8 +1154,8 @@ role_name (optional, str): role of the curve in the reaction,</p>
 </dd></dl>
 
 <dl class="method">
-<dt id="libsbml_draw.model.sbml_layout.SBMLlayout.getReactionCurveWidth">
-<code class="sig-name descname">getReactionCurveWidth</code><span class="sig-paren">(</span><em class="sig-param">reaction_id</em><span class="sig-paren">)</span><a class="headerlink" href="#libsbml_draw.model.sbml_layout.SBMLlayout.getReactionCurveWidth" title="Permalink to this definition">¶</a></dt>
+<dt id="libsbml_draw.sbml_layout.SBMLlayout.getReactionCurveWidth">
+<code class="sig-name descname">getReactionCurveWidth</code><span class="sig-paren">(</span><em class="sig-param">reaction_id</em><span class="sig-paren">)</span><a class="headerlink" href="#libsbml_draw.sbml_layout.SBMLlayout.getReactionCurveWidth" title="Permalink to this definition">¶</a></dt>
 <dd><p>Returns the curve width for all curves of the reaction.</p>
 <dl class="simple">
 <dt>Args:</dt><dd><p>reaction_id (str): id for the reaction</p>
@@ -1137,8 +1166,8 @@ role_name (optional, str): role of the curve in the reaction,</p>
 </dd></dl>
 
 <dl class="method">
-<dt id="libsbml_draw.model.sbml_layout.SBMLlayout.setReactionCurveWidth">
-<code class="sig-name descname">setReactionCurveWidth</code><span class="sig-paren">(</span><em class="sig-param">reaction_id</em>, <em class="sig-param">curve_width</em>, <em class="sig-param">role_name=None</em>, <em class="sig-param">species=None</em><span class="sig-paren">)</span><a class="headerlink" href="#libsbml_draw.model.sbml_layout.SBMLlayout.setReactionCurveWidth" title="Permalink to this definition">¶</a></dt>
+<dt id="libsbml_draw.sbml_layout.SBMLlayout.setReactionCurveWidth">
+<code class="sig-name descname">setReactionCurveWidth</code><span class="sig-paren">(</span><em class="sig-param">reaction_id</em>, <em class="sig-param">curve_width</em>, <em class="sig-param">role_name=None</em>, <em class="sig-param">species=None</em><span class="sig-paren">)</span><a class="headerlink" href="#libsbml_draw.sbml_layout.SBMLlayout.setReactionCurveWidth" title="Permalink to this definition">¶</a></dt>
 <dd><p>Sets the line width of the curve for all curves in the reaction.  If
 the role or species args are set, then the color is set only for curves
 in a reaction which have that role or are connected to that species.</p>
@@ -1162,8 +1191,8 @@ role_name (optional, str): role of the curve in the reaction,</p>
 </dd></dl>
 
 <dl class="method">
-<dt id="libsbml_draw.model.sbml_layout.SBMLlayout.getArrowheadStyle">
-<code class="sig-name descname">getArrowheadStyle</code><span class="sig-paren">(</span><em class="sig-param">role</em><span class="sig-paren">)</span><a class="headerlink" href="#libsbml_draw.model.sbml_layout.SBMLlayout.getArrowheadStyle" title="Permalink to this definition">¶</a></dt>
+<dt id="libsbml_draw.sbml_layout.SBMLlayout.getArrowheadStyle">
+<code class="sig-name descname">getArrowheadStyle</code><span class="sig-paren">(</span><em class="sig-param">role</em><span class="sig-paren">)</span><a class="headerlink" href="#libsbml_draw.sbml_layout.SBMLlayout.getArrowheadStyle" title="Permalink to this definition">¶</a></dt>
 <dd><p>Returns the arrowhead style for the given role.</p>
 <dl class="simple">
 <dt>Args:</dt><dd><p>role (int): which role</p>
@@ -1173,8 +1202,8 @@ role_name (optional, str): role of the curve in the reaction,</p>
 </dd></dl>
 
 <dl class="method">
-<dt id="libsbml_draw.model.sbml_layout.SBMLlayout.setArrowheadStyle">
-<code class="sig-name descname">setArrowheadStyle</code><span class="sig-paren">(</span><em class="sig-param">role</em>, <em class="sig-param">style</em><span class="sig-paren">)</span><a class="headerlink" href="#libsbml_draw.model.sbml_layout.SBMLlayout.setArrowheadStyle" title="Permalink to this definition">¶</a></dt>
+<dt id="libsbml_draw.sbml_layout.SBMLlayout.setArrowheadStyle">
+<code class="sig-name descname">setArrowheadStyle</code><span class="sig-paren">(</span><em class="sig-param">role</em>, <em class="sig-param">style</em><span class="sig-paren">)</span><a class="headerlink" href="#libsbml_draw.sbml_layout.SBMLlayout.setArrowheadStyle" title="Permalink to this definition">¶</a></dt>
 <dd><p>Set the arrowhead style for the given role.</p>
 <dl class="simple">
 <dt>Args:</dt><dd><p>role (int): which role
@@ -1185,8 +1214,8 @@ style (int): which style</p>
 </dd></dl>
 
 <dl class="method">
-<dt id="libsbml_draw.model.sbml_layout.SBMLlayout.getArrowheadNumVerts">
-<code class="sig-name descname">getArrowheadNumVerts</code><span class="sig-paren">(</span><em class="sig-param">style</em><span class="sig-paren">)</span><a class="headerlink" href="#libsbml_draw.model.sbml_layout.SBMLlayout.getArrowheadNumVerts" title="Permalink to this definition">¶</a></dt>
+<dt id="libsbml_draw.sbml_layout.SBMLlayout.getArrowheadNumVerts">
+<code class="sig-name descname">getArrowheadNumVerts</code><span class="sig-paren">(</span><em class="sig-param">style</em><span class="sig-paren">)</span><a class="headerlink" href="#libsbml_draw.sbml_layout.SBMLlayout.getArrowheadNumVerts" title="Permalink to this definition">¶</a></dt>
 <dd><p>Returns the number of vertices in the arrowhead of the given style.</p>
 <dl class="simple">
 <dt>Args:</dt><dd><p>style (int): which arrowhead style</p>
@@ -1196,8 +1225,8 @@ style (int): which style</p>
 </dd></dl>
 
 <dl class="method">
-<dt id="libsbml_draw.model.sbml_layout.SBMLlayout.getArrowheadVert">
-<code class="sig-name descname">getArrowheadVert</code><span class="sig-paren">(</span><em class="sig-param">style</em>, <em class="sig-param">vertex_number</em><span class="sig-paren">)</span><a class="headerlink" href="#libsbml_draw.model.sbml_layout.SBMLlayout.getArrowheadVert" title="Permalink to this definition">¶</a></dt>
+<dt id="libsbml_draw.sbml_layout.SBMLlayout.getArrowheadVert">
+<code class="sig-name descname">getArrowheadVert</code><span class="sig-paren">(</span><em class="sig-param">style</em>, <em class="sig-param">vertex_number</em><span class="sig-paren">)</span><a class="headerlink" href="#libsbml_draw.sbml_layout.SBMLlayout.getArrowheadVert" title="Permalink to this definition">¶</a></dt>
 <dd><p>Returns a point for the given vertex_number, given an arrowhead
 style.</p>
 <dl class="simple">
@@ -1209,16 +1238,16 @@ vertex_number (int): specify the vertex in the arrowhead</p>
 </dd></dl>
 
 <dl class="method">
-<dt id="libsbml_draw.model.sbml_layout.SBMLlayout.getArrowheadNumStyles">
-<code class="sig-name descname">getArrowheadNumStyles</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#libsbml_draw.model.sbml_layout.SBMLlayout.getArrowheadNumStyles" title="Permalink to this definition">¶</a></dt>
+<dt id="libsbml_draw.sbml_layout.SBMLlayout.getArrowheadNumStyles">
+<code class="sig-name descname">getArrowheadNumStyles</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#libsbml_draw.sbml_layout.SBMLlayout.getArrowheadNumStyles" title="Permalink to this definition">¶</a></dt>
 <dd><p>Returns the number of arrowhead styles available.</p>
 <p>Args: None</p>
 <p>Returns: int</p>
 </dd></dl>
 
 <dl class="method">
-<dt id="libsbml_draw.model.sbml_layout.SBMLlayout.drawNetwork">
-<code class="sig-name descname">drawNetwork</code><span class="sig-paren">(</span><em class="sig-param">save_file_name=None</em>, <em class="sig-param">show=True</em>, <em class="sig-param">dpi=72</em>, <em class="sig-param">width_shift=0.25</em>, <em class="sig-param">height_shift=0.25</em>, <em class="sig-param">scaling_factor=1</em><span class="sig-paren">)</span><a class="headerlink" href="#libsbml_draw.model.sbml_layout.SBMLlayout.drawNetwork" title="Permalink to this definition">¶</a></dt>
+<dt id="libsbml_draw.sbml_layout.SBMLlayout.drawNetwork">
+<code class="sig-name descname">drawNetwork</code><span class="sig-paren">(</span><em class="sig-param">save_file_name=None</em>, <em class="sig-param">show=True</em>, <em class="sig-param">dpi=72</em>, <em class="sig-param">width_shift=0.25</em>, <em class="sig-param">height_shift=0.25</em>, <em class="sig-param">scaling_factor=1</em><span class="sig-paren">)</span><a class="headerlink" href="#libsbml_draw.sbml_layout.SBMLlayout.drawNetwork" title="Permalink to this definition">¶</a></dt>
 <dd><p>Draws the network to screen.  The figure can be saved.</p>
 <dl>
 <dt>Args:</dt><dd><p>save_file_name (optional, str): save figure to this file
@@ -1241,8 +1270,16 @@ the figure size by one-half</p>
 </dd></dl>
 
 <dl class="method">
-<dt id="libsbml_draw.model.sbml_layout.SBMLlayout.setArrowheadScale">
-<code class="sig-name descname">setArrowheadScale</code><span class="sig-paren">(</span><em class="sig-param">role</em>, <em class="sig-param">arrowhead_scale</em><span class="sig-paren">)</span><a class="headerlink" href="#libsbml_draw.model.sbml_layout.SBMLlayout.setArrowheadScale" title="Permalink to this definition">¶</a></dt>
+<dt id="libsbml_draw.sbml_layout.SBMLlayout.getSBMLString">
+<code class="sig-name descname">getSBMLString</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#libsbml_draw.sbml_layout.SBMLlayout.getSBMLString" title="Permalink to this definition">¶</a></dt>
+<dd><p>Returns the SBML string for the model.</p>
+<p>Args: None</p>
+<p>Returns: str</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="libsbml_draw.sbml_layout.SBMLlayout.setArrowheadScale">
+<code class="sig-name descname">setArrowheadScale</code><span class="sig-paren">(</span><em class="sig-param">role</em>, <em class="sig-param">arrowhead_scale</em><span class="sig-paren">)</span><a class="headerlink" href="#libsbml_draw.sbml_layout.SBMLlayout.setArrowheadScale" title="Permalink to this definition">¶</a></dt>
 <dd><p>Set a value for matplotlib’s mutation_scale to change the
 size of the arrowhead for a given role.  The default value is 10.
 Bigger values result in bigger arrowheads.</p>
@@ -1255,8 +1292,8 @@ role(int): role of the reaction</p>
 </dd></dl>
 
 <dl class="method">
-<dt id="libsbml_draw.model.sbml_layout.SBMLlayout.getArrowheadScale">
-<code class="sig-name descname">getArrowheadScale</code><span class="sig-paren">(</span><em class="sig-param">role</em><span class="sig-paren">)</span><a class="headerlink" href="#libsbml_draw.model.sbml_layout.SBMLlayout.getArrowheadScale" title="Permalink to this definition">¶</a></dt>
+<dt id="libsbml_draw.sbml_layout.SBMLlayout.getArrowheadScale">
+<code class="sig-name descname">getArrowheadScale</code><span class="sig-paren">(</span><em class="sig-param">role</em><span class="sig-paren">)</span><a class="headerlink" href="#libsbml_draw.sbml_layout.SBMLlayout.getArrowheadScale" title="Permalink to this definition">¶</a></dt>
 <dd><p>Returns the arrowhead scale for the given role.  Bigger values
 result in bigger arrowheads.</p>
 <p>Args: role(int)</p>
@@ -1264,15 +1301,15 @@ result in bigger arrowheads.</p>
 </dd></dl>
 
 <dl class="method">
-<dt id="libsbml_draw.model.sbml_layout.SBMLlayout.getNumberOfRoles">
-<code class="sig-name descname">getNumberOfRoles</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#libsbml_draw.model.sbml_layout.SBMLlayout.getNumberOfRoles" title="Permalink to this definition">¶</a></dt>
+<dt id="libsbml_draw.sbml_layout.SBMLlayout.getNumberOfRoles">
+<code class="sig-name descname">getNumberOfRoles</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#libsbml_draw.sbml_layout.SBMLlayout.getNumberOfRoles" title="Permalink to this definition">¶</a></dt>
 <dd><p>Args: None</p>
 <p>Returns: int</p>
 </dd></dl>
 
 <dl class="method">
-<dt id="libsbml_draw.model.sbml_layout.SBMLlayout.getReactionBezierPoints">
-<code class="sig-name descname">getReactionBezierPoints</code><span class="sig-paren">(</span><em class="sig-param">reaction_id</em><span class="sig-paren">)</span><a class="headerlink" href="#libsbml_draw.model.sbml_layout.SBMLlayout.getReactionBezierPoints" title="Permalink to this definition">¶</a></dt>
+<dt id="libsbml_draw.sbml_layout.SBMLlayout.getReactionBezierPoints">
+<code class="sig-name descname">getReactionBezierPoints</code><span class="sig-paren">(</span><em class="sig-param">reaction_id</em><span class="sig-paren">)</span><a class="headerlink" href="#libsbml_draw.sbml_layout.SBMLlayout.getReactionBezierPoints" title="Permalink to this definition">¶</a></dt>
 <dd><p>Returns a list of Bezier points (start, end, control1, control2) for
 each curve in the reaction.</p>
 <dl class="simple">
@@ -1280,6 +1317,13 @@ each curve in the reaction.</p>
 </dd>
 </dl>
 <p>Returns: list, of BezierPoints named tuple of tuples</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="libsbml_draw.sbml_layout.SBMLlayout.apply_style">
+<code class="sig-name descname">apply_style</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#libsbml_draw.sbml_layout.SBMLlayout.apply_style" title="Permalink to this definition">¶</a></dt>
+<dd><p>Apply a <code class="xref py py-class docutils literal notranslate"><span class="pre">styles.Style</span></code> to current layout.</p>
+<p>return: None</p>
 </dd></dl>
 
 </dd></dl>
@@ -1294,8 +1338,6 @@ each curve in the reaction.</p>
           <footer>
   
     <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
-      
-        <a href="c_api.html" class="btn btn-neutral float-right" title="C API" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
       
       
         <a href="refmanual.html" class="btn btn-neutral float-left" title="Reference Manual" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
