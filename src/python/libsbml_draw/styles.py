@@ -80,7 +80,7 @@ class _AttributeSet:
         return self.__dict__[item]
 
     def __delitem__(self, key):
-        NotImplemented("Cannot add or remove entries from a _AttributeSet")
+        raise NotImplemented("Cannot add or remove entries from a _AttributeSet")
 
     def __str__(self):
         return self.__dict__.__str__()
@@ -106,8 +106,9 @@ class _AttributeSet:
         for the class that you want to set the attributes of.
         Uses the `_func_map` keyword for a mapping between attributes in this
         _AttributeSet and methods/functions in `cls`. The _func_map also has a 'target'
-        key. The value of 'target' is a function that returns a list of objects to
-        apply the attributes to.
+        key. The value of 'target' is a method name (str or None) in `obj` that returns
+        a list of objects to apply the attribute values to, so for example
+        :py:meth:`SBMLlayout.getNodeIds`, which returns a list of node Ids.
 
         .. warning:
 
