@@ -76,6 +76,7 @@ class SBMLlayout:
 
         # create layout, if it doesn't already exist or user requests it
         if not self._layoutSpecified or self._autoComputeLayout:
+            print('creating layout')
             self._randomizeLayout()
             self._doLayoutAlgorithm()
 

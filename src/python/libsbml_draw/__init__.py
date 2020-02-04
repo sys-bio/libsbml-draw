@@ -1,4 +1,4 @@
-from libsbml_draw.sbml_layout import SBMLlayout
+from libsbml_draw.layout import SBMLlayout
 from libsbml_draw.styles import Style, black_and_white
 from libsbml_draw.utils import biomodels_download
 

@@ -7,7 +7,7 @@ import unittest
 from add_to_path import add_to_path
 
 add_to_path()
-from libsbml_draw.sbml_layout import SBMLlayout
+from libsbml_draw.layout import SBMLlayout
 import requests
 import codecs
 
