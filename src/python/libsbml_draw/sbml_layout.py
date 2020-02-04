@@ -13,7 +13,7 @@ import libsbml_draw.sbnw as sbnw
 from libsbml_draw.draw_network import createNetworkFigure
 from libsbml_draw.network import Network
 from libsbml_draw.render import Render
-from .styles import Style, _AttributeSet
+from .styles import _AttributeSet
 
 BezierPoints = namedtuple("BezierPoints", ["start", "end",
                                            "control1", "control2"])
@@ -51,6 +51,7 @@ class SBMLlayout:
                 1,  # autobary
                 20.0  # padding
             )
+
         if not isinstance(self._sbml_source, str):
             raise TypeError('SBML source should be a of type str. Got "{}"'.format(type(self._sbml_source)))
 
@@ -100,6 +101,10 @@ class SBMLlayout:
             else:
                 self._doc = libsbml.readSBMLFromString(sbml_source)
 
+        # You get issues re-writing sbml docs with layout/render
+        # information if you do not convert to at least level 3 version 1
+        self._doc = self._convertToLatestSBML()
+
         if len(self._fitWindow) == 4:
             self._fitToWindow(self._fitWindow[0], self._fitWindow[1],
                               self._fitWindow[2], self._fitWindow[3])
@@ -128,6 +133,21 @@ class SBMLlayout:
         width = (len(node.name) + SBMLlayout.WIDTH_PADDING) * node.font_size
 
         return width
+
+    def _convertToLatestSBML(self):
+        """
+        Convert `doc` to latest sbml version
+        if it is not already
+        Args:
+            doc: sbml document
+
+        Returns: sbml document
+
+        """
+        latestLevel = self._doc.getDefaultLevel()
+        latestVersion = self._doc.getDefaultVersion()
+        self._doc.setLevelAndVersion(3, 1)
+        return self._doc
 
     def _computeNodeHeight(self, node):
         """Computes the node height needed for the text to fit inside.
@@ -784,16 +804,24 @@ class SBMLlayout:
         layout_number = self._layout_number
         layout_plugin = self._doc.getModel().getPlugin("layout")
 
-        layout = layout_plugin.getLayout(layout_number) if (
-                layout_plugin and layout_plugin.getNumLayouts() > 0) else None
+        if not layout_plugin:
+            raise ValueError('Could not find layout plugin')
 
+        if layout_plugin.getNumLayouts() > 0:
+            layout = layout_plugin.getLayout(layout_number)
+        else:
+            raise ValueError('No layouts in your sbml model')
+
+        print(layout.getNumSpeciesGlyphs())
         if not layout.getNumSpeciesGlyphs():
-            raise ValueError(f"""Cannot write file.  
-            This level {level} version {version} document has no layout information.""")  # noqa
+            self.drawNetwork()
+            #
+            # raise ValueError(f"""Cannot write file.
+            #     This level {level} version {version} document has no layout information.""")  # noqa
 
         self._addRenderInformation()
 
-        libsbml.writeSBMLToFile(self._doc, out_file_name)
+        libsbml.writeSBML(self._doc, out_file_name)
 
     # Compartment Methods
 
@@ -2287,7 +2315,6 @@ class SBMLlayout:
         Returns: str
         """
         return libsbml.writeSBMLToString(self._doc)
-
 
     def getRoles(self):
         return [i for i in range(len(sbnw.ROLES))]
