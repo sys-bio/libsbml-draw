@@ -97,14 +97,17 @@ class SBMLlayout:
             self.regenerateLayout()
 
         else:
+            print('loading sbml layout')
             if self._validate_sbml_filename(sbml_source):
                 self._doc = libsbml.readSBMLFromFile(sbml_source)
             else:
                 self._doc = libsbml.readSBMLFromString(sbml_source)
 
+        print(self._doc.getLevel(), self._doc.getVersion())
         # You get issues re-writing sbml docs with layout/render
         # information if you do not convert to at least level 3 version 1
         self._doc = self._convertToLatestSBML()
+        print(self._doc.getLevel(), self._doc.getVersion())
 
         if len(self._fitWindow) == 4:
             self._fitToWindow(self._fitWindow[0], self._fitWindow[1],
@@ -813,15 +816,12 @@ class SBMLlayout:
         else:
             raise ValueError('No layouts in your sbml model')
 
-        print(layout.getNumSpeciesGlyphs())
-        if layout.getNumSpeciesGlyphs() == 0:
-            self.drawNetwork()
-
         if layout.getNumSpeciesGlyphs() == 0:
             raise ValueError(f"""Cannot write file.
                 This level {level} version {version} document has no layout information.""")  # noqa
 
         self._addRenderInformation()
+        print(layout.getNumSpeciesGlyphs())
 
         libsbml.writeSBML(self._doc, out_file_name)
 

@@ -73,7 +73,7 @@ class TestWorksWithBioModels(unittest.TestCase):
         self.assertTrue(os.path.isfile(self.image_fname))
 
     def test_save_sbml_to_file(self):
-        self.sl = SBMLlayout(self.sbml_fname)
+        self.sl = SBMLlayout(self.sbml_fname, autoComputeLayout=True)
         self.sl.drawNetwork(self.image_fname, show=False, scaling_factor=1.0)
         self.sl.writeSBMLFile(self.sbml_layout_fname)
         self.assertTrue(os.path.isfile(self.sbml_layout_fname))
