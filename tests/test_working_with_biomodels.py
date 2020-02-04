@@ -33,11 +33,11 @@ class TestWorksWithBioModels(unittest.TestCase):
         with codecs.open(self.sbml_fname, 'w', 'utf-8') as f:
             f.write(sbml)
         return sbml
-
-    def tearDown(self) -> None:
-        for i in [self.sbml_fname, self.image_fname, self.sbml_layout_fname]:
-            if os.path.isfile(i):
-                os.remove(i)
+    #
+    # def tearDown(self) -> None:
+    #     for i in [self.sbml_fname, self.image_fname, self.sbml_layout_fname]:
+    #         if os.path.isfile(i):
+    #             os.remove(i)
 
     def setUp(self) -> None:
         self.sbml = self.get_model_from_url()
