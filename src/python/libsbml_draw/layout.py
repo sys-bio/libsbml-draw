@@ -15,13 +15,11 @@ from libsbml_draw.network import Network
 from libsbml_draw.render import Render
 from .styles import _AttributeSet
 
-BezierPoints = namedtuple("BezierPoints", ["start", "end",
-                                           "control1", "control2"])
+BezierPoints = namedtuple("BezierPoints", ["start", "end", "control1", "control2"])
 
 
 class SBMLlayout:
     """SBMLlayout represents the model in an SBML file."""
-
     LIBSBML_DRAW_VERSION = sbnw.getCurrentLibraryVersion()
 
     NODE_KEYWORDS = {"all", "boundary", "floating"}
@@ -37,6 +35,7 @@ class SBMLlayout:
         self._layout_number = layout_number
         self._fitWindow = fitToWindow
         self._applyRender = applyRender
+        self._autoComputeLayout = autoComputeLayout
         self.style = style
 
         if self._validate_layout_alg_options(layout_alg_options):
@@ -56,8 +55,7 @@ class SBMLlayout:
             raise TypeError('SBML source should be a of type str. Got "{}"'.format(type(self._sbml_source)))
 
         if self._sbml_source.startswith("<?xml"):
-            self._h_model = sbnw.loadSBMLString(
-                self._sbml_source)
+            self._h_model = sbnw.loadSBMLString(self._sbml_source)
         elif os.path.isfile(self._sbml_source):
             self._h_model = sbnw.loadSBMLFile(self._sbml_source)
         else:
@@ -71,33 +69,16 @@ class SBMLlayout:
         self._h_layout_info = sbnw.processLayout(self._h_model)
         self._h_network = sbnw.getNetworkp(self._h_layout_info)
         self._h_canvas = sbnw.getCanvasp(self._h_layout_info)
-        self._layoutSpecified = True if sbnw.isLayoutSpecified(self._h_network) else False
-        self._autoComputeLayout = autoComputeLayout
+        self._layoutSpecified = bool(sbnw.isLayoutSpecified(self._h_network))
+
+        print(self._h_layout_info)
+        print('layout specified: ', self._layoutSpecified)
 
         # create layout, if it doesn't already exist or user requests it
         if not self._layoutSpecified or self._autoComputeLayout:
-            print('creating layout')
-            self._randomizeLayout()
-            self._doLayoutAlgorithm()
-
-            # no render info here because auto-generating the layout
-            self._doc = libsbml.readSBMLFromString(
-                self._getSBMLWithLayoutString())
-
-            self._network = self._createNetwork()
-
-            # compute and set width and height for node boxes
-            for node in self._network.nodes.values():
-                # pad the width (default, 2 additional chars) and
-                # pad the height (default, 1 additional char)
-                width = self._computeNodeWidth(node)
-                height = self._computeNodeHeight(node)
-                self.setNodeWidth(node.id, width)
-                self.setNodeHeight(node.id, height)
-            self.regenerateLayout()
+            self._create_layout()
 
         else:
-            print('loading sbml layout')
             if self._validate_sbml_filename(sbml_source):
                 self._doc = libsbml.readSBMLFromFile(sbml_source)
             else:
@@ -120,11 +101,37 @@ class SBMLlayout:
 
         self._arrowhead_scale = {key: 15 for key in
                                  range(self.getNumberOfRoles())}
+
+        # apply style if not None
         if self.style is not None:
             self.style = style() if callable(style) else style
-
-        if self.style:
             self.apply_style()
+
+
+    def _create_layout(self):
+        """
+
+        Returns:
+
+        """
+        print('creating layout')
+        self._randomizeLayout()
+        self._doLayoutAlgorithm()
+
+        # no render info here because auto-generating the layout
+        self._doc = libsbml.readSBMLFromString(self._getSBMLWithLayoutString())
+
+        self._network = self._createNetwork()
+
+        # compute and set width and height for node boxes
+        for node in self._network.nodes.values():
+            # pad the width (default, 2 additional chars) and
+            # pad the height (default, 1 additional char)
+            width = self._computeNodeWidth(node)
+            height = self._computeNodeHeight(node)
+            self.setNodeWidth(node.id, width)
+            self.setNodeHeight(node.id, height)
+        self.regenerateLayout()
 
     def _computeNodeWidth(self, node):
         """Computes the node width needed for the text to fit inside.
@@ -150,7 +157,7 @@ class SBMLlayout:
         """
         latestLevel = self._doc.getDefaultLevel()
         latestVersion = self._doc.getDefaultVersion()
-        self._doc.setLevelAndVersion(3, 1)
+        self._doc.setLevelAndVersion(latestLevel, latestVersion)
         return self._doc
 
     def _computeNodeHeight(self, node):
@@ -279,7 +286,7 @@ class SBMLlayout:
         """
         self._layout_alg_options.padding = padding
 
-    def getLayoutAlgorithmOptions(self, ):
+    def getLayoutAlgorithmOptions(self):
         """Get the Fruchterman-Reingold layout algorithm parameter values.
 
         Args: None
@@ -288,7 +295,7 @@ class SBMLlayout:
         """
         return self._layout_alg_options
 
-    def showLayoutAlgorithmOptions(self, ):
+    def showLayoutAlgorithmOptions(self):
         """Prints out the values of the Fruchterman-Reingold algorithm
         paramters, which are: k, grav, baryx, baryy, autobary, and padding.
 
@@ -418,34 +425,7 @@ class SBMLlayout:
 
     # Layout Methods
 
-    def regenerateLayoutAndResetRenderInfo(self, ):
-        """Use this to generate a new layout, and reset the network's node
-        and reaction layout and render values.
-
-        Args: None
-
-        Returns: None
-        """
-        self._randomizeLayout()
-        self._doLayoutAlgorithm()
-
-        if len(self._fitWindow) == 4:
-            self._fitToWindow(self._fitWindow[0], self._fitWindow[1],
-                              self._fitWindow[2], self._fitWindow[3])
-        else:
-            pass
-
-        sbnw.layout_alignToOrigin(self._h_layout_info, 0, 0)
-
-        self._doc = libsbml.readSBMLFromString(
-            self._getSBMLWithLayoutString())
-        self._network = self._createNetwork()
-
-        # apply render information, if any
-        if self._applyRender:
-            self._applyRenderInformation()
-
-    def regenerateLayout(self, ):
+    def regenerateLayout(self):
         """Use this to generate a new layout, and update the network's node
         reaction, and compartment layout values.
 
@@ -461,12 +441,24 @@ class SBMLlayout:
                               self._fitWindow[2], self._fitWindow[3])
         sbnw.layout_alignToOrigin(self._h_layout_info, 0, 0)
 
-        self._doc = libsbml.readSBMLFromString(
-            self._getSBMLWithLayoutString())
+        self._doc = libsbml.readSBMLFromString(self._getSBMLWithLayoutString())
 
         self._updateNetworkLayout()
 
-    def _randomizeLayout(self, ):
+    def regenerateLayoutAndResetRenderInfo(self):
+        """Use this to generate a new layout, and reset the network's node
+        and reaction layout and render values.
+
+        Args: None
+
+        Returns: None
+        """
+        self.regenerateLayout()
+
+        # apply render information, if any
+        self._applyRenderInformation()
+
+    def _randomizeLayout(self):
         """Give the layout a starting point.
 
         Args: None
@@ -474,7 +466,7 @@ class SBMLlayout:
         """
         sbnw.randomizeLayout(self._h_layout_info)
 
-    def _doLayoutAlgorithm(self, ):
+    def _doLayoutAlgorithm(self):
         """Run the Fruchterman-Reingold Layout Algorithm.
 
         Args: None
@@ -492,7 +484,7 @@ class SBMLlayout:
         """
         return Network(self._h_network, self._doc)
 
-    def _updateNetworkLayout(self, ):
+    def _updateNetworkLayout(self):
         """Updates a network's layout values.
 
         Args: None
@@ -501,7 +493,7 @@ class SBMLlayout:
         network = self._network
         network.updateNetwork()
 
-    def describeModel(self, ):
+    def describeModel(self):
         """Provides a summary of the model built from the SBML file.
 
         Args: None
@@ -516,7 +508,7 @@ class SBMLlayout:
         dct["number_of_reactions"] = self.getNumberOfReactions()
         return dct
 
-    def getNumberOfCompartments(self, ):
+    def getNumberOfCompartments(self):
         """Returns the number of compartments in the model.
 
         Args: None
@@ -524,7 +516,7 @@ class SBMLlayout:
         """
         return sbnw.nw_getNumCompartments(self._h_network)
 
-    def getNumberOfNodes(self, ):
+    def getNumberOfNodes(self):
         """Returns the number of nodes in the model.
 
         Args: None
@@ -534,7 +526,7 @@ class SBMLlayout:
 
         return number_of_nodes
 
-    def getNumberOfReactions(self, ):
+    def getNumberOfReactions(self):
         """Returns the number of reactions in the model.
 
         Args: None
@@ -721,7 +713,7 @@ class SBMLlayout:
 
         self._network.bg_color = bg_color
 
-    def getNetworkBackgroundColor(self, ):
+    def getNetworkBackgroundColor(self):
         """Returns the color id for the background color of the network.
 
         Args: None
@@ -790,15 +782,17 @@ class SBMLlayout:
 
         Returns: str
         """
-        sbml_string = sbnw.getSBMLwithLayoutStr(self._h_model,
-                                                self._h_layout_info, 1)
+        print('x', sbnw.isLayoutSpecified(self._h_network))
+        sbml_string = sbnw.getSBMLwithLayoutStr(self._h_model, self._h_layout_info, 1)
+        # for i in sorted(dir(sbnw)):
+        #     print(i)
         return sbml_string
 
-    def writeSBMLFile(self, out_file_name):
+    def writeSBMLFile(self, filename):
         """Writes the model as an SBML file.
 
         Args:
-            out_file_name (str): name of the file to write
+            filename (str): name of the file to write
 
         Returns: None
         """
@@ -816,18 +810,20 @@ class SBMLlayout:
         else:
             raise ValueError('No layouts in your sbml model')
 
+        if not sbnw.isLayoutSpecified(self._h_network):
+            raise ValueError('No layout specified')
+
         if layout.getNumSpeciesGlyphs() == 0:
-            raise ValueError(f"""Cannot write file.
-                This level {level} version {version} document has no layout information.""")  # noqa
+            raise ValueError(f"Cannot write file. This level {level} version {version} "
+                             f"document has no layout information.")  # noqa
 
         self._addRenderInformation()
-        print(layout.getNumSpeciesGlyphs())
 
-        libsbml.writeSBML(self._doc, out_file_name)
+        libsbml.writeSBMLToFile(self._doc, filename)
 
     # Compartment Methods
 
-    def getCompartmentIds(self, ):
+    def getCompartmentIds(self):
         """Returns a list of compartment ids.
 
         Args: None
@@ -1675,7 +1671,7 @@ class SBMLlayout:
         else:
             raise ValueError(f"Species {node_id} not found in network.")
 
-    def getBoundarySpeciesIds(self, ):
+    def getBoundarySpeciesIds(self):
         """
         Gets the id values of the Species who have boundaryCondition set to
         True.
@@ -1696,7 +1692,7 @@ class SBMLlayout:
 
         return boundarySpeciesIds
 
-    def getFloatingSpeciesIds(self, ):
+    def getFloatingSpeciesIds(self):
         """
         Gets the id values of the Species who have boundaryCondition set to
         False.
@@ -1719,7 +1715,7 @@ class SBMLlayout:
 
     # Reaction Methods
 
-    def getReactionIds(self, ):
+    def getReactionIds(self):
         """
         Gets the ids of the reactions in the model.
 
@@ -2165,7 +2161,7 @@ class SBMLlayout:
 
     # Render Methods
 
-    def _addRenderInformation(self, ):
+    def _addRenderInformation(self):
         """Add render information to the model's libsbml.SBMLDocument.
         A LocalStyle element is added for each node, reaction, and compartment.
         If any of these elements already exist, they are first removed.
@@ -2175,9 +2171,10 @@ class SBMLlayout:
         Returns: None
         """
         renderInfo = Render(self._doc, self._layout_number)
+        print(renderInfo)
 
-        if (len(renderInfo.speciesToGlyphs) == 0 or
-                len(renderInfo.reactionToGlyphs) == 0):
+        if (len(renderInfo.speciesToGlyphs) == 0 or len(renderInfo.reactionToGlyphs) == 0):
+            print('passing')
             pass
 
         else:
@@ -2185,7 +2182,7 @@ class SBMLlayout:
             # update doc, it will be used to write new output xml file
             self._doc = renderInfo.doc
 
-    def _applyRenderInformation(self, ):
+    def _applyRenderInformation(self):
         """Apply the render information in the SBML file to nodes, reactions,
         and compartments in the model's network.
 
@@ -2256,7 +2253,7 @@ class SBMLlayout:
             raise ValueError(f"style {style} must be in range "
                              f"0 - {number_of_arrowhead_styles}")
 
-    def getArrowheadNumStyles(self, ):
+    def getArrowheadNumStyles(self):
         """Returns the number of arrowhead styles available.
 
         Args: None
@@ -2300,7 +2297,7 @@ class SBMLlayout:
 
         return fig
 
-    def _getLastError(self, ):
+    def _getLastError(self):
         """Returns the last error from the c_api code.
 
         Args: None
@@ -2309,7 +2306,7 @@ class SBMLlayout:
         """
         return sbnw.getLastError().decode('utf-8')
 
-    def getSBMLString(self, ):
+    def getSBMLString(self):
         """Returns the SBML string for the model.
 
         Args: None
@@ -2356,7 +2353,7 @@ class SBMLlayout:
             raise ValueError(f"Role {role} must be in the range 0 - "
                              f"{self.getNumberOfRoles() - 1}")
 
-    def getNumberOfRoles(self, ):
+    def getNumberOfRoles(self):
         """
         Args: None
 

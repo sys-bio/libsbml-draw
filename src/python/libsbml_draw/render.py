@@ -60,8 +60,7 @@ class Render:
         self.layout_plugin = self.model.getPlugin("layout")
         # Layout
         self.layout = self.layout_plugin.getLayout(layout_number) if (
-            self.layout_plugin and self.layout_plugin.getNumLayouts() > 0
-                                                                ) else None
+                self.layout_plugin and self.layout_plugin.getNumLayouts() > 0) else None
         # SBasePlugin, RenderLayoutPlugin
         self.rPlugin = self.layout.getPlugin("render") if self.layout else None
         # SBasePlugin, RenderListOfLayoutsPlugin

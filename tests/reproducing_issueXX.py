@@ -48,10 +48,11 @@ fname = model_id + '.xml'
 # download the model
 biomodels_download(model_id, fname)
 
-# Use a preconfigured style directly out of the box
-s = SBMLlayout(fname, style=None, applyRender=False)
+s = SBMLlayout(fname)
 
 s.drawNetwork(model_id + ".png")
+
+s.writeSBMLFile(model_id + 'layout.xml')
 
 
 # x = s.getBoundarySpeciesIds()

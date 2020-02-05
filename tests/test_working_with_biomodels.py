@@ -78,6 +78,13 @@ class TestWorksWithBioModels(unittest.TestCase):
         self.sl.writeSBMLFile(self.sbml_layout_fname)
         self.assertTrue(os.path.isfile(self.sbml_layout_fname))
 
+    def testx(self):
+        self.sl = SBMLlayout(self.sbml_fname, autoComputeLayout=True)
+        self.sl.drawNetwork(self.image_fname, show=False, scaling_factor=1.0)
+        print(self.sl)
+        # self.sl.writeSBMLFile(self.sbml_layout_fname)
+        # self.assertTrue(os.path.isfile(self.sbml_layout_fname))
+
     def test_dave_to_file_and_then_load_layout_information_again(self):
         self.sl = SBMLlayout(self.sbml_fname)
         self.sl.drawNetwork(self.image_fname, show=False, scaling_factor=1.0)

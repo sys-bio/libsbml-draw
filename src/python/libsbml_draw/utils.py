@@ -12,7 +12,7 @@ def biomodels_download(model_id, fname=None):
 
     """
     if fname is None:
-        fname = os.path.join(os.path.dirname(__file__), '{}.sbml'.find(model_id))
+        fname = os.path.join(os.path.dirname(__file__), '{}.sbml'.format(model_id))
     base_url = "https://www.ebi.ac.uk/biomodels-main/download?mid"
     model_url = f'{base_url}={model_id}'
     # get the model directly from url

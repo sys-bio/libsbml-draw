@@ -6,6 +6,8 @@ from enum import IntEnum
 from matplotlib.patches import ArrowStyle
 
 import libsbml_draw.sbnw as sbnw
+
+
 # import tesbml as libsbml
 
 
@@ -30,7 +32,6 @@ class Network:
         self.stylesheet_line_endings = {}
         self.stylesheet_libsbml_line_endings = []
         self._assign_species_to_curves()
-
 
     def _assign_species_to_curves(self, ):
         """Each curve has a species connected to it, either at the start of the
@@ -182,10 +183,8 @@ class Network:
 
         Returns: None
         """
-        for compartment_index in range(
-                sbnw.nw_getNumCompartments(self.h_network)):
-            h_compartment = sbnw.nw_getCompartmentp(self.h_network,
-                                                    compartment_index)
+        for compartment_index in range(sbnw.nw_getNumCompartments(self.h_network)):
+            h_compartment = sbnw.nw_getCompartmentp(self.h_network, compartment_index)
             compartment_id = sbnw.compartment_getID(h_compartment)
             compartment = self.compartments[compartment_id]
 
@@ -309,7 +308,6 @@ class Network:
             return False
 
 
-
 class Role(IntEnum):
     SUBSTRATE = 0
     PRODUCT = 1
@@ -416,4 +414,3 @@ class Reaction:
         self.fill_color = "#0000ff"
         self.curve_width = 1
         self.centroid = sbnw.reaction_getCentroid(h_reaction)
-

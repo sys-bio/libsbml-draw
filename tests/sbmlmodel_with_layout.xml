@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<sbml xmlns="http://www.sbml.org/sbml/level3/version1/core" level="3" version="1">
-  <model id="Proctor2005_Hsp90" substanceUnits="substance" timeUnits="second" volumeUnits="volume" areaUnits="area" lengthUnits="metre" extentUnits="substance">
+<sbml xmlns="http://www.sbml.org/sbml/level2" level="2" version="1">
+  <model id="Proctor2005_Hsp90">
     <annotation>
       <layout:listOfLayouts xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:layout="http://projects.eml.org/bcb/sbml/level2">
         <layout:layout layout:id="Graphfab_Layout">
@@ -8,51 +8,34 @@
         </layout:layout>
       </layout:listOfLayouts>
     </annotation>
-    <listOfUnitDefinitions>
-      <unitDefinition id="volume">
-        <listOfUnits>
-          <unit kind="litre" exponent="1" scale="0" multiplier="1"/>
-        </listOfUnits>
-      </unitDefinition>
-      <unitDefinition id="substance">
-        <listOfUnits>
-          <unit kind="mole" exponent="1" scale="0" multiplier="1"/>
-        </listOfUnits>
-      </unitDefinition>
-      <unitDefinition id="area">
-        <listOfUnits>
-          <unit kind="metre" exponent="2" scale="0" multiplier="1"/>
-        </listOfUnits>
-      </unitDefinition>
-    </listOfUnitDefinitions>
     <listOfCompartments>
-      <compartment id="graphfab_default_compartment" spatialDimensions="3" size="1" units="volume" constant="false"/>
+      <compartment id="graphfab_default_compartment" size="1" constant="false"/>
     </listOfCompartments>
     <listOfSpecies>
-      <species id="Hsp90" compartment="graphfab_default_compartment" initialConcentration="0" substanceUnits="substance" hasOnlySubstanceUnits="false" boundaryCondition="false" constant="false"/>
-      <species id="HCom" compartment="graphfab_default_compartment" initialConcentration="0" substanceUnits="substance" hasOnlySubstanceUnits="false" boundaryCondition="false" constant="false"/>
-      <species id="HSF1" compartment="graphfab_default_compartment" initialConcentration="0" substanceUnits="substance" hasOnlySubstanceUnits="false" boundaryCondition="false" constant="false"/>
-      <species id="MisP" compartment="graphfab_default_compartment" initialConcentration="0" substanceUnits="substance" hasOnlySubstanceUnits="false" boundaryCondition="false" constant="false"/>
-      <species id="MCom" compartment="graphfab_default_compartment" initialConcentration="0" substanceUnits="substance" hasOnlySubstanceUnits="false" boundaryCondition="false" constant="false"/>
-      <species id="TriH" compartment="graphfab_default_compartment" initialConcentration="0" substanceUnits="substance" hasOnlySubstanceUnits="false" boundaryCondition="false" constant="false"/>
-      <species id="DiH" compartment="graphfab_default_compartment" initialConcentration="0" substanceUnits="substance" hasOnlySubstanceUnits="false" boundaryCondition="false" constant="false"/>
-      <species id="NatP" compartment="graphfab_default_compartment" initialConcentration="0" substanceUnits="substance" hasOnlySubstanceUnits="false" boundaryCondition="false" constant="false"/>
-      <species id="AggP" compartment="graphfab_default_compartment" initialConcentration="0" substanceUnits="substance" hasOnlySubstanceUnits="false" boundaryCondition="false" constant="false"/>
-      <species id="HSE" compartment="graphfab_default_compartment" initialConcentration="0" substanceUnits="substance" hasOnlySubstanceUnits="false" boundaryCondition="false" constant="false"/>
-      <species id="HSETriH" compartment="graphfab_default_compartment" initialConcentration="0" substanceUnits="substance" hasOnlySubstanceUnits="false" boundaryCondition="false" constant="false"/>
-      <species id="X" compartment="graphfab_default_compartment" initialConcentration="0" substanceUnits="substance" hasOnlySubstanceUnits="false" boundaryCondition="false" constant="false"/>
-      <species id="ROS" compartment="graphfab_default_compartment" initialConcentration="0" substanceUnits="substance" hasOnlySubstanceUnits="false" boundaryCondition="false" constant="false"/>
-      <species id="ATP" compartment="graphfab_default_compartment" initialConcentration="0" substanceUnits="substance" hasOnlySubstanceUnits="false" boundaryCondition="false" constant="false"/>
-      <species id="ADP" compartment="graphfab_default_compartment" initialConcentration="0" substanceUnits="substance" hasOnlySubstanceUnits="false" boundaryCondition="false" constant="false"/>
-      <species id="source" compartment="graphfab_default_compartment" initialConcentration="0" substanceUnits="substance" hasOnlySubstanceUnits="false" boundaryCondition="false" constant="false"/>
+      <species id="Hsp90" compartment="graphfab_default_compartment" initialConcentration="0" hasOnlySubstanceUnits="false" boundaryCondition="false" constant="false"/>
+      <species id="HCom" compartment="graphfab_default_compartment" initialConcentration="0" hasOnlySubstanceUnits="false" boundaryCondition="false" constant="false"/>
+      <species id="HSF1" compartment="graphfab_default_compartment" initialConcentration="0" hasOnlySubstanceUnits="false" boundaryCondition="false" constant="false"/>
+      <species id="MisP" compartment="graphfab_default_compartment" initialConcentration="0" hasOnlySubstanceUnits="false" boundaryCondition="false" constant="false"/>
+      <species id="MCom" compartment="graphfab_default_compartment" initialConcentration="0" hasOnlySubstanceUnits="false" boundaryCondition="false" constant="false"/>
+      <species id="TriH" compartment="graphfab_default_compartment" initialConcentration="0" hasOnlySubstanceUnits="false" boundaryCondition="false" constant="false"/>
+      <species id="DiH" compartment="graphfab_default_compartment" initialConcentration="0" hasOnlySubstanceUnits="false" boundaryCondition="false" constant="false"/>
+      <species id="NatP" compartment="graphfab_default_compartment" initialConcentration="0" hasOnlySubstanceUnits="false" boundaryCondition="false" constant="false"/>
+      <species id="AggP" compartment="graphfab_default_compartment" initialConcentration="0" hasOnlySubstanceUnits="false" boundaryCondition="false" constant="false"/>
+      <species id="HSE" compartment="graphfab_default_compartment" initialConcentration="0" hasOnlySubstanceUnits="false" boundaryCondition="false" constant="false"/>
+      <species id="HSETriH" compartment="graphfab_default_compartment" initialConcentration="0" hasOnlySubstanceUnits="false" boundaryCondition="false" constant="false"/>
+      <species id="X" compartment="graphfab_default_compartment" initialConcentration="0" hasOnlySubstanceUnits="false" boundaryCondition="false" constant="false"/>
+      <species id="ROS" compartment="graphfab_default_compartment" initialConcentration="0" hasOnlySubstanceUnits="false" boundaryCondition="false" constant="false"/>
+      <species id="ATP" compartment="graphfab_default_compartment" initialConcentration="0" hasOnlySubstanceUnits="false" boundaryCondition="false" constant="false"/>
+      <species id="ADP" compartment="graphfab_default_compartment" initialConcentration="0" hasOnlySubstanceUnits="false" boundaryCondition="false" constant="false"/>
+      <species id="source" compartment="graphfab_default_compartment" initialConcentration="0" hasOnlySubstanceUnits="false" boundaryCondition="false" constant="false"/>
     </listOfSpecies>
     <listOfReactions>
       <reaction id="proteinSynthesis" reversible="false" fast="false">
         <listOfReactants>
-          <speciesReference species="source" stoichiometry="1" constant="true"/>
+          <speciesReference species="source" stoichiometry="1"/>
         </listOfReactants>
         <listOfProducts>
-          <speciesReference species="NatP" stoichiometry="1" constant="true"/>
+          <speciesReference species="NatP" stoichiometry="1"/>
         </listOfProducts>
         <kineticLaw>
           <math xmlns="http://www.w3.org/1998/Math/MathML">
@@ -62,12 +45,12 @@
       </reaction>
       <reaction id="misfolding" reversible="false" fast="false">
         <listOfReactants>
-          <speciesReference species="NatP" stoichiometry="1" constant="true"/>
-          <speciesReference species="ROS" stoichiometry="1" constant="true"/>
+          <speciesReference species="NatP" stoichiometry="1"/>
+          <speciesReference species="ROS" stoichiometry="1"/>
         </listOfReactants>
         <listOfProducts>
-          <speciesReference species="MisP" stoichiometry="1" constant="true"/>
-          <speciesReference species="ROS" stoichiometry="1" constant="true"/>
+          <speciesReference species="MisP" stoichiometry="1"/>
+          <speciesReference species="ROS" stoichiometry="1"/>
         </listOfProducts>
         <kineticLaw>
           <math xmlns="http://www.w3.org/1998/Math/MathML">
@@ -77,11 +60,11 @@
       </reaction>
       <reaction id="Hsp90MisPBinding" reversible="false" fast="false">
         <listOfReactants>
-          <speciesReference species="MisP" stoichiometry="1" constant="true"/>
-          <speciesReference species="Hsp90" stoichiometry="1" constant="true"/>
+          <speciesReference species="MisP" stoichiometry="1"/>
+          <speciesReference species="Hsp90" stoichiometry="1"/>
         </listOfReactants>
         <listOfProducts>
-          <speciesReference species="MCom" stoichiometry="1" constant="true"/>
+          <speciesReference species="MCom" stoichiometry="1"/>
         </listOfProducts>
         <kineticLaw>
           <math xmlns="http://www.w3.org/1998/Math/MathML">
@@ -91,11 +74,11 @@
       </reaction>
       <reaction id="unsuccessulRefolding" reversible="false" fast="false">
         <listOfReactants>
-          <speciesReference species="MCom" stoichiometry="1" constant="true"/>
+          <speciesReference species="MCom" stoichiometry="1"/>
         </listOfReactants>
         <listOfProducts>
-          <speciesReference species="MisP" stoichiometry="1" constant="true"/>
-          <speciesReference species="Hsp90" stoichiometry="1" constant="true"/>
+          <speciesReference species="MisP" stoichiometry="1"/>
+          <speciesReference species="Hsp90" stoichiometry="1"/>
         </listOfProducts>
         <kineticLaw>
           <math xmlns="http://www.w3.org/1998/Math/MathML">
@@ -105,13 +88,13 @@
       </reaction>
       <reaction id="refolding" reversible="false" fast="false">
         <listOfReactants>
-          <speciesReference species="MCom" stoichiometry="1" constant="true"/>
-          <speciesReference species="ATP" stoichiometry="1" constant="true"/>
+          <speciesReference species="MCom" stoichiometry="1"/>
+          <speciesReference species="ATP" stoichiometry="1"/>
         </listOfReactants>
         <listOfProducts>
-          <speciesReference species="Hsp90" stoichiometry="1" constant="true"/>
-          <speciesReference species="NatP" stoichiometry="1" constant="true"/>
-          <speciesReference species="ADP" stoichiometry="1" constant="true"/>
+          <speciesReference species="Hsp90" stoichiometry="1"/>
+          <speciesReference species="NatP" stoichiometry="1"/>
+          <speciesReference species="ADP" stoichiometry="1"/>
         </listOfProducts>
         <kineticLaw>
           <math xmlns="http://www.w3.org/1998/Math/MathML">
@@ -121,11 +104,11 @@
       </reaction>
       <reaction id="proteinDegradation" reversible="false" fast="false">
         <listOfReactants>
-          <speciesReference species="MisP" stoichiometry="1" constant="true"/>
-          <speciesReference species="ATP" stoichiometry="1" constant="true"/>
+          <speciesReference species="MisP" stoichiometry="1"/>
+          <speciesReference species="ATP" stoichiometry="1"/>
         </listOfReactants>
         <listOfProducts>
-          <speciesReference species="ADP" stoichiometry="1" constant="true"/>
+          <speciesReference species="ADP" stoichiometry="1"/>
         </listOfProducts>
         <kineticLaw>
           <math xmlns="http://www.w3.org/1998/Math/MathML">
@@ -135,10 +118,10 @@
       </reaction>
       <reaction id="proteinAggregation1" reversible="false" fast="false">
         <listOfReactants>
-          <speciesReference species="MisP" stoichiometry="1" constant="true"/>
+          <speciesReference species="MisP" stoichiometry="1"/>
         </listOfReactants>
         <listOfProducts>
-          <speciesReference species="AggP" stoichiometry="1" constant="true"/>
+          <speciesReference species="AggP" stoichiometry="1"/>
         </listOfProducts>
         <kineticLaw>
           <math xmlns="http://www.w3.org/1998/Math/MathML">
@@ -148,11 +131,11 @@
       </reaction>
       <reaction id="proteinAggregation2" reversible="false" fast="false">
         <listOfReactants>
-          <speciesReference species="MisP" stoichiometry="1" constant="true"/>
-          <speciesReference species="AggP" stoichiometry="1" constant="true"/>
+          <speciesReference species="MisP" stoichiometry="1"/>
+          <speciesReference species="AggP" stoichiometry="1"/>
         </listOfReactants>
         <listOfProducts>
-          <speciesReference species="AggP" stoichiometry="1" constant="true"/>
+          <speciesReference species="AggP" stoichiometry="1"/>
         </listOfProducts>
         <kineticLaw>
           <math xmlns="http://www.w3.org/1998/Math/MathML">
@@ -162,11 +145,11 @@
       </reaction>
       <reaction id="Hsp90HSF1Binding" reversible="false" fast="false">
         <listOfReactants>
-          <speciesReference species="Hsp90" stoichiometry="1" constant="true"/>
-          <speciesReference species="HSF1" stoichiometry="1" constant="true"/>
+          <speciesReference species="Hsp90" stoichiometry="1"/>
+          <speciesReference species="HSF1" stoichiometry="1"/>
         </listOfReactants>
         <listOfProducts>
-          <speciesReference species="HCom" stoichiometry="1" constant="true"/>
+          <speciesReference species="HCom" stoichiometry="1"/>
         </listOfProducts>
         <kineticLaw>
           <math xmlns="http://www.w3.org/1998/Math/MathML">
@@ -176,11 +159,11 @@
       </reaction>
       <reaction id="Hsp90HSF1Release" reversible="false" fast="false">
         <listOfReactants>
-          <speciesReference species="HCom" stoichiometry="1" constant="true"/>
+          <speciesReference species="HCom" stoichiometry="1"/>
         </listOfReactants>
         <listOfProducts>
-          <speciesReference species="Hsp90" stoichiometry="1" constant="true"/>
-          <speciesReference species="HSF1" stoichiometry="1" constant="true"/>
+          <speciesReference species="Hsp90" stoichiometry="1"/>
+          <speciesReference species="HSF1" stoichiometry="1"/>
         </listOfProducts>
         <kineticLaw>
           <math xmlns="http://www.w3.org/1998/Math/MathML">
@@ -190,10 +173,10 @@
       </reaction>
       <reaction id="dimerisation" reversible="false" fast="false">
         <listOfReactants>
-          <speciesReference species="HSF1" stoichiometry="1" constant="true"/>
+          <speciesReference species="HSF1" stoichiometry="1"/>
         </listOfReactants>
         <listOfProducts>
-          <speciesReference species="DiH" stoichiometry="1" constant="true"/>
+          <speciesReference species="DiH" stoichiometry="1"/>
         </listOfProducts>
         <kineticLaw>
           <math xmlns="http://www.w3.org/1998/Math/MathML">
@@ -203,11 +186,11 @@
       </reaction>
       <reaction id="trimerisation" reversible="false" fast="false">
         <listOfReactants>
-          <speciesReference species="HSF1" stoichiometry="1" constant="true"/>
-          <speciesReference species="DiH" stoichiometry="1" constant="true"/>
+          <speciesReference species="HSF1" stoichiometry="1"/>
+          <speciesReference species="DiH" stoichiometry="1"/>
         </listOfReactants>
         <listOfProducts>
-          <speciesReference species="TriH" stoichiometry="1" constant="true"/>
+          <speciesReference species="TriH" stoichiometry="1"/>
         </listOfProducts>
         <kineticLaw>
           <math xmlns="http://www.w3.org/1998/Math/MathML">
@@ -217,11 +200,11 @@
       </reaction>
       <reaction id="deTrimerisation" reversible="false" fast="false">
         <listOfReactants>
-          <speciesReference species="TriH" stoichiometry="1" constant="true"/>
+          <speciesReference species="TriH" stoichiometry="1"/>
         </listOfReactants>
         <listOfProducts>
-          <speciesReference species="HSF1" stoichiometry="1" constant="true"/>
-          <speciesReference species="DiH" stoichiometry="1" constant="true"/>
+          <speciesReference species="HSF1" stoichiometry="1"/>
+          <speciesReference species="DiH" stoichiometry="1"/>
         </listOfProducts>
         <kineticLaw>
           <math xmlns="http://www.w3.org/1998/Math/MathML">
@@ -231,10 +214,10 @@
       </reaction>
       <reaction id="deDimerisation" reversible="false" fast="false">
         <listOfReactants>
-          <speciesReference species="DiH" stoichiometry="1" constant="true"/>
+          <speciesReference species="DiH" stoichiometry="1"/>
         </listOfReactants>
         <listOfProducts>
-          <speciesReference species="HSF1" stoichiometry="1" constant="true"/>
+          <speciesReference species="HSF1" stoichiometry="1"/>
         </listOfProducts>
         <kineticLaw>
           <math xmlns="http://www.w3.org/1998/Math/MathML">
@@ -244,11 +227,11 @@
       </reaction>
       <reaction id="HSETriHBinding" reversible="false" fast="false">
         <listOfReactants>
-          <speciesReference species="TriH" stoichiometry="1" constant="true"/>
-          <speciesReference species="HSE" stoichiometry="1" constant="true"/>
+          <speciesReference species="TriH" stoichiometry="1"/>
+          <speciesReference species="HSE" stoichiometry="1"/>
         </listOfReactants>
         <listOfProducts>
-          <speciesReference species="HSETriH" stoichiometry="1" constant="true"/>
+          <speciesReference species="HSETriH" stoichiometry="1"/>
         </listOfProducts>
         <kineticLaw>
           <math xmlns="http://www.w3.org/1998/Math/MathML">
@@ -258,11 +241,11 @@
       </reaction>
       <reaction id="HSETriHRelease" reversible="false" fast="false">
         <listOfReactants>
-          <speciesReference species="HSETriH" stoichiometry="1" constant="true"/>
+          <speciesReference species="HSETriH" stoichiometry="1"/>
         </listOfReactants>
         <listOfProducts>
-          <speciesReference species="HSE" stoichiometry="1" constant="true"/>
-          <speciesReference species="TriH" stoichiometry="1" constant="true"/>
+          <speciesReference species="HSE" stoichiometry="1"/>
+          <speciesReference species="TriH" stoichiometry="1"/>
         </listOfProducts>
         <kineticLaw>
           <math xmlns="http://www.w3.org/1998/Math/MathML">
@@ -272,11 +255,11 @@
       </reaction>
       <reaction id="Hsp90Transcription" reversible="false" fast="false">
         <listOfReactants>
-          <speciesReference species="HSETriH" stoichiometry="1" constant="true"/>
+          <speciesReference species="HSETriH" stoichiometry="1"/>
         </listOfReactants>
         <listOfProducts>
-          <speciesReference species="HSETriH" stoichiometry="1" constant="true"/>
-          <speciesReference species="Hsp90" stoichiometry="1" constant="true"/>
+          <speciesReference species="HSETriH" stoichiometry="1"/>
+          <speciesReference species="Hsp90" stoichiometry="1"/>
         </listOfProducts>
         <kineticLaw>
           <math xmlns="http://www.w3.org/1998/Math/MathML">
@@ -286,11 +269,11 @@
       </reaction>
       <reaction id="Hsp90Degradation" reversible="false" fast="false">
         <listOfReactants>
-          <speciesReference species="Hsp90" stoichiometry="1" constant="true"/>
-          <speciesReference species="ATP" stoichiometry="1" constant="true"/>
+          <speciesReference species="Hsp90" stoichiometry="1"/>
+          <speciesReference species="ATP" stoichiometry="1"/>
         </listOfReactants>
         <listOfProducts>
-          <speciesReference species="ADP" stoichiometry="1" constant="true"/>
+          <speciesReference species="ADP" stoichiometry="1"/>
         </listOfProducts>
         <kineticLaw>
           <math xmlns="http://www.w3.org/1998/Math/MathML">
@@ -300,10 +283,10 @@
       </reaction>
       <reaction id="countTime" reversible="false" fast="false">
         <listOfReactants>
-          <speciesReference species="source" stoichiometry="1" constant="true"/>
+          <speciesReference species="source" stoichiometry="1"/>
         </listOfReactants>
         <listOfProducts>
-          <speciesReference species="X" stoichiometry="1" constant="true"/>
+          <speciesReference species="X" stoichiometry="1"/>
         </listOfProducts>
         <kineticLaw>
           <math xmlns="http://www.w3.org/1998/Math/MathML">
@@ -313,10 +296,10 @@
       </reaction>
       <reaction id="ATPformation" reversible="false" fast="false">
         <listOfReactants>
-          <speciesReference species="ADP" stoichiometry="1" constant="true"/>
+          <speciesReference species="ADP" stoichiometry="1"/>
         </listOfReactants>
         <listOfProducts>
-          <speciesReference species="ATP" stoichiometry="1" constant="true"/>
+          <speciesReference species="ATP" stoichiometry="1"/>
         </listOfProducts>
         <kineticLaw>
           <math xmlns="http://www.w3.org/1998/Math/MathML">
@@ -326,10 +309,10 @@
       </reaction>
       <reaction id="ATPconsumption" reversible="false" fast="false">
         <listOfReactants>
-          <speciesReference species="ATP" stoichiometry="1" constant="true"/>
+          <speciesReference species="ATP" stoichiometry="1"/>
         </listOfReactants>
         <listOfProducts>
-          <speciesReference species="ADP" stoichiometry="1" constant="true"/>
+          <speciesReference species="ADP" stoichiometry="1"/>
         </listOfProducts>
         <kineticLaw>
           <math xmlns="http://www.w3.org/1998/Math/MathML">
@@ -339,10 +322,10 @@
       </reaction>
       <reaction id="radicalFormation" reversible="false" fast="false">
         <listOfReactants>
-          <speciesReference species="source" stoichiometry="1" constant="true"/>
+          <speciesReference species="source" stoichiometry="1"/>
         </listOfReactants>
         <listOfProducts>
-          <speciesReference species="ROS" stoichiometry="1" constant="true"/>
+          <speciesReference species="ROS" stoichiometry="1"/>
         </listOfProducts>
         <kineticLaw>
           <math xmlns="http://www.w3.org/1998/Math/MathML">
@@ -352,7 +335,7 @@
       </reaction>
       <reaction id="radicalScavenging" reversible="false" fast="false">
         <listOfReactants>
-          <speciesReference species="ROS" stoichiometry="1" constant="true"/>
+          <speciesReference species="ROS" stoichiometry="1"/>
         </listOfReactants>
         <kineticLaw>
           <math xmlns="http://www.w3.org/1998/Math/MathML">
