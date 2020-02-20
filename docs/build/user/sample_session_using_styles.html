@@ -8,7 +8,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <title># Example using Styles# &mdash; libsbml_draw  documentation</title>
+  <title>Example using Styles &mdash; libsbml_draw  documentation</title>
   
 
   
@@ -34,7 +34,9 @@
   <link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
   <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
     <link rel="index" title="Index" href="../genindex.html" />
-    <link rel="search" title="Search" href="../search.html" /> 
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="SBMLlayout script using antimony" href="script_using_antimony.html" />
+    <link rel="prev" title="Sample session in libsbml_draw" href="sample_session_in_libsbml_draw.html" /> 
 </head>
 
 <body class="wy-body-for-nav">
@@ -79,8 +81,23 @@
             
             
               <p class="caption"><span class="caption-text">Contents:</span></p>
-<ul>
-<li class="toctree-l1"><a class="reference internal" href="user.html">User Manual</a></li>
+<ul class="current">
+<li class="toctree-l1 current"><a class="reference internal" href="user.html">User Manual</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="install.html">Installation</a></li>
+<li class="toctree-l2 current"><a class="reference internal" href="user_guide.html">User Guide</a><ul class="current">
+<li class="toctree-l3"><a class="reference internal" href="package_description.html">Summary of libsbml_draw</a></li>
+<li class="toctree-l3"><a class="reference internal" href="write_up.html">Publication  of libsbml_draw</a></li>
+<li class="toctree-l3"><a class="reference internal" href="sample_session_in_libsbml_draw.html">Sample session in libsbml_draw</a></li>
+<li class="toctree-l3 current"><a class="current reference internal" href="#">Example using Styles</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#preconfigured-styles">Preconfigured styles</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="script_using_antimony.html">SBMLlayout script using antimony</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="image_gallery.html">Image Gallery</a></li>
+</ul>
+</li>
 <li class="toctree-l1"><a class="reference internal" href="../refmanual/refmanual.html">Reference Manual</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../dev/dev.html">Developer Manual</a></li>
 </ul>
@@ -128,7 +145,11 @@
     
       <li><a href="../index.html">Docs</a> &raquo;</li>
         
-      <li># Example using Styles#</li>
+          <li><a href="user.html">User Manual</a> &raquo;</li>
+        
+          <li><a href="user_guide.html">User Guide</a> &raquo;</li>
+        
+      <li>Example using Styles</li>
     
     
       <li class="wy-breadcrumbs-aside">
@@ -148,7 +169,7 @@
            <div itemprop="articleBody">
             
   <div class="section" id="example-using-styles">
-<h1># Example using Styles#<a class="headerlink" href="#example-using-styles" title="Permalink to this headline">¶</a></h1>
+<h1>Example using Styles<a class="headerlink" href="#example-using-styles" title="Permalink to this headline">¶</a></h1>
 <p><code class="xref py py-class docutils literal notranslate"><span class="pre">styles.Style</span></code> provide a higher level mechanism for controlling
 figure aesthetics. You can use a preconfigured style or configure your own.</p>
 <div class="section" id="preconfigured-styles">
@@ -162,6 +183,7 @@ figure aesthetics. You can use a preconfigured style or configure your own.</p>
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">os</span>
 <span class="kn">from</span> <span class="nn">libsbml_draw</span> <span class="kn">import</span> <span class="n">SBMLlayout</span>
 <span class="kn">from</span> <span class="nn">libsbml_draw.styles</span> <span class="kn">import</span> <span class="n">Style</span><span class="p">,</span> <span class="n">black_and_white</span>
+<span class="kn">from</span> <span class="nn">libsbml_draw.utils</span> <span class="kn">import</span> <span class="n">biomodels_download</span>
 
 <span class="n">model_id</span> <span class="o">=</span> <span class="s1">&#39;BIOMD0000000096&#39;</span>
 
@@ -222,6 +244,15 @@ figure aesthetics. You can use a preconfigured style or configure your own.</p>
            
           </div>
           <footer>
+  
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+      
+        <a href="script_using_antimony.html" class="btn btn-neutral float-right" title="SBMLlayout script using antimony" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
+      
+      
+        <a href="sample_session_in_libsbml_draw.html" class="btn btn-neutral float-left" title="Sample session in libsbml_draw" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+      
+    </div>
   
 
   <hr/>

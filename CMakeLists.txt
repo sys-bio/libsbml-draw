@@ -19,12 +19,6 @@ set(SBNW_MINOR_VER 0)
 set(SBNW_PATCHLEVEL 0)
 set(SBNW_VER_STRING "${SBNW_MAJOR_VER}.${SBNW_MINOR_VER}.${SBNW_PATCHLEVEL}")
 
-message(These are the new variables that were not in the original cmake)
-set(PYTHON_INCLUDE_DIR C:/Miniconda/include)
-set(LIBSBML_PREFIX D:/libSBML-5.18.0-libxml2-x64/win64)
-set(LIBSBML_INCLUDE_DIR  ${LIBSBML_PREFIX}/include)
-set(LIBSBML_STATIC_LIBRARY ${LIBSBML_PREFIX}/lib/libsbml.lib)
-
 if(${CMAKE_SYSTEM_NAME} MATCHES "Linux")
     set(FPIC_FLAG "-fPIC")
 else()

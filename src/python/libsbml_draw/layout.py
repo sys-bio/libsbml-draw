@@ -42,7 +42,7 @@ class SBMLlayout:
             self._layout_alg_options = layout_alg_options
         else:
             # todo change layoutalg_optionsto dict not list?
-            self._layout_alg_options = sbnw.fr_alg_options(
+            self._layout_alg_options = sbnw.FrAlgOptions(
                 20.0,  # k
                 0,  # grav, has to be > 5 for effect
                 500.0,  # baryx
@@ -71,9 +71,6 @@ class SBMLlayout:
         self._h_canvas = sbnw.getCanvasp(self._h_layout_info)
         self._layoutSpecified = bool(sbnw.isLayoutSpecified(self._h_network))
 
-        print(self._h_layout_info)
-        print('layout specified: ', self._layoutSpecified)
-
         # create layout, if it doesn't already exist or user requests it
         if not self._layoutSpecified or self._autoComputeLayout:
             self._create_layout()
@@ -84,11 +81,11 @@ class SBMLlayout:
             else:
                 self._doc = libsbml.readSBMLFromString(sbml_source)
 
-        print(self._doc.getLevel(), self._doc.getVersion())
+        # print(self._doc.getLevel(), self._doc.getVersion())
         # You get issues re-writing sbml docs with layout/render
         # information if you do not convert to at least level 3 version 1
         self._doc = self._convertToLatestSBML()
-        print(self._doc.getLevel(), self._doc.getVersion())
+        # print(self._doc.getLevel(), self._doc.getVersion())
 
         if len(self._fitWindow) == 4:
             self._fitToWindow(self._fitWindow[0], self._fitWindow[1],
@@ -107,14 +104,12 @@ class SBMLlayout:
             self.style = style() if callable(style) else style
             self.apply_style()
 
-
     def _create_layout(self):
         """
 
         Returns:
 
         """
-        print('creating layout')
         self._randomizeLayout()
         self._doLayoutAlgorithm()
 
@@ -291,7 +286,7 @@ class SBMLlayout:
 
         Args: None
 
-        Returns: instance of the fr_alg_options class
+        Returns: instance of the FrAlgOptions class
         """
         return self._layout_alg_options
 
@@ -331,7 +326,7 @@ class SBMLlayout:
 
     def _validate_layout_alg_options(self, layout_alg_options):
         """
-        Check if the user supplied an instance of fr_alg_options class.
+        Check if the user supplied an instance of FrAlgOptions class.
 
         Args:
             layout_alg_options (sbnw.layout_alg_options): instance of the
@@ -339,7 +334,7 @@ class SBMLlayout:
 
         Returns: bool
         """
-        if isinstance(layout_alg_options, sbnw.fr_alg_options):
+        if isinstance(layout_alg_options, sbnw.FrAlgOptions):
             return True
         else:
             return False
@@ -782,13 +777,13 @@ class SBMLlayout:
 
         Returns: str
         """
-        print('x', sbnw.isLayoutSpecified(self._h_network))
         sbml_string = sbnw.getSBMLwithLayoutStr(self._h_model, self._h_layout_info, 1)
-        # for i in sorted(dir(sbnw)):
-        #     print(i)
         return sbml_string
 
-    def writeSBMLFile(self, filename):
+    def writeSBML(self, filename):
+        return sbnw.writeSBMLwithLayout(filename, self._h_model, self._h_layout_info)
+
+    def writeSBMLFileOld(self, filename):
         """Writes the model as an SBML file.
 
         Args:
@@ -810,14 +805,14 @@ class SBMLlayout:
         else:
             raise ValueError('No layouts in your sbml model')
 
-        if not sbnw.isLayoutSpecified(self._h_network):
-            raise ValueError('No layout specified')
+        print(libsbml.writeSBMLToString(self._doc))
 
         if layout.getNumSpeciesGlyphs() == 0:
             raise ValueError(f"Cannot write file. This level {level} version {version} "
                              f"document has no layout information.")  # noqa
 
         self._addRenderInformation()
+
 
         libsbml.writeSBMLToFile(self._doc, filename)
 
@@ -2171,7 +2166,6 @@ class SBMLlayout:
         Returns: None
         """
         renderInfo = Render(self._doc, self._layout_number)
-        print(renderInfo)
 
         if (len(renderInfo.speciesToGlyphs) == 0 or len(renderInfo.reactionToGlyphs) == 0):
             print('passing')

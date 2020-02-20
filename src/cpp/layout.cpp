@@ -193,11 +193,8 @@ gf_layoutInfo* gf_processLayout(gf_SBMLModel* lo) {
     gf_initLayoutInfo(l);
     l->level = doc->getLevel();
     l->version = doc->getVersion();
-
     l->net = net;
-
     l->canv = canv;
-
     return l;
 }
 

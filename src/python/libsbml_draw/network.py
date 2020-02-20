@@ -33,7 +33,7 @@ class Network:
         self.stylesheet_libsbml_line_endings = []
         self._assign_species_to_curves()
 
-    def _assign_species_to_curves(self, ):
+    def _assign_species_to_curves(self):
         """Each curve has a species connected to it, either at the start of the
         curve or at the end of the curve.  This function identifies that
         species and assigns it to a curve's species attribute.
@@ -125,7 +125,7 @@ class Network:
             compartment_id = sbnw.compartment_getID(h_compartment)
             self.compartments[compartment_id] = Compartment(h_compartment)
 
-    def _add_nodes(self, ):
+    def _add_nodes(self):
         """Populates the collection of nodes.
 
         Args: None
@@ -146,7 +146,7 @@ class Network:
             else:
                 self.nodes[node_id] = Node(h_node)
 
-    def _add_reactions_after_node_alias(self, ):
+    def _add_reactions_after_node_alias(self):
         """Updates the reactions in the network after a node has been aliased.
 
         Args: None
@@ -164,7 +164,7 @@ class Network:
             self.reactions[reaction.id].fill_color = reaction.fill_color
             self.reactions[reaction.id].curve_width = reaction.curve_width
 
-    def _add_reactions(self, ):
+    def _add_reactions(self):
         """Populates the collection of reactions.
 
         Args: None
@@ -176,7 +176,7 @@ class Network:
             reaction_id = sbnw.reaction_getID(h_reaction)
             self.reactions[reaction_id] = Reaction(h_reaction)
 
-    def _update_compartments_layout(self, ):
+    def _update_compartments_layout(self):
         """Updates the layout information for the compartments.
 
         Args: None
@@ -198,7 +198,7 @@ class Network:
             compartment.lower_left_point = [compartment.min_corner.x,
                                             compartment.min_corner.y]
 
-    def _update_nodes_layout(self, ):
+    def _update_nodes_layout(self):
         """Updates the layout information for the nodes.
 
         Args: None
@@ -211,8 +211,7 @@ class Network:
 
             if node_id in self.aliasedNodes:
 
-                num_aliases = sbnw.nw_getNumAliasInstances(self.h_network,
-                                                           h_node)
+                num_aliases = sbnw.nw_getNumAliasInstances(self.h_network, h_node)
 
                 for alias_index in range(num_aliases):
                     h_alias_node = sbnw.nw_getAliasInstancep(
@@ -231,7 +230,7 @@ class Network:
                 node.lower_left_point = [node.center.x - node.width / 2,
                                          node.center.y - node.height / 2]
 
-    def _update_reactions_layout(self, ):
+    def _update_reactions_layout(self):
         """Updates the layout information for the reactions.
 
         Args: None
@@ -250,7 +249,7 @@ class Network:
                 h_curve = sbnw.reaction_getCurvep(h_reaction, curve_index)
                 reaction.curves.append(Curve(h_curve))
 
-    def updateNetwork(self, ):
+    def updateNetwork(self):
         """Updates the layout position values for the compartments, nodes,
         reactions (and the curves making up each reaction).
 
@@ -258,6 +257,7 @@ class Network:
 
         Returns: None
         """
+        print('updating network')
         self._update_compartments_layout()
         self._update_nodes_layout()
         self._update_reactions_layout()

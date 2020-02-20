@@ -7,7 +7,7 @@ import unittest
 from add_to_path import add_to_path
 
 add_to_path()
-from libsbml_draw.layout import SBMLlayout
+from libsbml_draw import SBMLlayout, sbnw
 import requests
 import codecs
 
@@ -24,6 +24,7 @@ class TestWorksWithBioModels(unittest.TestCase):
     expected_number_of_compartments = 0
     expected_number_of_nodes = 16
     expected_number_of_reactions = 23
+    tear_down = True
 
     def get_model_from_url(self):
         self.model_file_name = f"{self.model_id}_url.xml"
@@ -33,11 +34,12 @@ class TestWorksWithBioModels(unittest.TestCase):
         with codecs.open(self.sbml_fname, 'w', 'utf-8') as f:
             f.write(sbml)
         return sbml
-    #
-    # def tearDown(self) -> None:
-    #     for i in [self.sbml_fname, self.image_fname, self.sbml_layout_fname]:
-    #         if os.path.isfile(i):
-    #             os.remove(i)
+
+    def tearDown(self) -> None:
+        if self.tear_down:
+            for i in [self.sbml_fname, self.image_fname, self.sbml_layout_fname]:
+                if os.path.isfile(i):
+                    os.remove(i)
 
     def setUp(self) -> None:
         self.sbml = self.get_model_from_url()
@@ -51,7 +53,6 @@ class TestWorksWithBioModels(unittest.TestCase):
         self.assertIsInstance(self.sl, SBMLlayout)
 
     def do_describe(self):
-        self.sl = SBMLlayout(self.sbml_fname, applyRender=False)
         desc = self.sl.describeModel()
         return desc
 
@@ -68,30 +69,13 @@ class TestWorksWithBioModels(unittest.TestCase):
         self.assertEqual(self.expected_number_of_reactions, described['number_of_reactions'])
 
     def test_draw_network_and_save_to_pdf(self):
-        self.sl = SBMLlayout(self.sbml_fname)
         self.sl.drawNetwork(self.image_fname, show=False, scaling_factor=1.0)
         self.assertTrue(os.path.isfile(self.image_fname))
 
     def test_save_sbml_to_file(self):
-        self.sl = SBMLlayout(self.sbml_fname, autoComputeLayout=True)
         self.sl.drawNetwork(self.image_fname, show=False, scaling_factor=1.0)
         self.sl.writeSBMLFile(self.sbml_layout_fname)
         self.assertTrue(os.path.isfile(self.sbml_layout_fname))
-
-    def testx(self):
-        self.sl = SBMLlayout(self.sbml_fname, autoComputeLayout=True)
-        self.sl.drawNetwork(self.image_fname, show=False, scaling_factor=1.0)
-        print(self.sl)
-        # self.sl.writeSBMLFile(self.sbml_layout_fname)
-        # self.assertTrue(os.path.isfile(self.sbml_layout_fname))
-
-    def test_dave_to_file_and_then_load_layout_information_again(self):
-        self.sl = SBMLlayout(self.sbml_fname)
-        self.sl.drawNetwork(self.image_fname, show=False, scaling_factor=1.0)
-        self.sl.writeSBMLFile(self.sbml_layout_fname)
-        self.sl = SBMLlayout(self.sbml_fname, )
-        # self.assertTrue(os.path.isfile(self.sbml_layout_fname))
-
 
 class TestBioMD0000000011(TestWorksWithBioModels):
     model_id = 'BIOMD0000000011'
@@ -112,6 +96,7 @@ class TestBioMD0000000002(TestWorksWithBioModels):
     expected_number_of_compartments = 1
     expected_number_of_nodes = 13
     expected_number_of_reactions = 17
+
 
 
 if __name__ == '__main__':

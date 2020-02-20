@@ -41,6 +41,10 @@ def my_style():
     return s
 
 
+import os
+from libsbml_draw import SBMLlayout, biomodels_download
+
+
 model_id = 'BIOMD0000000001'
 
 fname = model_id + '.xml'

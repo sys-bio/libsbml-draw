@@ -8,14 +8,18 @@ from ctypes import POINTER
 
 
 def load_sbnw():
+    directory = os.path.dirname(__file__)
     if platform.system() == "Windows":
-        lib = 'libsbml_draw.dll'
+        lib = os.path.join(directory, 'libsbml_draw.dll')
     elif platform.system() == "Linux":
-        lib = 'libsbml_draw.so'
+        lib = os.path.join(directory, 'libsbml_draw.so')
     else:
-        lib = 'libsbml_draw.dylib'
+        lib = os.path.join(directory, 'libsbml_draw.dylib')
+    if not os.path.isfile(lib):
+        raise FileNotFoundError('Did not find the libsbml-draw c api "{}"'.format(lib))
     lib = os.path.join(os.path.dirname(__file__), lib)
     return ctypes.CDLL(lib)
+
 
 slib = load_sbnw()
 
@@ -30,7 +34,7 @@ ROLES = (GF_ROLE_SUBSTRATE,
 
 
 # Classes
-class fr_alg_options(ctypes.Structure):
+class FrAlgOptions(ctypes.Structure):
     _fields_ = [("k", ctypes.c_double),
                 ("gravity", ctypes.c_double),
                 ("baryx", ctypes.c_double),
@@ -39,34 +43,38 @@ class fr_alg_options(ctypes.Structure):
                 ("padding", ctypes.c_double)]
 
 
-class point(ctypes.Structure):
+class Point(ctypes.Structure):
     _fields_ = [("x", ctypes.c_double),
                 ("y", ctypes.c_double)]
 
 
-class curveCP(ctypes.Structure):
-    _fields_ = [("start", point),
-                ("control_point_1", point),
-                ("control_point_2", point),
-                ("end", point)]
+class CurveCP(ctypes.Structure):
+    _fields_ = [("start", Point),
+                ("control_point_1", Point),
+                ("control_point_2", Point),
+                ("end", Point)]
 
 
-class gf_curve(ctypes.Structure):
+class GFCurve(ctypes.Structure):
     _fields_ = [("c", ctypes.c_void_p)]
 
 
-class layout_info(ctypes.Structure):
-    _fields_ = [("net", ctypes.c_void_p),
-                ("canv", ctypes.c_void_p),
-                ("cont", ctypes.c_char_p),
-                ("level", ctypes.c_int),
-                ("version", ctypes.c_int)
-                ]
+class LayoutInfo(ctypes.Structure):
+    _fields_ = [
+        ("net", ctypes.c_void_p),
+        ("canv", ctypes.c_void_p),
+        ("cont", ctypes.c_char_p),
+        ("level", ctypes.c_int),
+        ("version", ctypes.c_int)
+    ]
 
 
-class canvas(ctypes.Structure):
-    _fields_ = [("canv", ctypes.c_void_p)
-                ]
+class Canvas(ctypes.Structure):
+    _fields_ = [("canv", ctypes.c_void_p)]
+
+
+class SBMLModel(ctypes.Structure):
+    _fields_ = [("pdoc", ctypes.c_void_p)]
 
 
 # Library Info Functions
@@ -79,12 +87,12 @@ def getCurrentLibraryVersion():
 
 
 # Canvas Functions
-slib.gf_getCanvasp.argtypes = [POINTER(layout_info)]
-slib.gf_getCanvasp.restype = POINTER(canvas)
+slib.gf_getCanvasp.argtypes = [POINTER(LayoutInfo)]
+slib.gf_getCanvasp.restype = POINTER(Canvas)
 
-slib.gf_canvGetWidth.argtypes = [POINTER(canvas)]
+slib.gf_canvGetWidth.argtypes = [POINTER(Canvas)]
 slib.gf_canvGetWidth.restype = ctypes.c_int
-slib.gf_canvGetHeight.argtypes = [POINTER(canvas)]
+slib.gf_canvGetHeight.argtypes = [POINTER(Canvas)]
 slib.gf_canvGetHeight.restype = ctypes.c_int
 
 
@@ -101,7 +109,7 @@ def canvas_getHeight(h_canvas):
 
 
 # alternative to FitToWindow, returns void
-slib.gf_layout_alignToOrigin.argtypes = [POINTER(layout_info), ctypes.c_double,
+slib.gf_layout_alignToOrigin.argtypes = [POINTER(LayoutInfo), ctypes.c_double,
                                          ctypes.c_double]
 slib.gf_layout_alignToOrigin.restype = None
 
@@ -111,17 +119,13 @@ def layout_alignToOrigin(h_layoutInfo, pad_x, pad_y):
 
 
 # IO Functions
-slib.gf_getSBMLwithLayoutStr.argtypes = [ctypes.c_uint64, POINTER(layout_info),
-                                         ctypes.c_int]
+slib.gf_getSBMLwithLayoutStr.argtypes = [ctypes.c_uint64, POINTER(LayoutInfo), ctypes.c_int]
 slib.gf_getSBMLwithLayoutStr.restype = ctypes.c_char_p
 slib.gf_loadSBMLfile.argtypes = [ctypes.c_char_p]
 slib.gf_loadSBMLfile.restype = ctypes.c_uint64
 
 slib.gf_loadSBMLbuf.argtypes = [ctypes.c_char_p]
 slib.gf_loadSBMLbuf.restype = ctypes.c_uint64
-
-
-# IO Functions
 
 
 def getSBMLwithLayoutStr(h_sbml_model, h_layout_info,
@@ -141,6 +145,42 @@ def loadSBMLString(h_stringName):
     return slib.gf_loadSBMLbuf(h_stringname_string)
 
 
+slib.gf_writeSBML.argtypes = [ctypes.c_char_p, POINTER(SBMLModel)]
+slib.gf_writeSBML.restype = None
+
+
+def writeSBML(filename, h_sbml_model):
+    """
+    Original signature:
+
+        int gf_writeSBML(const char* filename, gf_SBMLModel* m) {
+
+    Returns:
+
+    """
+
+    return slib.gf_writeSBML(filename, h_sbml_model)
+
+
+slib.gf_writeSBMLwithLayout.argtypes = [ctypes.c_char_p, ctypes.c_uint64, POINTER(LayoutInfo)]
+slib.gf_writeSBMLwithLayout.restypes = None
+
+
+def writeSBMLwithLayout(filename, model, layout):
+    """
+    original signture:
+            const char* filename, gf_SBMLModel* m, gf_layoutInfo* l
+    Args:
+        model:
+        layout:
+
+    Returns:
+
+    """
+    return slib.gf_writeSBMLwithLayout(filename, model, layout)
+
+
+# error stuff
 slib.gf_getLastError.restype = ctypes.c_char_p
 
 
@@ -152,10 +192,10 @@ def getLastError():
 slib.gf_nw_isLayoutSpecified.argtypes = [ctypes.c_uint64]
 slib.gf_nw_isLayoutSpecified.restype = ctypes.c_uint64
 slib.gf_processLayout.argtypes = [ctypes.c_uint64]
-slib.gf_processLayout.restype = POINTER(layout_info)
-slib.gf_randomizeLayout.argtypes = [POINTER(layout_info)]
+slib.gf_processLayout.restype = POINTER(LayoutInfo)
+slib.gf_randomizeLayout.argtypes = [POINTER(LayoutInfo)]
 slib.gf_randomizeLayout.restype = None
-slib.gf_doLayoutAlgorithm.argtypes = [fr_alg_options, POINTER(layout_info)]
+slib.gf_doLayoutAlgorithm.argtypes = [FrAlgOptions, POINTER(LayoutInfo)]
 slib.gf_doLayoutAlgorithm.restype = None
 
 
@@ -178,7 +218,7 @@ def doLayoutAlgorithm(layout_options, h_layout_info):
 
 # Model Functions
 slib.gf_SBMLModel_newp.restype = ctypes.c_uint64
-slib.gf_setModelNamespace.argtypes = [POINTER(layout_info), ctypes.c_uint64,
+slib.gf_setModelNamespace.argtypes = [POINTER(LayoutInfo), ctypes.c_uint64,
                                       ctypes.c_uint64]
 slib.gf_setModelNamespace.restype = None
 
@@ -193,7 +233,7 @@ def setModelNamespace(h_layout_info, level, version):
 
 
 # Network Functions
-slib.gf_getNetworkp.argtypes = [POINTER(layout_info)]
+slib.gf_getNetworkp.argtypes = [POINTER(LayoutInfo)]
 slib.gf_getNetworkp.restype = ctypes.c_uint64
 slib.gf_nw_getNodep.argtypes = [ctypes.c_uint64, ctypes.c_uint64]
 slib.gf_nw_getNodep.restype = ctypes.c_uint64
@@ -273,8 +313,8 @@ def nw_rebuildCurves(h_network):
 
 # _Node Information
 slib.gf_node_getCentroid.argtypes = [ctypes.c_uint64]
-slib.gf_node_getCentroid.restype = point
-slib.gf_node_setCentroid.argtypes = [ctypes.c_uint64, point]
+slib.gf_node_getCentroid.restype = Point
+slib.gf_node_setCentroid.argtypes = [ctypes.c_uint64, Point]
 
 slib.gf_node_getHeight.argtypes = [ctypes.c_uint64]
 slib.gf_node_getHeight.restype = ctypes.c_double
@@ -301,14 +341,14 @@ slib.gf_node_isAliased.restype = ctypes.c_int
 
 slib.gf_node_getAttachedCurves.argtypes = [ctypes.c_uint64, ctypes.c_uint64,
                                            POINTER(ctypes.c_uint),
-                                           POINTER(POINTER(gf_curve))]
+                                           POINTER(POINTER(GFCurve))]
 slib.gf_node_getAttachedCurves.restype = ctypes.c_int
 
 
 def node_getAttachedCurves(h_node, h_network):
     num_curves = ctypes.c_uint(0)
 
-    h_curves = POINTER(gf_curve)()
+    h_curves = POINTER(GFCurve)()
 
     slib.gf_node_getAttachedCurves(h_node, h_network, ctypes.byref(num_curves),
                                    ctypes.byref(h_curves))
@@ -376,7 +416,7 @@ slib.gf_reaction_getNumSpec.restype = ctypes.c_uint64
 slib.gf_reaction_getID.argtypes = [ctypes.c_uint64]
 slib.gf_reaction_getID.restype = ctypes.c_char_p
 slib.gf_reaction_getCentroid.argtypes = [ctypes.c_uint64]
-slib.gf_reaction_getCentroid.restype = point
+slib.gf_reaction_getCentroid.restype = Point
 
 
 def reaction_getNumCurves(h_reaction):
@@ -397,12 +437,12 @@ def reaction_getCentroid(h_reaction):
 
 # Curve Information
 slib.gf_reaction_getCurvep.argtypes = [ctypes.c_uint64, ctypes.c_uint64]
-slib.gf_reaction_getCurvep.restype = POINTER(gf_curve)
+slib.gf_reaction_getCurvep.restype = POINTER(GFCurve)
 
-slib.gf_getCurveCPs.argtypes = [POINTER(gf_curve)]
-slib.gf_getCurveCPs.restype = curveCP
+slib.gf_getCurveCPs.argtypes = [POINTER(GFCurve)]
+slib.gf_getCurveCPs.restype = CurveCP
 
-slib.gf_curve_getRole.argtypes = [POINTER(gf_curve)]
+slib.gf_curve_getRole.argtypes = [POINTER(GFCurve)]
 slib.gf_curve_getRole.restype = ctypes.c_uint
 
 
@@ -419,7 +459,7 @@ def curve_getRole(h_curve):
 
 
 # Model Sizing Functions
-slib.gf_fit_to_window.argtypes = [POINTER(layout_info), ctypes.c_double,
+slib.gf_fit_to_window.argtypes = [POINTER(LayoutInfo), ctypes.c_double,
                                   ctypes.c_double, ctypes.c_double,
                                   ctypes.c_double]
 
@@ -454,7 +494,7 @@ def arrowheadNumStyles():
 slib.gf_arrowheadStyleGetNumVerts.argtypes = [ctypes.c_uint]
 slib.gf_arrowheadStyleGetNumVerts.restype = ctypes.c_uint
 slib.gf_arrowheadStyleGetVert.argtypes = [ctypes.c_uint, ctypes.c_uint]
-slib.gf_arrowheadStyleGetVert.restype = point
+slib.gf_arrowheadStyleGetVert.restype = Point
 
 
 def arrowheadStyleGetNumVerts(style):
@@ -470,9 +510,9 @@ def arrowheadStyleGetVert(style, vertex_number):
 slib.gf_nw_getCompartmentp.argtypes = [ctypes.c_uint64]
 slib.gf_nw_getCompartmentp.restype = ctypes.c_uint64
 slib.gf_compartment_getMinCorner.argtypes = [ctypes.c_uint64]
-slib.gf_compartment_getMinCorner.restype = point
+slib.gf_compartment_getMinCorner.restype = Point
 slib.gf_compartment_getMaxCorner.argtypes = [ctypes.c_uint64]
-slib.gf_compartment_getMaxCorner.restype = point
+slib.gf_compartment_getMaxCorner.restype = Point
 slib.gf_compartment_getHeight.argtypes = [ctypes.c_uint64]
 slib.gf_compartment_getHeight.restype = ctypes.c_double
 slib.gf_compartment_getWidth.argtypes = [ctypes.c_uint64]

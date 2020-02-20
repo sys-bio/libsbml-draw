@@ -9,10 +9,8 @@ from libsbml_draw.styles import _AttributeSet, Style
 from tests.model_strings import compartment_model
 
 
-# todo enable config of all node/edge attributes with a single command
 # todo make seed for algorithm depend on time
 # todo check with larger models.
-# todo
 
 
 class AttributeSetTests(unittest.TestCase):
