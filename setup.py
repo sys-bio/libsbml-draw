@@ -2,9 +2,9 @@ from setuptools import setup
 from setuptools import PEP420PackageFinder, find_packages
 
 
-MAJOR = 0
-MINOR = 0
-MICRO = 17
+MAJOR = 1
+MINOR = 1
+MICRO = 0
 
 version = f'{MAJOR}.{MINOR}.{MICRO}'
 
