@@ -807,9 +807,9 @@ class SBMLlayout:
 
         print(libsbml.writeSBMLToString(self._doc))
 
-        if layout.getNumSpeciesGlyphs() == 0:
-            raise ValueError(f"Cannot write file. This level {level} version {version} "
-                             f"document has no layout information.")  # noqa
+        # if layout.getNumSpeciesGlyphs() == 0:
+        #     raise ValueError(f"Cannot write file. This level {level} version {version} "
+        #                      f"document has no layout information.")  # noqa
 
         self._addRenderInformation()
 

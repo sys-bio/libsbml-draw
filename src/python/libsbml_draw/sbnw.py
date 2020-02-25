@@ -145,9 +145,8 @@ def loadSBMLString(h_stringName):
     return slib.gf_loadSBMLbuf(h_stringname_string)
 
 
-slib.gf_writeSBML.argtypes = [ctypes.c_char_p, POINTER(SBMLModel)]
-slib.gf_writeSBML.restype = None
-
+slib.gf_writeSBML.argtypes = [ctypes.c_char_p, ctypes.c_uint64]
+slib.gf_writeSBML.restype = ctypes.c_int
 
 def writeSBML(filename, h_sbml_model):
     """
@@ -158,7 +157,7 @@ def writeSBML(filename, h_sbml_model):
     Returns:
 
     """
-
+    filename = filename.encode('utf8')
     return slib.gf_writeSBML(filename, h_sbml_model)
 
 
@@ -177,6 +176,7 @@ def writeSBMLwithLayout(filename, model, layout):
     Returns:
 
     """
+    filename = filename.encode('utf8')
     return slib.gf_writeSBMLwithLayout(filename, model, layout)
 
 

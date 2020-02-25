@@ -24,7 +24,7 @@ class TestWorksWithBioModels(unittest.TestCase):
     expected_number_of_compartments = 0
     expected_number_of_nodes = 16
     expected_number_of_reactions = 23
-    tear_down = True
+    tear_down = False
 
     def get_model_from_url(self):
         self.model_file_name = f"{self.model_id}_url.xml"
@@ -74,7 +74,7 @@ class TestWorksWithBioModels(unittest.TestCase):
 
     def test_save_sbml_to_file(self):
         self.sl.drawNetwork(self.image_fname, show=False, scaling_factor=1.0)
-        self.sl.writeSBMLFile(self.sbml_layout_fname)
+        self.sl.writeSBML(self.sbml_layout_fname)
         self.assertTrue(os.path.isfile(self.sbml_layout_fname))
 
 class TestBioMD0000000011(TestWorksWithBioModels):
