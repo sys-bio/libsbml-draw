@@ -46,9 +46,9 @@ class SBMLlayout:
                 20.0,  # k
                 1,  # boundary
                 100,  # magnatism
-                0.0,  # grav, has to be > 5 for effect
-                500.0,  # baryx
-                599.0,  # baryy
+                5.0,  # grav, has to be > 5 for effect
+                512.0,  # baryx
+                512.0,  # baryy
                 1,  # autobary
                 0,  # enable compartments
                 1,  # pre-randomize
@@ -111,7 +111,6 @@ class SBMLlayout:
 
         """
         self._randomizeLayout()
-        print('doing layout algorithm 1')
         self._doLayoutAlgorithm()
 
         # no render info here because auto-generating the layout
@@ -127,8 +126,6 @@ class SBMLlayout:
             height = self._computeNodeHeight(node)
             self.setNodeWidth(node.id, width)
             self.setNodeHeight(node.id, height)
-
-        self.regenerateLayout()
 
     def _computeNodeWidth(self, node):
         """Computes the node width needed for the text to fit inside.
@@ -442,7 +439,7 @@ class SBMLlayout:
 
         self._doc = libsbml.readSBMLFromString(self._getSBMLWithLayoutString())
 
-        self._updateNetworkLayout()
+        self._network.updateNetwork()
 
         # apply the style again
 
@@ -484,15 +481,6 @@ class SBMLlayout:
         Returns: libsbml_draw.Network
         """
         return Network(self._h_network)
-
-    def _updateNetworkLayout(self):
-        """Updates a network's layout values.
-
-        Args: None
-        Returns: None
-        """
-        network = self._network
-        network.updateNetwork()
 
     def describeModel(self):
         """Provides a summary of the model built from the SBML file.

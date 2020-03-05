@@ -32,7 +32,7 @@ class TestWriteFile(unittest.TestCase):
 
     def test_with_libsbml_draw2(self):
         sl = SBMLlayout(self.sbml_with_layout, autoComputeLayout=True)
-        sl.drawNetwork(self.image_fname, show=False, scaling_factor=1.0)
+        # sl.drawNetwork(self.image_fname, show=False, scaling_factor=1.0)
         sl.writeSBML(self.sbml_with_layout2)
 
     def test_with_sbnw_c_api(self):
