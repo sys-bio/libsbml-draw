@@ -2,7 +2,7 @@
 models defined in an SBML file, making use of a c API and libsbml."""
 
 import os
-from collections import namedtuple
+from collections import namedtuple, OrderedDict
 
 # note: tesbml IS libsbml repackaged and renamed.
 # Therefore, import from tesbml using the alias
@@ -37,23 +37,10 @@ class SBMLlayout:
         self._applyRender = applyRender
         self._autoComputeLayout = autoComputeLayout
         self.style = style
+        self._layout_alg_options = layout_alg_options
 
-        if self._validate_layout_alg_options(layout_alg_options):
-            self._layout_alg_options = layout_alg_options
-        else:
-            # todo change layoutalg_optionsto dict not list?
-            self._layout_alg_options = sbnw.FrAlgOptions(
-                20.0,  # k
-                1,  # boundary
-                100,  # magnatism
-                5.0,  # grav, has to be > 5 for effect
-                512.0,  # baryx
-                512.0,  # baryy
-                1,  # autobary
-                0,  # enable compartments
-                1,  # pre-randomize
-                20.0  # padding
-            )
+        self._layout_alg_options = self._configure_layout_algorithm()
+
 
         if not isinstance(self._sbml_source, str):
             raise TypeError('SBML source should be a of type str. Got "{}"'.format(type(self._sbml_source)))
@@ -86,7 +73,7 @@ class SBMLlayout:
                 self._doc = libsbml.readSBMLFromFile(sbml_source)
             else:
                 self._doc = libsbml.readSBMLFromString(sbml_source)
-
+        print('Something above this line')
         if len(self._fitWindow) == 4:
             sbnw.fit_to_window(self._h_layout_info, self._fitWindow[0], self._fitWindow[1],
                                self._fitWindow[2], self._fitWindow[3])
@@ -104,13 +91,42 @@ class SBMLlayout:
             self.style = style() if callable(style) else style
             self.apply_style()
 
+    def _configure_layout_algorithm(self):
+        if self._layout_alg_options is None:
+            self._layout_alg_options = OrderedDict(
+                k=20.0,   # k
+                boundary=1,      # boundary
+                magnatism=100,    # magnatism
+                grav=10,     # grav, has to be > 5 for effect
+                baryx=512.0,  # baryx
+                baryy=512.0,  # baryy
+                autobary=1,      # autobary
+                enable_comps=0,      # enable compartments // breaks the algorithm
+                prerandomize=1,      # pre-randomize
+                padding=20.0  # padding
+            )
+        else:
+            if not isinstance(self._layout_alg_options, OrderedDict):
+                raise ValueError("Input for layout_alg_options argument "
+                                 "should be of type OrderedDict but got "
+                                 "{} instead".format(type(self._layout_alg_options)))
+            valid_alg_options = ['k', 'boundary', 'magnatism', 'grav',
+                             'baryx', 'baryy', 'autobary', 'enable_comps',
+                             'prerandomize', 'padding']
+            for k, v in self._layout_alg_options.items():
+                if k not in valid_alg_options:
+                    raise ValueError(f'"{k}" option is invalid. These are your '
+                                     f'options: {valid_alg_options} ')
+        return sbnw.FrAlgOptions(**self._layout_alg_options)
+
     def _create_layout(self):
         """
 
         Returns:
 
         """
-        self._randomizeLayout()
+        # give algorithm stating point
+        sbnw.randomizeLayout(self._h_layout_info)
         self._doLayoutAlgorithm()
 
         # no render info here because auto-generating the layout
@@ -427,8 +443,8 @@ class SBMLlayout:
 
         Returns: None
         """
-        self._randomizeLayout()
-        print('doing layout algorithm 2')
+        # starting point for alg
+        sbnw.randomizeLayout(self._h_layout_info)
 
         self._doLayoutAlgorithm()
 
@@ -456,13 +472,6 @@ class SBMLlayout:
         # apply render information, if any
         self._applyRenderInformation()
 
-    def _randomizeLayout(self):
-        """Give the layout a starting point.
-
-        Args: None
-        Returns: None
-        """
-        sbnw.randomizeLayout(self._h_layout_info)
 
     def _doLayoutAlgorithm(self):
         """Run the Fruchterman-Reingold Layout Algorithm.
@@ -470,7 +479,9 @@ class SBMLlayout:
         Args: None
         Returns: None
         """
+
         sbnw.doLayoutAlgorithm(self._layout_alg_options, self._h_layout_info)
+        self.writeSBML(r'D:\sbnw\test\teusink2000WithLayoutFromPython.xml')
 
     # Model Methods
 
@@ -1410,7 +1421,6 @@ class SBMLlayout:
             height = self._computeNodeHeight(node)
             self.setNodeHeight(this_node_id, height)
 
-        self.regenerateLayout()
 
     def getNodeFontName(self, node_id):
         """Returns the font family value, which can be the font family or

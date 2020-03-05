@@ -12,7 +12,7 @@ from matplotlib.path import Path
 WIDTH_SHIFT = .25  # inches
 HEIGHT_SHIFT = .25  # inches
 
-INCHES_PER_POINT = 1 / 72
+INCHES_PER_POINT = 1 / 72.0
 
 # without this, the image will get cut-off in the iPython Console
 try:
@@ -39,19 +39,21 @@ def draw_compartments(compartments, fig, scaling_factor, nw_height_inches):
 
     Returns: list of matplotlib.patches - FancyBboxPatch, Ellipse, or Polygon
     """
+    compartment_patch = None
     compartment_patches = []
 
     for compartment in compartments:
 
         if compartment.shape == "round_box":
-
+            # todo change the following to reduce padding around species boxes
             compartment_patch = FancyBboxPatch(
-                [scaling_factor * compartment.lower_left_point[0] * INCHES_PER_POINT +  # noqa
-                 WIDTH_SHIFT, scaling_factor * (nw_height_inches - compartment.lower_left_point[1] * INCHES_PER_POINT -
-                                                compartment.height * INCHES_PER_POINT) +
-                 HEIGHT_SHIFT],
-                scaling_factor * compartment.width * INCHES_PER_POINT,
-                scaling_factor * compartment.height * INCHES_PER_POINT,
+                xy=(
+                    scaling_factor * compartment.lower_left_point[0] * INCHES_PER_POINT + WIDTH_SHIFT,
+                    scaling_factor * (nw_height_inches - compartment.lower_left_point[
+                        1] * INCHES_PER_POINT - compartment.height * INCHES_PER_POINT) + HEIGHT_SHIFT
+                ),
+                width=scaling_factor * compartment.width * INCHES_PER_POINT,
+                height=scaling_factor * compartment.height * INCHES_PER_POINT,
                 edgecolor=compartment.edge_color,
                 facecolor=compartment.fill_color,
                 linewidth=compartment.line_width,
@@ -94,7 +96,8 @@ def draw_compartments(compartments, fig, scaling_factor, nw_height_inches):
                 linewidth=compartment.line_width,
                 transform=fig.dpi_scale_trans
             )
-
+        if compartment_patch is None:
+            raise ValueError
         compartment_patches.append(compartment_patch)
 
     return compartment_patches
@@ -118,15 +121,15 @@ def draw_nodes(nodes, fig, scaling_factor, nw_height_inches):
     for node in nodes:
 
         if node.shape == "round_box":
+            print(node.lower_left_point)
+            print(node.lower_left_point[0] * INCHES_PER_POINT + WIDTH_SHIFT, node.lower_left_point[1] * INCHES_PER_POINT + HEIGHT_SHIFT)
 
             node_patch = FancyBboxPatch(
-                [scaling_factor * node.lower_left_point[0] * INCHES_PER_POINT +
-                 WIDTH_SHIFT,
-                 scaling_factor * (nw_height_inches -
-                                   node.lower_left_point[1] * INCHES_PER_POINT -
-                                   node.height * INCHES_PER_POINT) + HEIGHT_SHIFT],
-                scaling_factor * node.width * INCHES_PER_POINT,
-                scaling_factor * node.height * INCHES_PER_POINT,
+                xy=(scaling_factor * node.lower_left_point[0] * INCHES_PER_POINT + WIDTH_SHIFT,
+                    scaling_factor * (nw_height_inches - node.lower_left_point[
+                        1] * INCHES_PER_POINT - node.height * INCHES_PER_POINT) + HEIGHT_SHIFT),
+                width=scaling_factor * node.width * INCHES_PER_POINT,
+                height=scaling_factor * node.height * INCHES_PER_POINT,
                 edgecolor=node.edge_color,
                 facecolor=node.fill_color,
                 linewidth=node.edge_width,
@@ -587,8 +590,6 @@ def get_network_dimensions(sbml_layout):
     #
     #
 
-
-
     max_x_curves = max([max(
         curve.start_point.x,
         curve.end_point.x,
@@ -651,7 +652,6 @@ def createNetworkFigure(sbml_layout, arrowhead_mutation_scale,
 
     (nw_width_inches, nw_height_inches) = get_network_dimensions(sbml_layout)
 
-
     fig_width_inches = nw_width_inches + 2 * WIDTH_SHIFT
     fig_height_inches = nw_height_inches + 2 * HEIGHT_SHIFT
 
@@ -713,7 +713,7 @@ def createNetworkFigure(sbml_layout, arrowhead_mutation_scale,
     #    plt.gca().invert_yaxis()
 
     if show:
-
+        print('showing')
         plt.show()
     else:
         plt.close()

@@ -340,6 +340,8 @@ def nw_rebuildCurves(h_network):
 
 
 # _Node Information
+
+
 slib.gf_node_getCentroid.argtypes = [ctypes.c_uint64]
 slib.gf_node_getCentroid.restype = Point
 slib.gf_node_setCentroid.argtypes = [ctypes.c_uint64, Point]
@@ -386,6 +388,7 @@ def node_getAttachedCurves(h_node, h_network):
 
 def node_getCentroid(h_node):
     return slib.gf_node_getCentroid(h_node)
+
 
 
 def node_setCentroid(h_node, point):
