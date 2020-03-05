@@ -10,7 +10,7 @@ import tesbml as libsbml
 from matplotlib.colors import is_color_like, to_hex
 
 import libsbml_draw.sbnw as sbnw
-from libsbml_draw.draw_network import createNetworkFigure
+from libsbml_draw._draw_network import createNetworkFigure
 from libsbml_draw.network import Network
 from libsbml_draw.render import Render
 from .styles import _AttributeSet
@@ -44,10 +44,14 @@ class SBMLlayout:
             # todo change layoutalg_optionsto dict not list?
             self._layout_alg_options = sbnw.FrAlgOptions(
                 20.0,  # k
-                0,  # grav, has to be > 5 for effect
-                500.0,  # baryx
-                500.0,  # baryy
+                1,  # boundary
+                100,  # magnatism
+                0.0,  # grav, has to be > 5 for effect
+                512.0,  # baryx
+                512.0,  # baryy
                 1,  # autobary
+                0,  # enable compartments
+                1,  # pre-randomize
                 20.0  # padding
             )
 
@@ -81,16 +85,13 @@ class SBMLlayout:
             else:
                 self._doc = libsbml.readSBMLFromString(sbml_source)
 
-        # print(self._doc.getLevel(), self._doc.getVersion())
-        # You get issues re-writing sbml docs with layout/render
-        # information if you do not convert to at least level 3 version 1
         self._doc = self._convertToLatestSBML()
-        # print(self._doc.getLevel(), self._doc.getVersion())
 
         if len(self._fitWindow) == 4:
-            self._fitToWindow(self._fitWindow[0], self._fitWindow[1],
-                              self._fitWindow[2], self._fitWindow[3])
-        sbnw.layout_alignToOrigin(self._h_layout_info, 0, 0)
+            sbnw.fit_to_window(self._h_layout_info, self._fitWindow[0], self._fitWindow[1],
+                               self._fitWindow[2], self._fitWindow[3])
+        # sbnw.layout_alignToOrigin(self._h_layout_info, 0, 0)
+
         self._network = self._createNetwork()
 
         if self._applyRender:
@@ -98,7 +99,6 @@ class SBMLlayout:
 
         self._arrowhead_scale = {key: 15 for key in
                                  range(self.getNumberOfRoles())}
-
         # apply style if not None
         if self.style is not None:
             self.style = style() if callable(style) else style
@@ -126,6 +126,7 @@ class SBMLlayout:
             height = self._computeNodeHeight(node)
             self.setNodeWidth(node.id, width)
             self.setNodeHeight(node.id, height)
+
         self.regenerateLayout()
 
     def _computeNodeWidth(self, node):
@@ -434,11 +435,13 @@ class SBMLlayout:
         if len(self._fitWindow) == 4:
             self._fitToWindow(self._fitWindow[0], self._fitWindow[1],
                               self._fitWindow[2], self._fitWindow[3])
-        sbnw.layout_alignToOrigin(self._h_layout_info, 0, 0)
+        # sbnw.layout_alignToOrigin(self._h_layout_info, 0, 0)
 
         self._doc = libsbml.readSBMLFromString(self._getSBMLWithLayoutString())
 
         self._updateNetworkLayout()
+
+        # apply the style again
 
     def regenerateLayoutAndResetRenderInfo(self):
         """Use this to generate a new layout, and reset the network's node
@@ -726,11 +729,11 @@ class SBMLlayout:
 
         Returns: tuple, with x and y
         """
-        if node_id in self.getNodeIds():
 
+        if node_id in self.getNodeIds():
             centroid = self._network.nodes[node_id].center
 
-            return (centroid.x, centroid.y)
+            return centroid.x, centroid.y
         else:
             raise ValueError(f"species {node_id} is not in the network.")
 
@@ -777,7 +780,7 @@ class SBMLlayout:
 
         Returns: str
         """
-        sbml_string = sbnw.getSBMLwithLayoutStr(self._h_model, self._h_layout_info, 1)
+        sbml_string = sbnw.getSBMLwithLayoutStr(self._h_model, self._h_layout_info)
         return sbml_string
 
     def writeSBML(self, filename):
@@ -812,7 +815,6 @@ class SBMLlayout:
         #                      f"document has no layout information.")  # noqa
 
         self._addRenderInformation()
-
 
         libsbml.writeSBMLToFile(self._doc, filename)
 
@@ -1409,6 +1411,7 @@ class SBMLlayout:
             raise ValueError(f"{node_id} not found in network, or is not one",
                              " of the valid id keywords {NODE_KEYWORDS}")
 
+        # Recompute size of node when change font size
         for this_node_id in node_ids:
             node = self._network.nodes[this_node_id]
             width = self._computeNodeWidth(node)
@@ -1840,7 +1843,8 @@ class SBMLlayout:
                 species)
 
         else:
-            raise ValueError(f"Invalid input for reaction ids: {reaction_id}")
+            raise ValueError(f"Invalid input for reaction ids: {reaction_id}. Valid "
+                             f"reaction ids are {self.getReactionIds()}")
 
     def getReactionEdgeColor(self, reaction_id):
         """Returns the color id for the edge color of the reaction.
@@ -2168,7 +2172,7 @@ class SBMLlayout:
         renderInfo = Render(self._doc, self._layout_number)
 
         if (len(renderInfo.speciesToGlyphs) == 0 or len(renderInfo.reactionToGlyphs) == 0):
-            print('passing')
+
             pass
 
         else:
@@ -2276,19 +2280,10 @@ class SBMLlayout:
         """
         fig = createNetworkFigure(self, self._arrowhead_scale, show, dpi,
                                   width_shift, height_shift, scaling_factor)
-        if (save_file_name):
+        if save_file_name:
             bg_color = self._network.bg_color
-            try:
-                fig.savefig(save_file_name, facecolor=bg_color)
-            except ValueError:
-                # sometimes a network is too big for matplotlib to cope. In these
-                # situations, keep trying whilst reducing the scale factor.
-                print(f"Network is too large. "
-                      f"Retrying with a smaller "
-                      f"scaling_factor ({scaling_factor})")
-                scaling_factor *= 0.95
-                self.drawNetwork(save_file_name, show, dpi, width_shift, height_shift, scaling_factor)
-
+            fig.savefig(save_file_name, facecolor=bg_color,
+                        bbox_inches='tight', dpi=dpi)
         return fig
 
     def _getLastError(self):

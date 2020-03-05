@@ -43,7 +43,7 @@ class TestWorksWithBioModels(unittest.TestCase):
 
     def setUp(self) -> None:
         self.sbml = self.get_model_from_url()
-        self.sl = SBMLlayout(self.sbml_fname, applyRender=False)
+        self.sl = SBMLlayout(self.sbml_fname, applyRender=True)
 
     def test_setup(self):
         self.get_model_from_url()
@@ -77,6 +77,7 @@ class TestWorksWithBioModels(unittest.TestCase):
         self.sl.writeSBML(self.sbml_layout_fname)
         self.assertTrue(os.path.isfile(self.sbml_layout_fname))
 
+
 class TestBioMD0000000011(TestWorksWithBioModels):
     model_id = 'BIOMD0000000011'
     expected_number_of_compartments = 1
@@ -96,7 +97,6 @@ class TestBioMD0000000002(TestWorksWithBioModels):
     expected_number_of_compartments = 1
     expected_number_of_nodes = 13
     expected_number_of_reactions = 17
-
 
 
 if __name__ == '__main__':

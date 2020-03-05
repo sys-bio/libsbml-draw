@@ -411,7 +411,7 @@ class Render:
 
         elif font_property == "vtextanchor":
             # flip top, bottom, and baseline since (0,0) is lower-left corner
-            # for matplotlib in draw_network.py
+            # for matplotlib in _draw_network.py
             if property_value == "middle":
                 font_property = FontProperty(True, "center")
             elif property_value == "top":

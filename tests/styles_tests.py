@@ -4,9 +4,10 @@ import site, os
 from .add_to_path import add_to_path
 add_to_path()
 
-from libsbml_draw.sbml_layout import SBMLlayout
+from libsbml_draw.layout import SBMLlayout
 from libsbml_draw.styles import _AttributeSet, Style
 from tests.model_strings import compartment_model
+from libsbml_draw.styles import black_and_white
 
 
 # todo make seed for algorithm depend on time
@@ -82,7 +83,7 @@ class StyleTests(unittest.TestCase):
         self.assertEqual(expected, actual)
 
     def test_edgecolor_via_a_style(self):
-        self.style.edge.color = 'orange'
+        self.style.edge.edgecolor = 'orange'
         sl = SBMLlayout(compartment_model, style=self.style)
         actual = [sl.getReactionEdgeColor(i) for i in sl.getReactionIds()]
         colours = []
@@ -91,11 +92,11 @@ class StyleTests(unittest.TestCase):
                 colours.append(j[2])
         expected = '#ffa500ff'
         actual = list(set(colours))[0]
+        sl.drawNetwork(show=True)
         self.assertEqual(expected, actual)
 
     def test_black_and_white(self):
-        self.style.node.color = 'black'
-        from libsbml_draw.styles import black_and_white
+        self.style.node.fillcolor = 'black'
         sl = SBMLlayout(compartment_model, style=black_and_white)
         expected = '#c4c4c4ff'
         actual = sl.getCompartmentEdgeColor('vol1')

@@ -123,6 +123,7 @@ class _AttributeSet:
         Returns:
 
         """
+
         for k, v in self.items():
             # exclude _func_dict and target
             if not k.startswith('_') and k != 'target':
@@ -130,6 +131,7 @@ class _AttributeSet:
                 try:
                     func = getattr(obj, self._func_map[k])
                 except KeyError:
+
                     raise AttributeError(f'Object of type {type(obj)} does not have a '
                                          f'a callable method called "{k}". '
                                          f'These keys are valid: {[i for i in self.keys() if not i.startswith("_")]}')
@@ -170,8 +172,8 @@ class _Font(_AttributeSet):
 
 class _Node(_AttributeSet):
     edgecolor = r'#0000ff'
-    edgewidth = 3
     fillcolor = r'#c9e0fb'
+    edgewidth = 3
 
     _func_map = dict(
         edgecolor='setNodeEdgeColor',
@@ -251,7 +253,7 @@ class Style(_AttributeSet):
     - edge
         - edgecolor
         - fillcolor
-        - linewidth
+        - width
     - compartment
         - edgecolor
         - fillcolor
@@ -277,16 +279,14 @@ def black_and_white():
     """
     s = Style()
     s.compartment.edgecolor = '#c4c4c4ff'
-    s.edge.color = 'black'
+    s.compartment.fillcolor = 'white'
     s.node.edgecolor = 'black'
     s.node.fillcolor = 'white'
-    s.compartment.fillcolor = 'white'
     s.node.edgewidth = 10
     s.font.size = 25
     s.edge.width = 5
     s.background.color = 'white'
     return s
-
 
 def blue():
     s = Style()
@@ -307,6 +307,7 @@ def blue():
 
     # compartment attributes
     s.compartment.edgecolor = 'black'
+    s.compartment.fillcolor = 'white'
     s.compartment.linewidth = 20
 
     # background attributes
