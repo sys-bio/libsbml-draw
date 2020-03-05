@@ -15,9 +15,8 @@ class Network:
     """Represents a network in the SBML model, and consists of nodes and
     reactions."""
 
-    def __init__(self, h_network, doc):
+    def __init__(self, h_network):
         self.h_network = h_network
-        self.doc = doc
         self.compartments = {}
         self.nodes = {}
         self.reactions = {}

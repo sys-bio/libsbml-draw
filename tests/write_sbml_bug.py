@@ -26,8 +26,7 @@ class TestWriteFile(unittest.TestCase):
         self.sbml_with_layout2 = r'D:\sbnw\test\teusink2000WithLayoutFromPythonSecond.xml'
 
     def test_with_libsbml_draw(self):
-        sl = SBMLlayout(self.sbml_fname, autoComputeLayout=False)
-        print('sl._layoutSpecified()', sl._layoutSpecified)
+        sl = SBMLlayout(self.sbml_fname, autoComputeLayout=True)
         sl.drawNetwork(self.image_fname, show=False, scaling_factor=1.0)
         sl.writeSBML(self.sbml_with_layout)
 
@@ -77,7 +76,7 @@ class TestWriteFile(unittest.TestCase):
             20.0,  # k
             1,      #boundary
             100,  # magnatism
-            5.0,  # grav, has to be > 5 for effect
+            0.0,  # grav, has to be > 5 for effect
             500.0,  # baryx
             500.0,  # baryy
             1,  # autobary

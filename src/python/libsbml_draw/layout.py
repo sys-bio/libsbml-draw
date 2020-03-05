@@ -47,8 +47,8 @@ class SBMLlayout:
                 1,  # boundary
                 100,  # magnatism
                 0.0,  # grav, has to be > 5 for effect
-                512.0,  # baryx
-                512.0,  # baryy
+                500.0,  # baryx
+                599.0,  # baryy
                 1,  # autobary
                 0,  # enable compartments
                 1,  # pre-randomize
@@ -80,19 +80,19 @@ class SBMLlayout:
             self._create_layout()
 
         else:
+            # todo : work out whether we should be using the pdoc that comes
+            #  with sbnw, rather than libsbml.
             if self._validate_sbml_filename(sbml_source):
                 self._doc = libsbml.readSBMLFromFile(sbml_source)
             else:
                 self._doc = libsbml.readSBMLFromString(sbml_source)
-
-        self._doc = self._convertToLatestSBML()
 
         if len(self._fitWindow) == 4:
             sbnw.fit_to_window(self._h_layout_info, self._fitWindow[0], self._fitWindow[1],
                                self._fitWindow[2], self._fitWindow[3])
         # sbnw.layout_alignToOrigin(self._h_layout_info, 0, 0)
 
-        self._network = self._createNetwork()
+        self._network = Network(self._h_network)
 
         if self._applyRender:
             self._applyRenderInformation()
@@ -111,6 +111,7 @@ class SBMLlayout:
 
         """
         self._randomizeLayout()
+        print('doing layout algorithm 1')
         self._doLayoutAlgorithm()
 
         # no render info here because auto-generating the layout
@@ -430,6 +431,8 @@ class SBMLlayout:
         Returns: None
         """
         self._randomizeLayout()
+        print('doing layout algorithm 2')
+
         self._doLayoutAlgorithm()
 
         if len(self._fitWindow) == 4:
@@ -480,7 +483,7 @@ class SBMLlayout:
         Args: None
         Returns: libsbml_draw.Network
         """
-        return Network(self._h_network, self._doc)
+        return Network(self._h_network)
 
     def _updateNetworkLayout(self):
         """Updates a network's layout values.
