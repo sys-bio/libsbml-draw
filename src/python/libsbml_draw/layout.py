@@ -97,7 +97,7 @@ class SBMLlayout:
                 k=20.0,   # k
                 boundary=1,      # boundary
                 magnatism=100,    # magnatism
-                grav=10,     # grav, has to be > 5 for effect
+                grav=5,     # grav, has to be > 5 for effect
                 baryx=512.0,  # baryx
                 baryy=512.0,  # baryy
                 autobary=1,      # autobary
@@ -117,8 +117,20 @@ class SBMLlayout:
                 if k not in valid_alg_options:
                     raise ValueError(f'"{k}" option is invalid. These are your '
                                      f'options: {valid_alg_options} ')
-        return sbnw.FrAlgOptions(**self._layout_alg_options)
-
+        print(self._layout_alg_options)
+        opt = sbnw.FrAlgOptions(*list(self._layout_alg_options.values()))
+        print("opt.k", opt.k)
+        print("opt.boundary", opt.boundary)
+        print("opt.magnatism", opt.magnatism)
+        print("opt.gravity", opt.gravity)
+        print("opt.baryx", opt.baryx)
+        print("opt.baryy", opt.baryy)
+        print("opt.autobary", opt.autobary)
+        print("opt.enable_comps", opt.enable_comps)
+        print("opt.prerandomize", opt.prerandomize)
+        print("opt.padding", opt.padding)
+        print(opt)
+        return opt
     def _create_layout(self):
         """
 
@@ -457,7 +469,7 @@ class SBMLlayout:
 
         self._network.updateNetwork()
 
-        # apply the style again
+        # apply the style again?
 
     def regenerateLayoutAndResetRenderInfo(self):
         """Use this to generate a new layout, and reset the network's node

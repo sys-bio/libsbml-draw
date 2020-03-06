@@ -7,7 +7,6 @@ from matplotlib.patches import ArrowStyle
 
 import libsbml_draw.sbnw as sbnw
 
-
 # import tesbml as libsbml
 
 
@@ -106,9 +105,6 @@ class Network:
             self.aliasedNodes[node_id] = alias_ids
         else:
             raise ValueError(f"species {node_id} is not in the network.")
-
-    def getNumCompartmentsWithLibsbml(self):
-        return self.doc.getModel().getNumCompartments()
 
     def _add_compartments(self):
         """Populates the collection of compartments.

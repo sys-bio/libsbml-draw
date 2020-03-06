@@ -22,52 +22,56 @@ class TestWriteFile(unittest.TestCase):
         self.image_fname = os.path.join(os.path.dirname(__file__), 'teusink2000network.png')
         # self.sbml_fname = r'D:\ReproduciblePaper\BIOMD64\JWSOnline_Teusink.xml'
         self.sbml_fname = r'D:\sbnw\test\teusink2000.xml'
-        self.sbml_with_layout = r'D:\sbnw\test\teusink2000WithLayoutFromPython.xml'
-        self.sbml_with_layout2 = r'D:\sbnw\test\teusink2000WithLayoutFromPythonSecond.xml'
+        self.sbml_with_layout = r'D:\libsbml-draw\tests\teusink2000WithLayoutFromPython.xml'
+        self.sbml_with_layout2 = r'D:\libsbml-draw\tests\teusink2000WithLayoutFromPythonSecond.xml'
 
     def test_with_libsbml_draw(self):
         from collections import OrderedDict
         opt = OrderedDict(
             k=20.0,  # k
             boundary=1,  # boundary
-            magnatism=100,  # magnatism
+            magnatism=50,  # magnatism
             grav=5,  # grav, has to be > 5 for effect
             baryx=500.0,  # baryx
             baryy=500.0,  # baryy
             autobary=1,  # autobary
             enable_comps=0,  # enable compartments // breaks the algorithm
-            prerandomize=1,  # pre-randomize
+            prerandomize=0,  # pre-randomize
             padding=20.0  # padding
         )
         s = Style()
 
         # edge attributes
-        s.edge.edgecolor = 'grey'
-        s.edge.fillcolor = 'grey'
+        # s.edge.edgecolor = 'grey'
+        # s.edge.fillcolor = 'grey'
         # s.edge.width = 15
 
         # font attributes
-        s.font.color = 'black'
+        # s.font.color = 'black'
         # s.font.size = 35
-        s.font.weight = 'bold'
+        # s.font.weight = 'bold'
 
         # node attributes
-        s.node.edgecolor = '#b36b00'
-        s.node.fillcolor = '#ffcc80'
-        s.node.edgewidth = 5
+        # s.node.edgecolor = '#b36b00'
+        # s.node.fillcolor = '#ffcc80'
+        # s.node.edgewidth = 5
 
         # compartment attributes
-        s.compartment.edgecolor = 'black'
-        s.compartment.fillcolor = '#ffebcc'
+        # s.compartment.edgecolor = 'black'
+        # s.compartment.fillcolor = '#ffebcc'
         # s.compartment.linewidth = 20
 
         # arrow attributes
-        s.arrow.scale = 50
+        # s.arrow.scale = 50
 
-        sl = SBMLlayout(self.sbml_fname, autoComputeLayout=True, style=s,
+        sl = SBMLlayout(self.sbml_fname, autoComputeLayout=True,
+                        # style=s,
                         layout_alg_options=opt)
-        # sl.drawNetwork(self.image_fname, show=False, scaling_factor=1.0)
-        # sl.writeSBML(self.sbml_with_layout)
+        # for i in range(10):
+        #     sl.regenerateLayout()
+        sl.drawNetwork(self.image_fname, show=False, scaling_factor=1.0)
+        sl.writeSBML(self.sbml_with_layout)
+        print('saved to {}'.format(self.image_fname))
 
     def test_with_libsbml_draw2(self):
         sl = SBMLlayout(self.sbml_with_layout, autoComputeLayout=True)
@@ -97,6 +101,10 @@ class TestWriteFile(unittest.TestCase):
         comp_height_before = sbnw.compartment_getHeight(comp)
         print('comp_height_before', comp_height_before)
         sbnw.doLayoutAlgorithm(_layout_alg_options, layout_info)
+        sbnw.doLayoutAlgorithm(_layout_alg_options, layout_info)
+        sbnw.doLayoutAlgorithm(_layout_alg_options, layout_info)
+        sbnw.doLayoutAlgorithm(_layout_alg_options, layout_info)
+        # sbnw.doLayoutAlgorithm(_layout_alg_options, layout_info)
         comp_height_after = sbnw.compartment_getHeight(comp)
         print('comp_height_after', comp_height_after)
 

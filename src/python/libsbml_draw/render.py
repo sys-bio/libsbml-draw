@@ -81,7 +81,7 @@ class Render:
         self.reactionGlyphs = self._createReactionGlyphsDirectory()
         self.reactionToGlyphs = self._createReactionsDirectory()
         self.glyphsDirectory = self._createGlyphsDirectory()
-        self.findSpeciesReferenceGlyphId = self._createSpeciesReferenceGlyphDirectory()  # noqa
+        self.findSpeciesReferenceGlyphId = self._createSpeciesReferenceGlyphDirectory()
 
     def _createSpeciesReferenceGlyphDirectory(self):
         """Create a directory to find the glyph id of a curve, which is a
