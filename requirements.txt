@@ -1,5 +1,5 @@
 matplotlib
-numpy==1.18.1
+numpy==1.22.0
 nose
 sphinx
 sphinx_rtd_theme
